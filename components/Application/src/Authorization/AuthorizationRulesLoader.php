@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Application\Authorization;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Application\Authorization;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Limoncello\Application\Authorization;
 
 use Limoncello\Application\Contracts\Authorization\AuthorizationRulesInterface;
 use Limoncello\Application\Contracts\Authorization\ResourceAuthorizationRulesInterface;
@@ -121,7 +124,7 @@ class AuthorizationRulesLoader
             if ($reflectionMethod->isPublic() === true &&
                 $reflectionMethod->isStatic() === true &&
                 $reflectionMethod->hasReturnType() === true &&
-                (string)$reflectionMethod->getReturnType() === 'bool' &&
+                (string)$reflectionMethod->getReturnType()->getName() === 'bool' &&
                 $reflectionMethod->getNumberOfParameters() === 1 &&
                 $reflectionMethod->getParameters()[0]->getClass()->implementsInterface(ContextInterface::class) === true
             ) {
@@ -163,7 +166,8 @@ class AuthorizationRulesLoader
         string $class,
         array $methods,
         string $resourcesType = null
-    ): PolicyInterface {
+    ): PolicyInterface
+    {
         $rules = [];
         foreach ($methods as $method) {
             $rules[] = $this->createMethodRule($class, $method);
