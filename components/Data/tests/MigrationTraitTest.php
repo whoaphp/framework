@@ -1,4 +1,4 @@
-<?php declare (strict_types = 1);
+<?php declare (strict_types=1);
 
 namespace Limoncello\Tests\Data;
 
@@ -19,17 +19,20 @@ namespace Limoncello\Tests\Data;
  */
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Limoncello\Contracts\Data\MigrationInterface;
 use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
 use Limoncello\Contracts\Data\RelationshipTypes;
 use Limoncello\Contracts\Data\TimestampFields as TSF;
+use Limoncello\Contracts\Data\UuidFields as UF;
 use Limoncello\Data\Migrations\MigrationTrait;
 use Limoncello\Data\Migrations\RawNameType;
+use Limoncello\Doctrine\Types\UuidType;
 use Limoncello\Tests\Data\Data\TestContainer;
 use Limoncello\Tests\Data\Data\TestTableMigration;
 use Mockery;
@@ -38,7 +41,7 @@ use Mockery\MockInterface;
 use Psr\Container\ContainerInterface;
 
 /**
- * @package Limoncello\Tests\Core
+ * @package Limoncello\Tests\Data
  */
 class MigrationTraitTest extends TestCase implements MigrationInterface
 {
@@ -48,6 +51,17 @@ class MigrationTraitTest extends TestCase implements MigrationInterface
      * @var Connection
      */
     private $connection;
+
+    /**
+     * @inheritDoc
+     * @throws DBALException
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Type::hasType(UuidType::NAME) === true ?: Type::addType(UuidType::NAME, UuidType::class);
+    }
 
     /**
      * Test columns migration.
@@ -63,8 +77,8 @@ class MigrationTraitTest extends TestCase implements MigrationInterface
         $columnNullableString   = 'col_nullable_string';
         $columnInt              = 'col_int';
         $columnNullableInt      = 'col_nullable_int';
-        $columnInt2              = 'col_int_2';
-        $columnNullableInt2      = 'col_nullable_int_2';
+        $columnInt2             = 'col_int_2';
+        $columnNullableInt2     = 'col_nullable_int_2';
         $columnStringLength     = 100;
         $columnNonNullText      = 'col_non_null_text';
         $columnNullableText     = 'col_nullable_text';
@@ -77,6 +91,11 @@ class MigrationTraitTest extends TestCase implements MigrationInterface
         $columnNullableDate     = 'col_nullable_date';
         $columnNonNullDateTime  = 'col_non_null_datetime';
         $columnNullableDateTime = 'col_nullable_datetime';
+
+        $columnUuid           = 'col_uuid';
+        $columnNullableUuid   = 'col_nullable_uuid';
+        $columnTime           = 'col_time';
+        $columnNullableTime   = 'col_nullable_time';
 
         $defaultUInt    = 123;
         $columnToCreate = [
@@ -107,7 +126,17 @@ class MigrationTraitTest extends TestCase implements MigrationInterface
 
             $this->searchable([$columnNonNullText]),
 
-            $this->defaultValue($columnUInt, $defaultUInt)
+            $this->defaultValue($columnUInt, $defaultUInt),
+
+            $this->uuid($columnUuid),
+
+            $this->defaultUuid(),
+
+            $this->nullableUuid($columnNullableUuid),
+
+            $this->time($columnTime),
+
+            $this->nullableTime($columnNullableTime),
         ];
         $migration      = new TestTableMigration($modelClass, $columnToCreate);
 
@@ -115,6 +144,7 @@ class MigrationTraitTest extends TestCase implements MigrationInterface
         $this->prepareTable($modelSchemas, $modelClass, $tableName, 2);
         $this->prepareAttributeLength($modelSchemas, $modelClass, $columnNonNullString, $columnStringLength);
         $this->prepareAttributeLength($modelSchemas, $modelClass, $columnNullableString, $columnStringLength);
+        $this->prepareDefaultUuid($modelSchemas, $modelClass);
         $this->prepareTimestamps($modelSchemas, $modelClass);
 
         $container = $this->createContainer($modelSchemas);
@@ -177,24 +207,39 @@ class MigrationTraitTest extends TestCase implements MigrationInterface
         $this->assertEquals('blob', $columnsCreated[$columnBinary]->getType()->getName());
         $this->assertTrue($columnsCreated[$columnBinary]->getNotnull());
 
-        $this->assertEquals('datetime', $columnsCreated[TSF::FIELD_CREATED_AT]->getType()->getName());
+        $this->assertEquals('datetime_immutable', $columnsCreated[TSF::FIELD_CREATED_AT]->getType()->getName());
         $this->assertTrue($columnsCreated[TSF::FIELD_CREATED_AT]->getNotnull());
-        $this->assertEquals('datetime', $columnsCreated[TSF::FIELD_UPDATED_AT]->getType()->getName());
+        $this->assertEquals('datetime_immutable', $columnsCreated[TSF::FIELD_UPDATED_AT]->getType()->getName());
         $this->assertFalse($columnsCreated[TSF::FIELD_UPDATED_AT]->getNotnull());
-        $this->assertEquals('datetime', $columnsCreated[TSF::FIELD_DELETED_AT]->getType()->getName());
+        $this->assertEquals('datetime_immutable', $columnsCreated[TSF::FIELD_DELETED_AT]->getType()->getName());
         $this->assertFalse($columnsCreated[TSF::FIELD_DELETED_AT]->getNotnull());
 
-        $this->assertEquals('datetime', $columnsCreated[$columnNullableDateTime]->getType()->getName());
+        $this->assertEquals('datetime_immutable', $columnsCreated[$columnNullableDateTime]->getType()->getName());
         $this->assertFalse($columnsCreated[$columnNullableDateTime]->getNotnull());
 
-        $this->assertEquals('datetime', $columnsCreated[$columnNonNullDateTime]->getType()->getName());
+        $this->assertEquals('datetime_immutable', $columnsCreated[$columnNonNullDateTime]->getType()->getName());
         $this->assertTrue($columnsCreated[$columnNonNullDateTime]->getNotnull());
 
-        $this->assertEquals('date', $columnsCreated[$columnNullableDate]->getType()->getName());
+        $this->assertEquals('date_immutable', $columnsCreated[$columnNullableDate]->getType()->getName());
         $this->assertFalse($columnsCreated[$columnNullableDate]->getNotnull());
 
-        $this->assertEquals('date', $columnsCreated[$columnNonNullDate]->getType()->getName());
+        $this->assertEquals('date_immutable', $columnsCreated[$columnNonNullDate]->getType()->getName());
         $this->assertTrue($columnsCreated[$columnNonNullDate]->getNotnull());
+
+        $this->assertEquals('limoncelloUuid', $columnsCreated[$columnUuid]->getType()->getName());
+        $this->assertTrue($columnsCreated[$columnUuid]->getNotnull());
+
+        $this->assertEquals('limoncelloUuid', $columnsCreated[UF::FIELD_UUID]->getType()->getName());
+        $this->assertTrue($columnsCreated[UF::FIELD_UUID]->getNotnull());
+
+        $this->assertEquals('limoncelloUuid', $columnsCreated[$columnNullableUuid]->getType()->getName());
+        $this->assertFalse($columnsCreated[$columnNullableUuid]->getNotnull());
+
+        $this->assertEquals('time_immutable', $columnsCreated[$columnTime]->getType()->getName());
+        $this->assertTrue($columnsCreated[$columnTime]->getNotnull());
+
+        $this->assertEquals('time_immutable', $columnsCreated[$columnNullableTime]->getType()->getName());
+        $this->assertFalse($columnsCreated[$columnNullableTime]->getNotnull());
 
         $migration->rollback();
         $this->assertFalse($manager->tablesExist([$tableName]));
@@ -293,9 +338,8 @@ class MigrationTraitTest extends TestCase implements MigrationInterface
         $this->init($container);
 
         $container[Connection::class] = $mockConnection = Mockery::mock(Connection::class);
-        $mockConnection->shouldReceive('getDriver')->once()->withNoArgs()->andReturnSelf();
-        $mockConnection->shouldReceive('getName')->once()->withNoArgs()->andReturn('pdo_pgsql');
-        $mockConnection->shouldReceive('exec')->once()->with($expectedSql)->andReturnUndefined();
+        $mockConnection->shouldReceive('getDriver')->once()->withNoArgs()->andReturn('pdo_pgsql');
+        $mockConnection->shouldReceive('executeStatement')->once()->with($expectedSql)->andReturnUndefined();
 
         $this->createEnum('myEnum', ['value1', 'value2']);
 
@@ -314,10 +358,9 @@ class MigrationTraitTest extends TestCase implements MigrationInterface
         $this->init($container);
 
         $container[Connection::class] = $mockConnection = Mockery::mock(Connection::class);
-        $mockConnection->shouldReceive('getDriver')->once()->withNoArgs()->andReturnSelf();
-        $mockConnection->shouldReceive('getName')->once()->withNoArgs()->andReturn('pdo_pgsql');
+        $mockConnection->shouldReceive('getDriver')->once()->withNoArgs()->andReturn('pdo_pgsql');
         $mockConnection->shouldReceive('quoteIdentifier')->once()->with('myEnum')->andReturn('myEnum');
-        $mockConnection->shouldReceive('exec')->once()->with($expectedSql)->andReturnUndefined();
+        $mockConnection->shouldReceive('executeStatement')->once()->with($expectedSql)->andReturnUndefined();
 
         $this->dropEnumIfExists('myEnum');
 
@@ -334,8 +377,7 @@ class MigrationTraitTest extends TestCase implements MigrationInterface
         $this->init($container);
 
         $container[Connection::class] = $mockConnection = Mockery::mock(Connection::class);
-        $mockConnection->shouldReceive('getDriver')->once()->withNoArgs()->andReturnSelf();
-        $mockConnection->shouldReceive('getName')->once()->withNoArgs()->andReturn('pdo_pgsql');
+        $mockConnection->shouldReceive('getDriver')->once()->withNoArgs()->andReturn('pdo_pgsql');;
 
         $closure = $this->useEnum('my_column', 'myEnum');
         $table   = new Table('table_name');
@@ -456,6 +498,21 @@ class MigrationTraitTest extends TestCase implements MigrationInterface
         return $mock;
     }
 
+    /**
+     * @param MockInterface $mock
+     * @param string        $modelClass
+     *
+     * @return Mock
+     */
+    private function prepareDefaultUuid(MockInterface $mock, string $modelClass)
+    {
+        /** @var Mock $mock */
+        $mock->shouldReceive('hasAttributeType')->once()
+            ->with($modelClass, UF::FIELD_UUID)->andReturn(true);
+
+        return $mock;
+    }
+
     /** @noinspection PhpTooManyParametersInspection
      * @param MockInterface $mock
      * @param string        $modelClass
@@ -478,8 +535,9 @@ class MigrationTraitTest extends TestCase implements MigrationInterface
         string $reverseTable,
         string $reversePk,
         int $relType = RelationshipTypes::BELONGS_TO,
-        string $colType = Type::INTEGER
-    ) {
+        string $colType = Types::INTEGER
+    )
+    {
         /** @var Mock $mock */
         $mock->shouldReceive('hasRelationship')->once()->with($modelClass, $relName)->andReturn(true);
         $mock->shouldReceive('getRelationshipType')->once()->with($modelClass, $relName)->andReturn($relType);
@@ -510,8 +568,9 @@ class MigrationTraitTest extends TestCase implements MigrationInterface
         string $reverseClass,
         string $reverseTable,
         string $reversePk,
-        string $colType = Type::INTEGER
-    ) {
+        string $colType = Types::INTEGER
+    )
+    {
         /** @var Mock $mock */
         $mock->shouldReceive('hasClass')->times(2)->with($reverseClass)->andReturn(true);
         $mock->shouldReceive('getTable')->once()->with($reverseClass)->andReturn($reverseTable);

@@ -155,7 +155,8 @@
     "require": {
         "php": "^7.4|^8.0",
         "doctrine/dbal": "^2.6.0",
-        "limoncello-php/contracts": "dev-master"
+        "limoncello-php/contracts": "dev-master",
+        "limoncello-php/doctrine": "dev-master"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^2.9",

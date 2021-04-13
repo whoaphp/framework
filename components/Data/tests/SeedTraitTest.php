@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Data;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,17 @@ namespace Limoncello\Tests\Data;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Data;
+
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
 use Limoncello\Contracts\Data\SeedInterface;
 use Limoncello\Data\Seeds\SeedTrait;
@@ -34,7 +38,7 @@ use Mockery\MockInterface;
 use Psr\Container\ContainerInterface;
 
 /**
- * @package Limoncello\Tests\Core
+ * @package Limoncello\Tests\Data
  */
 class SeedTraitTest extends TestCase
 {
@@ -55,7 +59,7 @@ class SeedTraitTest extends TestCase
     {
         $tableName  = 'table_name';
         $columnName = self::TEST_COLUMN_NAME;
-        $types      = [$columnName => Type::STRING];
+        $types      = [$columnName => Types::STRING];
 
         $modelSchemas = Mockery::mock(ModelSchemaInfoInterface::class);
 
@@ -65,7 +69,7 @@ class SeedTraitTest extends TestCase
         $manager = $this->connection->getSchemaManager();
         $table   = new Table(
             $tableName,
-            [new Column($columnName, Type::getType(Type::STRING))]
+            [new Column($columnName, Type::getType(Types::STRING))]
         );
         $table->addUniqueIndex([$columnName]);
         $manager->createTable($table);
@@ -80,8 +84,7 @@ class SeedTraitTest extends TestCase
      */
     private function createSeed(ContainerInterface $container): SeedInterface
     {
-        $seed = new class ($this) implements SeedInterface
-        {
+        $seed = new class ($this) implements SeedInterface {
             use SeedTrait;
 
             /**
@@ -106,6 +109,7 @@ class SeedTraitTest extends TestCase
                 $columnName = SeedTraitTest::TEST_COLUMN_NAME;
 
                 $this->test->assertTrue(is_string($this->now()));
+                $this->test->assertTrue(is_string($this->uuid()->toString()));
 
                 $this->test->assertCount(0, $this->readModelsData($modelClass));
 

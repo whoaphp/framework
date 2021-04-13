@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Data;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Tests\Data;
  * limitations under the License.
  */
 
-use Doctrine\DBAL\DBALException;
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Data;
+
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use Limoncello\Data\Migrations\EnumType;
 use Mockery;
 
 /**
- * @package Limoncello\Tests\Core
+ * @package Limoncello\Tests\Data
  */
 class EnumTypeTest extends TestCase
 {
@@ -44,7 +47,7 @@ class EnumTypeTest extends TestCase
         $type = Type::getType(EnumType::TYPE_NAME);
         $this->assertEquals(EnumType::TYPE_NAME, $type->getName());
 
-        $platform = Mockery::mock(AbstractPlatform::class);
+        $platform   = Mockery::mock(AbstractPlatform::class);
         $quoteValue = function (string $value): string {
             return "'$value'";
         };

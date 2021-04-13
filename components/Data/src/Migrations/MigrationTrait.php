@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Data\Migrations;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,17 +17,24 @@ namespace Limoncello\Data\Migrations;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Limoncello\Data\Migrations;
+
 use Closure;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Limoncello\Contracts\Data\MigrationInterface;
 use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
 use Limoncello\Contracts\Data\RelationshipTypes;
 use Limoncello\Contracts\Data\TimestampFields;
+use Limoncello\Contracts\Data\UuidFields;
 use Limoncello\Data\Contracts\MigrationContextInterface;
+use Limoncello\Doctrine\Types\UuidType;
 use Psr\Container\ContainerInterface;
 use function array_key_exists;
 use function assert;
@@ -175,10 +181,10 @@ trait MigrationTrait
         $this->enumerations[$name] = $values;
 
         $connection = $this->getConnection();
-        if ($connection->getDriver()->getName() === 'pdo_pgsql') {
+        if ($connection->getDriver() === 'pdo_pgsql') {
             $valueList = implode("', '", $values);
             $sql       = "CREATE TYPE $name AS ENUM ('$valueList');";
-            $connection->exec($sql);
+            $connection->executeStatement($sql);
         }
     }
 
@@ -194,10 +200,10 @@ trait MigrationTrait
         unset($this->enumerations[$name]);
 
         $connection = $this->getConnection();
-        if ($connection->getDriver()->getName() === 'pdo_pgsql') {
+        if ($connection->getDriver() === 'pdo_pgsql') {
             $name = $connection->quoteIdentifier($name);
             $sql  = "DROP TYPE IF EXISTS $name;";
-            $connection->exec($sql);
+            $connection->executeStatement($sql);
         }
     }
 
@@ -214,7 +220,7 @@ trait MigrationTrait
      */
     protected function useEnum(string $columnName, string $enumName, bool $notNullable = true): Closure
     {
-        if ($this->getConnection()->getDriver()->getName() === 'pdo_pgsql') {
+        if ($this->getConnection()->getDriver() === 'pdo_pgsql') {
             return function (Table $table) use ($columnName, $enumName): void {
                 $typeName = RawNameType::TYPE_NAME;
                 Type::hasType($typeName) === true ?: Type::addType($typeName, RawNameType::class);
@@ -243,7 +249,7 @@ trait MigrationTrait
     protected function primaryInt(string $name): Closure
     {
         return function (Table $table) use ($name) {
-            $table->addColumn($name, Type::INTEGER)->setAutoincrement(true)->setUnsigned(true)->setNotnull(true);
+            $table->addColumn($name, Types::INTEGER)->setAutoincrement(true)->setUnsigned(true)->setNotnull(true);
             $table->setPrimaryKey([$name]);
         };
     }
@@ -257,7 +263,7 @@ trait MigrationTrait
     {
         return function (Table $table, MigrationContextInterface $context) use ($name) {
             $length = $context->getModelSchemas()->getAttributeLength($context->getModelClass(), $name);
-            $table->addColumn($name, Type::STRING)->setLength($length)->setNotnull(true);
+            $table->addColumn($name, Types::STRING)->setLength($length)->setNotnull(true);
             $table->setPrimaryKey([$name]);
         };
     }
@@ -271,7 +277,7 @@ trait MigrationTrait
     protected function int(string $name, int $default = null): Closure
     {
         return function (Table $table) use ($name, $default) {
-            $column = $table->addColumn($name, Type::INTEGER)->setUnsigned(false)->setNotnull(true);
+            $column = $table->addColumn($name, Types::INTEGER)->setUnsigned(false)->setNotnull(true);
             $default === null ?: $column->setDefault($default);
         };
     }
@@ -285,7 +291,7 @@ trait MigrationTrait
     protected function nullableInt(string $name, int $default = null): Closure
     {
         return function (Table $table) use ($name, $default) {
-            $table->addColumn($name, Type::INTEGER)->setUnsigned(false)->setNotnull(false)->setDefault($default);
+            $table->addColumn($name, Types::INTEGER)->setUnsigned(false)->setNotnull(false)->setDefault($default);
         };
     }
 
@@ -312,66 +318,92 @@ trait MigrationTrait
     }
 
     /**
-     * @param string $name
+     * @param string     $name
+     *
+     * @param float|null $default
      *
      * @return Closure
      */
-    protected function float(string $name): Closure
+    protected function float(string $name, float $default = null): Closure
     {
         // precision and scale both seems to be ignored in Doctrine so not much sense to have them as inputs
 
-        return function (Table $table) use ($name) {
-            $table->addColumn($name, Type::FLOAT)->setNotnull(true);
+        return function (Table $table) use ($name, $default) {
+            $column = $table->addColumn($name, Types::FLOAT)->setUnsigned(false)->setNotnull(true);
+            $default === null ?: $column->setDefault($default);
         };
     }
 
     /**
-     * @param string $name
+     * @param string     $name
+     * @param float|null $default
      *
      * @return Closure
      */
-    protected function string(string $name): Closure
+    protected function nullableFloat(string $name, float $default = null): Closure
     {
-        return function (Table $table, MigrationContextInterface $context) use ($name) {
+        return function (Table $table) use ($name, $default) {
+            $table->addColumn($name, Types::FLOAT)->setUnsigned(false)->setNotnull(false)->setDefault($default);
+        };
+    }
+
+    /**
+     * @param string      $name
+     *
+     * @param string|null $default
+     *
+     * @return Closure
+     */
+    protected function string(string $name, string $default = null): Closure
+    {
+        return function (Table $table, MigrationContextInterface $context) use ($name, $default) {
             $length = $context->getModelSchemas()->getAttributeLength($context->getModelClass(), $name);
-            $table->addColumn($name, Type::STRING)->setLength($length)->setNotnull(true);
+            $column = $table->addColumn($name, Types::STRING)->setLength($length)->setNotnull(true);
+            $default === null ?: $column->setDefault($default);
         };
     }
 
     /**
-     * @param string $name
+     * @param string      $name
+     *
+     * @param string|null $default
      *
      * @return Closure
      */
-    protected function nullableString(string $name): Closure
+    protected function nullableString(string $name, string $default = null): Closure
     {
-        return function (Table $table, MigrationContextInterface $context) use ($name) {
+        return function (Table $table, MigrationContextInterface $context) use ($name, $default) {
             $length = $context->getModelSchemas()->getAttributeLength($context->getModelClass(), $name);
-            $table->addColumn($name, Type::STRING)->setLength($length)->setNotnull(false);
+            $table->addColumn($name, Types::STRING)->setLength($length)->setNotnull(false)->setDefault($default);
         };
     }
 
     /**
-     * @param string $name
+     * @param string      $name
+     *
+     * @param string|null $default
      *
      * @return Closure
      */
-    protected function text(string $name): Closure
+    protected function text(string $name, string $default = null): Closure
     {
-        return function (Table $table) use ($name) {
-            $table->addColumn($name, Type::TEXT)->setNotnull(true);
+        return function (Table $table) use ($name, $default) {
+            $column = $table->addColumn($name, Types::TEXT)->setNotnull(true);
+            $default === null ?: $column->setDefault($default);
         };
     }
 
     /**
-     * @param string $name
+     * @param string      $name
+     *
+     * @param string|null $default
      *
      * @return Closure
      */
-    protected function nullableText(string $name): Closure
+    protected function nullableText(string $name, string $default = null): Closure
     {
-        return function (Table $table) use ($name) {
-            $table->addColumn($name, Type::TEXT)->setNotnull(false);
+        return function (Table $table) use ($name, $default) {
+            $table->addColumn($name, Types::TEXT)->setNotnull(false)->setDefault($default);
         };
     }
 
@@ -384,10 +416,21 @@ trait MigrationTrait
     protected function bool(string $name, bool $default = null): Closure
     {
         return function (Table $table) use ($name, $default) {
-            $column = $table->addColumn($name, Type::BOOLEAN)->setNotnull(true);
-            if ($default !== null) {
-                $column->setDefault($default);
-            }
+            $column = $table->addColumn($name, Types::BOOLEAN)->setNotnull(true);
+            $default === null ?: $column->setDefault($default);
+        };
+    }
+
+    /**
+     * @param string    $name
+     * @param bool|null $default
+     *
+     * @return Closure
+     */
+    protected function nullableBool(string $name, bool $default = null): Closure
+    {
+        return function (Table $table) use ($name, $default) {
+            $table->addColumn($name, Types::BOOLEAN)->setNotnull(false)->setDefault($default);
         };
     }
 
@@ -399,7 +442,19 @@ trait MigrationTrait
     protected function binary(string $name): Closure
     {
         return function (Table $table) use ($name) {
-            $table->addColumn($name, Type::BINARY)->setNotnull(true);
+            $table->addColumn($name, Types::BINARY)->setNotnull(true);
+        };
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Closure
+     */
+    protected function nullableBinary(string $name): Closure
+    {
+        return function (Table $table) use ($name) {
+            $table->addColumn($name, Types::BINARY)->setNotnull(false);
         };
     }
 
@@ -458,7 +513,7 @@ trait MigrationTrait
             }
 
             foreach ($datesToAdd as $column => $isNullable) {
-                $table->addColumn($column, Type::DATETIME)->setNotnull($isNullable);
+                $table->addColumn($column, Types::DATETIME_IMMUTABLE)->setNotnull($isNullable);
             }
         };
     }
@@ -471,7 +526,7 @@ trait MigrationTrait
     protected function datetime(string $name): Closure
     {
         return function (Table $table) use ($name) {
-            $table->addColumn($name, Type::DATETIME)->setNotnull(true);
+            $table->addColumn($name, Types::DATETIME_IMMUTABLE)->setNotnull(true);
         };
     }
 
@@ -483,7 +538,7 @@ trait MigrationTrait
     protected function nullableDatetime(string $name): Closure
     {
         return function (Table $table) use ($name) {
-            $table->addColumn($name, Type::DATETIME)->setNotnull(false);
+            $table->addColumn($name, Types::DATETIME_IMMUTABLE)->setNotnull(false);
         };
     }
 
@@ -495,7 +550,7 @@ trait MigrationTrait
     protected function date(string $name): Closure
     {
         return function (Table $table) use ($name) {
-            $table->addColumn($name, Type::DATE)->setNotnull(true);
+            $table->addColumn($name, Types::DATE_IMMUTABLE)->setNotnull(true);
         };
     }
 
@@ -507,7 +562,108 @@ trait MigrationTrait
     protected function nullableDate(string $name): Closure
     {
         return function (Table $table) use ($name) {
-            $table->addColumn($name, Type::DATE)->setNotnull(false);
+            $table->addColumn($name, Types::DATE_IMMUTABLE)->setNotnull(false);
+        };
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Closure
+     */
+    protected function time(string $name): Closure
+    {
+        return function (Table $table) use ($name) {
+            $table->addColumn($name, Types::TIME_IMMUTABLE)->setNotnull(true);
+        };
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Closure
+     */
+    protected function nullableTime(string $name): Closure
+    {
+        return function (Table $table) use ($name) {
+            $table->addColumn($name, Types::TIME_IMMUTABLE)->setNotnull(false);
+        };
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Closure
+     */
+    protected function json(string $name): Closure
+    {
+        return function (Table $table) use ($name) {
+            $table->addColumn($name, Types::JSON)->setNotnull(true);
+        };
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Closure
+     */
+    protected function nullableJson(string $name): Closure
+    {
+        return function (Table $table) use ($name) {
+            $table->addColumn($name, Types::JSON)->setNotnull(false);
+        };
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Closure
+     */
+    protected function primaryUuid(string $name): Closure
+    {
+        return function (Table $table) use ($name) {
+            $table->addColumn($name, UuidType::NAME)->setNotnull(true);
+            $table->setPrimaryKey([$name]);
+        };
+    }
+
+    /**
+     * @return Closure
+     */
+    protected function defaultUuid(): Closure
+    {
+        return function (Table $table, MigrationContextInterface $context) {
+            $modelClass = $context->getModelClass();
+
+            $uuid = UuidFields::FIELD_UUID;
+
+            if ($this->getModelSchemas()->hasAttributeType($modelClass, $uuid) === true) {
+                $table->addColumn($uuid, UuidType::NAME)->setNotnull(true);
+            }
+        };
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Closure
+     */
+    protected function uuid(string $name): Closure
+    {
+        return function (Table $table) use ($name) {
+            $table->addColumn($name, UuidType::NAME)->setNotnull(true);
+        };
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Closure
+     */
+    protected function nullableUuid(string $name): Closure
+    {
+        return function (Table $table) use ($name) {
+            $table->addColumn($name, UuidType::NAME)->setNotnull(false);
         };
     }
 
@@ -548,7 +704,8 @@ trait MigrationTrait
         string $column,
         string $referredClass,
         string $onDeleteRestriction = RelationshipRestrictions::RESTRICT
-    ): Closure {
+    ): Closure
+    {
         return function (
             Table $table,
             MigrationContextInterface $context
@@ -560,7 +717,7 @@ trait MigrationTrait
             $tableName    = $this->getTableNameForClass($referredClass);
             $pkName       = $this->getModelSchemas()->getPrimaryKey($referredClass);
             $columnType   = $this->getModelSchemas()->getAttributeType($context->getModelClass(), $column);
-            $columnLength = $columnType === Type::STRING ?
+            $columnLength = $columnType === Types::STRING ?
                 $this->getModelSchemas()->getAttributeLength($context->getModelClass(), $column) : null;
 
             $closure = $this->foreignColumn(
@@ -589,7 +746,8 @@ trait MigrationTrait
         string $column,
         string $referredClass,
         string $onDeleteRestriction = RelationshipRestrictions::RESTRICT
-    ): Closure {
+    ): Closure
+    {
         return function (
             Table $table,
             MigrationContextInterface $context
@@ -601,7 +759,7 @@ trait MigrationTrait
             $tableName    = $this->getTableNameForClass($referredClass);
             $pkName       = $this->getModelSchemas()->getPrimaryKey($referredClass);
             $columnType   = $this->getModelSchemas()->getAttributeType($context->getModelClass(), $column);
-            $columnLength = $columnType === Type::STRING ?
+            $columnLength = $columnType === Types::STRING ?
                 $this->getModelSchemas()->getAttributeLength($context->getModelClass(), $column) : null;
 
             $closure = $this
@@ -630,7 +788,8 @@ trait MigrationTrait
         string $type,
         ?int $length = null,
         string $onDeleteRestriction = RelationshipRestrictions::RESTRICT
-    ): Closure {
+    ): Closure
+    {
         return $this->foreignColumnImpl(
             $localKey,
             $foreignTable,
@@ -661,7 +820,8 @@ trait MigrationTrait
         string $type,
         ?int $length = null,
         string $onDeleteRestriction = RelationshipRestrictions::RESTRICT
-    ): Closure {
+    ): Closure
+    {
         return $this->foreignColumnImpl(
             $localKey,
             $foreignTable,
@@ -684,7 +844,8 @@ trait MigrationTrait
     protected function nullableRelationship(
         string $name,
         string $onDeleteRestriction = RelationshipRestrictions::RESTRICT
-    ): Closure {
+    ): Closure
+    {
         return $this->relationshipImpl($name, false, $onDeleteRestriction);
     }
 
@@ -699,7 +860,8 @@ trait MigrationTrait
     protected function relationship(
         string $name,
         string $onDeleteRestriction = RelationshipRestrictions::RESTRICT
-    ): Closure {
+    ): Closure
+    {
         return $this->relationshipImpl($name, true, $onDeleteRestriction);
     }
 
@@ -770,7 +932,7 @@ trait MigrationTrait
     private function unsignedIntImpl(string $name, bool $notNullable, $default = null): Closure
     {
         return function (Table $table) use ($name, $notNullable, $default) {
-            $column = $table->addColumn($name, Type::INTEGER)->setUnsigned(true)->setNotnull($notNullable);
+            $column = $table->addColumn($name, Types::INTEGER)->setUnsigned(true)->setNotnull($notNullable);
             $default === null ?: $column->setDefault($default);
         };
     }
@@ -794,7 +956,8 @@ trait MigrationTrait
         ?int $length,
         bool $notNullable,
         string $onDeleteRestriction
-    ): Closure {
+    ): Closure
+    {
         return function (Table $table) use (
             $localKey,
             $foreignTable,
@@ -845,7 +1008,7 @@ trait MigrationTrait
 
             $localKey     = $this->getModelSchemas()->getForeignKey($modelClass, $name);
             $columnType   = $this->getModelSchemas()->getAttributeType($modelClass, $localKey);
-            $columnLength = $columnType === Type::STRING ?
+            $columnLength = $columnType === Types::STRING ?
                 $this->getModelSchemas()->getAttributeLength($modelClass, $localKey) : null;
 
             $otherModelClass = $this->getModelSchemas()->getReverseModelClass($modelClass, $name);

@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Data\Seeds;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +17,21 @@ namespace Limoncello\Data\Seeds;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Limoncello\Data\Seeds;
+
 use Closure;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Types\Type;
 use Exception;
 use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
 use Limoncello\Contracts\Data\SeedInterface;
+use Limoncello\Doctrine\Traits\UuidTypeTrait;
 use PDO;
 use Psr\Container\ContainerInterface;
 use function array_key_exists;
@@ -38,6 +42,8 @@ use function assert;
  */
 trait SeedTrait
 {
+    use UuidTypeTrait;
+
     /**
      * @var ContainerInterface
      */
@@ -110,6 +116,7 @@ trait SeedTrait
      * @param null|int $limit
      *
      * @return array
+     * @throws DBALException
      */
     protected function readTableData(string $tableName, int $limit = null): array
     {
@@ -122,7 +129,7 @@ trait SeedTrait
 
         $limit === null ?: $builder->setMaxResults($limit);
 
-        $result = $builder->execute()->fetchAll(PDO::FETCH_ASSOC);
+        $result = $builder->execute()->fetchAllAssociative();
 
         return $result;
     }
