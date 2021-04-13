@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Crypt;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Tests\Crypt;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Limoncello\Tests\Crypt;
 
 use Exception;
 use Limoncello\Contracts\Application\ContainerConfiguratorInterface;
@@ -55,7 +58,7 @@ class PackageTest extends TestCase
         $this->addAsymmetricCryptSettingsProvider($container);
 
         /** @var ContainerConfiguratorInterface $configuratorClass */
-        list ($configuratorClass) = AsymmetricPrivateEncryptPublicDecryptProvider::getContainerConfigurators();
+        [$configuratorClass] = AsymmetricPrivateEncryptPublicDecryptProvider::getContainerConfigurators();
         $configuratorClass::configureContainer($container);
 
         $this->assertNotNull($container->get(EncryptInterface::class));
@@ -64,17 +67,17 @@ class PackageTest extends TestCase
 
     /**
      * Test provider.
-     *
-     * @expectedException \Limoncello\Crypt\Exceptions\CryptConfigurationException
      */
     public function testAsymmetricPrivateEncryptPublicDecrypt2(): void
     {
+        $this->expectException(\Limoncello\Crypt\Exceptions\CryptConfigurationException::class);
+
         $container = new TestContainer();
 
         $this->addInvalidAsymmetricCryptSettingsProvider($container);
 
         /** @var ContainerConfiguratorInterface $configuratorClass */
-        list ($configuratorClass) = AsymmetricPrivateEncryptPublicDecryptProvider::getContainerConfigurators();
+        [$configuratorClass] = AsymmetricPrivateEncryptPublicDecryptProvider::getContainerConfigurators();
         $configuratorClass::configureContainer($container);
 
         $container->get(EncryptInterface::class);
@@ -82,17 +85,17 @@ class PackageTest extends TestCase
 
     /**
      * Test provider.
-     *
-     * @expectedException \Limoncello\Crypt\Exceptions\CryptConfigurationException
      */
     public function testAsymmetricPrivateEncryptPublicDecrypt3(): void
     {
+        $this->expectException(\Limoncello\Crypt\Exceptions\CryptConfigurationException::class);
+
         $container = new TestContainer();
 
         $this->addInvalidAsymmetricCryptSettingsProvider($container);
 
         /** @var ContainerConfiguratorInterface $configuratorClass */
-        list ($configuratorClass) = AsymmetricPrivateEncryptPublicDecryptProvider::getContainerConfigurators();
+        [$configuratorClass] = AsymmetricPrivateEncryptPublicDecryptProvider::getContainerConfigurators();
         $configuratorClass::configureContainer($container);
 
         $container->get(DecryptInterface::class);
@@ -110,7 +113,7 @@ class PackageTest extends TestCase
         $this->addAsymmetricCryptSettingsProvider($container);
 
         /** @var ContainerConfiguratorInterface $configuratorClass */
-        list ($configuratorClass) = AsymmetricPublicEncryptPrivateDecryptProvider::getContainerConfigurators();
+        [$configuratorClass] = AsymmetricPublicEncryptPrivateDecryptProvider::getContainerConfigurators();
         $configuratorClass::configureContainer($container);
 
         $this->assertNotNull($container->get(EncryptInterface::class));
@@ -119,17 +122,17 @@ class PackageTest extends TestCase
 
     /**
      * Test provider.
-     *
-     * @expectedException \Limoncello\Crypt\Exceptions\CryptConfigurationException
      */
     public function testPublicEncryptPrivateDecrypt2(): void
     {
+        $this->expectException(\Limoncello\Crypt\Exceptions\CryptConfigurationException::class);
+
         $container = new TestContainer();
 
         $this->addInvalidAsymmetricCryptSettingsProvider($container);
 
         /** @var ContainerConfiguratorInterface $configuratorClass */
-        list ($configuratorClass) = AsymmetricPublicEncryptPrivateDecryptProvider::getContainerConfigurators();
+        [$configuratorClass] = AsymmetricPublicEncryptPrivateDecryptProvider::getContainerConfigurators();
         $configuratorClass::configureContainer($container);
 
         $container->get(EncryptInterface::class);
@@ -137,17 +140,17 @@ class PackageTest extends TestCase
 
     /**
      * Test provider.
-     *
-     * @expectedException \Limoncello\Crypt\Exceptions\CryptConfigurationException
      */
     public function testPublicEncryptPrivateDecrypt3(): void
     {
+        $this->expectException(\Limoncello\Crypt\Exceptions\CryptConfigurationException::class);
+
         $container = new TestContainer();
 
         $this->addInvalidAsymmetricCryptSettingsProvider($container);
 
         /** @var ContainerConfiguratorInterface $configuratorClass */
-        list ($configuratorClass) = AsymmetricPublicEncryptPrivateDecryptProvider::getContainerConfigurators();
+        [$configuratorClass] = AsymmetricPublicEncryptPrivateDecryptProvider::getContainerConfigurators();
         $configuratorClass::configureContainer($container);
 
         $container->get(DecryptInterface::class);
@@ -162,8 +165,7 @@ class PackageTest extends TestCase
     {
         $container = new TestContainer();
 
-        $settings  = new class extends SymmetricCryptSettings
-        {
+        $settings  = new class extends SymmetricCryptSettings {
             /**
              * @inheritdoc
              */
@@ -181,7 +183,7 @@ class PackageTest extends TestCase
         $this->addSettings($container, SymmetricCryptSettings::class, $settings->get($appConfig));
 
         /** @var ContainerConfiguratorInterface $configuratorClass */
-        list ($configuratorClass) = SymmetricCryptProvider::getContainerConfigurators();
+        [$configuratorClass] = SymmetricCryptProvider::getContainerConfigurators();
         $configuratorClass::configureContainer($container);
 
         $this->assertNotNull($container->get(EncryptInterface::class));
@@ -198,12 +200,12 @@ class PackageTest extends TestCase
         $container = new TestContainer();
 
         /** @var HasherSettings $settings */
-        list($settings) = HasherProvider::getSettings();
+        [$settings] = HasherProvider::getSettings();
         $appConfig = [];
         $this->addSettings($container, HasherSettings::class, $settings->get($appConfig));
 
         /** @var ContainerConfiguratorInterface $configuratorClass */
-        list ($configuratorClass) = HasherProvider::getContainerConfigurators();
+        [$configuratorClass] = HasherProvider::getContainerConfigurators();
         $configuratorClass::configureContainer($container);
 
         $this->assertNotNull($container->get(HasherInterface::class));
@@ -243,8 +245,7 @@ class PackageTest extends TestCase
      */
     private function getAsymmetricSettings(string $publicValue, string $privateValue): SettingsInterface
     {
-        return new class ($publicValue, $privateValue) extends AsymmetricCryptSettings
-        {
+        return new class ($publicValue, $privateValue) extends AsymmetricCryptSettings {
             /**
              * @var string
              */

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Crypt;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Tests\Crypt;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Limoncello\Tests\Crypt;
 
 use Exception;
 use Limoncello\Crypt\Exceptions\CryptException;
@@ -39,12 +42,12 @@ class SymmetricCryptTest extends TestCase
     {
         $input = str_repeat('Hello world' . PHP_EOL, 1000);
 
-        $crypt = new SymmetricCrypt('aes128', 'secret');
+        $crypt     = new SymmetricCrypt('aes128', 'secret');
         $encrypted = $crypt->withoutZeroPadding()->disableAuthentication()->encrypt($input);
         $this->assertNotEmpty($encrypted);
         $this->assertNotEquals($input, $encrypted);
 
-        $crypt = new SymmetricCrypt('aes128', 'secret');
+        $crypt     = new SymmetricCrypt('aes128', 'secret');
         $decrypted = $crypt->decrypt($encrypted);
         $this->assertNotEmpty($decrypted);
         $this->assertEquals($input, $decrypted);
@@ -59,7 +62,7 @@ class SymmetricCryptTest extends TestCase
     {
         $input = str_repeat('Hello world' . PHP_EOL, 1000);
 
-        $crypt = new SymmetricCrypt('aes-256-gcm', 'secret');
+        $crypt     = new SymmetricCrypt('aes-256-gcm', 'secret');
         $encrypted = $crypt
             ->withoutZeroPadding()
             ->enableAuthentication()
@@ -69,7 +72,7 @@ class SymmetricCryptTest extends TestCase
         $this->assertNotEmpty($encrypted);
         $this->assertNotEquals($input, $encrypted);
 
-        $crypt = new SymmetricCrypt('aes-256-gcm', 'secret');
+        $crypt     = new SymmetricCrypt('aes-256-gcm', 'secret');
         $decrypted = $crypt
             ->withoutZeroPadding()
             ->enableAuthentication()
@@ -120,11 +123,11 @@ class SymmetricCryptTest extends TestCase
 
     /**
      * Test invalid input on decrypt.
-     *
-     * @expectedException \Limoncello\Crypt\Exceptions\CryptException
      */
     public function testInvalidInputOnDecrypt1(): void
     {
+        $this->expectException(\Limoncello\Crypt\Exceptions\CryptException::class);
+
         $encrypted = 'too short';
 
         $crypt = new SymmetricCrypt('aes128', 'secret');
@@ -133,11 +136,11 @@ class SymmetricCryptTest extends TestCase
 
     /**
      * Test invalid input on decrypt.
-     *
-     * @expectedException \Limoncello\Crypt\Exceptions\CryptException
      */
     public function testInvalidInputOnDecrypt2(): void
     {
+        $this->expectException(\Limoncello\Crypt\Exceptions\CryptException::class);
+
         // resembles IV but not enough characters for tag
         $encrypted = '1234567890123456_no_tag';
 
@@ -147,11 +150,11 @@ class SymmetricCryptTest extends TestCase
 
     /**
      * Test invalid input on decrypt.
-     *
-     * @expectedException \Limoncello\Crypt\Exceptions\CryptException
      */
     public function testInvalidInputOnDecrypt3(): void
     {
+        $this->expectException(\Limoncello\Crypt\Exceptions\CryptException::class);
+
         // input resembles IV (16 symbols) but no encrypted data
         $encrypted = '1234567890123456';
 

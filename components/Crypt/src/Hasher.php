@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Crypt;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Crypt;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Limoncello\Crypt;
 
 use Limoncello\Crypt\Contracts\HasherInterface;
 use function assert;
@@ -39,10 +42,10 @@ class Hasher implements HasherInterface
     private $options;
 
     /**
-     * @param int $algorithm
-     * @param int $cost
+     * @param string $algorithm
+     * @param int    $cost
      */
-    public function __construct(int $algorithm = PASSWORD_DEFAULT, int $cost = 10)
+    public function __construct(string $algorithm = PASSWORD_DEFAULT, int $cost = 10)
     {
         assert($cost > 0);
 
