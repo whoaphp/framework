@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Data\Models;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +17,11 @@ namespace Limoncello\Tests\Flute\Data\Models;
  * limitations under the License.
  */
 
-use Doctrine\DBAL\Types\Type;
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Data\Models;
+
+use Doctrine\DBAL\Types\Types;
 use Limoncello\Tests\Flute\Data\Types\SystemDateTimeType;
 
 /**
@@ -44,9 +47,9 @@ class CommentEmotion extends Model
     public static function getAttributeTypes(): array
     {
         return [
-            self::FIELD_ID         => Type::INTEGER,
-            self::FIELD_ID_COMMENT => Type::INTEGER,
-            self::FIELD_ID_EMOTION => Type::INTEGER,
+            self::FIELD_ID         => Types::INTEGER,
+            self::FIELD_ID_COMMENT => Types::INTEGER,
+            self::FIELD_ID_EMOTION => Types::INTEGER,
             self::FIELD_CREATED_AT => SystemDateTimeType::NAME,
             self::FIELD_UPDATED_AT => SystemDateTimeType::NAME,
         ];

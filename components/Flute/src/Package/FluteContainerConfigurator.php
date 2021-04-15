@@ -1,8 +1,27 @@
-<?php declare (strict_types = 1);
+<?php
+
+/**
+ * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+declare (strict_types=1);
 
 namespace Limoncello\Flute\Package;
 
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Types\Type;
 use Limoncello\Contracts\Application\ApplicationConfigurationInterface as A;
 use Limoncello\Contracts\Application\CacheSettingsProviderInterface;
@@ -11,6 +30,9 @@ use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInte
 use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
 use Limoncello\Contracts\Exceptions\ThrowableHandlerInterface;
 use Limoncello\Contracts\Settings\SettingsProviderInterface;
+use Limoncello\Doctrine\Types\DateTimeType as LimoncelloDateTimeType;
+use Limoncello\Doctrine\Types\DateType as LimoncelloDateType;
+use Limoncello\Doctrine\Types\UuidType as LimoncelloUuidType;
 use Limoncello\Flute\Api\BasicRelationshipPaginationStrategy;
 use Limoncello\Flute\Contracts\Api\RelationshipPaginationStrategyInterface;
 use Limoncello\Flute\Contracts\Encoder\EncoderInterface;
@@ -22,8 +44,6 @@ use Limoncello\Flute\Contracts\Validation\JsonApiParserFactoryInterface;
 use Limoncello\Flute\Factory;
 use Limoncello\Flute\Http\Query\ParametersMapper;
 use Limoncello\Flute\Http\ThrowableHandlers\FluteThrowableHandler;
-use Limoncello\Flute\Types\DateTimeType;
-use Limoncello\Flute\Types\DateType;
 use Limoncello\Flute\Validation\Form\Execution\FormValidatorFactory;
 use Limoncello\Flute\Validation\JsonApi\Execution\JsonApiParserFactory;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
@@ -105,8 +125,11 @@ class FluteContainerConfigurator implements ContainerConfiguratorInterface
         };
 
         // register date/date time types
-        Type::hasType(DateTimeType::NAME) === true ?: Type::addType(DateTimeType::NAME, DateTimeType::class);
-        Type::hasType(DateType::NAME) === true ?: Type::addType(DateType::NAME, DateType::class);
+        Type::hasType(LimoncelloDateTimeType::NAME) === true ?: Type::addType(LimoncelloDateTimeType::NAME, LimoncelloDateTimeType::class);
+        Type::hasType(LimoncelloDateType::NAME) === true ?: Type::addType(LimoncelloDateType::NAME, LimoncelloDateType::class);
+
+        // register UUID type
+        Type::hasType(LimoncelloUuidType::NAME) === true ?: Type::addType(LimoncelloUuidType::NAME, LimoncelloUuidType::class);
     }
 
     /**

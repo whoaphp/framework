@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Data\Models;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,12 @@ namespace Limoncello\Tests\Flute\Data\Models;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Data\Models;
+
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Limoncello\Tests\Flute\Data\Types\SystemDateTimeType;
 
 /**
@@ -69,12 +72,12 @@ class PostExtended extends Model
     public static function getAttributeTypes(): array
     {
         return [
-            self::FIELD_ID         => Type::INTEGER,
-            self::FIELD_ID_BOARD   => Type::INTEGER,
-            self::FIELD_ID_USER    => Type::INTEGER,
-            self::FIELD_ID_EDITOR  => Type::INTEGER,
-            self::FIELD_TITLE      => Type::STRING,
-            self::FIELD_TEXT       => Type::TEXT,
+            self::FIELD_ID         => Types::INTEGER,
+            self::FIELD_ID_BOARD   => Types::INTEGER,
+            self::FIELD_ID_USER    => Types::INTEGER,
+            self::FIELD_ID_EDITOR  => Types::INTEGER,
+            self::FIELD_TITLE      => Types::STRING,
+            self::FIELD_TEXT       => Types::TEXT,
             self::FIELD_CREATED_AT => SystemDateTimeType::NAME,
             self::FIELD_UPDATED_AT => SystemDateTimeType::NAME,
             self::FIELD_DELETED_AT => SystemDateTimeType::NAME,
@@ -106,15 +109,15 @@ class PostExtended extends Model
     {
         return [
 
-            function (string $tableAlias, AbstractPlatform $platform): string {
-                $usersTable = User::TABLE_NAME;
-                $userId     = User::FIELD_ID;
-                $userName   = User::FIELD_FIRST_NAME;
-                $authorId   = $platform->quoteSingleIdentifier($tableAlias) . '.' .
-                    $platform->quoteSingleIdentifier(self::FIELD_ID_USER);
+                function (string $tableAlias, AbstractPlatform $platform): string {
+                    $usersTable = User::TABLE_NAME;
+                    $userId     = User::FIELD_ID;
+                    $userName   = User::FIELD_FIRST_NAME;
+                    $authorId   = $platform->quoteSingleIdentifier($tableAlias) . '.' .
+                        $platform->quoteSingleIdentifier(self::FIELD_ID_USER);
 
-                return "(SELECT $userName FROM $usersTable WHERE $userId = $authorId) AS user_name";
-            },
+                    return "(SELECT $userName FROM $usersTable WHERE $userId = $authorId) AS user_name";
+                },
 
             ] + parent::getRawAttributes();
     }

@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Validation;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,12 @@ namespace Limoncello\Tests\Flute\Validation;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Validation;
+
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Exception;
 use Limoncello\Container\Container;
 use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
@@ -65,11 +68,11 @@ class FormValidatorTest extends TestCase
      * @return void
      *
      * @throws Exception
-     *
-     * @expectedException \Limoncello\Flute\Exceptions\InvalidArgumentException
      */
     public function testInvalidInput(): void
     {
+        $this->expectException(\Limoncello\Flute\Exceptions\InvalidArgumentException::class);
+
         $this->assertNotNull($validator = $this->createValidator(CreateCommentRules::class));
 
         $validator->validate('not array');

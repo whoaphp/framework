@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Http;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,12 @@ namespace Limoncello\Tests\Flute\Http;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Http;
+
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Types\Type;
 use Exception;
 use Limoncello\Container\Container;
@@ -28,6 +31,9 @@ use Limoncello\Contracts\Application\CacheSettingsProviderInterface;
 use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
 use Limoncello\Contracts\L10n\FormatterFactoryInterface;
 use Limoncello\Contracts\Settings\SettingsProviderInterface;
+use Limoncello\Doctrine\Types\DateTimeType as LimoncelloDateTimeType;
+use Limoncello\Doctrine\Types\DateType as LimoncelloDateType;
+use Limoncello\Doctrine\Types\UuidType as LimoncelloUuidType;
 use Limoncello\Flute\Api\BasicRelationshipPaginationStrategy;
 use Limoncello\Flute\Contracts\Api\RelationshipPaginationStrategyInterface;
 use Limoncello\Flute\Contracts\Encoder\EncoderInterface;
@@ -39,8 +45,6 @@ use Limoncello\Flute\Contracts\Validation\JsonApiParserFactoryInterface;
 use Limoncello\Flute\Factory;
 use Limoncello\Flute\Http\Query\ParametersMapper;
 use Limoncello\Flute\Package\FluteSettings;
-use Limoncello\Flute\Types\DateTimeType;
-use Limoncello\Flute\Types\DateType;
 use Limoncello\Flute\Validation\Form\Execution\FormValidatorFactory;
 use Limoncello\Flute\Validation\JsonApi\Execution\JsonApiParserFactory;
 use Limoncello\Tests\Flute\Data\Api\CommentsApi;
@@ -221,7 +225,7 @@ class ControllerTest extends TestCase
         // check dynamic attribute is present in User
         $this->assertTrue(isset(
             $resource[DocumentInterface::KEYWORD_INCLUDED][0]
-                [DocumentInterface::KEYWORD_ATTRIBUTES][UserSchema::D_ATTR_FULL_NAME]
+            [DocumentInterface::KEYWORD_ATTRIBUTES][UserSchema::D_ATTR_FULL_NAME]
         ));
     }
 
@@ -430,7 +434,8 @@ class ControllerTest extends TestCase
         // manually checked it should be 4 rows selected
         $this->assertCount(3, $resources[DocumentInterface::KEYWORD_DATA]);
         // check response sorted by post.id
-        $this->assertNull($resources['data'][0]['relationships']['parent-relationship']['data']['id']);
+        // $this->assertNull($resources['data'][0]['relationships']['parent-relationship']['data']['id']);
+        $this->assertNull($resources['data'][0]['relationships']['parent-relationship']['data']);
         $this->assertCount(2, $resources['data'][0]['relationships']['children-relationship']['data']);
         $this->assertEquals(1, $resources['data'][1]['relationships']['parent-relationship']['data']['id']);
         $this->assertCount(0, $resources['data'][1]['relationships']['children-relationship']['data']);
@@ -1458,7 +1463,8 @@ EOT;
         $this->assertCount(1, $resource[DocumentInterface::KEYWORD_DATA]);
         // manually checked that only 1 comment (ID=17) of current user has post (ID=15) text with $seldomWord
         $this->assertEquals('17', $resource['data'][0]['id']);
-        $this->assertContains('15', $resource['data'][0]['relationships'][CommentSchema::REL_POST]['data']['id']);
+        // $this->assertContains('15', $resource['data'][0]['relationships'][CommentSchema::REL_POST]['data']['id']);
+        $this->assertEquals('15', $resource['data'][0]['relationships'][CommentSchema::REL_POST]['data']['id']);
     }
 
     /**
@@ -1527,13 +1533,13 @@ EOT;
         $container[Connection::class]                              = $connection = $this->initDb();
         $container[RelationshipPaginationStrategyInterface::class] = new BasicRelationshipPaginationStrategy(10);
 
-        $appConfig                                        = [
+        $appConfig = [
             ApplicationConfigurationInterface::KEY_ROUTES_FOLDER          =>
                 implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'Data', 'Http']),
             ApplicationConfigurationInterface::KEY_WEB_CONTROLLERS_FOLDER =>
                 implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'Data', 'Http']),
         ];
-        [$modelToSchemaMap]                               = $this->getSchemaMap();
+        [$modelToSchemaMap] = $this->getSchemaMap();
         $cacheSettingsProvider                            = new CacheSettingsProvider(
             $appConfig,
             [
@@ -1560,9 +1566,9 @@ EOT;
                 $urlPrefix = (string)$settings[FluteSettings::KEY_URI_PREFIX];
                 $encoder   = $factory
                     ->createEncoder($jsonSchemas)
-                ->withEncodeOptions($settings[FluteSettings::KEY_JSON_ENCODE_OPTIONS])
-                ->withEncodeDepth($settings[FluteSettings::KEY_JSON_ENCODE_DEPTH])
-                ->withUrlPrefix($urlPrefix);
+                    ->withEncodeOptions($settings[FluteSettings::KEY_JSON_ENCODE_OPTIONS])
+                    ->withEncodeDepth($settings[FluteSettings::KEY_JSON_ENCODE_DEPTH])
+                    ->withUrlPrefix($urlPrefix);
                 if (isset($settings[FluteSettings::KEY_META]) === true) {
                     $meta = $settings[FluteSettings::KEY_META];
                     $encoder->withMeta($meta);
@@ -1590,8 +1596,10 @@ EOT;
 
         // If test is run withing the whole test suite then those lines not needed, however
         // if only tests from this file are run then the lines are required.
-        Type::hasType(DateTimeType::NAME) === true ?: Type::addType(DateTimeType::NAME, DateTimeType::class);
-        Type::hasType(DateType::NAME) === true ?: Type::addType(DateType::NAME, DateType::class);
+        Type::hasType(LimoncelloDateTimeType::NAME) === true ?: Type::addType(LimoncelloDateTimeType::NAME, LimoncelloDateTimeType::class);
+        Type::hasType(LimoncelloDateType::NAME) === true ?: Type::addType(LimoncelloDateType::NAME, LimoncelloDateType::class);
+
+        Type::hasType(LimoncelloUuidType::NAME) === true ?: Type::addType(LimoncelloUuidType::NAME, LimoncelloUuidType::class);
 
         return $container;
     }

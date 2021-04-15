@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Adapters;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Tests\Flute\Adapters;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Adapters;
 
 use DateTime;
 use Doctrine\DBAL\Connection;
@@ -47,7 +50,7 @@ class ModelQueryBuilderTest extends TestCase
      *
      * @throws DBALException
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -219,7 +222,7 @@ class ModelQueryBuilderTest extends TestCase
         $builder
             ->selectModelColumns()
             ->fromModelTable()
-            ->addRelationshipFiltersAndSorts(Post::REL_COMMENTS, $filters, $sorts, ModelQueryBuilder::OR);
+            ->addRelationshipFiltersAndSorts(Post::REL_COMMENTS, $filters, $sorts, ModelQueryBuilder:: OR);
 
         $expected =
             'SELECT "posts1"."id_post", "posts1"."id_board_fk", "posts1"."id_user_fk", "posts1"."id_editor_fk", ' .
@@ -434,11 +437,11 @@ class ModelQueryBuilderTest extends TestCase
      * Test builder.
      *
      * @throws DBALException
-     *
-     * @expectedException \Limoncello\Flute\Exceptions\InvalidArgumentException
      */
     public function testReadWithInvalidParam(): void
     {
+        $this->expectException(\Limoncello\Flute\Exceptions\InvalidArgumentException::class);
+
         $builder = $this->createModelQueryBuilder(Board::class);
 
         $emptyArguments = [];

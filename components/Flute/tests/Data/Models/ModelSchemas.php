@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Data\Models;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +17,11 @@ namespace Limoncello\Tests\Flute\Data\Models;
  * limitations under the License.
  */
 
-use Doctrine\DBAL\DBALException;
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Data\Models;
+
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Types\Type;
 use InvalidArgumentException;
 use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
@@ -132,10 +135,12 @@ class ModelSchemas implements ModelSchemaInfoInterface
      */
     public function setData(array $data)
     {
-        list($this->foreignKeys, $this->belongsToMany, $this->relationshipTypes,
-            $this->reversedRelationships,$this->tableNames, $this->primaryKeys,
+        [
+            $this->foreignKeys, $this->belongsToMany, $this->relationshipTypes,
+            $this->reversedRelationships, $this->tableNames, $this->primaryKeys,
             $this->attributeTypes, $this->attributeLengths, $this->attributes, $this->rawAttributes,
-            $this->reversedClasses) = $data;
+            $this->reversedClasses
+        ] = $data;
     }
 
     /**
@@ -148,7 +153,8 @@ class ModelSchemas implements ModelSchemaInfoInterface
         array $attributeTypes,
         array $attributeLengths,
         array $rawAttributes = []
-    ): ModelSchemaInfoInterface {
+    ): ModelSchemaInfoInterface
+    {
         if (empty($class) === true) {
             throw new InvalidArgumentException('class');
         }
@@ -329,11 +335,11 @@ class ModelSchemas implements ModelSchemaInfoInterface
      */
     public function getReverseForeignKey(string $class, string $name): array
     {
-        list ($reverseClass, $reverseName) = $this->getReverseRelationship($class, $name);
+        [$reverseClass, $reverseName] = $this->getReverseRelationship($class, $name);
 
         $table = $this->getTable($reverseClass);
         // would work only if $name is hasMany relationship
-        $key   = $this->getForeignKey($reverseClass, $reverseName);
+        $key = $this->getForeignKey($reverseClass, $reverseName);
 
         return [$key, $table];
     }
@@ -377,7 +383,8 @@ class ModelSchemas implements ModelSchemaInfoInterface
         string $foreignKey,
         string $reverseClass,
         string $reverseName
-    ): ModelSchemaInfoInterface {
+    ): ModelSchemaInfoInterface
+    {
         $this->registerRelationshipType(RelationshipTypes::BELONGS_TO, $class, $name);
         $this->registerRelationshipType(RelationshipTypes::HAS_MANY, $reverseClass, $reverseName);
 
@@ -400,7 +407,8 @@ class ModelSchemas implements ModelSchemaInfoInterface
         string $reverseForeignKey,
         string $reverseClass,
         string $reverseName
-    ): ModelSchemaInfoInterface {
+    ): ModelSchemaInfoInterface
+    {
         $this->registerRelationshipType(RelationshipTypes::BELONGS_TO_MANY, $class, $name);
         $this->registerRelationshipType(RelationshipTypes::BELONGS_TO_MANY, $reverseClass, $reverseName);
 
@@ -447,7 +455,8 @@ class ModelSchemas implements ModelSchemaInfoInterface
         string $name,
         string $reverseClass,
         string $reverseName
-    ) {
+    )
+    {
         assert(
             empty($class) === false &&
             empty($name) === false &&

@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Data\Models;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +17,11 @@ namespace Limoncello\Tests\Flute\Data\Models;
  * limitations under the License.
  */
 
-use Doctrine\DBAL\Types\Type;
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Data\Models;
+
+use Doctrine\DBAL\Types\Types;
 use Limoncello\Contracts\Data\RelationshipTypes;
 use Limoncello\Tests\Flute\Data\Types\SystemDateTimeType;
 use LogicException;
@@ -82,16 +85,16 @@ class User extends Model
     public static function getAttributeTypes(): array
     {
         return [
-            self::FIELD_ID            => Type::INTEGER,
-            self::FIELD_ID_ROLE       => Type::INTEGER,
-            self::FIELD_TITLE         => Type::STRING,
-            self::FIELD_FIRST_NAME    => Type::STRING,
-            self::FIELD_LAST_NAME     => Type::STRING,
-            self::FIELD_EMAIL         => Type::STRING,
-            self::FIELD_IS_ACTIVE     => Type::BOOLEAN,
-            self::FIELD_PASSWORD_HASH => Type::STRING,
-            self::FIELD_LANGUAGE      => Type::STRING,
-            self::FIELD_API_TOKEN     => Type::STRING,
+            self::FIELD_ID            => Types::INTEGER,
+            self::FIELD_ID_ROLE       => Types::INTEGER,
+            self::FIELD_TITLE         => Types::STRING,
+            self::FIELD_FIRST_NAME    => Types::STRING,
+            self::FIELD_LAST_NAME     => Types::STRING,
+            self::FIELD_EMAIL         => Types::STRING,
+            self::FIELD_IS_ACTIVE     => Types::BOOLEAN,
+            self::FIELD_PASSWORD_HASH => Types::STRING,
+            self::FIELD_LANGUAGE      => Types::STRING,
+            self::FIELD_API_TOKEN     => Types::STRING,
             self::FIELD_CREATED_AT    => SystemDateTimeType::NAME,
             self::FIELD_UPDATED_AT    => SystemDateTimeType::NAME,
             self::FIELD_DELETED_AT    => SystemDateTimeType::NAME,

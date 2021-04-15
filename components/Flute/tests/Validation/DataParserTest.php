@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Validation;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,19 +17,24 @@ namespace Limoncello\Tests\Flute\Validation;
  * limitations under the License.
  */
 
+
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Validation;
+
 use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Exception;
 use Limoncello\Container\Container;
 use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
 use Limoncello\Contracts\L10n\FormatterFactoryInterface;
+use Limoncello\Doctrine\Json\DateTime as LimoncelloDateTime;
 use Limoncello\Flute\Contracts\Schema\JsonSchemasInterface;
 use Limoncello\Flute\Contracts\Validation\JsonApiDataParserInterface;
 use Limoncello\Flute\Factory;
 use Limoncello\Flute\L10n\Messages;
-use Limoncello\Flute\Types\DateTime;
 use Limoncello\Flute\Validation\JsonApi\DataParser;
 use Limoncello\Flute\Validation\JsonApi\Execution\JsonApiDataRulesSerializer;
 use Limoncello\Flute\Validation\JsonApi\Execution\JsonApiErrorCollection;
@@ -75,7 +79,7 @@ class DataParserTest extends TestCase
         $float     = 3.21;
         $bool      = true;
         $now       = new DateTimeImmutable();
-        $dateTime  = $now->format(DateTime::JSON_API_FORMAT);
+        $dateTime  = $now->format(LimoncelloDateTime::JSON_API_FORMAT);
         $jsonInput = <<<EOT
         {
             "data" : {
@@ -115,7 +119,7 @@ EOT;
                 CommentSchema::ATTR_INT       => v::isString(v::stringToInt()),
                 CommentSchema::ATTR_FLOAT     => v::isString(v::stringToFloat()),
                 CommentSchema::ATTR_BOOL      => v::isString(v::stringToBool()),
-                CommentSchema::ATTR_DATE_TIME => v::isString(v::stringToDateTime(DateTime::JSON_API_FORMAT)),
+                CommentSchema::ATTR_DATE_TIME => v::isString(v::stringToDateTime(LimoncelloDateTime::JSON_API_FORMAT)),
             ],
             [
                 CommentSchema::REL_USER => v::toOneRelationship(UserSchema::TYPE, v::stringToInt(v::between(0, 15))),
@@ -153,7 +157,7 @@ EOT;
              "data" : { "type" : "users", "id" : "9" }
         }
 EOT;
-        $input = json_decode($jsonInput, true);
+        $input     = json_decode($jsonInput, true);
 
         $container = $this->createContainer();
         $validator = $this->createParser(
@@ -190,7 +194,7 @@ EOT;
               ]
         }
 EOT;
-        $input = json_decode($jsonInput, true);
+        $input     = json_decode($jsonInput, true);
 
         $container = $this->createContainer();
         $validator = $this->createParser(
@@ -215,17 +219,17 @@ EOT;
 
     /**
      * Validation test.
-     *
-     * @expectedException \Neomerx\JsonApi\Exceptions\JsonApiException
      */
     public function testParseNonExistingRelationship(): void
     {
+        $this->expectException(\Neomerx\JsonApi\Exceptions\JsonApiException::class);
+
         $jsonInput = <<<EOT
         {
              "data" : { "type": "abc", "id":"123" }
         }
 EOT;
-        $input = json_decode($jsonInput, true);
+        $input     = json_decode($jsonInput, true);
 
         $container = $this->createContainer();
         $validator = $this->createParser(
@@ -242,17 +246,17 @@ EOT;
 
     /**
      * Validation test.
-     *
-     * @expectedException \Neomerx\JsonApi\Exceptions\JsonApiException
      */
     public function testCaptureInvalidToManyData(): void
     {
+        $this->expectException(\Neomerx\JsonApi\Exceptions\JsonApiException::class);
+
         $jsonInput = <<<EOT
         {
              "data" : [ { "type" : "emotions", "id" : "1" } ]
         }
 EOT;
-        $input = json_decode($jsonInput, true);
+        $input     = json_decode($jsonInput, true);
 
         $container = $this->createContainer();
         $validator = $this->createParser(
@@ -868,15 +872,14 @@ EOT;
      */
     public function testAddTestCoverToExecuteEnds(): void
     {
-        $passThroughRule = new class extends BaseRule
-        {
+        $passThroughRule = new class extends BaseRule {
             /**
              * @inheritdoc
              */
             public function toBlock(): ExecutionBlockInterface
             {
                 $startOrEndCallable = [DataParserTest::class, 'successValidationStartOrEnd'];
-                $passThrough = (new ProcedureBlock([Success::class, 'execute']))
+                $passThrough        = (new ProcedureBlock([Success::class, 'execute']))
                     ->setStartCallable($startOrEndCallable)
                     ->setProperties($this->composeStandardProperties($this->getName(), false))
                     ->setEndCallable($startOrEndCallable);
@@ -893,7 +896,7 @@ EOT;
             }
         }
 EOT;
-        $input = json_decode($jsonInput, true);
+        $input     = json_decode($jsonInput, true);
 
         $container = $this->createContainer();
         $validator = $this->createParser($container, 'some_rule_name', $passThroughRule, v::success(), [], [], []);
@@ -938,7 +941,8 @@ EOT;
         array $attributeRules,
         array $toOneRules,
         array $toManyRules
-    ): JsonApiDataParserInterface {
+    ): JsonApiDataParserInterface
+    {
         $serializedData = (new JsonApiDataRulesSerializer(new BlockSerializer()))->addDataRules(
             $rulesClass,
             $idRule,
@@ -954,7 +958,7 @@ EOT;
         try {
             /** @var FormatterFactoryInterface $formatterFactory */
             $formatterFactory = $container->get(FormatterFactoryInterface::class);
-            $parser = new DataParser(
+            $parser           = new DataParser(
                 $rulesClass,
                 JsonApiDataRulesSerializer::class,
                 $serializedData,

@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Data\Models;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +17,11 @@ namespace Limoncello\Tests\Flute\Data\Models;
  * limitations under the License.
  */
 
-use Doctrine\DBAL\Types\Type;
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Data\Models;
+
+use Doctrine\DBAL\Types\Types;
 use Limoncello\Contracts\Data\RelationshipTypes;
 use Limoncello\Tests\Flute\Data\Types\SystemDateTimeType;
 
@@ -72,14 +75,14 @@ class Comment extends Model
     public static function getAttributeTypes(): array
     {
         return [
-            self::FIELD_ID         => Type::INTEGER,
-            self::FIELD_ID_POST    => Type::INTEGER,
-            self::FIELD_ID_USER    => Type::INTEGER,
-            self::FIELD_TEXT       => Type::STRING,
-            self::FIELD_INT        => Type::INTEGER,
-            self::FIELD_FLOAT      => Type::FLOAT,
-            self::FIELD_BOOL       => Type::BOOLEAN,
-            self::FIELD_DATE_TIME  => Type::DATETIME,
+            self::FIELD_ID         => Types::INTEGER,
+            self::FIELD_ID_POST    => Types::INTEGER,
+            self::FIELD_ID_USER    => Types::INTEGER,
+            self::FIELD_TEXT       => Types::STRING,
+            self::FIELD_INT        => Types::INTEGER,
+            self::FIELD_FLOAT      => Types::FLOAT,
+            self::FIELD_BOOL       => Types::BOOLEAN,
+            self::FIELD_DATE_TIME  => Types::DATETIME_IMMUTABLE,
             self::FIELD_CREATED_AT => SystemDateTimeType::NAME,
             self::FIELD_UPDATED_AT => SystemDateTimeType::NAME,
             self::FIELD_DELETED_AT => SystemDateTimeType::NAME,
@@ -102,7 +105,7 @@ class Comment extends Model
     public static function getRelationships(): array
     {
         return [
-            RelationshipTypes::BELONGS_TO => [
+            RelationshipTypes::BELONGS_TO      => [
                 self::REL_POST => [Post::class, self::FIELD_ID_POST, Post::REL_COMMENTS],
                 self::REL_USER => [User::class, self::FIELD_ID_USER, User::REL_COMMENTS],
             ],

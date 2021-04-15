@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Http\Query;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Tests\Flute\Http\Query;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Http\Query;
 
 use Limoncello\Container\Container;
 use Limoncello\Contracts\L10n\FormatterFactoryInterface;
@@ -302,11 +305,11 @@ class QueryParserTest extends TestCase
 
     /**
      * Test query.
-     *
-     * @expectedException \Limoncello\Flute\Exceptions\InvalidQueryParametersException
      */
     public function testGetFiltersWithInvalidValues1(): void
     {
+        $this->expectException(\Limoncello\Flute\Exceptions\InvalidQueryParametersException::class);
+
         $queryParameters = [
             JsonApiQueryParserInterface::PARAM_FILTER => [
                 CommentSchema::RESOURCE_ID => 'cannot be string',
@@ -320,11 +323,11 @@ class QueryParserTest extends TestCase
 
     /**
      * Test query.
-     *
-     * @expectedException \Neomerx\JsonApi\Exceptions\JsonApiException
      */
     public function testGetFiltersWithInvalidValues2(): void
     {
+        $this->expectException(\Neomerx\JsonApi\Exceptions\JsonApiException::class);
+
         $queryParameters = [
             JsonApiQueryParserInterface::PARAM_FILTER => [
                 'UnknownField' => ['gte' => '0'],
@@ -338,11 +341,11 @@ class QueryParserTest extends TestCase
 
     /**
      * Test query.
-     *
-     * @expectedException \Limoncello\Flute\Exceptions\InvalidQueryParametersException
      */
     public function testGetFiltersWithInvalidValues3(): void
     {
+        $this->expectException(\Limoncello\Flute\Exceptions\InvalidQueryParametersException::class);
+
         $queryParameters = [
             JsonApiQueryParserInterface::PARAM_FILTER => [
                 CommentSchema::RESOURCE_ID => [
@@ -372,11 +375,11 @@ class QueryParserTest extends TestCase
 
     /**
      * Test query.
-     *
-     * @expectedException \Neomerx\JsonApi\Exceptions\JsonApiException
      */
     public function testInvalidEmptyFilter1(): void
     {
+        $this->expectException(\Neomerx\JsonApi\Exceptions\JsonApiException::class);
+
         $queryParameters = [
             JsonApiQueryParserInterface::PARAM_FILTER => '',
         ];
@@ -386,11 +389,11 @@ class QueryParserTest extends TestCase
 
     /**
      * Test query.
-     *
-     * @expectedException \Neomerx\JsonApi\Exceptions\JsonApiException
      */
     public function testInvalidEmptyFilter2(): void
     {
+        $this->expectException(\Neomerx\JsonApi\Exceptions\JsonApiException::class);
+
         $queryParameters = [
             JsonApiQueryParserInterface::PARAM_FILTER => [],
         ];
@@ -400,11 +403,11 @@ class QueryParserTest extends TestCase
 
     /**
      * Test query.
-     *
-     * @expectedException \Neomerx\JsonApi\Exceptions\JsonApiException
      */
     public function testInvalidFilterTooManyRootItems(): void
     {
+        $this->expectException(\Neomerx\JsonApi\Exceptions\JsonApiException::class);
+
         $queryParameters = [
             JsonApiQueryParserInterface::PARAM_FILTER => [
                 'or'  => [

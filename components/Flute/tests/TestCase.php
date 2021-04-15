@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +17,13 @@ namespace Limoncello\Tests\Flute;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute;
+
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Exception as DBALException;
 use Exception;
 use Generator;
 use Limoncello\Common\Reflection\ClassIsTrait;
@@ -73,7 +76,8 @@ class TestCase extends \PHPUnit\Framework\TestCase
     public static function createSchemas(
         array $modelClasses,
         $requireReverseRelationships = true
-    ): ModelSchemaInfoInterface {
+    ): ModelSchemaInfoInterface
+    {
         $registered    = [];
         $modelSchemas  = new ModelSchemas();
         $registerModel = function (string $modelClass) use ($modelSchemas, &$registered, $requireReverseRelationships) {
@@ -90,7 +94,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             $relationships = $modelClass::getRelationships();
 
             if (array_key_exists(RelationshipTypes::BELONGS_TO, $relationships) === true) {
-                foreach ($relationships[RelationshipTypes::BELONGS_TO] as $relName => list($rClass, $fKey, $rRel)) {
+                foreach ($relationships[RelationshipTypes::BELONGS_TO] as $relName => [$rClass, $fKey, $rRel]) {
                     /** @var string $rClass */
                     $modelSchemas->registerBelongsToOneRelationship($modelClass, $relName, $fKey, $rClass, $rRel);
                     $registered[(string)$modelClass][$relName] = true;
@@ -110,7 +114,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             }
 
             if (array_key_exists(RelationshipTypes::HAS_MANY, $relationships) === true) {
-                foreach ($relationships[RelationshipTypes::HAS_MANY] as $relName => list($rClass, $fKey, $rRel)) {
+                foreach ($relationships[RelationshipTypes::HAS_MANY] as $relName => [$rClass, $fKey, $rRel]) {
                     // Sanity check. Every `has_many` should be paired with `belongs_to` on the other side.
                     /** @var ModelInterface $rClass */
                     $rRelationships   = $rClass::getRelationships();
@@ -129,7 +133,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
                         continue;
                     }
                     /** @var string $rClass */
-                    list($rClass, $iTable, $fKeyPrimary, $fKeySecondary, $rRel) = $data;
+                    [$rClass, $iTable, $fKeyPrimary, $fKeySecondary, $rRel] = $data;
                     $modelSchemas->registerBelongsToManyRelationship(
                         $modelClass,
                         $relName,
@@ -153,7 +157,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * @inheritdoc
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
     }
@@ -161,7 +165,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * @inheritdoc
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         Mockery::close();
@@ -176,7 +180,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     protected function createConnection()
     {
         $connection = DriverManager::getConnection(['url' => 'sqlite:///', 'memory' => true]);
-        $this->assertNotSame(false, $connection->exec('PRAGMA foreign_keys = ON;'));
+        $this->assertNotSame(false, $connection->executeStatement('PRAGMA foreign_keys = ON;'));
 
         return $connection;
     }
@@ -319,6 +323,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     {
         return $iterable instanceof Generator ? iterator_to_array($iterable) : $iterable;
     }
+
     /**
      * @param iterable $iterable
      *

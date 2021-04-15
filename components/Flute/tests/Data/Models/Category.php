@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Data\Models;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +17,11 @@ namespace Limoncello\Tests\Flute\Data\Models;
  * limitations under the License.
  */
 
-use Doctrine\DBAL\Types\Type;
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Data\Models;
+
+use Doctrine\DBAL\Types\Types;
 use Limoncello\Contracts\Data\RelationshipTypes;
 use Limoncello\Tests\Flute\Data\Types\SystemDateTimeType;
 
@@ -54,9 +57,9 @@ class Category extends Model
     public static function getAttributeTypes(): array
     {
         return [
-            self::FIELD_ID         => Type::INTEGER,
-            self::FIELD_ID_PARENT  => Type::INTEGER,
-            self::FIELD_NAME       => Type::STRING,
+            self::FIELD_ID         => Types::INTEGER,
+            self::FIELD_ID_PARENT  => Types::INTEGER,
+            self::FIELD_NAME       => Types::STRING,
             self::FIELD_CREATED_AT => SystemDateTimeType::NAME,
             self::FIELD_UPDATED_AT => SystemDateTimeType::NAME,
             self::FIELD_DELETED_AT => SystemDateTimeType::NAME,
@@ -82,7 +85,7 @@ class Category extends Model
             RelationshipTypes::BELONGS_TO => [
                 self::REL_PARENT => [Category::class, self::FIELD_ID_PARENT, Category::REL_CHILDREN],
             ],
-            RelationshipTypes::HAS_MANY => [
+            RelationshipTypes::HAS_MANY   => [
                 self::REL_CHILDREN => [Category::class, self::FIELD_ID_PARENT, Category::REL_PARENT],
             ],
         ];

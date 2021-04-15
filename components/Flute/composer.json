@@ -161,6 +161,7 @@
         "neomerx/json-api": "^3.0.0",
         "limoncello-php/common": "dev-master",
         "limoncello-php/contracts": "dev-master",
+        "limoncello-php/doctrine": "dev-master",
         "limoncello-php/l10n": "dev-master",
         "limoncello-php/validation": "dev-master"
     },

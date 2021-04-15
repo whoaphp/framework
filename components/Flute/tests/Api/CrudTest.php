@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Api;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,12 @@ namespace Limoncello\Tests\Flute\Api;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Api;
+
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Types\Type;
 use Exception;
 use Limoncello\Container\Container;
@@ -275,11 +278,11 @@ class CrudTest extends TestCase
     /**
      * @throws Exception
      * @throws DBALException
-     *
-     * @expectedException \Doctrine\DBAL\Exception\DriverException
      */
     public function testDeleteResourceWithConstraints(): void
     {
+        $this->expectException(\Doctrine\DBAL\Exception\DriverException::class);
+
         $crud = $this->createCrud(PostsApi::class);
         $crud->remove('1');
     }
@@ -775,11 +778,11 @@ class CrudTest extends TestCase
      *
      * @throws Exception
      * @throws DBALException
-     *
-     * @expectedException \Limoncello\Flute\Exceptions\InvalidArgumentException
      */
     public function testReadRelationshipIdentitiesForBelongsToRelationship(): void
     {
+        $this->expectException(\Limoncello\Flute\Exceptions\InvalidArgumentException::class);
+
         $this->createCrud(PostsApi::class)->indexRelationshipIdentities(Post::REL_USER);
     }
 
@@ -871,11 +874,11 @@ class CrudTest extends TestCase
      * Test invalid argument.
      *
      * @throws DBALException
-     *
-     * @expectedException \Limoncello\Flute\Exceptions\InvalidArgumentException
      */
     public function testInvalidInputWithEmptyIndexList(): void
     {
+        $this->expectException(\Limoncello\Flute\Exceptions\InvalidArgumentException::class);
+
         $crud = $this->createCrud(PostsApi::class);
 
         $crud->withIndexesFilter([]);
@@ -930,7 +933,7 @@ class CrudTest extends TestCase
             ->read('1');
 
         $this->assertTrue(is_string($model->{Post::FIELD_ID_BOARD}));
-        $this->assertRegExp('/\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d.\d\d\dZ/', $model->{Post::FIELD_CREATED_AT});
+        $this->assertMatchesRegularExpression('/\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d.\d\d\dZ/', $model->{Post::FIELD_CREATED_AT});
     }
 
     /**

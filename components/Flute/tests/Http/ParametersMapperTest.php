@@ -1,4 +1,4 @@
-<?php declare (strict_types = 1);
+<?php declare (strict_types=1);
 
 namespace Limoncello\Tests\Flute\Http;
 
@@ -170,11 +170,11 @@ class ParametersMapperTest extends TestCase
      * Test query.
      *
      * @throws Exception
-     *
-     * @expectedException \Limoncello\Flute\Exceptions\InvalidQueryParametersException
      */
     public function testGetFiltersForUnknownOperation(): void
     {
+        $this->expectException(\Limoncello\Flute\Exceptions\InvalidQueryParametersException::class);
+
         $filterParameters = [
             BoardSchema::RESOURCE_ID => [
                 'non-existing-operation' => [],
@@ -196,11 +196,11 @@ class ParametersMapperTest extends TestCase
      * Test query.
      *
      * @throws Exception
-     *
-     * @expectedException \Limoncello\Flute\Exceptions\InvalidQueryParametersException
      */
     public function testGetFiltersForUnknownField(): void
     {
+        $this->expectException(\Limoncello\Flute\Exceptions\InvalidQueryParametersException::class);
+
         $filterParameters = [
             'non_existing_field' => ['equals' => ['1']],
         ];
@@ -314,11 +314,11 @@ class ParametersMapperTest extends TestCase
 
     /**
      * Test query.
-     *
-     * @expectedException \Limoncello\Flute\Exceptions\InvalidQueryParametersException
      */
     public function testIncludesWithInvalidPaths(): void
     {
+        $this->expectException(\Limoncello\Flute\Exceptions\InvalidQueryParametersException::class);
+
         $path1 = [BoardSchema::REL_POSTS . 'XXX']; // invalid path
 
         $includeParameters = [$path1];
@@ -328,10 +328,12 @@ class ParametersMapperTest extends TestCase
     }
 
     /**
-     * @expectedException \Limoncello\Flute\Exceptions\LogicException
+     * Test query.
      */
     public function testUsageWhenNoRootSchemaSet(): void
     {
+        $this->expectException(\Limoncello\Flute\Exceptions\LogicException::class);
+
         $includes = (new ParametersMapper($this->createDefaultJsonSchemas()))->getMappedIncludes();
 
         $this->deepIterableToArray($includes);

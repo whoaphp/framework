@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Data\Models;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +17,11 @@ namespace Limoncello\Tests\Flute\Data\Models;
  * limitations under the License.
  */
 
-use Doctrine\DBAL\Types\Type;
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Data\Models;
+
+use Doctrine\DBAL\Types\Types;
 
 /**
  * @package Limoncello\Tests\Flute
@@ -40,8 +43,8 @@ class StringPKModel extends Model
     public static function getAttributeTypes(): array
     {
         return [
-            self::FIELD_ID   => Type::STRING,
-            self::FIELD_NAME => Type::STRING,
+            self::FIELD_ID   => Types::STRING,
+            self::FIELD_NAME => Types::STRING,
         ];
     }
 
