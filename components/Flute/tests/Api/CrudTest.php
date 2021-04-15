@@ -50,6 +50,8 @@ use Limoncello\Tests\Flute\Data\Models\Post;
 use Limoncello\Tests\Flute\Data\Models\StringPKModel;
 use Limoncello\Tests\Flute\Data\Models\User;
 use Limoncello\Tests\Flute\Data\Types\SystemDateTimeType;
+use Limoncello\Tests\Flute\Data\Types\SystemDateType;
+use Limoncello\Tests\Flute\Data\Types\SystemUuidType;
 use Limoncello\Tests\Flute\TestCase;
 use PDO;
 
@@ -64,6 +66,21 @@ class CrudTest extends TestCase
      * @var Connection
      */
     private $connection;
+
+    /**
+     * @inheritDoc
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // If test is run withing the whole test suite then those lines not needed, however
+        // if only tests from this file are run then the lines are required.
+        Type::hasType(SystemDateTimeType::NAME) === true ?: Type::addType(SystemDateTimeType::NAME, SystemDateTimeType::class);
+        Type::hasType(SystemDateType::NAME) === true ?: Type::addType(SystemDateType::NAME, SystemDateType::class);
+
+        Type::hasType(SystemUuidType::NAME) === true ?: Type::addType(SystemUuidType::NAME, SystemUuidType::class);
+    }
 
     /**
      * Test create read and delete newly created resource.
@@ -155,7 +172,9 @@ class CrudTest extends TestCase
         $userId     = 1;
         $postId     = 2;
         $text       = 'Some text';
+        $uuid       = '64c7660d-01f6-406a-8d13-e137ce268fde';
         $attributes = [
+            Comment::FIELD_UUID    => $uuid,
             Comment::FIELD_TEXT    => $text,
             Comment::FIELD_ID_POST => $postId,
             Comment::FIELD_ID_USER => $userId,
@@ -173,22 +192,23 @@ class CrudTest extends TestCase
 
         $this->assertEquals($userId, $model->{Comment::FIELD_ID_USER});
         $this->assertEquals($postId, $model->{Comment::FIELD_ID_POST});
+        $this->assertEquals($uuid, $model->{Comment::FIELD_UUID});
         $this->assertEquals($text, $model->{Comment::FIELD_TEXT});
         $this->assertEquals($index, $model->{Comment::FIELD_ID});
 
         // check resources is saved
         /** @noinspection SqlDialectInspection */
         $res = $this->connection
-            ->query('SELECT * FROM ' . Comment::TABLE_NAME . ' WHERE ' . Comment::FIELD_ID . " = $index")
-            ->fetch(PDO::FETCH_ASSOC);
+            ->executeQuery('SELECT * FROM ' . Comment::TABLE_NAME . ' WHERE ' . Comment::FIELD_ID . " = $index")
+            ->fetchAssociative(PDO::FETCH_ASSOC);
         $this->assertNotEquals(false, $res);
         $this->assertEquals($userId, $res[Comment::FIELD_ID_USER]);
         $this->assertEquals($postId, $res[Comment::FIELD_ID_POST]);
         // check resource to-many relationship are saved
         /** @noinspection SqlDialectInspection */
-        $res = $this->connection->query(
+        $res = $this->connection->executeQuery(
             'SELECT * FROM ' . CommentEmotion::TABLE_NAME . ' WHERE ' . CommentEmotion::FIELD_ID_COMMENT . " = $index"
-        )->fetchAll(PDO::FETCH_ASSOC);
+        )->fetchAllAssociative();
         $this->assertNotEquals(false, $res);
         $this->assertCount(2, (array)$res);
 
@@ -329,8 +349,8 @@ class CrudTest extends TestCase
 
         /** @var PaginatedDataInterface $emotions */
         $emotions = $comments[0]->{Comment::REL_EMOTIONS};
-        $this->assertCount(3, $emotions->getData());
-        $this->assertTrue($emotions->hasMoreItems());
+        $this->assertCount(2, $emotions->getData());
+        $this->assertFalse($emotions->hasMoreItems());
         $this->assertEquals(0, $emotions->getOffset());
         $this->assertEquals(self::DEFAULT_PAGE, $emotions->getLimit());
 
@@ -342,7 +362,7 @@ class CrudTest extends TestCase
 
         $comment  = $comments[2];
         $emotions = $comment->{Comment::REL_EMOTIONS};
-        $this->assertCount(1, $emotions->getData());
+        $this->assertCount(3, $emotions->getData());
         $this->assertFalse($emotions->hasMoreItems());
         $this->assertSame(0, $emotions->getOffset());
         $this->assertSame(self::DEFAULT_PAGE, $emotions->getLimit());
@@ -442,8 +462,8 @@ class CrudTest extends TestCase
 
         /** @var PaginatedDataInterface $emotions */
         $emotions = $comments[0]->{Comment::REL_EMOTIONS};
-        $this->assertCount(3, $emotions->getData());
-        $this->assertTrue($emotions->hasMoreItems());
+        $this->assertCount(2, $emotions->getData());
+        $this->assertFalse($emotions->hasMoreItems());
         $this->assertEquals(0, $emotions->getOffset());
         $this->assertEquals(self::DEFAULT_PAGE, $emotions->getLimit());
         $this->assertTrue(is_string($emotions->getData()[0]->{Emotion::FIELD_CREATED_AT}));
@@ -456,7 +476,7 @@ class CrudTest extends TestCase
 
         $comment  = $comments[2];
         $emotions = $comment->{Comment::REL_EMOTIONS};
-        $this->assertCount(1, $emotions->getData());
+        $this->assertCount(3, $emotions->getData());
         $this->assertFalse($emotions->hasMoreItems());
         $this->assertSame(0, $emotions->getOffset());
         $this->assertSame(self::DEFAULT_PAGE, $emotions->getLimit());
@@ -548,14 +568,13 @@ class CrudTest extends TestCase
         $this->assertEquals($pagingSize, $data->getLimit());
 
         // make sure that `comments` and `comments -> emotions` are sorted.
-        $this->assertCount(3, $comments = $firstPost->{Post::REL_COMMENTS}->getData());
-        $this->assertEquals(27, $comments[0]->{Comment::FIELD_ID});
-        $this->assertEquals(39, $comments[1]->{Comment::FIELD_ID});
-        $this->assertEquals(49, $comments[2]->{Comment::FIELD_ID});
+        $this->assertCount(2, $comments = $firstPost->{Post::REL_COMMENTS}->getData());
+        $this->assertEquals(3, $comments[0]->{Comment::FIELD_ID});
+        $this->assertEquals(72, $comments[1]->{Comment::FIELD_ID});
         $this->assertCount(3, $emotions = $comments[1]->{Comment::REL_EMOTIONS}->getData());
-        $this->assertEquals(3, $emotions[0]->{Emotion::FIELD_ID});
-        $this->assertEquals(4, $emotions[1]->{Emotion::FIELD_ID});
-        $this->assertEquals(5, $emotions[2]->{Emotion::FIELD_ID});
+        $this->assertEquals(1, $emotions[0]->{Emotion::FIELD_ID});
+        $this->assertEquals(2, $emotions[1]->{Emotion::FIELD_ID});
+        $this->assertEquals(4, $emotions[2]->{Emotion::FIELD_ID});
     }
 
     /**
@@ -687,8 +706,8 @@ class CrudTest extends TestCase
 
         $this->assertNotEmpty($data->getData());
         $this->assertCount($pagingSize, $data->getData());
-        $this->assertEquals(9, $data->getData()[0]->{Comment::FIELD_ID});
-        $this->assertEquals(85, $data->getData()[1]->{Comment::FIELD_ID});
+        $this->assertEquals(45, $data->getData()[0]->{Comment::FIELD_ID});
+        $this->assertEquals(91, $data->getData()[1]->{Comment::FIELD_ID});
         $this->assertTrue($data->isCollection());
         $this->assertEquals($pagingOffset, $data->getOffset());
         $this->assertEquals($pagingSize, $data->getLimit());
@@ -729,9 +748,9 @@ class CrudTest extends TestCase
 
         $this->assertNotEmpty($comments = $data->getData());
         $this->assertCount(3, $comments);
-        $this->assertEquals(10, $data->getData()[0]->{Comment::FIELD_ID});
-        $this->assertEquals(83, $data->getData()[1]->{Comment::FIELD_ID});
-        $this->assertEquals(31, $data->getData()[2]->{Comment::FIELD_ID});
+        $this->assertEquals(9, $data->getData()[0]->{Comment::FIELD_ID});
+        $this->assertEquals(91, $data->getData()[1]->{Comment::FIELD_ID});
+        $this->assertEquals(57, $data->getData()[2]->{Comment::FIELD_ID});
         $this->assertTrue($data->isCollection());
     }
 
@@ -770,7 +789,7 @@ class CrudTest extends TestCase
             ->withPaging($pagingOffset, $pagingSize)
             ->indexRelationshipIdentities(Post::REL_COMMENTS, $commentFilters, $commentSorts);
 
-        $this->assertEquals([9, 85, 83], $data);
+        $this->assertEquals([45, 91, 9], $data);
     }
 
     /**
@@ -1010,7 +1029,7 @@ class CrudTest extends TestCase
 
         $result = $crud->withFilters($filters)->count();
 
-        $this->assertEquals(15, $result);
+        $this->assertEquals(14, $result);
     }
 
     /**
@@ -1067,10 +1086,6 @@ class CrudTest extends TestCase
 
         $container[RelationshipPaginationStrategyInterface::class]
             = new BasicRelationshipPaginationStrategy(self::DEFAULT_PAGE);
-
-        if (Type::hasType(SystemDateTimeType::NAME) === false) {
-            Type::addType(SystemDateTimeType::NAME, SystemDateTimeType::class);
-        }
 
         $crud = new $class($container);
 

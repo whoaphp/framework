@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Validation;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Tests\Flute\Validation;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Validation;
 
 use Exception;
 use Limoncello\Flute\Contracts\Validation\ErrorCodes;
@@ -49,8 +52,11 @@ class JsonApiErrorCollectionTest extends TestCase
         $collection->addValidationTypeError(
             new Error('id', 'whatever', ErrorCodes::TYPE_MISSING, Messages::TYPE_MISSING, [])
         );
+        $collection->addValidationAttributeError(
+            new Error('uuid', 'whatever', ErrorCodes::IS_UUID, Messages::IS_UUID, [])
+        );
 
-        $this->assertCount(2, $collection);
+        $this->assertCount(3, $collection);
         $errors = $collection->getArrayCopy();
 
         $this->assertEquals(['pointer' => '/data/id'], $errors[0]->getSource());
@@ -58,5 +64,8 @@ class JsonApiErrorCollectionTest extends TestCase
 
         $this->assertEquals(['pointer' => '/data/type'], $errors[1]->getSource());
         $this->assertEquals('JSON API type should be specified.', $errors[1]->getDetail());
+
+        $this->assertEquals(['pointer' => '/data/attributes/uuid'], $errors[2]->getSource());
+        $this->assertEquals('The value should be a valid UUID.', $errors[2]->getDetail());
     }
 }

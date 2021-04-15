@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Data\Models;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +17,13 @@ namespace Limoncello\Tests\Flute\Data\Models;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Data\Models;
+
 use Limoncello\Contracts\Application\ModelInterface;
+use Limoncello\Contracts\Data\TimestampFields;
+use Limoncello\Contracts\Data\UuidFields;
 
 /**
  * @package Limoncello\Tests\Flute
@@ -32,13 +37,16 @@ abstract class Model implements ModelInterface
     const FIELD_ID = null;
 
     /** Field name */
-    const FIELD_CREATED_AT = 'created_at';
+    const FIELD_UUID = UuidFields::FIELD_UUID;
 
     /** Field name */
-    const FIELD_UPDATED_AT = 'updated_at';
+    const FIELD_CREATED_AT = TimestampFields::FIELD_CREATED_AT;
 
     /** Field name */
-    const FIELD_DELETED_AT = 'deleted_at';
+    const FIELD_UPDATED_AT = TimestampFields::FIELD_UPDATED_AT;
+
+    /** Field name */
+    const FIELD_DELETED_AT = TimestampFields::FIELD_DELETED_AT;
 
     /**
      * @inheritdoc

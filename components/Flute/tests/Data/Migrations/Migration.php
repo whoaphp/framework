@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Data\Migrations;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,19 @@ namespace Limoncello\Tests\Flute\Data\Migrations;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Data\Migrations;
+
 use Closure;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Table;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Limoncello\Contracts\Application\ModelInterface;
 use Limoncello\Contracts\Data\RelationshipTypes;
 use Limoncello\Tests\Flute\Data\Models\Model;
+use Limoncello\Tests\Flute\Data\Types\SystemUuidType;
 
 /**
  * @package Limoncello\Tests\Flute
@@ -112,7 +116,7 @@ abstract class Migration
     protected function primaryInt(string $name)
     {
         return function (Table $table) use ($name) {
-            $table->addColumn($name, Type::INTEGER)->setAutoincrement(true)->setUnsigned(true)->setNotnull(true);
+            $table->addColumn($name, Types::INTEGER)->setAutoincrement(true)->setUnsigned(true)->setNotnull(true);
             $table->setPrimaryKey([$name]);
         };
     }
@@ -125,7 +129,7 @@ abstract class Migration
     protected function primaryString(string $name)
     {
         return function (Table $table) use ($name) {
-            $table->addColumn($name, Type::STRING)->setNotnull(true);
+            $table->addColumn($name, Types::STRING)->setNotnull(true);
             $table->setPrimaryKey([$name]);
         };
     }
@@ -139,13 +143,13 @@ abstract class Migration
     {
         return function (Table $table) use ($name) {
             $modelClass = $this->getModelClass();
-            /** @var ModelInterface $modelClass*/
+            /** @var ModelInterface $modelClass */
             $lengths   = $modelClass::getAttributeLengths();
             $hasLength = array_key_exists($name, $lengths);
             assert($hasLength === true, "String length is not specified for column '$name' in model '$modelClass'.");
             $hasLength ?: null;
             $length = $lengths[$name];
-            $table->addColumn($name, Type::STRING, ['length' => $length])->setNotnull(true);
+            $table->addColumn($name, Types::STRING, ['length' => $length])->setNotnull(true);
         };
     }
 
@@ -157,7 +161,7 @@ abstract class Migration
     protected function text(string $name)
     {
         return function (Table $table) use ($name) {
-            $table->addColumn($name, Type::TEXT)->setNotnull(true);
+            $table->addColumn($name, Types::TEXT)->setNotnull(true);
         };
     }
 
@@ -169,7 +173,7 @@ abstract class Migration
     protected function nullableInt(string $name)
     {
         return function (Table $table) use ($name) {
-            $table->addColumn($name, Type::INTEGER)->setNotnull(false);
+            $table->addColumn($name, Types::INTEGER)->setNotnull(false);
         };
     }
 
@@ -181,7 +185,7 @@ abstract class Migration
     protected function nullableFloat(string $name)
     {
         return function (Table $table) use ($name) {
-            $table->addColumn($name, Type::FLOAT)->setNotnull(false);
+            $table->addColumn($name, Types::FLOAT)->setNotnull(false);
         };
     }
 
@@ -194,7 +198,7 @@ abstract class Migration
     protected function bool(string $name, bool $default = false)
     {
         return function (Table $table) use ($name, $default) {
-            $table->addColumn($name, Type::BOOLEAN)->setNotnull(true)->setDefault($default);
+            $table->addColumn($name, Types::BOOLEAN)->setNotnull(true)->setDefault($default);
         };
     }
 
@@ -206,7 +210,7 @@ abstract class Migration
     protected function datetime(string $name)
     {
         return function (Table $table) use ($name) {
-            $table->addColumn($name, Type::DATETIME)->setNotnull(true);
+            $table->addColumn($name, Types::DATETIME_IMMUTABLE)->setNotnull(true);
         };
     }
 
@@ -218,7 +222,19 @@ abstract class Migration
     protected function nullableDatetime(string $name)
     {
         return function (Table $table) use ($name) {
-            $table->addColumn($name, Type::DATETIME)->setNotnull(false);
+            $table->addColumn($name, Types::DATETIME_IMMUTABLE)->setNotnull(false);
+        };
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Closure
+     */
+    protected function uuid(string $name)
+    {
+        return function (Table $table) use ($name) {
+            $table->addColumn($name, SystemUuidType::NAME)->setNotnull(true);
         };
     }
 
@@ -244,9 +260,9 @@ abstract class Migration
     protected function foreignInt(string $name, $referredClass, $notNull = true)
     {
         return function (Table $table) use ($name, $referredClass, $notNull) {
-            $table->addColumn($name, Type::INTEGER)->setUnsigned(true)->setNotnull($notNull);
+            $table->addColumn($name, Types::INTEGER)->setUnsigned(true)->setNotnull($notNull);
             $tableName = $this->getTableNameForClass($referredClass);
-            /** @var Model $referredClass*/
+            /** @var Model $referredClass */
             assert($tableName !== null, "Table name is not specified for model '$referredClass'.");
             $pkName = $referredClass::FIELD_ID;
             $table->addForeignKeyConstraint($tableName, [$name], [$pkName]);
@@ -268,7 +284,7 @@ abstract class Migration
             assert($relFound === true, "Belongs-to relationship '$name' not found.");
         }
         assert($relFound === true, "Belongs-to relationship '$name' not found.");
-        list ($referencedClass, $foreignKey) = $relationships[RelationshipTypes::BELONGS_TO][$name];
+        [$referencedClass, $foreignKey] = $relationships[RelationshipTypes::BELONGS_TO][$name];
         return $this->foreignInt($foreignKey, $referencedClass);
     }
 
@@ -286,7 +302,7 @@ abstract class Migration
         if ($relFound === false) {
             assert($relFound === true, "Belongs-to relationship '$name' not found.");
         }
-        list ($referencedClass, $foreignKey) = $relationships[RelationshipTypes::BELONGS_TO][$name];
+        [$referencedClass, $foreignKey] = $relationships[RelationshipTypes::BELONGS_TO][$name];
         return $this->foreignInt($foreignKey, $referencedClass, false);
     }
 
@@ -297,7 +313,7 @@ abstract class Migration
      */
     protected function getTableNameForClass(string $modelClass)
     {
-        /** @var Model $modelClass*/
+        /** @var Model $modelClass */
         $tableName = $modelClass::TABLE_NAME;
         assert($tableName !== null, "Table name is not specified for model '$modelClass'.");
 

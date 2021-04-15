@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Data\Validation;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +17,14 @@ namespace Limoncello\Tests\Flute\Data\Validation;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Data\Validation;
+
 use Limoncello\Flute\Validation\Rules\ApiRulesTrait;
 use Limoncello\Flute\Validation\Rules\DatabaseRulesTrait;
 use Limoncello\Flute\Validation\Rules\RelationshipRulesTrait;
+use Limoncello\Flute\Validation\Rules\UuidRulesTrait;
 use Limoncello\Tests\Flute\Data\Api\PostsApi;
 use Limoncello\Tests\Flute\Data\Models\Board;
 use Limoncello\Tests\Flute\Data\Models\Category;
@@ -35,7 +39,7 @@ use Limoncello\Validation\Rules;
  */
 class AppRules extends Rules
 {
-    use RelationshipRulesTrait, DatabaseRulesTrait, ApiRulesTrait;
+    use RelationshipRulesTrait, DatabaseRulesTrait, ApiRulesTrait, UuidRulesTrait;
 
     /**
      * @return RuleInterface

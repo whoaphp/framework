@@ -17,7 +17,6 @@
  * limitations under the License.
  */
 
-
 declare (strict_types=1);
 
 namespace Limoncello\Tests\Flute\Validation;
@@ -26,6 +25,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception as DBALException;
+use Doctrine\DBAL\Types\Type;
 use Exception;
 use Limoncello\Container\Container;
 use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
@@ -44,6 +44,9 @@ use Limoncello\Tests\Flute\Data\Models\Comment;
 use Limoncello\Tests\Flute\Data\Schemas\CommentSchema;
 use Limoncello\Tests\Flute\Data\Schemas\EmotionSchema;
 use Limoncello\Tests\Flute\Data\Schemas\UserSchema;
+use Limoncello\Tests\Flute\Data\Types\SystemDateTimeType;
+use Limoncello\Tests\Flute\Data\Types\SystemDateType;
+use Limoncello\Tests\Flute\Data\Types\SystemUuidType;
 use Limoncello\Tests\Flute\Data\Validation\AppRules as v;
 use Limoncello\Tests\Flute\TestCase;
 use Limoncello\Validation\Blocks\ProcedureBlock;
@@ -67,6 +70,21 @@ use ReflectionMethod;
  */
 class DataParserTest extends TestCase
 {
+    /**
+     * @inheritDoc
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // If test is run withing the whole test suite then those lines not needed, however
+        // if only tests from this file are run then the lines are required.
+        Type::hasType(SystemDateTimeType::NAME) === true ?: Type::addType(SystemDateTimeType::NAME, SystemDateTimeType::class);
+        Type::hasType(SystemDateType::NAME) === true ?: Type::addType(SystemDateType::NAME, SystemDateType::class);
+
+        Type::hasType(SystemUuidType::NAME) === true ?: Type::addType(SystemUuidType::NAME, SystemUuidType::class);
+    }
+
     /**
      * Validation test.
      *

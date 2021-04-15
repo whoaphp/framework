@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Data\Seeds;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +17,13 @@ namespace Limoncello\Tests\Flute\Data\Seeds;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Data\Seeds;
+
 use Closure;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Faker\Factory;
 use Limoncello\Tests\Flute\Data\Models\Board;
@@ -100,6 +103,7 @@ class Runner
             return [
                 Comment::FIELD_ID_POST => $faker->randomElement($allPosts)[Post::FIELD_ID],
                 Comment::FIELD_ID_USER => $faker->randomElement($allUsers)[User::FIELD_ID],
+                Comment::FIELD_UUID    => $faker->uuid,
                 Comment::FIELD_TEXT    => $faker->text(),
             ];
         });

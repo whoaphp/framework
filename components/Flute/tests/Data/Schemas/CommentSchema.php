@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Data\Schemas;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Tests\Flute\Data\Schemas;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Data\Schemas;
 
 use Limoncello\Tests\Flute\Data\Models\Comment as Model;
 
@@ -61,8 +64,9 @@ class CommentSchema extends BaseSchema
     public static function getMappings(): array
     {
         return [
-            self::SCHEMA_ATTRIBUTES => [
+            self::SCHEMA_ATTRIBUTES    => [
                 self::RESOURCE_ID     => Model::FIELD_ID,
+                self::ATTR_UUID       => Model::FIELD_UUID,
                 self::ATTR_TEXT       => Model::FIELD_TEXT,
                 self::ATTR_INT        => Model::FIELD_INT,
                 self::ATTR_FLOAT      => Model::FIELD_FLOAT,

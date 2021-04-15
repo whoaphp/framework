@@ -31,9 +31,6 @@ use Limoncello\Contracts\Application\CacheSettingsProviderInterface;
 use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
 use Limoncello\Contracts\L10n\FormatterFactoryInterface;
 use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Doctrine\Types\DateTimeType as LimoncelloDateTimeType;
-use Limoncello\Doctrine\Types\DateType as LimoncelloDateType;
-use Limoncello\Doctrine\Types\UuidType as LimoncelloUuidType;
 use Limoncello\Flute\Api\BasicRelationshipPaginationStrategy;
 use Limoncello\Flute\Contracts\Api\RelationshipPaginationStrategyInterface;
 use Limoncello\Flute\Contracts\Encoder\EncoderInterface;
@@ -67,6 +64,9 @@ use Limoncello\Tests\Flute\Data\Schemas\CommentSchema;
 use Limoncello\Tests\Flute\Data\Schemas\EmotionSchema;
 use Limoncello\Tests\Flute\Data\Schemas\PostSchema;
 use Limoncello\Tests\Flute\Data\Schemas\UserSchema;
+use Limoncello\Tests\Flute\Data\Types\SystemDateTimeType;
+use Limoncello\Tests\Flute\Data\Types\SystemDateType;
+use Limoncello\Tests\Flute\Data\Types\SystemUuidType;
 use Limoncello\Tests\Flute\TestCase;
 use Mockery;
 use Mockery\Mock;
@@ -87,6 +87,21 @@ class ControllerTest extends TestCase
     const DEFAULT_JSON_META = [
         'Title' => 'Default JSON API meta information',
     ];
+
+    /**
+     * @inheritDoc
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // If test is run withing the whole test suite then those lines not needed, however
+        // if only tests from this file are run then the lines are required.
+        Type::hasType(SystemDateTimeType::NAME) === true ?: Type::addType(SystemDateTimeType::NAME, SystemDateTimeType::class);
+        Type::hasType(SystemDateType::NAME) === true ?: Type::addType(SystemDateType::NAME, SystemDateType::class);
+
+        Type::hasType(SystemUuidType::NAME) === true ?: Type::addType(SystemUuidType::NAME, SystemUuidType::class);
+    }
 
     /**
      * Controller test.
@@ -211,13 +226,10 @@ class ControllerTest extends TestCase
 
         // check reply has resource included
         $this->assertCount(1, $resource[DocumentInterface::KEYWORD_INCLUDED]);
-        // manually checked it should be 4 rows selected
-        $this->assertCount(4, $resource[DocumentInterface::KEYWORD_DATA]);
+        // manually checked it should be 1 rows selected
+        $this->assertCount(1, $resource[DocumentInterface::KEYWORD_DATA]);
         // check response sorted by post.id
         $this->assertEquals(8, $resource['data'][0]['relationships'][CommentSchema::REL_POST]['data']['id']);
-        $this->assertEquals(11, $resource['data'][1]['relationships'][CommentSchema::REL_POST]['data']['id']);
-        $this->assertEquals(11, $resource['data'][2]['relationships'][CommentSchema::REL_POST]['data']['id']);
-        $this->assertEquals(15, $resource['data'][3]['relationships'][CommentSchema::REL_POST]['data']['id']);
 
         // check some fields were filtered out
         $this->assertFalse(isset($resource['data'][0]['relationships'][CommentSchema::REL_EMOTIONS]));
@@ -267,16 +279,15 @@ class ControllerTest extends TestCase
         $body     = (string)($response->getBody());
         $resource = json_decode($body, true);
 
-        // manually checked it should be 8 rows selected
-        $this->assertCount(8, $resource[DocumentInterface::KEYWORD_DATA]);
-        $this->assertEquals(10, $resource['data'][0]['id']);
-        $this->assertEquals(11, $resource['data'][1]['id']);
-        $this->assertEquals(33, $resource['data'][2]['id']);
-        $this->assertEquals(44, $resource['data'][3]['id']);
-        $this->assertEquals(48, $resource['data'][4]['id']);
-        $this->assertEquals(66, $resource['data'][5]['id']);
-        $this->assertEquals(77, $resource['data'][6]['id']);
-        $this->assertEquals(81, $resource['data'][7]['id']);
+        // manually checked it should be 7 rows selected
+        $this->assertCount(7, $resource[DocumentInterface::KEYWORD_DATA]);
+        $this->assertEquals(8, $resource['data'][0]['id']);
+        $this->assertEquals(51, $resource['data'][1]['id']);
+        $this->assertEquals(57, $resource['data'][2]['id']);
+        $this->assertEquals(59, $resource['data'][3]['id']);
+        $this->assertEquals(66, $resource['data'][4]['id']);
+        $this->assertEquals(69, $resource['data'][5]['id']);
+        $this->assertEquals(96, $resource['data'][6]['id']);
     }
 
     /**
@@ -519,9 +530,9 @@ class ControllerTest extends TestCase
         // - comments with ID from 1 to 10 have user IDs 2, 4, 5
         // - posts with ID from 1 to 7 have user IDs 3, 4, 5
         // - therefore output must have 2 users with IDs 4 and 5
-        $this->assertCount(2, $resource[DocumentInterface::KEYWORD_DATA]);
-        $this->assertEquals(4, $resource['data'][0]['id']);
-        $this->assertEquals(5, $resource['data'][1]['id']);
+        $this->assertCount(3, $resource[DocumentInterface::KEYWORD_DATA]);
+        $this->assertEquals(3, $resource['data'][0]['id']);
+        $this->assertEquals(4, $resource['data'][1]['id']);
     }
 
     /**
@@ -584,6 +595,7 @@ class ControllerTest extends TestCase
      */
     public function testCreate(): void
     {
+        $uuid      = '64c7660d-01f6-406a-8d13-e137ce268fde';
         $text      = 'Some comment text';
         $jsonInput = <<<EOT
         {
@@ -591,6 +603,7 @@ class ControllerTest extends TestCase
                 "type"  : "comments",
                 "id"    : null,
                 "attributes" : {
+                    "uuid-attribute" : "$uuid",
                     "text-attribute" : "$text"
                 },
                 "relationships" : {
@@ -713,7 +726,7 @@ EOT;
      */
     public function testReadWithoutParameters(): void
     {
-        $routeParams = [ApiCommentsControllerApi::ROUTE_KEY_INDEX => '10'];
+        $routeParams = [ApiCommentsControllerApi::ROUTE_KEY_INDEX => '96'];
         $container   = $this->createContainer();
         /** @var Mock $request */
         $request = Mockery::mock(ServerRequestInterface::class);
@@ -730,11 +743,11 @@ EOT;
         $resource = json_decode($body, true)[DocumentInterface::KEYWORD_DATA];
 
         $this->assertEquals('comments', $resource['type']);
-        $this->assertEquals('10', $resource['id']);
+        $this->assertEquals('96', $resource['id']);
         $this->assertEquals([
             'user-relationship'     => ['data' => ['type' => 'users', 'id' => '1']],
-            'post-relationship'     => ['data' => ['type' => 'posts', 'id' => '1']],
-            'emotions-relationship' => ['links' => ['self' => '/comments/10/relationships/emotions-relationship']],
+            'post-relationship'     => ['data' => ['type' => 'posts', 'id' => '12']],
+            'emotions-relationship' => ['links' => ['self' => '/comments/96/relationships/emotions-relationship']],
         ], $resource['relationships']);
     }
 
@@ -748,13 +761,15 @@ EOT;
      */
     public function testUpdate(): void
     {
+        $uuid      = '64c7660d-01f6-406a-8d13-e137ce268fde';
         $text      = 'Some comment text';
-        $index     = '10';
+        $index     = '96';
         $jsonInput = <<<EOT
         {
             "data" : {
                 "type"  : "comments",
                 "attributes" : {
+                    "uuid-attribute" : "$uuid",
                     "text-attribute" : "$text"
                 },
                 "relationships" : {
@@ -1033,6 +1048,7 @@ EOT;
 
         // add comment to delete
         $this->assertEquals(1, $connection->insert($tableName, [
+            Comment::FIELD_UUID       => '64c7660d-01f6-406a-8d13-e137ce268fde',
             Comment::FIELD_TEXT       => 'Some text',
             Comment::FIELD_ID_USER    => '1',
             Comment::FIELD_ID_POST    => '2',
@@ -1462,9 +1478,9 @@ EOT;
 
         $this->assertCount(1, $resource[DocumentInterface::KEYWORD_DATA]);
         // manually checked that only 1 comment (ID=17) of current user has post (ID=15) text with $seldomWord
-        $this->assertEquals('17', $resource['data'][0]['id']);
+        $this->assertEquals('57', $resource['data'][0]['id']);
         // $this->assertContains('15', $resource['data'][0]['relationships'][CommentSchema::REL_POST]['data']['id']);
-        $this->assertEquals('15', $resource['data'][0]['relationships'][CommentSchema::REL_POST]['data']['id']);
+        $this->assertEquals('2', $resource['data'][0]['relationships'][CommentSchema::REL_POST]['data']['id']);
     }
 
     /**
@@ -1499,15 +1515,16 @@ EOT;
         $body     = (string)($response->getBody());
         $resource = json_decode($body, true);
 
-        // manually checked it should be 7 comments with IDs below
-        $this->assertCount(7, $resource[DocumentInterface::KEYWORD_DATA]);
-        $this->assertEquals('15', $resource['data'][0]['id']);
-        $this->assertEquals('17', $resource['data'][1]['id']);
-        $this->assertEquals('33', $resource['data'][2]['id']);
+        // manually checked it should be 8 comments with IDs below
+        $this->assertCount(8, $resource[DocumentInterface::KEYWORD_DATA]);
+        $this->assertEquals('14', $resource['data'][0]['id']);
+        $this->assertEquals('15', $resource['data'][1]['id']);
+        $this->assertEquals('17', $resource['data'][2]['id']);
         $this->assertEquals('51', $resource['data'][3]['id']);
-        $this->assertEquals('65', $resource['data'][4]['id']);
+        $this->assertEquals('55', $resource['data'][4]['id']);
         $this->assertEquals('66', $resource['data'][5]['id']);
-        $this->assertEquals('77', $resource['data'][6]['id']);
+        $this->assertEquals('68', $resource['data'][6]['id']);
+        $this->assertEquals('83', $resource['data'][7]['id']);
     }
 
     /**
@@ -1593,13 +1610,6 @@ EOT;
 
             return $factory;
         };
-
-        // If test is run withing the whole test suite then those lines not needed, however
-        // if only tests from this file are run then the lines are required.
-        Type::hasType(LimoncelloDateTimeType::NAME) === true ?: Type::addType(LimoncelloDateTimeType::NAME, LimoncelloDateTimeType::class);
-        Type::hasType(LimoncelloDateType::NAME) === true ?: Type::addType(LimoncelloDateType::NAME, LimoncelloDateType::class);
-
-        Type::hasType(LimoncelloUuidType::NAME) === true ?: Type::addType(LimoncelloUuidType::NAME, LimoncelloUuidType::class);
 
         return $container;
     }

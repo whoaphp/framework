@@ -23,6 +23,7 @@ namespace Limoncello\Tests\Flute\Validation;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception as DBALException;
+use Doctrine\DBAL\Types\Type;
 use Exception;
 use Limoncello\Container\Container;
 use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
@@ -36,6 +37,9 @@ use Limoncello\Flute\Validation\Form\Execution\FormRulesSerializer;
 use Limoncello\Flute\Validation\Form\FormValidator;
 use Limoncello\Tests\Flute\Data\L10n\FormatterFactory;
 use Limoncello\Tests\Flute\Data\Models\Comment;
+use Limoncello\Tests\Flute\Data\Types\SystemDateTimeType;
+use Limoncello\Tests\Flute\Data\Types\SystemDateType;
+use Limoncello\Tests\Flute\Data\Types\SystemUuidType;
 use Limoncello\Tests\Flute\Data\Validation\Forms\CreateCommentRules;
 use Limoncello\Tests\Flute\Data\Validation\Forms\UpdateCommentRules;
 use Limoncello\Tests\Flute\TestCase;
@@ -43,10 +47,22 @@ use Limoncello\Validation\Execution\BlockSerializer;
 use Limoncello\Validation\Execution\ContextStorage;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Limoncello\Tests\Flute
  */
 class FormValidatorTest extends TestCase
 {
+    /**
+     * @inheritDoc
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Type::hasType(SystemDateTimeType::NAME) === true ?: Type::addType(SystemDateTimeType::NAME, SystemDateTimeType::class);
+        Type::hasType(SystemDateType::NAME) === true ?: Type::addType(SystemDateType::NAME, SystemDateType::class);
+        Type::hasType(SystemUuidType::NAME) === true ?: Type::addType(SystemUuidType::NAME, SystemUuidType::class);
+    }
+
     /**
      * @return void
      *
@@ -60,6 +76,12 @@ class FormValidatorTest extends TestCase
         $this->assertFalse($validator->validate([Comment::FIELD_TEXT => false]));
         $this->assertEquals(
             [Comment::FIELD_TEXT => 'The value should be a string.'],
+            $this->iterableToArray($validator->getMessages())
+        );
+        $this->assertTrue($validator->validate([Comment::FIELD_UUID => '64c7660d-01f6-406a-8d13-e137ce268fde']));
+        $this->assertFalse($validator->validate([Comment::FIELD_UUID => '##1234']));
+        $this->assertEquals(
+            [Comment::FIELD_UUID => 'The value should be a valid UUID.'],
             $this->iterableToArray($validator->getMessages())
         );
     }
@@ -76,6 +98,8 @@ class FormValidatorTest extends TestCase
         $this->assertNotNull($validator = $this->createValidator(CreateCommentRules::class));
 
         $validator->validate('not array');
+
+        $validator->validate([Comment::FIELD_UUID => new \stdClass()]);
     }
 
     /**

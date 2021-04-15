@@ -24,6 +24,7 @@ namespace Limoncello\Tests\Flute\Data\Models;
 use Doctrine\DBAL\Types\Types;
 use Limoncello\Contracts\Data\RelationshipTypes;
 use Limoncello\Tests\Flute\Data\Types\SystemDateTimeType;
+use Limoncello\Tests\Flute\Data\Types\SystemUuidType;
 
 /**
  * @package Limoncello\Tests\Flute
@@ -78,6 +79,7 @@ class Comment extends Model
             self::FIELD_ID         => Types::INTEGER,
             self::FIELD_ID_POST    => Types::INTEGER,
             self::FIELD_ID_USER    => Types::INTEGER,
+            self::FIELD_UUID       => SystemUuidType::NAME,
             self::FIELD_TEXT       => Types::STRING,
             self::FIELD_INT        => Types::INTEGER,
             self::FIELD_FLOAT      => Types::FLOAT,

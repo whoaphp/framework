@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Flute\L10n;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Flute\L10n;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare (strict_types=1);
+
+namespace Limoncello\Flute\L10n;
 
 /**
  * @package Limoncello\Flute
@@ -68,4 +71,7 @@ interface Messages extends \Limoncello\Validation\I18n\Messages
 
     /** @var string Validation Message Template */
     const INVALID_OPERATION_ARGUMENTS = 'Invalid Operation Arguments.';
+
+    /** @var string Validation Message Template */
+    const IS_UUID = 'The value should be a valid UUID.';
 }

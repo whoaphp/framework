@@ -168,6 +168,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     protected function tearDown(): void
     {
         parent::tearDown();
+
         Mockery::close();
     }
 

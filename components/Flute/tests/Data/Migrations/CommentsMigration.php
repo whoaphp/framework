@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Data\Migrations;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +17,11 @@ namespace Limoncello\Tests\Flute\Data\Migrations;
  * limitations under the License.
  */
 
-use Doctrine\DBAL\DBALException;
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Data\Migrations;
+
+use Doctrine\DBAL\Exception as DBALException;
 use Limoncello\Tests\Flute\Data\Models\Comment as Model;
 
 /**
@@ -40,6 +43,7 @@ class CommentsMigration extends Migration
             $this->primaryInt(Model::FIELD_ID),
             $this->relationship(Model::REL_USER),
             $this->relationship(Model::REL_POST),
+            $this->uuid(Model::FIELD_UUID),
             $this->text(Model::FIELD_TEXT),
             $this->nullableInt(Model::FIELD_INT),
             $this->nullableFloat(Model::FIELD_FLOAT),
@@ -48,6 +52,8 @@ class CommentsMigration extends Migration
             $this->datetime(Model::FIELD_CREATED_AT),
             $this->nullableDatetime(Model::FIELD_UPDATED_AT),
             $this->nullableDatetime(Model::FIELD_DELETED_AT),
+            $this->unique([Model::FIELD_ID, Model::FIELD_UUID]),
+            $this->unique([Model::FIELD_UUID]),
         ]);
     }
 }

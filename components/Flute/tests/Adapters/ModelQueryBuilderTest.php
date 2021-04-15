@@ -23,7 +23,8 @@ namespace Limoncello\Tests\Flute\Adapters;
 
 use DateTime;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
+use Doctrine\DBAL\Types\Type;
 use Exception;
 use Limoncello\Flute\Adapters\ModelQueryBuilder;
 use Limoncello\Flute\Contracts\Http\Query\FilterParameterInterface;
@@ -33,6 +34,9 @@ use Limoncello\Tests\Flute\Data\Models\Emotion;
 use Limoncello\Tests\Flute\Data\Models\Post;
 use Limoncello\Tests\Flute\Data\Models\PostExtended;
 use Limoncello\Tests\Flute\Data\Models\User;
+use Limoncello\Tests\Flute\Data\Types\SystemDateTimeType;
+use Limoncello\Tests\Flute\Data\Types\SystemDateType;
+use Limoncello\Tests\Flute\Data\Types\SystemUuidType;
 use Limoncello\Tests\Flute\TestCase;
 
 /**
@@ -53,6 +57,13 @@ class ModelQueryBuilderTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        // If test is run withing the whole test suite then those lines not needed, however
+        // if only tests from this file are run then the lines are required.
+        Type::hasType(SystemDateTimeType::NAME) === true ?: Type::addType(SystemDateTimeType::NAME, SystemDateTimeType::class);
+        Type::hasType(SystemDateType::NAME) === true ?: Type::addType(SystemDateType::NAME, SystemDateType::class);
+
+        Type::hasType(SystemUuidType::NAME) === true ?: Type::addType(SystemUuidType::NAME, SystemUuidType::class);
 
         $this->connection = $this->createConnection();
     }
@@ -90,8 +101,8 @@ class ModelQueryBuilderTest extends TestCase
         $this->assertEquals($expected, $builder->getSQL());
 
         $this->migrateDatabase($this->connection);
-        $this->assertNotEmpty($posts = $builder->execute()->fetchAll());
-        $this->assertEquals(4, count($posts));
+        $this->assertNotEmpty($posts = $builder->execute()->fetchAllAssociative());
+        $this->assertCount(4, $posts);
     }
 
     /**
@@ -123,8 +134,8 @@ class ModelQueryBuilderTest extends TestCase
         $this->assertEquals($expected, $builder->getSQL());
 
         $this->migrateDatabase($this->connection);
-        $this->assertNotEmpty($posts = $builder->execute()->fetchAll());
-        $this->assertEquals(4, count($posts));
+        $this->assertNotEmpty($posts = $builder->execute()->fetchAllAssociative());
+        $this->assertCount(4, $posts);
     }
 
     /**
@@ -156,8 +167,8 @@ class ModelQueryBuilderTest extends TestCase
         $this->assertEquals($expected, $builder->getSQL());
 
         $this->migrateDatabase($this->connection);
-        $this->assertNotEmpty($posts = $builder->execute()->fetchAll());
-        $this->assertEquals(21, count($posts));
+        $this->assertNotEmpty($posts = $builder->execute()->fetchAllAssociative());
+        $this->assertCount(21, $posts);
     }
 
     /**
@@ -195,8 +206,8 @@ class ModelQueryBuilderTest extends TestCase
         $this->assertEquals($expected, $builder->getSQL());
 
         $this->migrateDatabase($this->connection);
-        $this->assertNotEmpty($posts = $builder->execute()->fetchAll());
-        $this->assertEquals(2, count($posts));
+        $this->assertNotEmpty($posts = $builder->execute()->fetchAllAssociative());
+        $this->assertCount(2, $posts);
     }
 
     /**
@@ -234,8 +245,8 @@ class ModelQueryBuilderTest extends TestCase
         $this->assertEquals($expected, $builder->getSQL());
 
         $this->migrateDatabase($this->connection);
-        $this->assertNotEmpty($posts = $builder->execute()->fetchAll());
-        $this->assertEquals(100, count($posts));
+        $this->assertNotEmpty($posts = $builder->execute()->fetchAllAssociative());
+        $this->assertCount(100, $posts);
     }
 
     /**
@@ -265,6 +276,7 @@ class ModelQueryBuilderTest extends TestCase
 
         $expected =
             'SELECT "comments1"."id_comment", "comments1"."id_post_fk", "comments1"."id_user_fk", ' .
+            '"comments1"."uuid", ' .
             '"comments1"."text", "comments1"."int_value", "comments1"."float_value", "comments1"."bool_value", ' .
             '"comments1"."datetime_value", "comments1"."created_at", "comments1"."updated_at", ' .
             '"comments1"."deleted_at" ' .
@@ -277,8 +289,8 @@ class ModelQueryBuilderTest extends TestCase
         $this->assertEquals($expected, $builder->getSQL());
 
         $this->migrateDatabase($this->connection);
-        $this->assertNotEmpty($comments = $builder->execute()->fetchAll());
-        $this->assertEquals(35, count($comments));
+        $this->assertNotEmpty($comments = $builder->execute()->fetchAllAssociative());
+        $this->assertCount(39, $comments);
     }
 
     /**

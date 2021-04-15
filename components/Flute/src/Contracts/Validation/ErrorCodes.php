@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Flute\Contracts\Validation;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Flute\Contracts\Validation;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare (strict_types=1);
+
+namespace Limoncello\Flute\Contracts\Validation;
 
 use Limoncello\Validation\Contracts\Errors\ErrorCodes as BaseErrorCodes;
 
@@ -57,6 +60,9 @@ interface ErrorCodes extends BaseErrorCodes
 
     // Special code for those who extend this enum
 
+    /** @var string Message code */
+    const IS_UUID = self::INVALID_OPERATION_ARGUMENTS + 1;
+
     /** Message code */
-    const FLUTE_LAST = self::INVALID_OPERATION_ARGUMENTS;
+    const FLUTE_LAST = self::IS_UUID;
 }

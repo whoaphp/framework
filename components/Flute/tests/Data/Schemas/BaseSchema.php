@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Tests\Flute\Data\Schemas;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +17,10 @@ namespace Limoncello\Tests\Flute\Data\Schemas;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Limoncello\Tests\Flute\Data\Schemas;
+
 use Limoncello\Flute\Schema\Schema;
 use Limoncello\Tests\Flute\Data\Models\Model;
 
@@ -26,6 +29,9 @@ use Limoncello\Tests\Flute\Data\Models\Model;
  */
 abstract class BaseSchema extends Schema
 {
+    /** Attribute name */
+    const ATTR_UUID = 'uuid-attribute';
+
     /** Attribute name */
     const ATTR_CREATED_AT = 'created-at-attribute';
 
