@@ -1,4 +1,139 @@
 {
+    "repositories": [
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Application",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Auth",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Commands",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Common",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Container",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Contracts",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Core",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Crypt",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Data",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Events",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Flute",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\L10n",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\OAuthServer",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Passport",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Templates",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Validation",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Doctrine",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Testing",
+            "options": {
+                "symlink": false
+            }
+        }
+    ],
     "name": "limoncello-php/application",
     "description": "PHP application components (PSR-7).",
     "keywords": ["limoncello", "framework", "PSR-7", "PSR7"],
@@ -11,26 +146,30 @@
         {
             "name": "neomerx",
             "email": "info@neomerx.com"
+        },
+        {
+            "name": "whoaphp",
+            "email": "info@whoaphp.com"
         }
     ],
     "require": {
-        "php": ">=7.3.0",
+        "php": "^7.4|^8.0",
         "filp/whoops": "^2.1",
-        "doctrine/dbal": "^2.6.3",
+        "doctrine/dbal": "^2.6.0",
         "monolog/monolog": "^2.0",
         "neomerx/cors-psr7": "^2.0.0",
-        "limoncello-php/contracts": "^0.10.0",
-        "limoncello-php/core": "^0.10.0",
-        "limoncello-php/auth": "^0.10.0",
-        "limoncello-php/l10n": "^0.10.0",
-        "limoncello-php/validation": "^0.10.0"
+        "limoncello-php/contracts": "dev-master",
+        "limoncello-php/core": "dev-master",
+        "limoncello-php/auth": "dev-master",
+        "limoncello-php/l10n": "dev-master",
+        "limoncello-php/validation": "dev-master"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^2.9",
         "phpmd/phpmd": "^2.6",
         "scrutinizer/ocular": "^1.4",
-        "phpunit/phpunit": "^9.0",
-        "mockery/mockery": "^1.0"
+        "phpunit/phpunit": "^9.5",
+        "mockery/mockery": "^0.9|^1.0"
     },
     "autoload": {
         "psr-4": {
@@ -58,5 +197,7 @@
         "branch-alias": {
             "dev-develop": "0.10.x-dev"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

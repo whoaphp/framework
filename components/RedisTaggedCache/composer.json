@@ -1,4 +1,139 @@
 {
+    "repositories": [
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Application",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Auth",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Commands",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Common",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Container",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Contracts",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Core",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Crypt",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Data",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Events",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Flute",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\L10n",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\OAuthServer",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Passport",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Templates",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Validation",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Doctrine",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Testing",
+            "options": {
+                "symlink": false
+            }
+        }
+    ],
     "name": "limoncello-php/redis-tagged-cache",
     "description": "Redis-based Cache with Tags implementation.",
     "keywords": ["redis", "tagged cache", "cache"],
@@ -11,19 +146,23 @@
         {
             "name": "neomerx",
             "email": "info@neomerx.com"
+        },
+        {
+            "name": "whoaphp",
+            "email": "info@whoaphp.com"
         }
     ],
     "require": {
-        "php": ">=7.1.0",
+        "php": "^7.4|^8.0",
         "ext-redis": "*",
-        "limoncello-php/contracts" : "^0.10.0"
+        "limoncello-php/contracts": "dev-master"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^2.9",
         "phpmd/phpmd": "^2.4",
         "scrutinizer/ocular": "^1.4",
-        "mockery/mockery": "^1.0",
-        "phpunit/phpunit": "^7.0"
+        "mockery/mockery": "^0.9|^1.0",
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
@@ -50,5 +189,7 @@
         "branch-alias": {
             "dev-develop": "0.10.x-dev"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
