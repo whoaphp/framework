@@ -54,6 +54,7 @@ abstract class ClientRepository extends BaseRepository implements ClientReposito
             $schema = $this->getDatabaseSchema();
             $values = [
                 $schema->getClientsIdentityColumn()               => $client->getIdentifier(),
+                $schema->getClientsUuidColumn()                   => $client->getUuid(),
                 $schema->getClientsNameColumn()                   => $client->getName(),
                 $schema->getClientsDescriptionColumn()            => $client->getDescription(),
                 $schema->getClientsCredentialsColumn()            => $client->getCredentials(),
@@ -77,7 +78,7 @@ abstract class ClientRepository extends BaseRepository implements ClientReposito
                     $this->bindScopeIdentifiers($identifier, $scopeIdentifiers);
                 });
             }
-            $client->setCreatedAt($now);
+            $client->setUuid()->setCreatedAt($now);
 
             return $client;
         } catch (RepositoryException $exception) {

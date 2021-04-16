@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Contracts\Entities;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,13 @@ namespace Limoncello\Passport\Contracts\Entities;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Passport\Contracts\Entities;
+
 use DateTimeInterface;
 use Limoncello\OAuthServer\Contracts\AuthorizationCodeInterface;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * @package Limoncello\Passport
@@ -37,6 +41,18 @@ interface TokenInterface extends AuthorizationCodeInterface, \Limoncello\OAuthSe
      * @return TokenInterface
      */
     public function setIdentifier(int $identifier): TokenInterface;
+
+    /**
+     * @return UuidInterface
+     */
+    public function getUuid(): UuidInterface;
+
+    /**
+     * @param UuidInterface|string|null $uuid
+     *
+     * @return TokenInterface
+     */
+    public function setUuid($uuid = null): TokenInterface;
 
     /**
      * @param string $identifier
@@ -164,4 +180,28 @@ interface TokenInterface extends AuthorizationCodeInterface, \Limoncello\OAuthSe
      * @return TokenInterface
      */
     public function setRefreshCreatedAt(DateTimeInterface $refreshCreatedAt): TokenInterface;
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreatedAt(): ?DateTimeInterface;
+
+    /**
+     * @param DateTimeInterface $createdAt
+     *
+     * @return TokenInterface
+     */
+    public function setCreatedAt(DateTimeInterface $createdAt): TokenInterface;
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getUpdatedAt(): ?DateTimeInterface;
+
+    /**
+     * @param DateTimeInterface $updatedAt
+     *
+     * @return TokenInterface
+     */
+    public function setUpdatedAt(DateTimeInterface $updatedAt): TokenInterface;
 }

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Traits;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Tests\Passport\Traits;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Limoncello\Tests\Passport\Traits;
 
 use Limoncello\Passport\Adaptors\MySql\Client;
 use Limoncello\Passport\Contracts\PassportServerIntegrationInterface;
@@ -53,7 +56,7 @@ class BasicClientAuthenticationTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -64,7 +67,7 @@ class BasicClientAuthenticationTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -73,11 +76,11 @@ class BasicClientAuthenticationTest extends TestCase
 
     /**
      * Test empty authorization header.
-     *
-     * @expectedException \Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException
      */
     public function testNoAuthorizationHeader()
     {
+        $this->expectException(\Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException::class);
+
         $this->determineClient(
             $this->integration,
             $this->createEmptyAuthHeaderRequest(),
@@ -87,11 +90,11 @@ class BasicClientAuthenticationTest extends TestCase
 
     /**
      * Test invalid authorization header.
-     *
-     * @expectedException \Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException
      */
     public function testUnknownClientLogin()
     {
+        $this->expectException(\Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException::class);
+
         $this->integrationMock
             ->shouldReceive('getClientRepository')->once()->withNoArgs()->andReturn($this->clientRepoMock);
         $this->clientRepoMock
@@ -106,11 +109,11 @@ class BasicClientAuthenticationTest extends TestCase
 
     /**
      * Test not matching client identifiers.
-     *
-     * @expectedException \Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException
      */
     public function testNotMatchingClientIdentifiers()
     {
+        $this->expectException(\Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException::class);
+
         $this->determineClient(
             $this->integration,
             $this->createClientAuthRequest('clientId1', 'some_password'),
@@ -120,11 +123,11 @@ class BasicClientAuthenticationTest extends TestCase
 
     /**
      * Test invalid client credentials.
-     *
-     * @expectedException \Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException
      */
     public function testInvalidClientCredentials()
     {
+        $this->expectException(\Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException::class);
+
         $credentials = 'whatever';
         $password    = 'some_password';
 
@@ -147,11 +150,11 @@ class BasicClientAuthenticationTest extends TestCase
 
     /**
      * Test no client password.
-     *
-     * @expectedException \Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException
      */
     public function testNoClientPassword()
     {
+        $this->expectException(\Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException::class);
+        
         $credentials = 'whatever';
 
         $client = (new Client())

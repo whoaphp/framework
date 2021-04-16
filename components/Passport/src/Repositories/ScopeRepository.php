@@ -57,11 +57,12 @@ abstract class ScopeRepository extends BaseRepository implements ScopeRepository
             $schema = $this->getDatabaseSchema();
             $this->createResource([
                 $schema->getScopesIdentityColumn()    => $scope->getIdentifier(),
+                $schema->getScopesUuidColumn()        => $scope->getUuid(),
                 $schema->getScopesDescriptionColumn() => $scope->getDescription(),
                 $schema->getScopesCreatedAtColumn()   => $now,
             ]);
 
-            $scope->setCreatedAt($now);
+            $scope->setUuid()->setCreatedAt($now);
 
             return $scope;
         } catch (RepositoryException $exception) {

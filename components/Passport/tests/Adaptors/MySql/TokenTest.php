@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Adaptors\MySql;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +17,11 @@ namespace Limoncello\Tests\Passport\Adaptors\MySql;
  * limitations under the License.
  */
 
-use Doctrine\DBAL\Types\Type;
+declare(strict_types=1);
+
+namespace Limoncello\Tests\Passport\Adaptors\MySql;
+
+use Doctrine\DBAL\Types\Types;
 use Exception;
 use Limoncello\Passport\Adaptors\MySql\Token;
 use Limoncello\Passport\Entities\DatabaseSchema;
@@ -40,18 +43,18 @@ class TokenTest extends TestCase
     {
         $connection = $this->createConnection();
         $types      = [
-            Token::FIELD_ID                => Type::INTEGER,
-            Token::FIELD_ID_CLIENT         => Type::STRING,
-            Token::FIELD_ID_USER           => Type::INTEGER,
-            Token::FIELD_REDIRECT_URI      => Type::STRING,
-            Token::FIELD_CODE              => Type::STRING,
-            Token::FIELD_TYPE              => Type::STRING,
-            Token::FIELD_VALUE             => Type::STRING,
-            Token::FIELD_REFRESH           => Type::STRING,
-            Token::FIELD_IS_SCOPE_MODIFIED => Type::BOOLEAN,
-            Token::FIELD_IS_ENABLED        => Type::BOOLEAN,
+            Token::FIELD_ID                => Types::INTEGER,
+            Token::FIELD_ID_CLIENT         => Types::STRING,
+            Token::FIELD_ID_USER           => Types::INTEGER,
+            Token::FIELD_REDIRECT_URI      => Types::STRING,
+            Token::FIELD_CODE              => Types::STRING,
+            Token::FIELD_TYPE              => Types::STRING,
+            Token::FIELD_VALUE             => Types::STRING,
+            Token::FIELD_REFRESH           => Types::STRING,
+            Token::FIELD_IS_SCOPE_MODIFIED => Types::BOOLEAN,
+            Token::FIELD_IS_ENABLED        => Types::BOOLEAN,
 
-            Token::FIELD_SCOPES => Type::STRING,
+            Token::FIELD_SCOPES => Types::STRING,
         ];
         $columns    = [
             Token::FIELD_ID                => 123,

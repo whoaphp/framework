@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Package;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Tests\Passport\Package;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Limoncello\Tests\Passport\Package;
 
 use Doctrine\DBAL\Connection;
 use Exception;
@@ -47,8 +50,8 @@ use Limoncello\Tests\Passport\Package\PassportContainerConfiguratorTest as T;
 class PassportContainerConfiguratorTest extends TestCase
 {
     const TEST_DEFAULT_CLIENT_ID = 'default_client';
-    const TEST_ERROR_URI         = 'http://example.app/auth_request_error';
-    const TEST_APPROVAL_URI      = 'http://example.app/resource_owner_approval';
+    const TEST_ERROR_URI = 'http://example.app/auth_request_error';
+    const TEST_APPROVAL_URI = 'http://example.app/resource_owner_approval';
 
     /**
      * Test container configurator.
@@ -132,7 +135,7 @@ class PassportContainerConfiguratorTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -144,17 +147,16 @@ class PassportContainerConfiguratorTest extends TestCase
      */
     public static function createSettingsProvider(): SettingsProviderInterface
     {
-        return new class implements SettingsProviderInterface
-        {
+        return new class implements SettingsProviderInterface {
             private $values = [
                 C::class => [
-                    C::KEY_IS_LOG_ENABLED                  => true,
-                    C::KEY_USER_TABLE_NAME                 => 'users',
-                    C::KEY_USER_PRIMARY_KEY_NAME           => 'id_user',
-                    C::KEY_DEFAULT_CLIENT_ID               => T::TEST_DEFAULT_CLIENT_ID,
-                    C::KEY_APPROVAL_URI_STRING             => T::TEST_APPROVAL_URI,
-                    C::KEY_ERROR_URI_STRING                => T::TEST_ERROR_URI,
-                    C::KEY_CODE_EXPIRATION_TIME_IN_SECONDS => 3600,
+                    C::KEY_IS_LOG_ENABLED                       => true,
+                    C::KEY_USER_TABLE_NAME                      => 'users',
+                    C::KEY_USER_PRIMARY_KEY_NAME                => 'id_user',
+                    C::KEY_DEFAULT_CLIENT_ID                    => T::TEST_DEFAULT_CLIENT_ID,
+                    C::KEY_APPROVAL_URI_STRING                  => T::TEST_APPROVAL_URI,
+                    C::KEY_ERROR_URI_STRING                     => T::TEST_ERROR_URI,
+                    C::KEY_CODE_EXPIRATION_TIME_IN_SECONDS      => 3600,
                     C::KEY_TOKEN_EXPIRATION_TIME_IN_SECONDS     => 3600,
                     C::KEY_RENEW_REFRESH_VALUE_ON_TOKEN_REFRESH => true,
                     C::KEY_USER_CREDENTIALS_VALIDATOR           => [T::class, 'userValidator'],

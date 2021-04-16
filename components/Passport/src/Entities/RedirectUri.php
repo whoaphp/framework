@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Entities;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +17,14 @@ namespace Limoncello\Passport\Entities;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Passport\Entities;
+
 use DateTimeInterface;
 use Limoncello\Passport\Contracts\Entities\RedirectUriInterface;
 use Limoncello\Passport\Exceptions\InvalidArgumentException;
+use Limoncello\Passport\Models\RedirectUri as Model;
 use Psr\Http\Message\UriInterface;
 use Zend\Diactoros\Uri;
 
@@ -30,13 +34,13 @@ use Zend\Diactoros\Uri;
 abstract class RedirectUri extends DatabaseItem implements RedirectUriInterface
 {
     /** Field name */
-    const FIELD_ID = 'id_redirect_uri';
+    const FIELD_ID = Model::FIELD_ID;
 
     /** Field name */
-    const FIELD_ID_CLIENT = Client::FIELD_ID;
+    const FIELD_ID_CLIENT = Model::FIELD_ID_CLIENT;
 
     /** Field name */
-    const FIELD_VALUE = 'value';
+    const FIELD_VALUE = Model::FIELD_VALUE;
 
     /**
      * @var int|null
@@ -85,6 +89,17 @@ abstract class RedirectUri extends DatabaseItem implements RedirectUriInterface
     public function setIdentifier(int $identifier): RedirectUriInterface
     {
         $this->identifierField = $identifier;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setUuid($uuid = null): RedirectUriInterface
+    {
+        /** @var RedirectUriInterface $self */
+        $self = $this->setUuidImpl($uuid);
 
         return $this;
     }

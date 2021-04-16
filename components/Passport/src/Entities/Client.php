@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Entities;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,13 @@ namespace Limoncello\Passport\Entities;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Passport\Entities;
+
 use DateTimeInterface;
 use Limoncello\Passport\Contracts\Entities\ClientInterface;
+use Limoncello\Passport\Models\Client as Model;
 
 /**
  * @package Limoncello\Passport
@@ -31,46 +35,46 @@ use Limoncello\Passport\Contracts\Entities\ClientInterface;
 abstract class Client extends DatabaseItem implements ClientInterface
 {
     /** Field name */
-    const FIELD_ID = 'id_client';
+    const FIELD_ID = Model::FIELD_ID;
 
     /** Field name */
-    const FIELD_NAME = 'name';
+    const FIELD_NAME = Model::FIELD_NAME;
 
     /** Field name */
-    const FIELD_DESCRIPTION = 'description';
+    const FIELD_DESCRIPTION = Model::FIELD_DESCRIPTION;
 
     /** Field name */
-    const FIELD_CREDENTIALS = 'credentials';
+    const FIELD_CREDENTIALS = Model::FIELD_CREDENTIALS;
 
     /** Field name */
-    const FIELD_REDIRECT_URIS = 'redirect_uris';
+    const FIELD_REDIRECT_URIS = Model::REL_REDIRECT_URIS;
 
     /** Field name */
-    const FIELD_SCOPES = 'scopes';
+    const FIELD_SCOPES = Model::REL_SCOPES;
 
     /** Field name */
-    const FIELD_IS_CONFIDENTIAL = 'is_confidential';
+    const FIELD_IS_CONFIDENTIAL = Model::FIELD_IS_CONFIDENTIAL;
 
     /** Field name */
-    const FIELD_IS_USE_DEFAULT_SCOPE = 'is_use_default_scope';
+    const FIELD_IS_USE_DEFAULT_SCOPE = Model::FIELD_IS_USE_DEFAULT_SCOPE;
 
     /** Field name */
-    const FIELD_IS_SCOPE_EXCESS_ALLOWED = 'is_scope_excess_allowed';
+    const FIELD_IS_SCOPE_EXCESS_ALLOWED = Model::FIELD_IS_SCOPE_EXCESS_ALLOWED;
 
     /** Field name */
-    const FIELD_IS_CODE_GRANT_ENABLED = 'is_code_grant_enabled';
+    const FIELD_IS_CODE_GRANT_ENABLED = Model::FIELD_IS_CODE_GRANT_ENABLED;
 
     /** Field name */
-    const FIELD_IS_IMPLICIT_GRANT_ENABLED = 'is_implicit_grant_enabled';
+    const FIELD_IS_IMPLICIT_GRANT_ENABLED = Model::FIELD_IS_IMPLICIT_GRANT_ENABLED;
 
     /** Field name */
-    const FIELD_IS_PASSWORD_GRANT_ENABLED = 'is_password_grant_enabled';
+    const FIELD_IS_PASSWORD_GRANT_ENABLED = Model::FIELD_IS_PASSWORD_GRANT_ENABLED;
 
     /** Field name */
-    const FIELD_IS_CLIENT_GRANT_ENABLED = 'is_client_grant_enabled';
+    const FIELD_IS_CLIENT_GRANT_ENABLED = Model::FIELD_IS_CLIENT_GRANT_ENABLED;
 
     /** Field name */
-    const FIELD_IS_REFRESH_GRANT_ENABLED = 'is_refresh_grant_enabled';
+    const FIELD_IS_REFRESH_GRANT_ENABLED = Model::FIELD_IS_REFRESH_GRANT_ENABLED;
 
     /**
      * @var string
@@ -166,7 +170,7 @@ abstract class Client extends DatabaseItem implements ClientInterface
                 ->parseIsRefreshGrantEnabled($this->{static::FIELD_IS_REFRESH_GRANT_ENABLED});
         } else {
             $this->
-                setScopeIdentifiers([])->setRedirectUriStrings([]);
+            setScopeIdentifiers([])->setRedirectUriStrings([]);
         }
     }
 
@@ -184,6 +188,17 @@ abstract class Client extends DatabaseItem implements ClientInterface
     public function setIdentifier(string $identifier): ClientInterface
     {
         $this->identifierField = $identifier;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setUuid($uuid = null): ClientInterface
+    {
+        /** @var ClientInterface $self */
+        $self = $this->setUuidImpl($uuid);
 
         return $this;
     }

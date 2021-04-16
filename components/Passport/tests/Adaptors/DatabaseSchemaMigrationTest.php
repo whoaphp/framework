@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Adaptors;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,12 @@ namespace Limoncello\Tests\Passport\Adaptors;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Tests\Passport\Adaptors;
+
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Limoncello\Passport\Adaptors\MySql\DatabaseSchemaMigrationTrait;
 use Limoncello\Passport\Entities\DatabaseSchema;
 use Limoncello\Tests\Passport\Data\User;
@@ -37,7 +40,7 @@ class DatabaseSchemaMigrationTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -46,19 +49,20 @@ class DatabaseSchemaMigrationTest extends TestCase
 
     /**
      * Test migration fail.
-     *
-     * @expectedException \Doctrine\DBAL\DBALException
      */
     public function testMigrationFail()
     {
+        $this->expectException(DBALException::class);
+
         /** @var Mock $connection */
         $connection = Mockery::mock(Connection::class);
         $connection->shouldReceive('getSchemaManager')->zeroOrMoreTimes()->withNoArgs()->andReturnSelf();
         $connection->shouldReceive('dropAndCreateTable')->zeroOrMoreTimes()->withAnyArgs()->andReturnUndefined();
-        $connection->shouldReceive('isConnected')->once()->withNoArgs()->andReturn(true);
+//        $connection->shouldReceive('isConnected')->once()->withNoArgs()->andReturn(true);
+        $connection->shouldReceive('isConnected')->times(2)->withNoArgs()->andReturn(true);
         $connection->shouldReceive('tablesExist')->zeroOrMoreTimes()->withAnyArgs()->andReturn(false);
-        $connection->shouldReceive('exec')->once()->withAnyArgs()->andThrow(DBALException::invalidTableName('abc'));
-        $connection->shouldReceive('exec')->zeroOrMoreTimes()->withAnyArgs()->andReturnUndefined();
+        $connection->shouldReceive('executeStatement')->once()->withAnyArgs()->andThrow(DBALException::invalidTableName('abc'));
+        $connection->shouldReceive('executeStatement')->zeroOrMoreTimes()->withAnyArgs()->andReturnUndefined();
 
         /** @var Connection $connection */
 

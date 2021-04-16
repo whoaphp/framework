@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Repositories;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,14 @@ namespace Limoncello\Tests\Passport\Repositories;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Tests\Passport\Repositories;
+
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ConnectionException;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Exception;
 use Limoncello\Passport\Adaptors\Generic\Client;
 use Limoncello\Passport\Adaptors\Generic\ClientRepository;
@@ -50,301 +53,301 @@ class BadDatabaseTest extends TestCase
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testClientIndex(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createClientRepository()->index();
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testClientCreate(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createClientRepository()->create(new Client());
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testClientBindScopeIdentifiers(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createClientRepository()->bindScopeIdentifiers('fakeClientId1', ['fakeScopeId1']);
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testClientUnbindScopeIdentifiers(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createClientRepository()->unbindScopes('fakeClientId1');
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testClientRead(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createClientRepository()->read('fakeClientId1');
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testClientReadScopeIdentifiers(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createClientRepository()->readScopeIdentifiers('fakeClientId1');
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testClientReadRedirectUriStrings(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createClientRepository()->readRedirectUriStrings('fakeClientId1');
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testClientUpdate(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createClientRepository()->update(new Client());
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testClientDelete(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createClientRepository()->delete('fakeClientId1');
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testRedirectUriIndexClientUris(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createRedirectUriRepository()->indexClientUris('fakeClientId1');
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testRedirectUriCreate(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createRedirectUriRepository()->create(new RedirectUri());
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testRedirectUriRead(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createRedirectUriRepository()->read(1);
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testRedirectUriUpdate(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createRedirectUriRepository()->update(new RedirectUri());
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testRedirectUriDelete(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createRedirectUriRepository()->delete(1);
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testScopeIndex(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createScopeRepository()->index();
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testScopeCreate(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createScopeRepository()->create(new Scope());
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testScopeRead(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createScopeRepository()->read('fakeScopeId');
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testScopeUpdate(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createScopeRepository()->update(new Scope());
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testScopeDelete(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createScopeRepository()->delete('fakeScopeId');
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testTokenCreateCode(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createTokenRepository()->createCode((new Token())->setCode('fakeCode'));
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testTokenAssignValuesToCode(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createTokenRepository()->assignValuesToCode((new Token())->setCode('fakeCode'), 123);
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testTokenCreateToken(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createTokenRepository()->createToken(new Token());
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testTokenBindScopeIdentifiers(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createTokenRepository()->bindScopeIdentifiers(1, ['fakeToken1']);
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testTokenUnbindScopes(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createTokenRepository()->unbindScopes(1);
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testTokenRead(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createTokenRepository()->read(1);
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testTokenReadByCode(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createTokenRepository()->readByCode('fakeCode', 123);
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testTokenReadByUser(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createTokenRepository()->readByUser(1, 123);
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testTokenReadPassport(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createTokenRepository()->readPassport('fakeToken', 123);
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testTokenReadScopeIdentifiers(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createTokenRepository()->readScopeIdentifiers(1);
     }
 
     /**
      * Test repository error handling.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testTokenUpdateValues(): void
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
         $this->createTokenRepository()->updateValues(new Token());
     }
 
@@ -353,19 +356,19 @@ class BadDatabaseTest extends TestCase
      *
      * @throws ReflectionException
      * @throws Exception
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testInTransactionAddCoverage(): void
     {
-        $connection  = Mockery::mock(Connection::class);
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
+        $connection = Mockery::mock(Connection::class);
         $connection->shouldReceive('beginTransaction')->once()->withNoArgs()->andReturnUndefined();
         $connection->shouldReceive('commit')->once()->withNoArgs()->andThrow(new ConnectionException());
 
         /** @var Connection $connection */
 
-        $repo    = new ClientRepository($connection, $this->initDefaultDatabaseSchema());
-        $method  = new ReflectionMethod(ClientRepository::class, 'inTransaction');
+        $repo   = new ClientRepository($connection, $this->initDefaultDatabaseSchema());
+        $method = new ReflectionMethod(ClientRepository::class, 'inTransaction');
 
         $method->setAccessible(true);
         // the exception thrown in the closure will be ignored
@@ -378,18 +381,18 @@ class BadDatabaseTest extends TestCase
      *
      * @throws ReflectionException
      * @throws Exception
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\RepositoryException
      */
     public function testGetDateTimeForDbAddCoverage(): void
     {
-        $connection  = Mockery::mock(Connection::class);
+        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+
+        $connection = Mockery::mock(Connection::class);
         $connection->shouldReceive('getDatabasePlatform')->once()->withNoArgs()->andThrow(new DBALException());
 
         /** @var Connection $connection */
 
-        $repo    = new ClientRepository($connection, $this->initDefaultDatabaseSchema());
-        $method  = new ReflectionMethod(ClientRepository::class, 'getDateTimeForDb');
+        $repo   = new ClientRepository($connection, $this->initDefaultDatabaseSchema());
+        $method = new ReflectionMethod(ClientRepository::class, 'getDateTimeForDb');
 
         $method->setAccessible(true);
         // the exception thrown in the closure will be ignored
@@ -451,7 +454,7 @@ class BadDatabaseTest extends TestCase
     /**
      * @return Connection
      */
-    private function initDummyConnection(): Connection
+    private function initDummyConnection(): ?Connection
     {
         try {
             $this->setConnection($connection = static::createConnection());

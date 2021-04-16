@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Repositories;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,14 @@ namespace Limoncello\Tests\Passport\Repositories;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Tests\Passport\Repositories;
+
 use DateTimeImmutable;
+use Doctrine\DBAL\Types\Type;
 use Exception;
+use Limoncello\Doctrine\Types\UuidType as LimoncelloUuidType;
 use Limoncello\Passport\Adaptors\Generic\Client;
 use Limoncello\Passport\Adaptors\Generic\ClientRepository;
 use Limoncello\Passport\Adaptors\Generic\Scope;
@@ -42,9 +47,11 @@ class ClientRepositoryTest extends TestCase
      *
      * @throws Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
+
+        Type::hasType(LimoncelloUuidType::NAME) === true ?: Type::addType(LimoncelloUuidType::NAME, LimoncelloUuidType::class);
 
         $this->initDatabase();
     }
@@ -57,7 +64,7 @@ class ClientRepositoryTest extends TestCase
     public function testCrud()
     {
         /** @var ClientRepositoryInterface $clientRepo */
-        list($clientRepo) = $this->createRepositories();
+        [$clientRepo] = $this->createRepositories();
 
         $this->assertEmpty($clientRepo->index());
 
@@ -107,7 +114,7 @@ class ClientRepositoryTest extends TestCase
     {
         /** @var ClientRepositoryInterface $clientRepo */
         /** @var ScopeRepositoryInterface $scopeRepo */
-        list($clientRepo, $scopeRepo) = $this->createRepositories();
+        [$clientRepo, $scopeRepo] = $this->createRepositories();
 
         $clientRepo->inTransaction(function () use ($clientRepo, $scopeRepo) {
             $scopeRepo->create($scope1 = (new Scope())->setIdentifier('scope1'));

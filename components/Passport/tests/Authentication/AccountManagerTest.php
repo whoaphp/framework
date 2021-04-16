@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Authentication;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Tests\Passport\Authentication;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Limoncello\Tests\Passport\Authentication;
 
 use Exception;
 use Limoncello\Contracts\Settings\SettingsProviderInterface;
@@ -100,16 +103,16 @@ class AccountManagerTest extends TestCase
 
     /**
      * Test setting current account with invalid token value.
-     *
-     * @expectedException \Limoncello\Passport\Exceptions\AuthenticationException
      */
     public function testSetAccountWithInvalidTokenValue()
     {
+        $this->expectException(\Limoncello\Passport\Exceptions\AuthenticationException::class);
+
         $container = new TestContainer();
 
         /** @var Mock $repoMock */
         /** @var Mock $providerMock */
-        $container[TokenRepositoryInterface::class] = $repoMock = Mockery::mock(TokenRepositoryInterface::class);
+        $container[TokenRepositoryInterface::class]  = $repoMock = Mockery::mock(TokenRepositoryInterface::class);
         $container[SettingsProviderInterface::class] = $providerMock = Mockery::mock(SettingsProviderInterface::class);
 
         $timeout    = 3600;

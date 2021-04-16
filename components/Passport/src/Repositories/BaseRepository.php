@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Repositories;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,18 @@ namespace Limoncello\Passport\Repositories;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Passport\Repositories;
+
 use Closure;
 use DateTimeInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ConnectionException as ConEx;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Exception;
 use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
 use Limoncello\Passport\Exceptions\RepositoryException;
@@ -300,7 +304,8 @@ abstract class BaseRepository
         string $intTableName,
         string $intPrimaryKeyName,
         string $intForeignKeyName
-    ): void {
+    ): void
+    {
         assert(is_string($primaryKey) === true || is_int($primaryKey) === true);
 
         try {
@@ -345,7 +350,8 @@ abstract class BaseRepository
         string $intTableName,
         string $intPrimaryKeyName,
         string $intForeignKeyName
-    ): array {
+    ): array
+    {
         try {
             $connection = $this->getConnection();
             $query      = $connection->createQueryBuilder();
@@ -379,7 +385,8 @@ abstract class BaseRepository
         string $intTableName,
         string $intPrimaryKeyName,
         $identifier
-    ): int {
+    ): int
+    {
         try {
             $connection = $this->getConnection();
             $query      = $connection->createQueryBuilder();
@@ -413,7 +420,8 @@ abstract class BaseRepository
         string $hasManyTableName,
         string $hasManyColumn,
         string $hasManyFkName
-    ): array {
+    ): array
+    {
         try {
             $connection = $this->getConnection();
             $query      = $connection->createQueryBuilder();
@@ -444,7 +452,7 @@ abstract class BaseRepository
     protected function getDateTimeForDb(DateTimeInterface $dateTime): string
     {
         try {
-            return Type::getType(Type::DATETIME)
+            return Type::getType(Types::DATETIME_IMMUTABLE)
                 ->convertToDatabaseValue($dateTime, $this->getConnection()->getDatabasePlatform());
         } catch (DBALException $exception) {
             $message = 'DateTime conversion to database format failed.';

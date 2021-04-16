@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Adaptors\PostgreSql;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,12 @@ namespace Limoncello\Passport\Adaptors\PostgreSql;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Passport\Adaptors\PostgreSql;
+
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
 use Limoncello\Passport\Traits\DatabaseSchemaMigrationTrait as BaseDatabaseSchemaMigrationTrait;
 
@@ -37,9 +40,9 @@ trait DatabaseSchemaMigrationTrait
      * @param Connection              $connection
      * @param DatabaseSchemaInterface $schema
      *
+     * @return void
      * @throws DBALException
      *
-     * @return void
      */
     protected function createDatabaseSchema(Connection $connection, DatabaseSchemaInterface $schema): void
     {
@@ -128,7 +131,7 @@ CREATE OR REPLACE VIEW {$view} AS
       LEFT JOIN {$intermediate} AS s ON t.{$tokensTokenId} = s.{$intermediateTokenId}
     GROUP BY t.{$tokensTokenId};
 EOT;
-        $connection->exec($sql);
+        $connection->executeStatement($sql);
     }
 
     /** @noinspection PhpUnusedPrivateMethodInspection
@@ -143,7 +146,7 @@ EOT;
     {
         $view = $schema->getTokensView();
         $sql  = "DROP VIEW IF EXISTS {$view}";
-        $connection->exec($sql);
+        $connection->executeStatement($sql);
     }
 
     /** @noinspection PhpUnusedPrivateMethodInspection
@@ -167,7 +170,7 @@ CREATE OR REPLACE VIEW {$view} AS
     FROM $tokensView
       LEFT JOIN $users USING ($tokensUserFk);
 EOT;
-        $connection->exec($sql);
+        $connection->executeStatement($sql);
     }
 
     /** @noinspection PhpUnusedPrivateMethodInspection
@@ -182,7 +185,7 @@ EOT;
     {
         $view = $schema->getPassportView();
         $sql  = "DROP VIEW IF EXISTS {$view}";
-        $connection->exec($sql);
+        $connection->executeStatement($sql);
     }
 
     /** @noinspection PhpUnusedPrivateMethodInspection
@@ -217,7 +220,7 @@ CREATE VIEW {$view} AS
       LEFT JOIN {$clientsUris}   AS u ON c.{$clientsClientId} = u.{$clUrisClientId}
     GROUP BY c.{$clientsClientId};
 EOT;
-        $connection->exec($sql);
+        $connection->executeStatement($sql);
     }
 
     /** @noinspection PhpUnusedPrivateMethodInspection
@@ -232,7 +235,7 @@ EOT;
     {
         $view = $schema->getClientsView();
         $sql  = "DROP VIEW IF EXISTS {$view}";
-        $connection->exec($sql);
+        $connection->executeStatement($sql);
     }
 
     /** @noinspection PhpUnusedPrivateMethodInspection
@@ -264,7 +267,7 @@ CREATE OR REPLACE VIEW {$view} AS
       LEFT JOIN {$users} AS u ON t.{$tokensUserId} = u.{$usersUserId}
     WHERE $tokensIsEnabled IS TRUE;
 EOT;
-            $connection->exec($sql);
+            $connection->executeStatement($sql);
         }
     }
 
@@ -280,6 +283,6 @@ EOT;
     {
         $view = $schema->getUsersView();
         $sql  = "DROP VIEW IF EXISTS {$view}";
-        $connection->exec($sql);
+        $connection->executeStatement($sql);
     }
 }

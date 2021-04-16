@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Adaptors\PostgreSql;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +17,11 @@ namespace Limoncello\Tests\Passport\Adaptors\PostgreSql;
  * limitations under the License.
  */
 
-use Doctrine\DBAL\Types\Type;
+declare(strict_types=1);
+
+namespace Limoncello\Tests\Passport\Adaptors\PostgreSql;
+
+use Doctrine\DBAL\Types\Types;
 use Exception;
 use Limoncello\Passport\Adaptors\PostgreSql\Client;
 use Limoncello\Passport\Entities\DatabaseSchema;
@@ -40,21 +43,21 @@ class ClientTest extends TestCase
     {
         $connection = $this->createConnection();
         $types      = [
-            Client::FIELD_ID                        => Type::STRING,
-            Client::FIELD_NAME                      => Type::STRING,
-            Client::FIELD_DESCRIPTION               => Type::STRING,
-            Client::FIELD_CREDENTIALS               => Type::STRING,
-            Client::FIELD_IS_CONFIDENTIAL           => Type::BOOLEAN,
-            Client::FIELD_IS_USE_DEFAULT_SCOPE      => Type::BOOLEAN,
-            Client::FIELD_IS_SCOPE_EXCESS_ALLOWED   => Type::BOOLEAN,
-            Client::FIELD_IS_CODE_GRANT_ENABLED     => Type::BOOLEAN,
-            Client::FIELD_IS_IMPLICIT_GRANT_ENABLED => Type::BOOLEAN,
-            Client::FIELD_IS_PASSWORD_GRANT_ENABLED => Type::BOOLEAN,
-            Client::FIELD_IS_CLIENT_GRANT_ENABLED   => Type::BOOLEAN,
-            Client::FIELD_IS_REFRESH_GRANT_ENABLED  => Type::BOOLEAN,
+            Client::FIELD_ID                        => Types::STRING,
+            Client::FIELD_NAME                      => Types::STRING,
+            Client::FIELD_DESCRIPTION               => Types::STRING,
+            Client::FIELD_CREDENTIALS               => Types::STRING,
+            Client::FIELD_IS_CONFIDENTIAL           => Types::BOOLEAN,
+            Client::FIELD_IS_USE_DEFAULT_SCOPE      => Types::BOOLEAN,
+            Client::FIELD_IS_SCOPE_EXCESS_ALLOWED   => Types::BOOLEAN,
+            Client::FIELD_IS_CODE_GRANT_ENABLED     => Types::BOOLEAN,
+            Client::FIELD_IS_IMPLICIT_GRANT_ENABLED => Types::BOOLEAN,
+            Client::FIELD_IS_PASSWORD_GRANT_ENABLED => Types::BOOLEAN,
+            Client::FIELD_IS_CLIENT_GRANT_ENABLED   => Types::BOOLEAN,
+            Client::FIELD_IS_REFRESH_GRANT_ENABLED  => Types::BOOLEAN,
 
-            Client::FIELD_SCOPES        => Type::STRING,
-            Client::FIELD_REDIRECT_URIS => Type::STRING,
+            Client::FIELD_SCOPES        => Types::STRING,
+            Client::FIELD_REDIRECT_URIS => Types::STRING,
         ];
         $columns    = [
             Client::FIELD_ID                        => 'some_id',

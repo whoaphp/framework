@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Traits;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,14 @@ namespace Limoncello\Tests\Passport\Traits;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Tests\Passport\Traits;
+
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
+use Doctrine\DBAL\Types\Type;
+use Limoncello\Doctrine\Types\UuidType as LimoncelloUuidType;
 use Limoncello\Passport\Entities\DatabaseSchema;
 use Limoncello\Passport\Traits\DatabaseSchemaMigrationTrait;
 use Limoncello\Tests\Passport\Data\User;
@@ -35,9 +40,19 @@ class DatabaseSchemaMigrationTest extends TestCase
     use DatabaseSchemaMigrationTrait;
 
     /**
+     * @inheritDoc
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Type::hasType(LimoncelloUuidType::NAME) === true ?: Type::addType(LimoncelloUuidType::NAME, LimoncelloUuidType::class);
+    }
+
+    /**
      * @inheritdoc
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -46,11 +61,11 @@ class DatabaseSchemaMigrationTest extends TestCase
 
     /**
      * Test migration fail.
-     *
-     * @expectedException \Doctrine\DBAL\DBALException
      */
     public function testMigrationFail()
     {
+        $this->expectException(DBALException::class);
+
         /** @var Mock $connection */
         $connection = Mockery::mock(Connection::class);
         $connection->shouldReceive('getSchemaManager')->zeroOrMoreTimes()->withNoArgs()->andReturnSelf();

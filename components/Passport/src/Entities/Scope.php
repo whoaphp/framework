@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Entities;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,13 @@ namespace Limoncello\Passport\Entities;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Passport\Entities;
+
 use DateTimeInterface;
 use Limoncello\Passport\Contracts\Entities\ScopeInterface;
+use Limoncello\Passport\Models\Scope as Model;
 
 /**
  * @package Limoncello\Passport
@@ -27,10 +31,10 @@ use Limoncello\Passport\Contracts\Entities\ScopeInterface;
 abstract class Scope extends DatabaseItem implements ScopeInterface
 {
     /** Field name */
-    const FIELD_ID = 'id_scope';
+    const FIELD_ID = Model::FIELD_ID;
 
     /** Field name */
-    const FIELD_DESCRIPTION = 'description';
+    const FIELD_DESCRIPTION = Model::FIELD_DESCRIPTION;
 
     /**
      * @var string|null
@@ -68,6 +72,17 @@ abstract class Scope extends DatabaseItem implements ScopeInterface
     public function setIdentifier(string $identifier): ScopeInterface
     {
         $this->identifierField = $identifier;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setUuid($uuid = null): ScopeInterface
+    {
+        /** @var ScopeInterface $self */
+        $self = $this->setUuidImpl($uuid);
 
         return $this;
     }

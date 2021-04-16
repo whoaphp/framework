@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,14 @@ namespace Limoncello\Tests\Passport;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Tests\Passport;
+
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Schema\Table;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Dotenv\Dotenv;
 use Exception;
 use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
@@ -89,7 +92,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      *
      * @throws Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -100,7 +103,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * @inheritdoc
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         if ($this->getConnection() !== null && $this->getDatabaseSchema() !== null) {
@@ -132,8 +135,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $schema = $this->initDefaultDatabaseSchema();
 
         $table = new Table($schema->getUsersTable());
-        $table->addColumn($schema->getUsersIdentityColumn(), Type::INTEGER)->setNotnull(true)->setUnsigned(true);
-        $table->addColumn(self::USERS_COLUMN_NAME, Type::STRING)->setNotnull(false);
+        $table->addColumn($schema->getUsersIdentityColumn(), Types::INTEGER)->setNotnull(true)->setUnsigned(true);
+        $table->addColumn(self::USERS_COLUMN_NAME, Types::STRING)->setNotnull(false);
         $table->setPrimaryKey([$schema->getUsersIdentityColumn()]);
 
         $this->getConnection()->getSchemaManager()->dropAndCreateTable($table);
@@ -175,7 +178,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     protected static function createSqliteDatabaseConnection(): Connection
     {
         $connection = DriverManager::getConnection(['url' => 'sqlite:///', 'memory' => true]);
-        static::assertNotSame(false, $connection->exec('PRAGMA foreign_keys = ON;'));
+        static::assertNotSame(false, $connection->executeStatement('PRAGMA foreign_keys = ON;'));
 
         return $connection;
     }
@@ -300,7 +303,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         array $postData = null,
         array $queryParameters = null,
         array $headers = null
-    ): ServerRequestInterface {
+    ): ServerRequestInterface
+    {
         $removeNulls = function (array $values) {
             return array_filter($values, function ($value) {
                 return $value !== null;
@@ -345,7 +349,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         int $httpStatus,
         array $body,
         array $headers = []
-    ) {
+    )
+    {
         $headers += [
             'Content-type'  => 'application/json',
             'Cache-Control' => 'no-store',
@@ -377,12 +382,13 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         array $expectedFragments,
         int $httpStatus = 302,
         array $headers = []
-    ) {
+    )
+    {
         $this->assertEquals(302, $response->getStatusCode());
         $this->assertTrue($response->hasHeader('Location'));
         /** @noinspection PhpParamsInspection */
         $this->assertCount(1, $response->getHeader('Location'));
-        list($location) = $response->getHeader('Location');
+        [$location] = $response->getHeader('Location');
 
         $locationUri = new Uri($location);
 

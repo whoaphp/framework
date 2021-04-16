@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Contracts\Entities;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +17,12 @@ namespace Limoncello\Passport\Contracts\Entities;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Passport\Contracts\Entities;
+
 use DateTimeInterface;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * @package Limoncello\Passport
@@ -36,6 +40,18 @@ interface ScopeInterface
      * @return ScopeInterface
      */
     public function setIdentifier(string $identifier): ScopeInterface;
+
+    /**
+     * @return UuidInterface
+     */
+    public function getUuid(): UuidInterface;
+
+    /**
+     * @param UuidInterface|string|null $uuid
+     *
+     * @return ScopeInterface
+     */
+    public function setUuid($uuid = null): ScopeInterface;
 
     /**
      * @return string|null

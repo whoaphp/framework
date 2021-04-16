@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Contracts\Entities;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,13 @@ namespace Limoncello\Passport\Contracts\Entities;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Passport\Contracts\Entities;
+
 use DateTimeInterface;
 use Psr\Http\Message\UriInterface;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * @package Limoncello\Passport
@@ -37,6 +41,18 @@ interface RedirectUriInterface
      * @return RedirectUriInterface
      */
     public function setIdentifier(int $identifier): RedirectUriInterface;
+
+    /**
+     * @return UuidInterface
+     */
+    public function getUuid(): UuidInterface;
+
+    /**
+     * @param UuidInterface|string|null $uuid
+     *
+     * @return RedirectUriInterface
+     */
+    public function setUuid($uuid = null): RedirectUriInterface;
 
     /**
      * @return string|null

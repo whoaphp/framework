@@ -20,7 +20,7 @@ namespace Limoncello\Passport\Repositories;
 
 use DateInterval;
 use DateTimeImmutable;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Limoncello\Passport\Contracts\Entities\ScopeInterface;
 use Limoncello\Passport\Contracts\Entities\TokenInterface;
@@ -52,11 +52,13 @@ abstract class TokenRepository extends BaseRepository implements TokenRepository
             });
             $schema = $this->getDatabaseSchema();
             $values = [
+                $schema->getTokensUuidColumn()           => $code->getUuid(),
                 $schema->getTokensClientIdentityColumn() => $code->getClientIdentifier(),
                 $schema->getTokensUserIdentityColumn()   => $code->getUserIdentifier(),
                 $schema->getTokensCodeColumn()           => $code->getCode(),
                 $schema->getTokensIsScopeModified()      => $code->isScopeModified(),
                 $schema->getTokensCodeCreatedAtColumn()  => $now,
+                $schema->getTokensCreatedAtColumn()      => $now,
             ];
 
             $tokenIdentifier = null;
@@ -71,7 +73,7 @@ abstract class TokenRepository extends BaseRepository implements TokenRepository
                 $tokenIdentifier = $this->getLastInsertId();
             }
 
-            $code->setIdentifier($tokenIdentifier)->setCodeCreatedAt($now);
+            $code->setIdentifier($tokenIdentifier)->setUuid()->setCodeCreatedAt($now)->setCreatedAt($now);
 
             return $code;
         } catch (RepositoryException $exception) {
@@ -143,21 +145,20 @@ abstract class TokenRepository extends BaseRepository implements TokenRepository
             });
             $schema     = $this->getDatabaseSchema();
             $hasRefresh = $token->getRefreshValue() !== null;
-            $values     = $hasRefresh === false ? [
+            $values     = [
                 $schema->getTokensClientIdentityColumn() => $token->getClientIdentifier(),
+                $schema->getTokensUuidColumn()           => $token->getUuid(),
                 $schema->getTokensUserIdentityColumn()   => $token->getUserIdentifier(),
                 $schema->getTokensValueColumn()          => $token->getValue(),
                 $schema->getTokensTypeColumn()           => $token->getType(),
                 $schema->getTokensIsScopeModified()      => $token->isScopeModified(),
                 $schema->getTokensIsEnabledColumn()      => $token->isEnabled(),
+                $schema->getTokensCreatedAtColumn()      => $now,
+                $schema->getTokensCreatedAtColumn()      => $now
+            ];
+            $values     += $hasRefresh === false ? [
                 $schema->getTokensValueCreatedAtColumn() => $now,
             ] : [
-                $schema->getTokensClientIdentityColumn()   => $token->getClientIdentifier(),
-                $schema->getTokensUserIdentityColumn()     => $token->getUserIdentifier(),
-                $schema->getTokensValueColumn()            => $token->getValue(),
-                $schema->getTokensTypeColumn()             => $token->getType(),
-                $schema->getTokensIsScopeModified()        => $token->isScopeModified(),
-                $schema->getTokensIsEnabledColumn()        => $token->isEnabled(),
                 $schema->getTokensValueCreatedAtColumn()   => $now,
                 $schema->getTokensRefreshColumn()          => $token->getRefreshValue(),
                 $schema->getTokensRefreshCreatedAtColumn() => $now,
@@ -175,7 +176,7 @@ abstract class TokenRepository extends BaseRepository implements TokenRepository
                 $tokenIdentifier = $this->getLastInsertId();
             }
 
-            $token->setIdentifier($tokenIdentifier)->setValueCreatedAt($now);
+            $token->setIdentifier($tokenIdentifier)->setUuid()->setValueCreatedAt($now);
             if ($hasRefresh === true) {
                 $token->setRefreshCreatedAt($now);
             }
@@ -387,6 +388,8 @@ abstract class TokenRepository extends BaseRepository implements TokenRepository
                 if ($token->getRefreshValue() !== null) {
                     $token->setRefreshCreatedAt($now);
                 }
+
+                $token->setUpdatedAt($now);
             }
         } /** @noinspection PhpRedundantCatchClauseInspection */ catch (DBALException $exception) {
             $message = 'Token update failed.';
@@ -456,7 +459,8 @@ abstract class TokenRepository extends BaseRepository implements TokenRepository
         int $expirationInSeconds,
         string $createdAtColumn,
         array $columns = ['*']
-    ): ?TokenInterface {
+    ): ?TokenInterface
+    {
         try {
             $query = $this->createEnabledTokenByColumnWithExpirationCheckQuery(
                 $identifier,
@@ -496,7 +500,8 @@ abstract class TokenRepository extends BaseRepository implements TokenRepository
         string $createdAtColumn,
         array $columns = ['*'],
         int $limit = null
-    ): array {
+    ): array
+    {
         try {
             $query = $this->createEnabledTokenByColumnWithExpirationCheckQuery(
                 $identifier,
@@ -538,7 +543,8 @@ abstract class TokenRepository extends BaseRepository implements TokenRepository
         int $expirationInSeconds,
         string $createdAtColumn,
         array $columns = ['*']
-    ): QueryBuilder {
+    ): QueryBuilder
+    {
         $query = $this->getConnection()->createQueryBuilder();
         $query = $this->addExpirationCondition(
             $query->select($columns)
@@ -564,7 +570,8 @@ abstract class TokenRepository extends BaseRepository implements TokenRepository
         QueryBuilder $query,
         int $expirationInSeconds,
         string $createdAtColumn
-    ): QueryBuilder {
+    ): QueryBuilder
+    {
         $earliestExpired = $this->ignoreException(function () use ($expirationInSeconds) : DateTimeImmutable {
             return (new DateTimeImmutable())->sub(new DateInterval("PT{$expirationInSeconds}S"));
         });

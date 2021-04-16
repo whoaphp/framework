@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Entities;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +17,17 @@ namespace Limoncello\Passport\Entities;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Passport\Entities;
+
 use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Limoncello\Passport\Models\Client as ClientModel;
+use Limoncello\Passport\Models\ClientScope as ClientScopeModel;
+use Limoncello\Passport\Models\RedirectUri as RedirectUriModel;
+use Limoncello\Passport\Models\Scope as ScopeModel;
+use Limoncello\Passport\Models\Token as TokenModel;
+use Limoncello\Passport\Models\TokenScope as TokenScopeModel;
 
 /**
  * @package Limoncello\Passport
@@ -28,37 +37,37 @@ use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
 class DatabaseSchema implements DatabaseSchemaInterface
 {
     /** Table name */
-    const TABLE_CLIENTS = 'oauth_clients';
+    const TABLE_CLIENTS = ClientModel::TABLE_NAME;
 
     /** View name */
     const VIEW_CLIENTS = 'vw_oauth_clients';
 
     /** Table name */
-    const TABLE_CLIENTS_SCOPES = 'oauth_clients_scopes';
+    const TABLE_CLIENTS_SCOPES = ClientScopeModel::TABLE_NAME;
 
     /** Table name */
-    const TABLE_REDIRECT_URIS = 'oauth_redirect_uris';
+    const TABLE_REDIRECT_URIS = RedirectUriModel::TABLE_NAME;
 
     /** Table name */
-    const TABLE_SCOPES = 'oauth_scopes';
+    const TABLE_SCOPES = ScopeModel::TABLE_NAME;
 
     /** Table name */
-    const TABLE_TOKENS = 'oauth_tokens';
+    const TABLE_TOKENS = TokenModel::TABLE_NAME;
 
     /** View name */
     const VIEW_TOKENS = 'vw_oauth_tokens';
 
     /** Table name */
-    const TABLE_TOKENS_SCOPES = 'oauth_tokens_scopes';
+    const TABLE_TOKENS_SCOPES = TokenScopeModel::TABLE_NAME;
 
     /** View name */
     const VIEW_USERS = 'vw_oauth_users';
 
     /** Field name */
-    const CLIENTS_SCOPES_FIELD_ID = 'clients_scopes_id';
+    const CLIENTS_SCOPES_FIELD_ID = ClientScopeModel::FIELD_ID;
 
     /** Field name */
-    const TOKENS_SCOPES_FIELD_ID = 'tokens_scopes_id';
+    const TOKENS_SCOPES_FIELD_ID = TokenScopeModel::FIELD_ID;
 
     /** View name */
     const VIEW_PASSPORT = 'vw_oauth_passport';
@@ -121,6 +130,14 @@ class DatabaseSchema implements DatabaseSchemaInterface
     public function getClientsIdentityColumn(): string
     {
         return Client::FIELD_ID;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getClientsUuidColumn(): string
+    {
+        return Client::FIELD_UUID;
     }
 
     /**
@@ -276,6 +293,14 @@ class DatabaseSchema implements DatabaseSchemaInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getRedirectUrisUuidColumn(): string
+    {
+        return RedirectUri::FIELD_UUID;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getRedirectUrisClientIdentityColumn(): string
@@ -321,6 +346,14 @@ class DatabaseSchema implements DatabaseSchemaInterface
     public function getScopesIdentityColumn(): string
     {
         return Scope::FIELD_ID;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getScopesUuidColumn(): string
+    {
+        return Scope::FIELD_UUID;
     }
 
     /**
@@ -377,6 +410,14 @@ class DatabaseSchema implements DatabaseSchemaInterface
     public function getTokensIdentityColumn(): string
     {
         return Token::FIELD_ID;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTokensUuidColumn(): string
+    {
+        return Token::FIELD_UUID;
     }
 
     /**
@@ -473,6 +514,22 @@ class DatabaseSchema implements DatabaseSchemaInterface
     public function getTokensRefreshCreatedAtColumn(): string
     {
         return Token::FIELD_REFRESH_CREATED_AT;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTokensCreatedAtColumn(): string
+    {
+        return Token::FIELD_CREATED_AT;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTokensUpdatedAtColumn(): string
+    {
+        return Token::FIELD_UPDATED_AT;
     }
 
     /**

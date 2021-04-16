@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Entities;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,25 +17,35 @@ namespace Limoncello\Passport\Entities;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Passport\Entities;
+
 use DateTimeImmutable;
 use DateTimeInterface;
+use Limoncello\Contracts\Data\TimestampFields;
+use Limoncello\Contracts\Data\UuidFields;
+use Limoncello\Doctrine\Traits\UuidTypeTrait;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use function property_exists;
 
 /**
  * @package Limoncello\Passport
  */
-abstract class DatabaseItem
+abstract class DatabaseItem implements UuidFields, TimestampFields
 {
+    use UuidTypeTrait;
+
     /**
      * @return string
      */
     abstract protected function getDbDateFormat(): string;
 
-    /** Field name */
-    const FIELD_CREATED_AT = 'created_at';
-
-    /** Field name */
-    const FIELD_UPDATED_AT = 'updated_at';
+    /**
+     * @var UuidInterface|null
+     */
+    private $uuidField;
 
     /**
      * @var DateTimeInterface|null
@@ -47,6 +56,41 @@ abstract class DatabaseItem
      * @var DateTimeInterface|null
      */
     private $updatedAtField;
+
+    /**
+     * @return UuidInterface
+     */
+    public function getUuid(): UuidInterface
+    {
+        if ($this->uuidField === null &&
+            $this->hasDynamicProperty(static::FIELD_UUID) === true &&
+            ($uuid = $this->{static::FIELD_UUID}) !== null
+        ) {
+            $this->setUuidImpl($uuid);
+        } else {
+            $this->setUuidImpl();
+        }
+
+        return $this->uuidField;
+    }
+
+    /**
+     * @param UuidInterface|string|null $uuid
+     *
+     * @return $this
+     */
+    public function setUuidImpl($uuid = null): DatabaseItem
+    {
+        if ($uuid instanceof UuidInterface) {
+            $this->uuidField = $uuid;
+        } elseif (is_string($uuid) === true && Uuid::isValid($uuid) === true) {
+            $this->uuidField = $this->parseUuid($uuid);
+        } else {
+            $this->uuidField = Uuid::uuid4();
+        }
+
+        return $this;
+    }
 
     /**
      * @inheritdoc

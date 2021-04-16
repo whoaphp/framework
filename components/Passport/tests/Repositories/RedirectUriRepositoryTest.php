@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Repositories;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Tests\Passport\Repositories;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Limoncello\Tests\Passport\Repositories;
 
 use DateTimeImmutable;
 use Exception;
@@ -43,7 +46,7 @@ class RedirectUriRepositoryTest extends TestCase
      *
      * @throws Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -59,7 +62,7 @@ class RedirectUriRepositoryTest extends TestCase
     {
         /** @var ClientRepositoryInterface $clientRepo */
         /** @var RedirectUriRepositoryInterface $uriRepo */
-        list($clientRepo, $uriRepo) = $this->createRepositories();
+        [$clientRepo, $uriRepo] = $this->createRepositories();
 
         $clientRepo->create(
             $client = (new Client())->setIdentifier('client1')->setName('client name')

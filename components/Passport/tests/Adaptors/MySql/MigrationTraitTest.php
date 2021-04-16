@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Adaptors\MySql;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +17,15 @@ namespace Limoncello\Tests\Passport\Adaptors\MySql;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Tests\Passport\Adaptors\MySql;
+
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
+use Doctrine\DBAL\Types\Type;
 use Exception;
+use Limoncello\Doctrine\Types\UuidType as LimoncelloUuidType;
 use Limoncello\Passport\Adaptors\MySql\DatabaseSchemaMigrationTrait;
 use Limoncello\Passport\Adaptors\MySql\DbDateFormatTrait;
 use Limoncello\Passport\Entities\DatabaseSchema;
@@ -47,6 +52,16 @@ class MigrationTraitTest extends TestCase
     private $isThrowInDummyCreate = false;
 
     /**
+     * @inheritDoc
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Type::hasType(LimoncelloUuidType::NAME) === true ?: Type::addType(LimoncelloUuidType::NAME, LimoncelloUuidType::class);
+    }
+
+    /**
      * We'll build a dummy test for covering some very basics of migration script and
      * then will test the actual methods separately.
      *
@@ -60,7 +75,7 @@ class MigrationTraitTest extends TestCase
         $this->createDatabaseSchema($connection, $schema);
 
         $this->isThrowInDummyCreate = true;
-        $gotException = false;
+        $gotException               = false;
         try {
             $this->createDatabaseSchema($connection, $schema);
         } catch (DBALException $exception) {
@@ -84,7 +99,7 @@ class MigrationTraitTest extends TestCase
         // Should we set expectations with specific SQL values?
         // I have a feeling it's better to have more generic expectations.
 
-        $connection->shouldReceive('exec')->times(4)->withAnyArgs()->andReturnUndefined();
+        $connection->shouldReceive('executeStatement')->times(4)->withAnyArgs()->andReturnUndefined();
 
         /** @var Connection $connection */
 
@@ -108,7 +123,7 @@ class MigrationTraitTest extends TestCase
         // Should we set expectations with specific SQL values?
         // I have a feeling it's better to have more generic expectations.
 
-        $connection->shouldReceive('exec')->times(4)->withAnyArgs()->andReturnUndefined();
+        $connection->shouldReceive('executeStatement')->times(4)->withAnyArgs()->andReturnUndefined();
 
         /** @var Connection $connection */
 

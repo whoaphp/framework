@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Repositories;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Tests\Passport\Repositories;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Limoncello\Tests\Passport\Repositories;
 
 use DateTimeImmutable;
 use Exception;
@@ -44,7 +47,7 @@ class TokenRepositoryTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -61,7 +64,7 @@ class TokenRepositoryTest extends TestCase
         /** @var TokenRepositoryInterface $tokenRepo */
         /** @var ScopeRepositoryInterface $scopeRepo */
         /** @var ClientRepositoryInterface $clientRepo */
-        list($tokenRepo, $scopeRepo, $clientRepo) = $this->createRepositories();
+        [$tokenRepo, $scopeRepo, $clientRepo] = $this->createRepositories();
 
         $newCode = (new Token())
             ->setUserIdentifier(PassportServerTest::TEST_USER_ID)
@@ -149,7 +152,7 @@ class TokenRepositoryTest extends TestCase
     {
         /** @var TokenRepositoryInterface $tokenRepo */
         /** @var ClientRepositoryInterface $clientRepo */
-        list($tokenRepo, , $clientRepo) = $this->createRepositories();
+        [$tokenRepo, , $clientRepo] = $this->createRepositories();
 
         $clientRepo->create($client = (new Client())->setIdentifier('client1')->setName('client name'));
         $unsavedToken = (new Token())
@@ -174,7 +177,7 @@ class TokenRepositoryTest extends TestCase
     {
         /** @var TokenRepositoryInterface $tokenRepo */
         /** @var ClientRepositoryInterface $clientRepo */
-        list($tokenRepo, , $clientRepo) = $this->createRepositories();
+        [$tokenRepo, , $clientRepo] = $this->createRepositories();
 
         $clientRepo->create($client = (new Client())->setIdentifier('client1')->setName('client name'));
         $unsavedToken = (new Token())
@@ -204,7 +207,7 @@ class TokenRepositoryTest extends TestCase
     {
         /** @var TokenRepositoryInterface $tokenRepo */
         /** @var ClientRepositoryInterface $clientRepo */
-        list($tokenRepo, , $clientRepo) = $this->createRepositories();
+        [$tokenRepo, , $clientRepo] = $this->createRepositories();
 
         $clientRepo->create($client = (new Client())->setIdentifier('client1')->setName('client name'));
         $unsavedToken = (new Token())
@@ -230,7 +233,7 @@ class TokenRepositoryTest extends TestCase
     {
         /** @var TokenRepositoryInterface $tokenRepo */
         /** @var ClientRepositoryInterface $clientRepo */
-        list($tokenRepo, , $clientRepo) = $this->createRepositories();
+        [$tokenRepo, , $clientRepo] = $this->createRepositories();
 
         $clientRepo->create($client = (new Client())->setIdentifier('client1')->setName('client name'));
         $unsavedToken = (new Token())

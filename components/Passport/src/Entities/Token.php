@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Entities;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,66 +17,64 @@ namespace Limoncello\Passport\Entities;
  * limitations under the License.
  */
 
-use DateTimeImmutable;
+declare(strict_types=1);
+
+namespace Limoncello\Passport\Entities;
+
 use DateTimeInterface;
 use Limoncello\Passport\Contracts\Entities\TokenInterface;
+use Limoncello\Passport\Models\Token as Model;
 use function assert;
 use function implode;
 use function is_int;
 use function is_string;
-use function property_exists;
 
 /**
  * @package Limoncello\Passport
  */
-abstract class Token implements TokenInterface
+abstract class Token extends DatabaseItem implements TokenInterface
 {
-    /**
-     * @return string
-     */
-    abstract protected function getDbDateFormat(): string;
+    /** Field name */
+    const FIELD_ID = Model::FIELD_ID;
 
     /** Field name */
-    const FIELD_ID = 'id_token';
-
-    /** Field name */
-    const FIELD_ID_CLIENT = Client::FIELD_ID;
+    const FIELD_ID_CLIENT = Model::FIELD_ID_CLIENT;
 
     /** Field name */
     const FIELD_ID_USER = 'id_user';
 
     /** Field name */
-    const FIELD_SCOPES = 'scopes';
+    const FIELD_SCOPES = Model::REL_SCOPES;
 
     /** Field name */
-    const FIELD_IS_SCOPE_MODIFIED = 'is_scope_modified';
+    const FIELD_IS_SCOPE_MODIFIED = Model::FIELD_IS_SCOPE_MODIFIED;
 
     /** Field name */
-    const FIELD_IS_ENABLED = 'is_enabled';
+    const FIELD_IS_ENABLED = Model::FIELD_IS_ENABLED;
 
     /** Field name */
-    const FIELD_REDIRECT_URI = 'redirect_uri';
+    const FIELD_REDIRECT_URI = Model::FIELD_REDIRECT_URI;
 
     /** Field name */
-    const FIELD_CODE = 'code';
+    const FIELD_CODE = Model::FIELD_CODE;
 
     /** Field name */
-    const FIELD_VALUE = 'value';
+    const FIELD_VALUE = Model::FIELD_VALUE;
 
     /** Field name */
-    const FIELD_TYPE = 'type';
+    const FIELD_TYPE = Model::FIELD_TYPE;
 
     /** Field name */
-    const FIELD_REFRESH = 'refresh';
+    const FIELD_REFRESH = Model::FIELD_REFRESH;
 
     /** Field name */
-    const FIELD_CODE_CREATED_AT = 'code_created_at';
+    const FIELD_CODE_CREATED_AT = Model::FIELD_CODE_CREATED_AT;
 
     /** Field name */
-    const FIELD_VALUE_CREATED_AT = 'value_created_at';
+    const FIELD_VALUE_CREATED_AT = Model::FIELD_VALUE_CREATED_AT;
 
     /** Field name */
-    const FIELD_REFRESH_CREATED_AT = 'refresh_created_at';
+    const FIELD_REFRESH_CREATED_AT = Model::FIELD_REFRESH_CREATED_AT;
 
     /**
      * @var int|null
@@ -189,6 +186,17 @@ abstract class Token implements TokenInterface
     public function setIdentifier(int $identifier): TokenInterface
     {
         $this->identifierField = $identifier;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setUuid($uuid = null): TokenInterface
+    {
+        /** @var TokenInterface $self */
+        $self = $this->setUuidImpl($uuid);
 
         return $this;
     }
@@ -482,6 +490,28 @@ abstract class Token implements TokenInterface
     /**
      * @inheritdoc
      */
+    public function setCreatedAt(DateTimeInterface $createdAt): TokenInterface
+    {
+        /** @var TokenInterface $self */
+        $self = $this->setCreatedAtImpl($createdAt);
+
+        return $self;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setUpdatedAt(DateTimeInterface $updatedAt): TokenInterface
+    {
+        /** @var TokenInterface $self */
+        $self = $this->setUpdatedAtImpl($updatedAt);
+
+        return $self;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function hasBeenUsedEarlier(): bool
     {
         return $this->getValueCreatedAt() !== null;
@@ -509,27 +539,5 @@ abstract class Token implements TokenInterface
         $value === '1' ? $this->setEnabled() : $this->setDisabled();
 
         return $this;
-    }
-
-    /**
-     * @param string $createdAt
-     *
-     * @return DateTimeInterface
-     *
-     * @SuppressWarnings(PHPMD.StaticAccess)
-     */
-    protected function parseDateTime(string $createdAt): DateTimeInterface
-    {
-        return DateTimeImmutable::createFromFormat($this->getDbDateFormat(), $createdAt);
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
-    protected function hasDynamicProperty(string $name): bool
-    {
-        return property_exists($this, $name);
     }
 }

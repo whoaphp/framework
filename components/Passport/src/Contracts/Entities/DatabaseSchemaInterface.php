@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Contracts\Entities;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Passport\Contracts\Entities;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Limoncello\Passport\Contracts\Entities;
 
 /**
  * @package Limoncello\Passport
@@ -36,6 +39,7 @@ interface DatabaseSchemaInterface
      * @return string
      */
     public function getClientsViewRedirectUrisColumn(): string;
+
     /**
      * @return string
      */
@@ -50,6 +54,11 @@ interface DatabaseSchemaInterface
      * @return string
      */
     public function getClientsIdentityColumn(): string;
+
+    /**
+     * @return string
+     */
+    public function getClientsUuidColumn(): string;
 
     /**
      * @return string
@@ -157,6 +166,11 @@ interface DatabaseSchemaInterface
     /**
      * @return string
      */
+    public function getRedirectUrisUuidColumn(): string;
+
+    /**
+     * @return string
+     */
     public function getRedirectUrisClientIdentityColumn(): string;
 
     /**
@@ -187,6 +201,11 @@ interface DatabaseSchemaInterface
      * @return string
      */
     public function getScopesIdentityColumn(): string;
+
+    /**
+     * @return string
+     */
+    public function getScopesUuidColumn(): string;
 
     /**
      * @return string
@@ -226,6 +245,11 @@ interface DatabaseSchemaInterface
      * @return string
      */
     public function getTokensIdentityColumn(): string;
+
+    /**
+     * @return string
+     */
+    public function getTokensUuidColumn(): string;
 
     /**
      * @return string
@@ -286,6 +310,16 @@ interface DatabaseSchemaInterface
      * @return string
      */
     public function getTokensRefreshCreatedAtColumn(): string;
+
+    /**
+     * @return string
+     */
+    public function getTokensCreatedAtColumn(): string;
+
+    /**
+     * @return string
+     */
+    public function getTokensUpdatedAtColumn(): string;
 
     /**************************************************************************
      * OAuth Tokens-Scopes table.

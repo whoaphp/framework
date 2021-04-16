@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Traits;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,15 @@ namespace Limoncello\Passport\Traits;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Passport\Traits;
+
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Schema\Table;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
+use Limoncello\Doctrine\Types\UuidType;
 use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
 
 /**
@@ -33,9 +37,9 @@ trait DatabaseSchemaMigrationTrait
      * @param Connection              $connection
      * @param DatabaseSchemaInterface $schema
      *
+     * @return void
      * @throws DBALException
      *
-     * @return void
      */
     protected function createDatabaseSchema(Connection $connection, DatabaseSchemaInterface $schema): void
     {
@@ -98,11 +102,14 @@ trait DatabaseSchemaMigrationTrait
         $manager = $connection->getSchemaManager();
 
         $table = new Table($schema->getScopesTable());
-        $table->addColumn($schema->getScopesIdentityColumn(), Type::STRING)->setNotnull(true);
-        $table->addColumn($schema->getScopesDescriptionColumn(), Type::STRING)->setNotnull(false);
-        $table->addColumn($schema->getScopesCreatedAtColumn(), Type::DATETIME)->setNotnull(true);
-        $table->addColumn($schema->getScopesUpdatedAtColumn(), Type::DATETIME)->setNotnull(false);
+        $table->addColumn($schema->getScopesIdentityColumn(), Types::STRING)->setNotnull(true);
+        $table->addColumn($schema->getScopesUuidColumn(), UuidType::NAME)->setNotnull(true);
+        $table->addColumn($schema->getScopesDescriptionColumn(), Types::STRING)->setNotnull(false);
+        $table->addColumn($schema->getScopesCreatedAtColumn(), Types::DATETIME_IMMUTABLE)->setNotnull(true);
+        $table->addColumn($schema->getScopesUpdatedAtColumn(), Types::DATETIME_IMMUTABLE)->setNotnull(false);
         $table->setPrimaryKey([$schema->getScopesIdentityColumn()]);
+        $table->addUniqueIndex([$schema->getScopesIdentityColumn(), $schema->getScopesUuidColumn()]);
+        $table->addUniqueIndex([$schema->getScopesUuidColumn()]);
 
         $manager->dropAndCreateTable($table);
     }
@@ -120,21 +127,24 @@ trait DatabaseSchemaMigrationTrait
         $manager = $connection->getSchemaManager();
 
         $table = new Table($schema->getClientsTable());
-        $table->addColumn($schema->getClientsIdentityColumn(), Type::STRING)->setNotnull(true);
-        $table->addColumn($schema->getClientsNameColumn(), Type::STRING)->setNotnull(true);
-        $table->addColumn($schema->getClientsDescriptionColumn(), Type::STRING)->setNotnull(false);
-        $table->addColumn($schema->getClientsCredentialsColumn(), Type::STRING)->setNotnull(false);
-        $table->addColumn($schema->getClientsIsConfidentialColumn(), Type::BOOLEAN)->setDefault(true);
-        $table->addColumn($schema->getClientsIsScopeExcessAllowedColumn(), Type::BOOLEAN)->setDefault(false);
-        $table->addColumn($schema->getClientsIsUseDefaultScopeColumn(), Type::BOOLEAN)->setDefault(true);
-        $table->addColumn($schema->getClientsIsCodeGrantEnabledColumn(), Type::BOOLEAN)->setDefault(false);
-        $table->addColumn($schema->getClientsIsImplicitGrantEnabledColumn(), Type::BOOLEAN)->setDefault(false);
-        $table->addColumn($schema->getClientsIsPasswordGrantEnabledColumn(), Type::BOOLEAN)->setDefault(false);
-        $table->addColumn($schema->getClientsIsClientGrantEnabledColumn(), Type::BOOLEAN)->setDefault(false);
-        $table->addColumn($schema->getClientsIsRefreshGrantEnabledColumn(), Type::BOOLEAN)->setDefault(false);
-        $table->addColumn($schema->getClientsCreatedAtColumn(), Type::DATETIME)->setNotnull(true);
-        $table->addColumn($schema->getClientsUpdatedAtColumn(), Type::DATETIME)->setNotnull(false);
+        $table->addColumn($schema->getClientsIdentityColumn(), Types::STRING)->setNotnull(true);
+        $table->addColumn($schema->getClientsUuidColumn(), UuidType::NAME)->setNotnull(true);
+        $table->addColumn($schema->getClientsNameColumn(), Types::STRING)->setNotnull(true);
+        $table->addColumn($schema->getClientsDescriptionColumn(), Types::STRING)->setNotnull(false);
+        $table->addColumn($schema->getClientsCredentialsColumn(), Types::STRING)->setNotnull(false);
+        $table->addColumn($schema->getClientsIsConfidentialColumn(), Types::BOOLEAN)->setDefault(true);
+        $table->addColumn($schema->getClientsIsScopeExcessAllowedColumn(), Types::BOOLEAN)->setDefault(false);
+        $table->addColumn($schema->getClientsIsUseDefaultScopeColumn(), Types::BOOLEAN)->setDefault(true);
+        $table->addColumn($schema->getClientsIsCodeGrantEnabledColumn(), Types::BOOLEAN)->setDefault(false);
+        $table->addColumn($schema->getClientsIsImplicitGrantEnabledColumn(), Types::BOOLEAN)->setDefault(false);
+        $table->addColumn($schema->getClientsIsPasswordGrantEnabledColumn(), Types::BOOLEAN)->setDefault(false);
+        $table->addColumn($schema->getClientsIsClientGrantEnabledColumn(), Types::BOOLEAN)->setDefault(false);
+        $table->addColumn($schema->getClientsIsRefreshGrantEnabledColumn(), Types::BOOLEAN)->setDefault(false);
+        $table->addColumn($schema->getClientsCreatedAtColumn(), Types::DATETIME_IMMUTABLE)->setNotnull(true);
+        $table->addColumn($schema->getClientsUpdatedAtColumn(), Types::DATETIME_IMMUTABLE)->setNotnull(false);
         $table->setPrimaryKey([$schema->getClientsIdentityColumn()]);
+        $table->addUniqueIndex([$schema->getClientsIdentityColumn(), $schema->getClientsUuidColumn()]);
+        $table->addUniqueIndex([$schema->getClientsUuidColumn()]);
         $manager->dropAndCreateTable($table);
     }
 
@@ -151,13 +161,16 @@ trait DatabaseSchemaMigrationTrait
         $manager = $connection->getSchemaManager();
 
         $table = new Table($schema->getRedirectUrisTable());
-        $table->addColumn($schema->getRedirectUrisIdentityColumn(), Type::INTEGER)
+        $table->addColumn($schema->getRedirectUrisIdentityColumn(), Types::INTEGER)
             ->setNotnull(true)->setAutoincrement(true)->setUnsigned(true);
-        $table->addColumn($schema->getRedirectUrisClientIdentityColumn(), Type::STRING)->setNotnull(true);
-        $table->addColumn($schema->getRedirectUrisValueColumn(), Type::STRING)->setNotnull(true);
-        $table->addColumn($schema->getRedirectUrisCreatedAtColumn(), Type::DATETIME)->setNotnull(true);
-        $table->addColumn($schema->getRedirectUrisUpdatedAtColumn(), Type::DATETIME)->setNotnull(false);
+        $table->addColumn($schema->getRedirectUrisUuidColumn(), UuidType::NAME)->setNotnull(true);
+        $table->addColumn($schema->getRedirectUrisClientIdentityColumn(), Types::STRING)->setNotnull(true);
+        $table->addColumn($schema->getRedirectUrisValueColumn(), Types::STRING)->setNotnull(true);
+        $table->addColumn($schema->getRedirectUrisCreatedAtColumn(), Types::DATETIME_IMMUTABLE)->setNotnull(true);
+        $table->addColumn($schema->getRedirectUrisUpdatedAtColumn(), Types::DATETIME_IMMUTABLE)->setNotnull(false);
         $table->setPrimaryKey([$schema->getRedirectUrisIdentityColumn()]);
+        $table->addUniqueIndex([$schema->getRedirectUrisIdentityColumn(), $schema->getRedirectUrisUuidColumn()]);
+        $table->addUniqueIndex([$schema->getRedirectUrisUuidColumn()]);
 
         $table->addForeignKeyConstraint(
             $schema->getClientsTable(),
@@ -182,21 +195,26 @@ trait DatabaseSchemaMigrationTrait
         $manager = $connection->getSchemaManager();
 
         $table = new Table($schema->getTokensTable());
-        $table->addColumn($schema->getTokensIdentityColumn(), Type::INTEGER)
+        $table->addColumn($schema->getTokensIdentityColumn(), Types::INTEGER)
             ->setNotnull(true)->setAutoincrement(true)->setUnsigned(true);
-        $table->addColumn($schema->getTokensIsEnabledColumn(), Type::BOOLEAN)->setNotnull(true)->setDefault(true);
-        $table->addColumn($schema->getTokensIsScopeModified(), Type::BOOLEAN)->setNotnull(true)->setDefault(false);
-        $table->addColumn($schema->getTokensClientIdentityColumn(), Type::STRING)->setNotnull(true);
-        $table->addColumn($schema->getTokensUserIdentityColumn(), Type::INTEGER)->setNotnull(false)->setUnsigned(true);
-        $table->addColumn($schema->getTokensRedirectUriColumn(), Type::STRING)->setNotnull(false);
-        $table->addColumn($schema->getTokensCodeColumn(), Type::STRING)->setNotnull(false);
-        $table->addColumn($schema->getTokensTypeColumn(), Type::STRING)->setNotnull(false);
-        $table->addColumn($schema->getTokensValueColumn(), Type::STRING)->setNotnull(false);
-        $table->addColumn($schema->getTokensRefreshColumn(), Type::STRING)->setNotnull(false);
-        $table->addColumn($schema->getTokensCodeCreatedAtColumn(), Type::DATETIME)->setNotnull(false);
-        $table->addColumn($schema->getTokensValueCreatedAtColumn(), Type::DATETIME)->setNotnull(false);
-        $table->addColumn($schema->getTokensRefreshCreatedAtColumn(), Type::DATETIME)->setNotnull(false);
+        $table->addColumn($schema->getTokensUuidColumn(), UuidType::NAME)->setNotnull(true);
+        $table->addColumn($schema->getTokensIsEnabledColumn(), Types::BOOLEAN)->setNotnull(true)->setDefault(true);
+        $table->addColumn($schema->getTokensIsScopeModified(), Types::BOOLEAN)->setNotnull(true)->setDefault(false);
+        $table->addColumn($schema->getTokensClientIdentityColumn(), Types::STRING)->setNotnull(true);
+        $table->addColumn($schema->getTokensUserIdentityColumn(), Types::INTEGER)->setNotnull(false)->setUnsigned(true);
+        $table->addColumn($schema->getTokensRedirectUriColumn(), Types::STRING)->setNotnull(false);
+        $table->addColumn($schema->getTokensCodeColumn(), Types::STRING)->setNotnull(false);
+        $table->addColumn($schema->getTokensTypeColumn(), Types::STRING)->setNotnull(false);
+        $table->addColumn($schema->getTokensValueColumn(), Types::STRING)->setNotnull(false);
+        $table->addColumn($schema->getTokensRefreshColumn(), Types::STRING)->setNotnull(false);
+        $table->addColumn($schema->getTokensCodeCreatedAtColumn(), Types::DATETIME_IMMUTABLE)->setNotnull(false);
+        $table->addColumn($schema->getTokensValueCreatedAtColumn(), Types::DATETIME_IMMUTABLE)->setNotnull(false);
+        $table->addColumn($schema->getTokensRefreshCreatedAtColumn(), Types::DATETIME_IMMUTABLE)->setNotnull(false);
+        $table->addColumn($schema->getTokensCreatedAtColumn(), Types::DATETIME_IMMUTABLE)->setNotnull(true);
+        $table->addColumn($schema->getTokensUpdatedAtColumn(), Types::DATETIME_IMMUTABLE)->setNotnull(false);
         $table->setPrimaryKey([$schema->getTokensIdentityColumn()]);
+        $table->addUniqueIndex([$schema->getTokensIdentityColumn(), $schema->getTokensUuidColumn()]);
+        $table->addUniqueIndex([$schema->getTokensUuidColumn()]);
 
         $table->addForeignKeyConstraint(
             $schema->getClientsTable(),
@@ -232,10 +250,10 @@ trait DatabaseSchemaMigrationTrait
         $manager = $connection->getSchemaManager();
 
         $table = new Table($schema->getClientsScopesTable());
-        $table->addColumn($schema->getClientsScopesIdentityColumn(), Type::INTEGER)
+        $table->addColumn($schema->getClientsScopesIdentityColumn(), Types::INTEGER)
             ->setNotnull(true)->setAutoincrement(true)->setUnsigned(true);
-        $table->addColumn($schema->getClientsScopesClientIdentityColumn(), Type::STRING)->setNotnull(true);
-        $table->addColumn($schema->getClientsScopesScopeIdentityColumn(), Type::STRING)->setNotnull(true);
+        $table->addColumn($schema->getClientsScopesClientIdentityColumn(), Types::STRING)->setNotnull(true);
+        $table->addColumn($schema->getClientsScopesScopeIdentityColumn(), Types::STRING)->setNotnull(true);
         $table->setPrimaryKey([$schema->getClientsScopesIdentityColumn()]);
         $table->addUniqueIndex([
             $schema->getClientsScopesClientIdentityColumn(),
@@ -272,11 +290,11 @@ trait DatabaseSchemaMigrationTrait
         $manager = $connection->getSchemaManager();
 
         $table = new Table($schema->getTokensScopesTable());
-        $table->addColumn($schema->getTokensScopesIdentityColumn(), Type::INTEGER)
+        $table->addColumn($schema->getTokensScopesIdentityColumn(), Types::INTEGER)
             ->setNotnull(true)->setAutoincrement(true)->setUnsigned(true);
-        $table->addColumn($schema->getTokensScopesTokenIdentityColumn(), Type::INTEGER)->setNotnull(true)
+        $table->addColumn($schema->getTokensScopesTokenIdentityColumn(), Types::INTEGER)->setNotnull(true)
             ->setUnsigned(true);
-        $table->addColumn($schema->getTokensScopesScopeIdentityColumn(), Type::STRING)->setNotnull(true);
+        $table->addColumn($schema->getTokensScopesScopeIdentityColumn(), Types::STRING)->setNotnull(true);
         $table->setPrimaryKey([$schema->getTokensScopesIdentityColumn()]);
         $table->addUniqueIndex([
             $schema->getTokensScopesTokenIdentityColumn(),

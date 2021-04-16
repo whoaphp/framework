@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Package;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Tests\Passport\Package;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Limoncello\Tests\Passport\Package;
 
 use Exception;
 use Limoncello\Passport\Contracts\PassportServerInterface;
@@ -43,7 +46,7 @@ class PassportControllerTest extends TestCase
         $request  = new ServerRequest();
         $response = new Response();
 
-        $container = new TestContainer();
+        $container                                 = new TestContainer();
         $container[PassportServerInterface::class] = $serverMock = Mockery::mock(PassportServerInterface::class);
         /** @var Mock $serverMock */
         $serverMock->shouldReceive('getCreateAuthorization')->once()->with($request)->andReturn($response);
@@ -61,7 +64,7 @@ class PassportControllerTest extends TestCase
         $request  = new ServerRequest();
         $response = new Response();
 
-        $container = new TestContainer();
+        $container                                 = new TestContainer();
         $container[PassportServerInterface::class] = $serverMock = Mockery::mock(PassportServerInterface::class);
         /** @var Mock $serverMock */
         $serverMock->shouldReceive('postCreateToken')->once()->with($request)->andReturn($response);
@@ -72,7 +75,7 @@ class PassportControllerTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

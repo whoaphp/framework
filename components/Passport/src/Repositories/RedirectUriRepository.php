@@ -19,7 +19,7 @@ namespace Limoncello\Passport\Repositories;
  */
 
 use DateTimeImmutable;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Limoncello\Passport\Contracts\Entities\RedirectUriInterface;
 use Limoncello\Passport\Contracts\Repositories\RedirectUriRepositoryInterface;
 use Limoncello\Passport\Exceptions\RepositoryException;
@@ -71,12 +71,13 @@ abstract class RedirectUriRepository extends BaseRepository implements RedirectU
             $schema = $this->getDatabaseSchema();
             $this->createResource([
                 $schema->getRedirectUrisClientIdentityColumn() => $redirectUri->getClientIdentifier(),
+                $schema->getRedirectUrisUuidColumn()           => $redirectUri->getUuid(),
                 $schema->getRedirectUrisValueColumn()          => $redirectUri->getValue(),
                 $schema->getRedirectUrisCreatedAtColumn()      => $now,
             ]);
             $identifier = $this->getLastInsertId();
 
-            $redirectUri->setIdentifier($identifier)->setCreatedAt($now);
+            $redirectUri->setIdentifier($identifier)->setUuid()->setCreatedAt($now);
 
             return $redirectUri;
         } catch (RepositoryException $exception) {
