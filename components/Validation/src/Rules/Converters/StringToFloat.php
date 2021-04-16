@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Rules\Converters;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Validation\Rules\Converters;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Limoncello\Validation\Rules\Converters;
 
 use Limoncello\Validation\Contracts\Errors\ErrorCodes;
 use Limoncello\Validation\Contracts\Execution\ContextInterface;
@@ -40,10 +43,16 @@ final class StringToFloat extends ExecuteRule
      */
     public static function execute($value, ContextInterface $context): array
     {
-        if (is_string($value) === true || is_numeric($value) === true) {
-            return static::createSuccessReply((float)$value);
+        if (is_string($value) === true &&
+            (is_numeric($value) === true || filter_var($value, FILTER_VALIDATE_FLOAT) === true)
+        ) {
+            $reply = static::createSuccessReply((float)$value);
+        } elseif (is_float($value) === true) {
+            $reply = static::createSuccessReply($value);
+        } else {
+            $reply = static::createErrorReply($context, $value, ErrorCodes::IS_FLOAT, Messages::IS_FLOAT, []);
         }
 
-        return static::createErrorReply($context, $value, ErrorCodes::IS_FLOAT, Messages::IS_FLOAT, []);
+        return $reply;
     }
 }

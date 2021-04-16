@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Validation;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Tests\Validation;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Limoncello\Tests\Validation;
 
 use DateTimeImmutable;
 use Exception;
@@ -54,64 +57,72 @@ class RulesTest extends TestCase
         $jan20 = new DateTimeImmutable('2001-01-20');
 
         $rules = [
-            'date1' => v::stringToDateTime(DATE_ATOM, v::between($jan1, $feb1)),
-            'date2' => v::stringToDateTime('Y-d-m\TH:i:sP', v::equals($jan20)),
-            'date3' => v::stringToDateTime(DATE_ATOM, v::notEquals($jan20)),
-            'date4' => v::nullable(v::stringToDateTime(DATE_ATOM, v::success())),
-            'date5' => v::nullable(v::stringToDateTime(DATE_ATOM, v::success())),
-            'date6' => v::stringToDateTime(DATE_ATOM, v::lessThan($feb1)),
-            'date7' => v::stringToDateTime(DATE_ATOM, v::lessOrEquals($feb1)),
-            'date8' => v::stringToDateTime(DATE_ATOM, v::moreThan($feb1)),
-            'date9' => v::stringToDateTime(DATE_ATOM, v::moreOrEquals($feb1)),
+            'date1'  => v::stringToDateTime(DATE_ATOM, v::between($jan1, $feb1)),
+            'date2'  => v::stringToDateTime('Y-d-m\TH:i:sP', v::equals($jan20)),
+            'date3'  => v::stringToDateTime(DATE_ATOM, v::notEquals($jan20)),
+            'date4'  => v::nullable(v::stringToDateTime(DATE_ATOM, v::success())),
+            'date5'  => v::nullable(v::stringToDateTime(DATE_ATOM, v::success())),
+            'date6'  => v::stringToDateTime(DATE_ATOM, v::lessThan($feb1)),
+            'date7'  => v::stringToDateTime(DATE_ATOM, v::lessOrEquals($feb1)),
+            'date8'  => v::stringToDateTime(DATE_ATOM, v::moreThan($feb1)),
+            'date9'  => v::stringToDateTime(DATE_ATOM, v::moreOrEquals($feb1)),
+            'date10' => v::stringToDateTime('Y-m-d', v::success()),
+            'date11' => v::stringToDateTime('Y-m-d', v::equals($jan20)),
         ];
 
         // Check with valid input
 
         $input = [
-            'date1' => '2001-01-02T00:00:00Z',
-            'date2' => '2001-20-01T00:00:00Z',
-            'date3' => '2001-01-21T00:00:00Z',
-            'date4' => null,
-            'date5' => '2001-02-03T00:00:00Z',
-            'date6' => '2001-01-02T00:00:00Z',
-            'date7' => '2001-02-01T00:00:00Z',
-            'date8' => '2001-02-02T00:00:00Z',
-            'date9' => '2001-02-01T00:00:00Z',
+            'date1'  => '2001-01-02T00:00:00Z',
+            'date2'  => '2001-20-01T00:00:00Z',
+            'date3'  => '2001-01-21T00:00:00Z',
+            'date4'  => null,
+            'date5'  => '2001-02-03T00:00:00Z',
+            'date6'  => '2001-01-02T00:00:00Z',
+            'date7'  => '2001-02-01T00:00:00Z',
+            'date8'  => '2001-02-02T00:00:00Z',
+            'date9'  => '2001-02-01T00:00:00Z',
+            'date10' => '2001-01-20',
+            'date11' => '2001-01-20',
         ];
 
-        list($captures, $errors) = $this->validateArray($input, $rules);
+        [$captures, $errors] = $this->validateArray($input, $rules);
 
         $this->assertEmpty($errors);
         $this->assertEquals([
-            'date1' => new DateTimeImmutable('2001-01-02T00:00:00Z'),
-            'date2' => $jan20,
-            'date3' => new DateTimeImmutable('2001-01-21T00:00:00Z'),
-            'date4' => null,
-            'date5' => new DateTimeImmutable('2001-02-03T00:00:00Z'),
-            'date6' => new DateTimeImmutable('2001-01-02T00:00:00Z'),
-            'date7' => new DateTimeImmutable('2001-02-01T00:00:00Z'),
-            'date8' => new DateTimeImmutable('2001-02-02T00:00:00Z'),
-            'date9' => new DateTimeImmutable('2001-02-01T00:00:00Z'),
+            'date1'  => new DateTimeImmutable('2001-01-02T00:00:00Z'),
+            'date2'  => $jan20,
+            'date3'  => new DateTimeImmutable('2001-01-21T00:00:00Z'),
+            'date4'  => null,
+            'date5'  => new DateTimeImmutable('2001-02-03T00:00:00Z'),
+            'date6'  => new DateTimeImmutable('2001-01-02T00:00:00Z'),
+            'date7'  => new DateTimeImmutable('2001-02-01T00:00:00Z'),
+            'date8'  => new DateTimeImmutable('2001-02-02T00:00:00Z'),
+            'date9'  => new DateTimeImmutable('2001-02-01T00:00:00Z'),
+            'date10' => $jan20,
+            'date11' => new DateTimeImmutable('2001-01-20T00:00:00Z'),
         ], $captures);
 
         // Check with invalid input
 
         $input = [
-            'date1' => '2001-03-02T00:00:00Z',
-            'date2' => '2001-21-01T00:00:00Z',
-            'date3' => '2001-01-20T00:00:00Z',
-            'date4' => new stdClass(),
-            'date5' => 'not date',
-            'date6' => '2001-02-01T00:00:00Z',
-            'date7' => '2001-02-02T00:00:00Z',
-            'date8' => '2001-02-01T00:00:00Z',
-            'date9' => '2001-01-01T00:00:00Z',
+            'date1'  => '2001-03-02T00:00:00Z',
+            'date2'  => '2001-21-01T00:00:00Z',
+            'date3'  => '2001-01-20T00:00:00Z',
+            'date4'  => new stdClass(),
+            'date5'  => 'not date',
+            'date6'  => '2001-02-01T00:00:00Z',
+            'date7'  => '2001-02-02T00:00:00Z',
+            'date8'  => '2001-02-01T00:00:00Z',
+            'date9'  => '2001-01-01T00:00:00Z',
+            'date10' => '#DATE',
+            'date11' => new stdClass(),
         ];
 
-        list($captures, $errors) = $this->validateArray($input, $rules);
+        [$captures, $errors] = $this->validateArray($input, $rules);
 
         $this->assertEmpty($captures);
-        $this->assertCount(9, $errors);
+        $this->assertCount(11, $errors);
 
         $this->assertEquals(
             ErrorCodes::DATE_TIME_BETWEEN,
@@ -148,6 +159,14 @@ class RulesTest extends TestCase
         $this->assertEquals(
             ErrorCodes::DATE_TIME_MORE_OR_EQUALS,
             $this->findErrorByParamName('date9', $errors)->getMessageCode()
+        );
+        $this->assertEquals(
+            ErrorCodes::IS_DATE_TIME,
+            $this->findErrorByParamName('date10', $errors)->getMessageCode()
+        );
+        $this->assertEquals(
+            ErrorCodes::IS_DATE_TIME,
+            $this->findErrorByParamName('date11', $errors)->getMessageCode()
         );
     }
 
@@ -188,7 +207,7 @@ class RulesTest extends TestCase
             'scalar11' => 'anything',
         ];
 
-        list($captures, $errors) = $this->validateArray($input, $rules);
+        [$captures, $errors] = $this->validateArray($input, $rules);
 
         $this->assertEmpty($errors);
         $this->assertEquals([
@@ -221,7 +240,7 @@ class RulesTest extends TestCase
             'scalar11' => null,
         ];
 
-        list($captures, $errors) = $this->validateArray($input, $rules);
+        [$captures, $errors] = $this->validateArray($input, $rules);
 
         $this->assertEmpty($captures);
         $this->assertCount(11, $errors);
@@ -299,7 +318,7 @@ class RulesTest extends TestCase
             'string6' => 'def',
         ];
 
-        list($captures, $errors) = $this->validateArray($input, $rules);
+        [$captures, $errors] = $this->validateArray($input, $rules);
 
         $this->assertEmpty($errors);
         $this->assertEquals($input, $captures);
@@ -315,7 +334,7 @@ class RulesTest extends TestCase
             'string6' => 'non matching value',
         ];
 
-        list($captures, $errors) = $this->validateArray($input, $rules);
+        [$captures, $errors] = $this->validateArray($input, $rules);
 
         $this->assertEmpty($captures);
         $this->assertCount(6, $errors);
@@ -351,7 +370,7 @@ class RulesTest extends TestCase
             'string1' => '1234567',
         ];
 
-        list($captures, $errors) = $this->validateArray($input, $rules);
+        [$captures, $errors] = $this->validateArray($input, $rules);
 
         $this->assertEmpty($captures);
         $this->assertCount(1, $errors);
@@ -394,7 +413,7 @@ class RulesTest extends TestCase
             'stringArr2' => ['3tree',],
         ];
 
-        list($captures, $errors) = $this->validateArray($input, $rules);
+        [$captures, $errors] = $this->validateArray($input, $rules);
 
         $this->assertEmpty($errors);
         $this->assertEquals([
@@ -421,7 +440,7 @@ class RulesTest extends TestCase
             'stringArr2' => [new stdClass(),],
         ];
 
-        list($captures, $errors) = $this->validateArray($input, $rules);
+        [$captures, $errors] = $this->validateArray($input, $rules);
 
         $this->assertEmpty($captures);
         $this->assertCount(8, $errors);
@@ -479,7 +498,7 @@ class RulesTest extends TestCase
             'string2' => 'whatever 2',
         ];
 
-        list($captures, $errors) = $this->validateArray($input, $rules);
+        [$captures, $errors] = $this->validateArray($input, $rules);
 
         $this->assertEmpty($errors);
         $this->assertCount(2, $captures);
@@ -488,7 +507,7 @@ class RulesTest extends TestCase
 
         $input = [];
 
-        list($captures, $errors) = $this->validateArray($input, $rules);
+        [$captures, $errors] = $this->validateArray($input, $rules);
 
         $this->assertEmpty($captures);
         $this->assertCount(1, $errors);
@@ -520,7 +539,7 @@ class RulesTest extends TestCase
             'value2' => 'two',
         ];
 
-        list($captures, $errors) = $this->validateArray($input, $rules);
+        [$captures, $errors] = $this->validateArray($input, $rules);
 
         $this->assertEmpty($errors);
         $this->assertCount(2, $captures);
@@ -532,7 +551,7 @@ class RulesTest extends TestCase
             'value2' => 'one',
         ];
 
-        list($captures, $errors) = $this->validateArray($input, $rules);
+        [$captures, $errors] = $this->validateArray($input, $rules);
 
         $this->assertEmpty($captures);
         $this->assertCount(2, $errors);
@@ -567,7 +586,7 @@ class RulesTest extends TestCase
             'value2' => 'Hello WorldÆØÅ!',
         ];
 
-        list($captures, $errors) = $this->validateArray($input, $rules);
+        [$captures, $errors] = $this->validateArray($input, $rules);
 
         $this->assertEmpty($errors);
         $this->assertEquals([
@@ -582,7 +601,7 @@ class RulesTest extends TestCase
             'value2' => new stdClass(),
         ];
 
-        list($captures, $errors) = $this->validateArray($input, $rules);
+        [$captures, $errors] = $this->validateArray($input, $rules);
 
         $this->assertEmpty($captures);
         $this->assertCount(2, $errors);
@@ -628,7 +647,7 @@ class RulesTest extends TestCase
             'string'  => 'some string',
         ];
 
-        list($captures, $errors) = $this->validateArray($input, $rules);
+        [$captures, $errors] = $this->validateArray($input, $rules);
 
         $this->assertEmpty($errors);
         $this->assertEquals($input, $captures);
@@ -645,7 +664,7 @@ class RulesTest extends TestCase
             'string'  => new stdClass(),
         ];
 
-        list($captures, $errors) = $this->validateArray($input, $rules);
+        [$captures, $errors] = $this->validateArray($input, $rules);
 
         $this->assertEmpty($captures);
         $this->assertCount(7, $errors);
@@ -707,7 +726,7 @@ class RulesTest extends TestCase
             'empty_string' => '',
         ];
 
-        list($captures, $errors) = $this->validateArray($input1, $rules);
+        [$captures, $errors] = $this->validateArray($input1, $rules);
 
         $this->assertEmpty($errors);
         $this->assertSame(
@@ -722,7 +741,7 @@ class RulesTest extends TestCase
             'empty_string' => 'hello',
         ];
 
-        list($captures, $errors) = $this->validateArray($input2, $rules);
+        [$captures, $errors] = $this->validateArray($input2, $rules);
 
         $this->assertEmpty($errors);
         $this->assertSame(

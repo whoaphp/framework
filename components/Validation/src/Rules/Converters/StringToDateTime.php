@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Rules\Converters;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Validation\Rules\Converters;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Limoncello\Validation\Rules\Converters;
 
 use DateTimeImmutable;
 use DateTimeInterface;
@@ -86,6 +89,8 @@ final class StringToDateTime extends ExecuteRule
     private static function parseFromFormat(string $input, string $format)
     {
         $parsedOrNull = null;
+
+        $format = preg_match('/^Y-m-d$/', $format) >= 1 ? 'Y-m-d|' : $format;
 
         if (($value = DateTimeImmutable::createFromFormat($format, $input)) !== false) {
             $parsedOrNull = $value;
