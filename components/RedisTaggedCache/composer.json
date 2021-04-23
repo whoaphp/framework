@@ -132,6 +132,20 @@
             "options": {
                 "symlink": false
             }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\OAuthClient",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\JsonWebToken",
+            "options": {
+                "symlink": false
+            }
         }
     ],
     "name": "limoncello-php/redis-tagged-cache",
