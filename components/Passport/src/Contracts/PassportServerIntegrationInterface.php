@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Contracts;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Passport\Contracts;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Limoncello\Passport\Contracts;
 
 use Limoncello\OAuthServer\Contracts\ClientInterface;
 use Limoncello\Passport\Contracts\Entities\TokenInterface;
@@ -57,12 +60,13 @@ interface PassportServerIntegrationInterface
     public function getRedirectUriRepository(): RedirectUriRepositoryInterface;
 
     /**
-     * @param string $userName
-     * @param string $password
+     * @param string      $userName
+     * @param string|null $password
+     * @param mixed|null  $extras
      *
-     * @return int|string|null
+     * @return mixed
      */
-    public function validateUserId(string $userName, string $password);
+    public function validateUserId(string $userName, ?string $password = null, $extras = null);
 
     /**
      * @param int        $userIdentity

@@ -44,7 +44,7 @@ use Zend\Diactoros\Uri;
  */
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-    const USERS_COLUMN_NAME = 'name';
+    const TEST_USERS_COLUMN_NAME = 'name';
 
     /**
      * @var resource
@@ -136,14 +136,14 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
         $table = new Table($schema->getUsersTable());
         $table->addColumn($schema->getUsersIdentityColumn(), Types::INTEGER)->setNotnull(true)->setUnsigned(true);
-        $table->addColumn(self::USERS_COLUMN_NAME, Types::STRING)->setNotnull(false);
+        $table->addColumn(self::TEST_USERS_COLUMN_NAME, Types::STRING)->setNotnull(false);
         $table->setPrimaryKey([$schema->getUsersIdentityColumn()]);
 
         $this->getConnection()->getSchemaManager()->dropAndCreateTable($table);
 
         $this->getConnection()->insert($schema->getUsersTable(), [
-            $schema->getUsersIdentityColumn()     => PassportServerTest::TEST_USER_ID,
-            PassportServerTest::USERS_COLUMN_NAME => PassportServerTest::TEST_USER_NAME,
+            $schema->getUsersIdentityColumn()          => PassportServerTest::TEST_USER_ID,
+            PassportServerTest::TEST_USERS_COLUMN_NAME => PassportServerTest::TEST_USER_NAME,
         ]);
 
         $this->createDatabaseSchema($this->getConnection(), $this->getDatabaseSchema());

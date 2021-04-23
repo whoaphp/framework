@@ -75,8 +75,37 @@ class PassportContainerConfiguratorTest extends TestCase
         /** @var PassportServerIntegrationInterface $integration */
         $this->assertNotNull($integration = $container->get(PassportServerIntegrationInterface::class));
         $this->assertNotNull($userId = $integration->validateUserId(
+            PassportServerTest::TEST_USER_NAME, PassportServerTest::TEST_USER_PASSWORD
+        ));
+
+        $integration->verifyAllowedUserScope($userId, []);
+    }
+
+    /**
+     * Test container configurator.
+     *
+     * @throws Exception
+     */
+    public function testGenericContainerConfigurator1()
+    {
+        $container                                   = new TestContainer();
+        $container[SettingsProviderInterface::class] = $this->createSettingsProvider();
+        $container[Connection::class]                = Mockery::mock(Connection::class);
+        $container[LoggerInterface::class]           = new NullLogger();
+
+        PassportContainerConfigurator::configureContainer($container);
+
+        $this->assertNotNull($container->get(AccountManagerInterface::class));
+        $this->assertNotNull($container->get(PassportAccountManagerInterface::class));
+        $this->assertNotNull($container->get(DatabaseSchemaInterface::class));
+        $this->assertNotNull($container->get(PassportServerInterface::class));
+        $this->assertNotNull($container->get(TokenRepositoryInterface::class));
+        /** @var PassportServerIntegrationInterface $integration */
+        $this->assertNotNull($integration = $container->get(PassportServerIntegrationInterface::class));
+        $this->assertNotNull($userId = $integration->validateUserId(
             PassportServerTest::TEST_USER_NAME,
-            PassportServerTest::TEST_USER_PASSWORD
+            PassportServerTest::TEST_USER_PASSWORD,
+            PassportServerTest::TEST_EXTRAS
         ));
 
         $integration->verifyAllowedUserScope($userId, []);
@@ -100,8 +129,33 @@ class PassportContainerConfiguratorTest extends TestCase
         /** @var PassportServerIntegrationInterface $integration */
         $this->assertNotNull($integration = $container->get(PassportServerIntegrationInterface::class));
         $userId = $integration->validateUserId(
+            PassportServerTest::TEST_USER_NAME, PassportServerTest::TEST_USER_PASSWORD
+        );
+        $this->assertTrue(is_int($userId));
+        $integration->verifyAllowedUserScope($userId, []);
+    }
+
+    /**
+     * Test container configurator.
+     *
+     * @throws Exception
+     */
+    public function testMySqlContainerConfigurator1()
+    {
+        $container                                   = new TestContainer();
+        $container[SettingsProviderInterface::class] = $this->createSettingsProvider();
+        $container[Connection::class]                = Mockery::mock(Connection::class);
+        $container[LoggerInterface::class]           = new NullLogger();
+
+        MySqlPassportContainerConfigurator::configureContainer($container);
+
+        $this->assertNotNull($container->get(TokenRepositoryInterface::class));
+        /** @var PassportServerIntegrationInterface $integration */
+        $this->assertNotNull($integration = $container->get(PassportServerIntegrationInterface::class));
+        $userId = $integration->validateUserId(
             PassportServerTest::TEST_USER_NAME,
-            PassportServerTest::TEST_USER_PASSWORD
+            PassportServerTest::TEST_USER_PASSWORD,
+            PassportServerTest::TEST_EXTRAS
         );
         $this->assertTrue(is_int($userId));
         $integration->verifyAllowedUserScope($userId, []);
@@ -125,8 +179,33 @@ class PassportContainerConfiguratorTest extends TestCase
         /** @var PassportServerIntegrationInterface $integration */
         $this->assertNotNull($integration = $container->get(PassportServerIntegrationInterface::class));
         $userId = $integration->validateUserId(
+            PassportServerTest::TEST_USER_NAME, PassportServerTest::TEST_USER_PASSWORD
+        );
+        $this->assertTrue(is_int($userId));
+        $integration->verifyAllowedUserScope($userId, []);
+    }
+
+    /**
+     * Test container configurator.
+     *
+     * @throws Exception
+     */
+    public function testPostgreSqlContainerConfigurator1()
+    {
+        $container                                   = new TestContainer();
+        $container[SettingsProviderInterface::class] = $this->createSettingsProvider();
+        $container[Connection::class]                = Mockery::mock(Connection::class);
+        $container[LoggerInterface::class]           = new NullLogger();
+
+        PostgreSqlPassportContainerConfigurator::configureContainer($container);
+
+        $this->assertNotNull($container->get(TokenRepositoryInterface::class));
+        /** @var PassportServerIntegrationInterface $integration */
+        $this->assertNotNull($integration = $container->get(PassportServerIntegrationInterface::class));
+        $userId = $integration->validateUserId(
             PassportServerTest::TEST_USER_NAME,
-            PassportServerTest::TEST_USER_PASSWORD
+            PassportServerTest::TEST_USER_PASSWORD,
+            PassportServerTest::TEST_EXTRAS
         );
         $this->assertTrue(is_int($userId));
         $integration->verifyAllowedUserScope($userId, []);

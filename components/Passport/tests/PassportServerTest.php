@@ -77,7 +77,24 @@ class PassportServerTest extends TestCase
     const TEST_CLIENT_REDIRECT_URI = 'http://client.server/redirect_uri';
     const TEST_SCOPE_1 = 'scope1';
     const TEST_SCOPE_2 = 'scope2';
-    const USERS_COLUMN_NAME = 'name';
+    const TEST_USERS_COLUMN_NAME = 'name';
+
+    const TEST_EXTRAS_COLUMN_NAME_1 = 'extra_column_1';
+    const TEST_EXTRAS_COLUMN_NAME_2 = 'extra_column_2';
+    const TEST_EXTRAS_COLUMN_NAME_3 = 'extra_column_3';
+    const TEST_EXTRAS_COLUMN_NAME_4 = 'extra_column_4';
+
+    const TEST_EXTRAS_COLUMN_VALUE_1 = 'value1';
+    const TEST_EXTRAS_COLUMN_VALUE_2 = 'value2';
+    const TEST_EXTRAS_COLUMN_VALUE_3 = 'value3';
+    const TEST_EXTRAS_COLUMN_VALUE_4 = 'value4';
+
+    const TEST_EXTRAS = [
+        self::TEST_EXTRAS_COLUMN_NAME_1 => self::TEST_EXTRAS_COLUMN_VALUE_1,
+        self::TEST_EXTRAS_COLUMN_NAME_2 => self::TEST_EXTRAS_COLUMN_VALUE_1,
+        self::TEST_EXTRAS_COLUMN_NAME_3 => self::TEST_EXTRAS_COLUMN_VALUE_2,
+        self::TEST_EXTRAS_COLUMN_NAME_4 => self::TEST_EXTRAS_COLUMN_VALUE_3,
+    ];
 
     /**
      * Test issuing resource owner password token.

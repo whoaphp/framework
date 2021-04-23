@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Integration;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Passport\Integration;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Limoncello\Passport\Integration;
 
 use Doctrine\DBAL\Connection;
 use Exception;
@@ -157,10 +160,10 @@ abstract class BasePassportServerIntegration implements PassportServerIntegratio
     /**
      * @inheritdoc
      */
-    public function validateUserId(string $userName, string $password)
+    public function validateUserId(string $userName, ?string $password = null, $extras = null)
     {
         $validator    = $this->settings[C::KEY_USER_CREDENTIALS_VALIDATOR];
-        $nullOrUserId = call_user_func($validator, $this->getContainer(), $userName, $password);
+        $nullOrUserId = call_user_func($validator, $this->getContainer(), $userName, $password, $extras);
 
         return $nullOrUserId;
     }
@@ -263,7 +266,8 @@ abstract class BasePassportServerIntegration implements PassportServerIntegratio
         array $scopeList = null,
         string $state = null,
         array $extraParameters = []
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         /** @var Client $client */
         assert($client instanceof Client);
 

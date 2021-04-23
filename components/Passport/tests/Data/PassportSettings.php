@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Data;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Tests\Passport\Data;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Limoncello\Tests\Passport\Data;
 
 use Limoncello\Passport\Contracts\Entities\TokenInterface;
 use Psr\Container\ContainerInterface;
@@ -48,16 +51,18 @@ class PassportSettings extends \Limoncello\Passport\Package\PassportSettings
             ] + parent::getSettings();
     }
 
+
     /**
      * @param ContainerInterface $container
      * @param string             $userName
-     * @param string             $password
+     * @param string|null        $password
+     * @param mixed|null         $extras
      *
-     * @return int|null
+     * @return int
      */
-    public static function validateUser(ContainerInterface $container, string $userName, string $password)
+    public static function validateUser(ContainerInterface $container, string $userName, ?string $password = null, $extras = null)
     {
-        assert($container || $userName || $password);
+        assert($container || $userName || $password || $extras);
 
         return 123;
     }
