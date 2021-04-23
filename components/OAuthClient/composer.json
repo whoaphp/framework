@@ -1,0 +1,205 @@
+{
+    "repositories": [
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Application",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Auth",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Commands",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Common",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Container",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Contracts",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Core",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Crypt",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Data",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Events",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Flute",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\L10n",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\OAuthServer",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Passport",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Templates",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Validation",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Doctrine",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\Testing",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\OAuthClient",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework3\\components\\JsonWebToken",
+            "options": {
+                "symlink": false
+            }
+        }
+    ],
+    "name": "limoncello-php/oauth-client",
+    "description": "",
+    "keywords": [],
+    "homepage": "https://github.com/whoaphp/framework/tree/master/components/OAuthClient",
+    "support": {
+        "issues": "https://github.com/whoaphp/framework/issues"
+    },
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "whoaphp",
+            "email": "info@whoaphp.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "guzzlehttp/guzzle": "^7.0",
+        "limoncello-php/contracts": "dev-master",
+        "limoncello-php/container": "dev-master",
+        "web-token/jwt-framework": "^2.2.0",
+        "limoncello-php/json-web-token": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "mockery/mockery": "^0.9|^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Limoncello\\OAuthClient\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Limoncello\\Tests\\OAuthClient\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": ["@test-unit-with-coverage", "@test-cs", "@test-md"],
+        "test-unit": "./vendor/bin/phpunit",
+        "test-unit-with-coverage": "phpdbg -qrr ./vendor/bin/phpunit --coverage-text",
+        "test-cs": "./vendor/bin/phpcs -p -s --standard=PSR2 ./src ./tests",
+        "test-md": "./vendor/bin/phpmd ./src text codesize,controversial,cleancode,design,unusedcode,naming",
+        "test-unit-php-7-3": "docker-compose run --rm cli_7_3_php php ./vendor/bin/phpunit",
+        "test-unit-php-7-2": "docker-compose run --rm cli_7_2_php php ./vendor/bin/phpunit",
+        "test-unit-php-7-1": "docker-compose run --rm cli_7_1_php php ./vendor/bin/phpunit",
+        "test-unit-hhvm":    "docker-compose run --rm cli_hhvm php -d hhvm.php7.all=1 ./vendor/bin/phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-develop": "0.10.x-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
