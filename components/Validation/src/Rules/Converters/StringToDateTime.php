@@ -35,9 +35,7 @@ use function is_string;
  */
 final class StringToDateTime extends ExecuteRule
 {
-    /**
-     * Property key.
-     */
+    /** @var int Property key */
     const PROPERTY_FORMAT = self::PROPERTY_LAST + 1;
 
     /**
@@ -53,14 +51,9 @@ final class StringToDateTime extends ExecuteRule
     }
 
     /**
-     * @param mixed            $value
-     * @param ContextInterface $context
-     *
-     * @return array
-     *
-     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @inheritDoc
      */
-    public static function execute($value, ContextInterface $context): array
+    public static function execute($value, ContextInterface $context, $extras = null): array
     {
         $format = $context->getProperties()->getProperty(self::PROPERTY_FORMAT);
         if (is_string($value) === true && ($parsed = static::parseFromFormat($value, $format)) !== null) {

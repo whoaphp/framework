@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Blocks;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +17,14 @@ namespace Limoncello\Validation\Blocks;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Validation\Blocks;
+
 use Limoncello\Common\Reflection\CheckCallableTrait;
 use Limoncello\Validation\Contracts\Blocks\ProcedureBlockInterface;
 use Limoncello\Validation\Contracts\Execution\ContextInterface;
+use ReflectionParameter;
 use function assert;
 
 /**
@@ -61,7 +65,8 @@ final class ProcedureBlock implements ProcedureBlockInterface
         array $properties = [],
         callable $startCallable = null,
         callable $endCallable = null
-    ) {
+    )
+    {
         $this->setExecuteCallable($executeCallable)->setProperties($properties);
 
         if ($startCallable !== null) {
@@ -167,7 +172,17 @@ final class ProcedureBlock implements ProcedureBlockInterface
     private function checkProcedureExecuteCallableSignature(callable $procedureCallable): bool
     {
         /** @noinspection PhpUnhandledExceptionInspection */
-        return static::checkPublicStaticCallable($procedureCallable, [null, ContextInterface::class], 'array');
+        return static::checkPublicStaticCallable(
+            $procedureCallable,
+            [
+                null,
+                ContextInterface::class,
+                function (ReflectionParameter $parameter) {
+                    return $parameter->allowsNull() === true;
+                },
+            ],
+            'array'
+        );
     }
 
     /** @noinspection PhpDocMissingThrowsInspection

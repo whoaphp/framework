@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Flute\Validation\JsonApi\Rules;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,15 @@ namespace Limoncello\Flute\Validation\JsonApi\Rules;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Limoncello\Flute\Validation\JsonApi\Rules;
+
 use Doctrine\DBAL\Connection;
 use Limoncello\Flute\Contracts\Validation\ErrorCodes;
 use Limoncello\Flute\L10n\Messages;
 use Limoncello\Validation\Contracts\Execution\ContextInterface;
 use Limoncello\Validation\Rules\ExecuteRule;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 use function is_scalar;
 
 /**
@@ -32,42 +33,37 @@ use function is_scalar;
  */
 final class UniqueInDbTableSingleWithDoctrineRule extends ExecuteRule
 {
-    /**
-     * Property key.
-     */
+    /** @var int Property key */
     const PROPERTY_TABLE_NAME = self::PROPERTY_LAST + 1;
 
-    /**
-     * Property key.
-     */
+    /** @var int Property key */
     const PROPERTY_PRIMARY_NAME = self::PROPERTY_TABLE_NAME + 1;
 
+    /** @var int Property key */
+    const PROPERTY_PRIMARY_KEY = self::PROPERTY_PRIMARY_NAME + 1;
+
     /**
-     * @param string $tableName
-     * @param string $primaryName
+     * @param string      $tableName
+     * @param string      $primaryName
+     * @param string|null $primaryKey
      */
-    public function __construct(string $tableName, string $primaryName)
+    public function __construct(string $tableName, string $primaryName, ?string $primaryKey = null)
     {
         parent::__construct([
             static::PROPERTY_TABLE_NAME   => $tableName,
             static::PROPERTY_PRIMARY_NAME => $primaryName,
+            static::PROPERTY_PRIMARY_KEY  => $primaryKey,
         ]);
     }
 
     /**
-     * @param mixed            $value
-     * @param ContextInterface $context
-     *
-     * @return array
-     *
-     * @SuppressWarnings(PHPMD.StaticAccess)
-     *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
+     * @inheritDoc
+     * @throws \Doctrine\DBAL\Exception
+     * @throws \Doctrine\DBAL\Driver\Exception
      */
-    public static function execute($value, ContextInterface $context): array
+    public static function execute($value, ContextInterface $context, $extras = null): array
     {
-        $count = 0;
+        $found = false;
 
         if (is_scalar($value) === true) {
             /** @var Connection $connection */
@@ -75,16 +71,21 @@ final class UniqueInDbTableSingleWithDoctrineRule extends ExecuteRule
             $builder     = $connection->createQueryBuilder();
             $tableName   = $context->getProperties()->getProperty(static::PROPERTY_TABLE_NAME);
             $primaryName = $context->getProperties()->getProperty(static::PROPERTY_PRIMARY_NAME);
+            $primaryKey  = $context->getProperties()->getProperty(static::PROPERTY_PRIMARY_KEY);
+            $columns     = $primaryKey === null ? "`{$primaryName}`" : "`{$primaryKey}`, `{$primaryName}`";
             $statement   = $builder
-                ->select('count(*)')
+                ->select($columns)
                 ->from($tableName)
                 ->where($builder->expr()->eq($primaryName, $builder->createPositionalParameter($value)))
-                ->execute();
+                ->setMaxResults(1);
 
-            $count = $statement->fetchColumn();
+            $fetched = $statement->execute()->fetchOne();
+            $found   = isset($primaryKeyName) ?
+                $fetched !== false && (int)$fetched[$primaryKey] !== (int)$extras :
+                $fetched !== false;
         }
 
-        $reply = $count <= 0 ?
+        return $found == false ?
             static::createSuccessReply($value) :
             static::createErrorReply(
                 $context,
@@ -93,7 +94,5 @@ final class UniqueInDbTableSingleWithDoctrineRule extends ExecuteRule
                 Messages::UNIQUE_IN_DATABASE_SINGLE,
                 []
             );
-
-        return $reply;
     }
 }

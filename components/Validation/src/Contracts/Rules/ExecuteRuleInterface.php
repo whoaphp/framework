@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Contracts\Rules;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +17,10 @@ namespace Limoncello\Validation\Contracts\Rules;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Validation\Contracts\Rules;
+
 use Limoncello\Validation\Contracts\Execution\ContextInterface;
 
 /**
@@ -29,7 +32,9 @@ interface ExecuteRuleInterface extends RuleInterface
      * @param mixed            $value
      * @param ContextInterface $context
      *
+     * @param null             $extras
+     *
      * @return array
      */
-    public static function execute($value, ContextInterface $context): array;
+    public static function execute($value, ContextInterface $context, $extras = null): array;
 }

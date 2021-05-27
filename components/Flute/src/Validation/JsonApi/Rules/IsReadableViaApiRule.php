@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Flute\Validation\JsonApi\Rules;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +17,10 @@ namespace Limoncello\Flute\Validation\JsonApi\Rules;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Limoncello\Flute\Validation\JsonApi\Rules;
+
 use Limoncello\Common\Reflection\ClassIsTrait;
 use Limoncello\Flute\Contracts\Api\CrudInterface;
 use Limoncello\Flute\Contracts\FactoryInterface;
@@ -25,8 +28,6 @@ use Limoncello\Flute\Contracts\Validation\ErrorCodes;
 use Limoncello\Flute\L10n\Messages;
 use Limoncello\Validation\Contracts\Execution\ContextInterface;
 use Limoncello\Validation\Rules\ExecuteRule;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 use function assert;
 use function is_int;
 use function is_string;
@@ -38,9 +39,7 @@ final class IsReadableViaApiRule extends ExecuteRule
 {
     use ClassIsTrait;
 
-    /**
-     * Property key.
-     */
+    /** @var int Property key */
     const PROPERTY_API_CLASS = self::PROPERTY_LAST + 1;
 
     /**
@@ -56,17 +55,9 @@ final class IsReadableViaApiRule extends ExecuteRule
     }
 
     /**
-     * @param mixed            $value
-     * @param ContextInterface $context
-     *
-     * @return array
-     *
-     * @SuppressWarnings(PHPMD.StaticAccess)
-     *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
+     * @inheritDoc
      */
-    public static function execute($value, ContextInterface $context): array
+    public static function execute($value, ContextInterface $context, $extras = null): array
     {
         assert(is_int($value) || is_string($value));
 

@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Flute\Validation\JsonApi;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Flute\Validation\JsonApi;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare (strict_types=1);
+
+namespace Limoncello\Flute\Validation\JsonApi;
 
 use Generator;
 use Limoncello\Common\Reflection\ClassIsTrait;
@@ -199,7 +202,8 @@ class QueryParser implements JsonApiQueryParserInterface
         JsonApiErrorCollection $jsonErrors,
         FormatterFactoryInterface $formatterFactory,
         array $messages = null
-    ) {
+    )
+    {
         assert(static::classImplements($rulesClass, JsonApiQueryRulesInterface::class));
         assert(static::classImplements($serializerClass, JsonApiQueryRulesSerializerInterface::class));
 
@@ -311,7 +315,7 @@ class QueryParser implements JsonApiQueryParserInterface
     public function getFields(): array
     {
         if ($this->cachedFields === null) {
-            $fields = $this->getFieldsImpl($this->getParameters(), $this->getInvalidParamMessage());
+            $fields             = $this->getFieldsImpl($this->getParameters(), $this->getInvalidParamMessage());
             $this->cachedFields = $this->iterableToArray($this->getValidatedFields($fields));
         }
 
@@ -324,7 +328,7 @@ class QueryParser implements JsonApiQueryParserInterface
     public function getSorts(): array
     {
         if ($this->cachedSorts === null) {
-            $sorts = $this->getSortsImpl($this->getParameters(), $this->getInvalidParamMessage());
+            $sorts             = $this->getSortsImpl($this->getParameters(), $this->getInvalidParamMessage());
             $this->cachedSorts = $this->iterableToArray($this->getValidatedSorts($sorts));
         }
 
@@ -337,7 +341,7 @@ class QueryParser implements JsonApiQueryParserInterface
     public function getIncludes(): iterable
     {
         if ($this->cachedIncludes === null) {
-            $includes = $this->getIncludesImpl($this->getParameters(), $this->getInvalidParamMessage());
+            $includes             = $this->getIncludesImpl($this->getParameters(), $this->getInvalidParamMessage());
             $this->cachedIncludes = $this->iterableToArray($this->getValidatedIncludes($includes));
         }
 
@@ -1040,8 +1044,8 @@ class QueryParser implements JsonApiQueryParserInterface
             if (is_string($operationName) === false || empty($operationName) === true ||
                 is_string($arguments) === false
             ) {
-                $title  = $this->getFormatter()->formatMessage(Messages::INVALID_OPERATION_ARGUMENTS);
-                $error  = $this->createQueryError($parameterName, $title);
+                $title = $this->getFormatter()->formatMessage(Messages::INVALID_OPERATION_ARGUMENTS);
+                $error = $this->createQueryError($parameterName, $title);
                 throw new InvalidQueryParametersException($error);
             }
 

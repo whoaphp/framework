@@ -1,4 +1,4 @@
-<?php declare (strict_types = 1);
+<?php declare (strict_types=1);
 
 namespace Limoncello\Flute\Validation\Rules;
 
@@ -61,12 +61,18 @@ trait DatabaseRulesTrait
      * @param string             $tableName
      * @param string             $primaryName
      * @param RuleInterface|null $next
+     * @param string|null        $primaryKey
      *
      * @return RuleInterface
      */
-    public static function unique(string $tableName, string $primaryName, RuleInterface $next = null): RuleInterface
+    public static function unique(
+        string $tableName,
+        string $primaryName,
+        ?string $primaryKey = null,
+        RuleInterface $next = null
+    ): RuleInterface
     {
-        $primary = new UniqueInDbTableSingleWithDoctrineRule($tableName, $primaryName);
+        $primary = new UniqueInDbTableSingleWithDoctrineRule($tableName, $primaryName, $primaryKey);
 
         return $next === null ? $primary : new AndOperator($primary, $next);
     }

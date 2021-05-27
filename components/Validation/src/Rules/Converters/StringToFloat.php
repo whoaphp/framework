@@ -34,14 +34,9 @@ use function is_string;
 final class StringToFloat extends ExecuteRule
 {
     /**
-     * @param mixed            $value
-     * @param ContextInterface $context
-     *
-     * @return array
-     *
-     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @inheritDoc
      */
-    public static function execute($value, ContextInterface $context): array
+    public static function execute($value, ContextInterface $context, $extras = null): array
     {
         if (is_string($value) === true &&
             (is_numeric($value) === true || filter_var($value, FILTER_VALIDATE_FLOAT) === true)

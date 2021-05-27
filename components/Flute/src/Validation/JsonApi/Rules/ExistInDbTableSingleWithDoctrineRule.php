@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Flute\Validation\JsonApi\Rules;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,27 +17,25 @@ namespace Limoncello\Flute\Validation\JsonApi\Rules;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Limoncello\Flute\Validation\JsonApi\Rules;
+
 use Doctrine\DBAL\Connection;
 use Limoncello\Flute\Contracts\Validation\ErrorCodes;
 use Limoncello\Flute\L10n\Messages;
 use Limoncello\Validation\Contracts\Execution\ContextInterface;
 use Limoncello\Validation\Rules\ExecuteRule;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * @package Limoncello\Flute
  */
 final class ExistInDbTableSingleWithDoctrineRule extends ExecuteRule
 {
-    /**
-     * Property key.
-     */
+    /** @var int Property key */
     const PROPERTY_TABLE_NAME = self::PROPERTY_LAST + 1;
 
-    /**
-     * Property key.
-     */
+    /** @var int Property key */
     const PROPERTY_PRIMARY_NAME = self::PROPERTY_TABLE_NAME + 1;
 
     /**
@@ -54,17 +51,11 @@ final class ExistInDbTableSingleWithDoctrineRule extends ExecuteRule
     }
 
     /**
-     * @param mixed            $value
-     * @param ContextInterface $context
-     *
-     * @return array
-     *
-     * @SuppressWarnings(PHPMD.StaticAccess)
-     *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
+     * @inheritDoc
+     * @throws \Doctrine\DBAL\Driver\Exception
+     * @throws \Doctrine\DBAL\Exception
      */
-    public static function execute($value, ContextInterface $context): array
+    public static function execute($value, ContextInterface $context, $extras = null): array
     {
         $count = 0;
 
@@ -81,7 +72,7 @@ final class ExistInDbTableSingleWithDoctrineRule extends ExecuteRule
                 ->where($builder->expr()->eq($primaryName, $builder->createPositionalParameter($value)))
                 ->execute();
 
-            $count = $statement->fetchColumn();
+            $count = $statement->fetchOne();
         }
 
         $reply = $count > 0 ?

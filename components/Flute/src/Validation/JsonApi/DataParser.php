@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Flute\Validation\JsonApi;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Flute\Validation\JsonApi;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare (strict_types=1);
+
+namespace Limoncello\Flute\Validation\JsonApi;
 
 use Limoncello\Common\Reflection\ClassIsTrait;
 use Limoncello\Contracts\L10n\FormatterFactoryInterface;
@@ -166,7 +169,8 @@ class DataParser implements JsonApiDataParserInterface
         ContextStorageInterface $context,
         JsonApiErrorCollection $jsonErrors,
         FormatterFactoryInterface $formatterFactory
-    ) {
+    )
+    {
         $this
             ->setSerializerClass($serializerClass)
             ->setContext($context)
@@ -256,7 +260,7 @@ class DataParser implements JsonApiDataParserInterface
             $this->executeEnds($this->getSerializer()::readRuleEndIndexes($ruleIndexes));
 
             if (count($this->getErrorAggregator()) > 0) {
-                $status  = JsonApiResponse::HTTP_CONFLICT;
+                $status = JsonApiResponse::HTTP_CONFLICT;
                 foreach ($this->getErrorAggregator()->get() as $error) {
                     $this->getJsonApiErrorCollection()->addValidationRelationshipError($error, $status);
                     $this->addErrorStatus($status);
@@ -277,7 +281,8 @@ class DataParser implements JsonApiDataParserInterface
         string $index,
         string $name,
         array $jsonData
-    ): JsonApiDataParserInterface {
+    ): JsonApiDataParserInterface
+    {
         if ($this->parseRelationship($index, $name, $jsonData) === false) {
             $status = JsonApiResponse::HTTP_UNPROCESSABLE_ENTITY;
             throw new JsonApiException($this->getJsonApiErrorCollection(), $status);
@@ -443,7 +448,11 @@ class DataParser implements JsonApiDataParserInterface
                 // execute main validation block(s)
                 foreach ($attributes as $name => $value) {
                     if (($index = $this->getAttributeIndex($name)) !== null) {
-                        $this->executeBlock($value, $index);
+                        if (array_key_exists(DI::KEYWORD_ID, $data = $jsonData[DI::KEYWORD_DATA]) === true) {
+                            $this->executeBlock($value, $index, (int)$data[DI::KEYWORD_ID]);
+                        } else {
+                            $this->executeBlock($value, $index);
+                        }
                     } elseif ($this->isIgnoreUnknowns() === false) {
                         $title   = $this->formatMessage(Messages::INVALID_VALUE);
                         $details = $this->formatMessage(Messages::UNKNOWN_ATTRIBUTE);
@@ -460,7 +469,7 @@ class DataParser implements JsonApiDataParserInterface
         $this->executeEnds($this->getSerializer()::readRulesEndIndexes($this->getAttributeRules()));
 
         if (count($this->getErrorAggregator()) > 0) {
-            $status  = JsonApiResponse::HTTP_UNPROCESSABLE_ENTITY;
+            $status = JsonApiResponse::HTTP_UNPROCESSABLE_ENTITY;
             foreach ($this->getErrorAggregator()->get() as $error) {
                 $this->getJsonApiErrorCollection()->addValidationAttributeError($error, $status);
             }
@@ -528,7 +537,7 @@ class DataParser implements JsonApiDataParserInterface
         ));
 
         if (count($this->getErrorAggregator()) > 0) {
-            $status  = JsonApiResponse::HTTP_CONFLICT;
+            $status = JsonApiResponse::HTTP_CONFLICT;
             foreach ($this->getErrorAggregator()->get() as $error) {
                 $this->getJsonApiErrorCollection()->addValidationRelationshipError($error, $status);
             }
@@ -635,12 +644,13 @@ class DataParser implements JsonApiDataParserInterface
     /**
      * @param mixed $input
      * @param int   $index
+     * @param null  $extras
      *
      * @return void
      *
      * @SuppressWarnings(PHPMD.StaticAccess)
      */
-    private function executeBlock($input, int $index): void
+    private function executeBlock($input, int $index, $extras = null): void
     {
         BlockInterpreter::executeBlock(
             $input,
@@ -648,7 +658,8 @@ class DataParser implements JsonApiDataParserInterface
             $this->getBlocks(),
             $this->getContext(),
             $this->getCaptureAggregator(),
-            $this->getErrorAggregator()
+            $this->getErrorAggregator(),
+            $extras
         );
     }
 

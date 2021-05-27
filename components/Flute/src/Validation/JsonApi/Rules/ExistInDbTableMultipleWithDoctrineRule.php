@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Flute\Validation\JsonApi\Rules;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,15 @@ namespace Limoncello\Flute\Validation\JsonApi\Rules;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Limoncello\Flute\Validation\JsonApi\Rules;
+
 use Doctrine\DBAL\Connection;
 use Limoncello\Flute\Contracts\Validation\ErrorCodes;
 use Limoncello\Flute\L10n\Messages;
 use Limoncello\Validation\Contracts\Execution\ContextInterface;
 use Limoncello\Validation\Rules\ExecuteRule;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 use function count;
 use function is_array;
 
@@ -33,14 +34,10 @@ use function is_array;
  */
 final class ExistInDbTableMultipleWithDoctrineRule extends ExecuteRule
 {
-    /**
-     * Property key.
-     */
+    /** @var int Property key */
     const PROPERTY_TABLE_NAME = self::PROPERTY_LAST + 1;
 
-    /**
-     * Property key.
-     */
+    /** @var int Property key */
     const PROPERTY_PRIMARY_NAME = self::PROPERTY_TABLE_NAME + 1;
 
     /**
@@ -56,22 +53,16 @@ final class ExistInDbTableMultipleWithDoctrineRule extends ExecuteRule
     }
 
     /**
-     * @param mixed            $values
-     * @param ContextInterface $context
-     *
-     * @return array
-     *
-     * @SuppressWarnings(PHPMD.StaticAccess)
-     *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
+     * @inheritDoc
+     * @throws \Doctrine\DBAL\Exception
+     * @throws \Doctrine\DBAL\Driver\Exception
      */
-    public static function execute($values, ContextInterface $context): array
+    public static function execute($value, ContextInterface $context, $extras = null): array
     {
         // let's consider an empty index list as `exists`
-        $result = is_array($values);
+        $result = is_array($value);
 
-        if ($result === true && empty($values) === false) {
+        if ($result === true && empty($value) === false) {
             $tableName   = $context->getProperties()->getProperty(static::PROPERTY_TABLE_NAME);
             $primaryName = $context->getProperties()->getProperty(static::PROPERTY_PRIMARY_NAME);
 
@@ -79,8 +70,8 @@ final class ExistInDbTableMultipleWithDoctrineRule extends ExecuteRule
             $connection   = $context->getContainer()->get(Connection::class);
             $builder      = $connection->createQueryBuilder();
             $placeholders = [];
-            foreach ($values as $value) {
-                $placeholders[] = $builder->createPositionalParameter($value);
+            foreach ($value as $v) {
+                $placeholders[] = $builder->createPositionalParameter($v);
             }
             $statement = $builder
                 ->select('count(*)')
@@ -88,15 +79,15 @@ final class ExistInDbTableMultipleWithDoctrineRule extends ExecuteRule
                 ->where($builder->expr()->in($primaryName, $placeholders))
                 ->execute();
 
-            $count  = (int)$statement->fetchColumn();
-            $result = $count === count($values);
+            $count  = (int)$statement->fetchOne();
+            $result = $count === count($value);
         }
 
         $reply = $result === true ?
-            static::createSuccessReply($values) :
+            static::createSuccessReply($value) :
             static::createErrorReply(
                 $context,
-                $values,
+                $value,
                 ErrorCodes::EXIST_IN_DATABASE_MULTIPLE,
                 Messages::EXIST_IN_DATABASE_MULTIPLE,
                 []

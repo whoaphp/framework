@@ -34,7 +34,7 @@ final class IsUuid extends ExecuteRule
     /**
      * @inheritDoc
      */
-    public static function execute($value, ContextInterface $context): array
+    public static function execute($value, ContextInterface $context, $extras = null): array
     {
         return $value instanceof UuidInterface ?
             static::createSuccessReply($value) :

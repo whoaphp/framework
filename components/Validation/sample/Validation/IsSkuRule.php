@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Sample\Validation;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +17,10 @@ namespace Sample\Validation;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Sample\Validation;
+
 use Limoncello\Validation\Contracts\Execution\ContextInterface;
 use Limoncello\Validation\Rules\ExecuteRule;
 use function is_int;
@@ -31,12 +34,9 @@ class IsSkuRule extends ExecuteRule
     const MESSAGE_TEMPLATE = 'The value should be a valid SKU.';
 
     /**
-     * @param mixed            $value
-     * @param ContextInterface $context
-     *
-     * @return array
+     * @inheritDoc
      */
-    public static function execute($value, ContextInterface $context): array
+    public static function execute($value, ContextInterface $context, $extras = null): array
     {
         $idExists = is_int($value) === true && $value < 3;
 

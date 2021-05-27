@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Rules\Generic;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +17,10 @@ namespace Limoncello\Validation\Rules\Generic;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Limoncello\Validation\Rules\Generic;
+
 use Limoncello\Validation\Contracts\Errors\ErrorCodes;
 use Limoncello\Validation\Contracts\Execution\ContextInterface;
 use Limoncello\Validation\I18n\Messages;
@@ -29,19 +32,13 @@ use function assert;
  */
 final class Fail extends ExecuteRule
 {
-    /**
-     * Property key.
-     */
+    /** @var int Property key */
     const PROPERTY_ERROR_CODE = self::PROPERTY_LAST + 1;
 
-    /**
-     * Property key.
-     */
+    /** @var int Property key */
     const PROPERTY_ERROR_MESSAGE_TEMPLATE = self::PROPERTY_ERROR_CODE + 1;
 
-    /**
-     * Property key.
-     */
+    /** @var int Property key */
     const PROPERTY_ERROR_MESSAGE_PARAMETERS = self::PROPERTY_ERROR_MESSAGE_TEMPLATE + 1;
 
     /**
@@ -53,7 +50,8 @@ final class Fail extends ExecuteRule
         int $errorCode = ErrorCodes::INVALID_VALUE,
         string $messageTemplate = Messages::INVALID_VALUE,
         array $messageParams = []
-    ) {
+    )
+    {
         assert($this->checkEachValueConvertibleToString($messageParams));
 
         parent::__construct([
@@ -64,14 +62,9 @@ final class Fail extends ExecuteRule
     }
 
     /**
-     * @param mixed            $value
-     * @param ContextInterface $context
-     *
-     * @return array
-     *
-     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @inheritDoc
      */
-    public static function execute($value, ContextInterface $context): array
+    public static function execute($value, ContextInterface $context, $extras = null): array
     {
         $properties = $context->getProperties();
 

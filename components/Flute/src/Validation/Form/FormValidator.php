@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Flute\Validation\Form;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Flute\Validation\Form;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare (strict_types=1);
+
+namespace Limoncello\Flute\Validation\Form;
 
 use Generator;
 use Limoncello\Common\Reflection\ClassIsTrait;
@@ -92,7 +95,8 @@ class FormValidator extends BaseValidator implements FormValidatorInterface
         array $serializedData,
         ContextStorageInterface $context,
         FormatterInterface $messageFormatter
-    ) {
+    )
+    {
         $this
             ->setSerializer($serializerClass)
             ->setContext($context)

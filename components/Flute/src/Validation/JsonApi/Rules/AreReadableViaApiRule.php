@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Flute\Validation\JsonApi\Rules;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +17,10 @@ namespace Limoncello\Flute\Validation\JsonApi\Rules;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Limoncello\Flute\Validation\JsonApi\Rules;
+
 use Limoncello\Common\Reflection\ClassIsTrait;
 use Limoncello\Flute\Contracts\Api\CrudInterface;
 use Limoncello\Flute\Contracts\FactoryInterface;
@@ -25,8 +28,6 @@ use Limoncello\Flute\Contracts\Validation\ErrorCodes;
 use Limoncello\Flute\L10n\Messages;
 use Limoncello\Validation\Contracts\Execution\ContextInterface;
 use Limoncello\Validation\Rules\ExecuteRule;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 use function assert;
 use function count;
 use function is_array;
@@ -38,9 +39,7 @@ final class AreReadableViaApiRule extends ExecuteRule
 {
     use ClassIsTrait;
 
-    /**
-     * Property key.
-     */
+    /** @var int Property key */
     const PROPERTY_API_CLASS = self::PROPERTY_LAST + 1;
 
     /**
@@ -56,24 +55,16 @@ final class AreReadableViaApiRule extends ExecuteRule
     }
 
     /**
-     * @param mixed            $values
-     * @param ContextInterface $context
-     *
-     * @return array
-     *
-     * @SuppressWarnings(PHPMD.StaticAccess)
-     *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
+     * @inheritDoc
      */
-    public static function execute($values, ContextInterface $context): array
+    public static function execute($value, ContextInterface $context, $extras = null): array
     {
-        assert(is_array($values));
+        assert(is_array($value));
 
         // let's consider an empty index list as `readable`
         $result = true;
 
-        if (empty($values) === false) {
+        if (empty($value) === false) {
             $apiClass = $context->getProperties()->getProperty(static::PROPERTY_API_CLASS);
 
             /** @var FactoryInterface $apiFactory */
@@ -82,16 +73,16 @@ final class AreReadableViaApiRule extends ExecuteRule
             /** @var CrudInterface $api */
             $api = $apiFactory->createApi($apiClass);
 
-            $readIndexes = $api->withIndexesFilter($values)->indexIdentities();
+            $readIndexes = $api->withIndexesFilter($value)->indexIdentities();
 
-            $result = count($readIndexes) === count($values);
+            $result = count($readIndexes) === count($value);
         }
 
         return $result === true ?
-            static::createSuccessReply($values) :
+            static::createSuccessReply($value) :
             static::createErrorReply(
                 $context,
-                $values,
+                $value,
                 ErrorCodes::EXIST_IN_DATABASE_MULTIPLE,
                 Messages::EXIST_IN_DATABASE_MULTIPLE,
                 []

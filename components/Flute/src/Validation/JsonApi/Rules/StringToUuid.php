@@ -35,7 +35,7 @@ final class StringToUuid extends ExecuteRule
     /**
      * @inheritDoc
      */
-    public static function execute($value, ContextInterface $context): array
+    public static function execute($value, ContextInterface $context, $extras = null): array
     {
         if (is_string($value) === true && Uuid::isValid($value) === true) {
             $reply = static::createSuccessReply(Uuid::fromString($value));
