@@ -27,8 +27,10 @@ use Doctrine\DBAL\Types\Type;
 use Exception;
 use Limoncello\Doctrine\Json\Date as LimoncelloDate;
 use Limoncello\Doctrine\Json\DateTime as LimoncelloDateTime;
+use Limoncello\Doctrine\Json\Time as LimoncelloTime;
 use Limoncello\Doctrine\Types\DateTimeType;
 use Limoncello\Doctrine\Types\DateType;
+use Limoncello\Doctrine\Types\TimeType;
 use Limoncello\Tests\Doctrine\TestCase;
 
 /**
@@ -47,6 +49,7 @@ class DateTimeTypesTest extends TestCase
 
         Type::hasType(DateTimeType::NAME) === true ?: Type::addType(DateTimeType::NAME, DateTimeType::class);
         Type::hasType(DateType::NAME) === true ?: Type::addType(DateType::NAME, DateType::class);
+        Type::hasType(TimeType::NAME) === true ?: Type::addType(TimeType::NAME, TimeType::class);
     }
 
     /**
@@ -388,6 +391,135 @@ class DateTimeTypesTest extends TestCase
         $this->expectException(\Doctrine\DBAL\Types\ConversionException::class);
 
         $type     = Type::getType(DateType::NAME);
+        $platform = $this->createConnection()->getDatabasePlatform();
+
+        $date = new \stdClass();
+
+        $type->convertToDatabaseValue($date, $platform);
+    }
+
+    /**
+     * Test time type conversion.
+     *
+     * @throws Exception
+     * @throws DBALException
+     */
+    public function testTimeTypeConversion(): void
+    {
+        $type     = Type::getType(TimeType::NAME);
+        $platform = $this->createConnection()->getDatabasePlatform();
+
+        $time = '22:10:01';
+
+        $this->assertIsString($time);
+
+        /** @var DateTime $phpValue */
+        $phpValue = $type->convertToPHPValue($time, $platform);
+
+        $this->assertInstanceOf(LimoncelloTime::class, $phpValue);
+
+        $this->assertEquals(79801, $phpValue->getTimestamp());
+        $this->assertEquals($time, $phpValue->jsonSerialize());
+    }
+
+    /**
+     * Test time type to database conversion.
+     *
+     * @throws Exception
+     * @throws DBALException
+     */
+    public function testTimeTypeToDatabaseConversion1(): void
+    {
+        /** @var TimeType $type */
+        $type     = Type::getType(TimeType::NAME);
+        $platform = $this->createConnection()->getDatabasePlatform();
+
+        $time = '22:10:01';
+
+        $this->assertIsString($time);
+
+        /** @var string $databaseValue */
+        $databaseValue = $type->convertToDatabaseValue($time, $platform);
+
+        $this->assertIsString($databaseValue);
+        $this->assertEquals('22:10:01', $databaseValue);
+    }
+
+    /**
+     * Test time type to database conversion.
+     *
+     * @throws Exception
+     * @throws DBALException
+     */
+    public function testTimeTypeToDatabaseConversion2(): void
+    {
+        /** @var DateType $type */
+        $type     = Type::getType(TimeType::NAME);
+        $platform = $this->createConnection()->getDatabasePlatform();
+
+        $date = new DateTime('22:10:01');
+
+        $this->assertInstanceOf(DateTime::class, $date);
+
+        /** @var string $databaseValue */
+        $databaseValue = $type->convertToDatabaseValue($date, $platform);
+
+        $this->assertIsString($databaseValue);
+        $this->assertEquals('22:10:01', $databaseValue);
+    }
+
+    /**
+     * Test time type conversion.
+     *
+     * @throws Exception
+     * @throws DBALException
+     */
+    public function testTimeTypeToDatabaseConversion3(): void
+    {
+        /** @var TimeType $type */
+        $type     = Type::getType(TimeType::NAME);
+        $platform = $this->createConnection()->getDatabasePlatform();
+
+        $date = new LimoncelloTime('22:10:01');
+
+        $this->assertInstanceOf(LimoncelloTime::class, $date);
+
+        /** @var string $databaseValue */
+        $databaseValue = $type->convertToDatabaseValue($date, $platform);
+
+        $this->assertIsString($databaseValue);
+        $this->assertEquals('22:10:01', $databaseValue);
+    }
+
+    /**
+     * Test time type to database conversion invalid type.
+     *
+     * @throws Exception
+     * @throws DBALException
+     */
+    public function testTimeTypeToDatabaseConversionInvalidInput1(): void
+    {
+        $this->expectException(\Doctrine\DBAL\Types\ConversionException::class);
+
+        $type     = Type::getType(TimeType::NAME);
+        $platform = $this->createConnection()->getDatabasePlatform();
+
+        $date = 'XXX';
+
+        $type->convertToDatabaseValue($date, $platform);
+    }
+
+    /**
+     * Test time type to database conversion invalid type.
+     *
+     * @throws Exception
+     * @throws DBALException
+     */
+    public function testTimeTypeToDatabaseConversionInvalidInput2(): void
+    {
+        $this->expectException(\Doctrine\DBAL\Types\ConversionException::class);
+
+        $type     = Type::getType(TimeType::NAME);
         $platform = $this->createConnection()->getDatabasePlatform();
 
         $date = new \stdClass();

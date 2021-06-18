@@ -37,6 +37,7 @@ class DateType extends \Doctrine\DBAL\Types\DateType
 
     /**
      * @inheritDoc
+     * @throws \Doctrine\DBAL\Types\ConversionException
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
@@ -52,11 +53,12 @@ class DateType extends \Doctrine\DBAL\Types\DateType
 
     /**
      * @inheritDoc
+     * @throws \Doctrine\DBAL\Types\ConversionException
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
         return parent::convertToDatabaseValue(
-            $this->convertToDateFromString($value, $platform->getDateTimeFormatString(), static::NAME),
+            $this->convertToDateFromString($value, $platform->getDateFormatString(), static::NAME),
             $platform
         );
     }

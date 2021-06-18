@@ -21,20 +21,19 @@ declare(strict_types=1);
 
 namespace Limoncello\Doctrine\Types;
 
-use DateTimeInterface;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Limoncello\Doctrine\Json\DateTime;
-use Limoncello\Doctrine\Traits\DateTimeTypeTrait;
+use Limoncello\Doctrine\Json\Time;
+use Limoncello\Doctrine\Traits\TimeTypeTrait;
 
 /**
  * @package Limoncello\Doctrine
  */
-class DateTimeType extends \Doctrine\DBAL\Types\DateTimeType
+class TimeType extends \Doctrine\DBAL\Types\TimeType
 {
-    use DateTimeTypeTrait;
+    use TimeTypeTrait;
 
     /** @var string Type name */
-    const NAME = 'limoncelloDateTime';
+    const NAME = 'limoncelloTime';
 
     /**
      * @inheritDoc
@@ -44,10 +43,9 @@ class DateTimeType extends \Doctrine\DBAL\Types\DateTimeType
     {
         $result = null;
 
-        if ($value !== null && ($dateTimeOrNull = parent::convertToPHPValue($value, $platform)) !== null) {
-            assert($dateTimeOrNull instanceof DateTimeInterface);
+        if ($value !== null && ($dateOrNull = parent::convertToPHPValue($value, $platform)) !== null) {
             // despite the name it's not null already
-            $result = DateTime::createFromDateTime($dateTimeOrNull);
+            $result = Time::createFromDateTime($dateOrNull);
         }
 
         return $result;
@@ -60,7 +58,7 @@ class DateTimeType extends \Doctrine\DBAL\Types\DateTimeType
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
         return parent::convertToDatabaseValue(
-            $this->convertToDateTimeFromString($value, $platform->getDateTimeFormatString(), static::NAME),
+            $this->convertToTimeFromString($value, $platform->getTimeFormatString(), static::NAME),
             $platform
         );
     }
