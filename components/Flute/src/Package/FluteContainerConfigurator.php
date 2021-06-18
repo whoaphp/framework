@@ -32,6 +32,7 @@ use Limoncello\Contracts\Exceptions\ThrowableHandlerInterface;
 use Limoncello\Contracts\Settings\SettingsProviderInterface;
 use Limoncello\Doctrine\Types\DateTimeType as LimoncelloDateTimeType;
 use Limoncello\Doctrine\Types\DateType as LimoncelloDateType;
+use Limoncello\Doctrine\Types\TimeType as LimoncelloTimeType;
 use Limoncello\Doctrine\Types\UuidType as LimoncelloUuidType;
 use Limoncello\Flute\Api\BasicRelationshipPaginationStrategy;
 use Limoncello\Flute\Contracts\Api\RelationshipPaginationStrategyInterface;
@@ -127,6 +128,7 @@ class FluteContainerConfigurator implements ContainerConfiguratorInterface
         // register date/date time types
         Type::hasType(LimoncelloDateTimeType::NAME) === true ?: Type::addType(LimoncelloDateTimeType::NAME, LimoncelloDateTimeType::class);
         Type::hasType(LimoncelloDateType::NAME) === true ?: Type::addType(LimoncelloDateType::NAME, LimoncelloDateType::class);
+        Type::hasType(LimoncelloTimeType::NAME) === true ?: Type::addType(LimoncelloTimeType::NAME, LimoncelloTimeType::class);
 
         // register UUID type
         Type::hasType(LimoncelloUuidType::NAME) === true ?: Type::addType(LimoncelloUuidType::NAME, LimoncelloUuidType::class);
