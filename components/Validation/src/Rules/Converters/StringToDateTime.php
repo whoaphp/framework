@@ -84,6 +84,7 @@ final class StringToDateTime extends ExecuteRule
         $parsedOrNull = null;
 
         $format = preg_match('/^Y-m-d$/', $format) >= 1 ? 'Y-m-d|' : $format;
+        $format = preg_match('/^H:i:s$/', $format) >= 1 ? 'H:i:s' : $format;
 
         if (($value = DateTimeImmutable::createFromFormat($format, $input)) !== false) {
             $parsedOrNull = $value;

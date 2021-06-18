@@ -175,6 +175,132 @@ class RulesTest extends TestCase
      *
      * @throws Exception
      */
+    public function testTimes(): void
+    {
+        $time1 = new DateTimeImmutable('22:10:01');
+        $time2 = new DateTimeImmutable('10:10:01');
+        $time3 = new DateTimeImmutable('00:00:01');
+
+        $rules = [
+            'time1' => v::stringToDateTime('H:i:s', v::success()),
+            'time2' => v::stringToDateTime('H:i:s', v::equals($time3)),
+            'time3' => v::stringToDateTime('H:i:s', v::isDateTime(v::equals($time1))),
+            'time4' => v::stringToDateTime('H:i:s', v::isDateTime(v::equals($time2))),
+            'time5' => v::stringToDateTime('H:i:s', v::isDateTime(v::equals($time3))),
+        ];
+
+        // Check with valid input
+
+        $input = [
+            'time1' => '22:10:01',
+            'time2' => '00:00:01',
+            'time3' => '22:10:01',
+            'time4' => '10:10:01',
+            'time5' => '00:00:01',
+        ];
+
+        [$captures, $errors] = $this->validateArray($input, $rules);
+        $this->assertEmpty($errors);
+        $this->assertEquals([
+            'time1' => new DateTimeImmutable('22:10:01'),
+            'time2' => new DateTimeImmutable('00:00:01'),
+            'time3' => new DateTimeImmutable('22:10:01'),
+            'time4' => new DateTimeImmutable('10:10:01'),
+            'time5' => new DateTimeImmutable('00:00:01'),
+        ], $captures);
+
+        // Check with invalid input
+
+        $rules = [
+            'time1'  => v::stringToDateTime('H:i:s', v::success()),
+            'time2'  => v::stringToDateTime('H:i:s', v::equals($time3)),
+            'time3'  => v::stringToDateTime('H:i:s', v::isDateTime(v::equals($time1))),
+            'time4'  => v::stringToDateTime('H:i:s', v::isDateTime(v::equals($time2))),
+            'time5'  => v::stringToDateTime('H:i:s', v::isDateTime(v::equals($time3))),
+            'time6'  => v::stringToDateTime('H:i:s', v::isDateTime(v::equals($time3))),
+            'time7'  => v::stringToDateTime('H:i:s', v::isDateTime(v::equals($time3))),
+            'time8'  => v::stringToDateTime('H:i:s', v::isDateTime(v::equals($time3))),
+            'time9'  => v::stringToDateTime('H:i:s', v::isDateTime(v::equals($time3))),
+            'time10' => v::stringToDateTime('H:i:s', v::isDateTime(v::equals($time3))),
+            'time11' => v::stringToDateTime('H:i:s', v::isDateTime(v::lessThan($time1))),
+            'time12' => v::stringToDateTime('H:i:s', v::isDateTime(v::moreThan($time1))),
+        ];
+
+        $input = [
+            'time1'  => '2001-03-02T00:00:00Z',
+            'time2'  => new stdClass(),
+            'time3'  => 'not date',
+            'time4'  => '22:10:999',
+            'time5'  => '24:10:01',
+            'time6'  => '999:10.01',
+            'time7'  => '00:99:01',
+            'time8'  => '00:990:01',
+            'time9'  => '#DATE',
+            'time10' => '22:10:02',
+            'time11' => '22:11:02',
+            'time12' => '22:09:02',
+        ];
+
+        [$captures, $errors] = $this->validateArray($input, $rules);
+
+        $this->assertEmpty($captures);
+        $this->assertCount(12, $errors);
+
+        $this->assertEquals(
+            ErrorCodes::IS_DATE_TIME,
+            $this->findErrorByParamName('time1', $errors)->getMessageCode()
+        );
+        $this->assertEquals(
+            ErrorCodes::IS_DATE_TIME,
+            $this->findErrorByParamName('time2', $errors)->getMessageCode()
+        );
+        $this->assertEquals(
+            ErrorCodes::IS_DATE_TIME,
+            $this->findErrorByParamName('time3', $errors)->getMessageCode()
+        );
+        $this->assertEquals(
+            ErrorCodes::IS_DATE_TIME,
+            $this->findErrorByParamName('time4', $errors)->getMessageCode()
+        );
+        $this->assertEquals(
+            ErrorCodes::DATE_TIME_EQUALS,
+            $this->findErrorByParamName('time5', $errors)->getMessageCode()
+        );
+        $this->assertEquals(
+            ErrorCodes::IS_DATE_TIME,
+            $this->findErrorByParamName('time6', $errors)->getMessageCode()
+        );
+        $this->assertEquals(
+            ErrorCodes::DATE_TIME_EQUALS,
+            $this->findErrorByParamName('time7', $errors)->getMessageCode()
+        );
+        $this->assertEquals(
+            ErrorCodes::IS_DATE_TIME,
+            $this->findErrorByParamName('time8', $errors)->getMessageCode()
+        );
+        $this->assertEquals(
+            ErrorCodes::IS_DATE_TIME,
+            $this->findErrorByParamName('time9', $errors)->getMessageCode()
+        );
+        $this->assertEquals(
+            ErrorCodes::DATE_TIME_EQUALS,
+            $this->findErrorByParamName('time10', $errors)->getMessageCode()
+        );
+        $this->assertEquals(
+            ErrorCodes::DATE_TIME_LESS_THAN,
+            $this->findErrorByParamName('time11', $errors)->getMessageCode()
+        );
+        $this->assertEquals(
+            ErrorCodes::DATE_TIME_MORE_THAN,
+            $this->findErrorByParamName('time12', $errors)->getMessageCode()
+        );
+    }
+
+    /**
+     * Test validator.
+     *
+     * @throws Exception
+     */
     public function testScalars(): void
     {
         $rules = [
