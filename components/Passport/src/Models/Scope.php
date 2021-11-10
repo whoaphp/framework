@@ -44,7 +44,7 @@ class Scope implements ModelInterface, UuidFields, TimestampFields
 
     /** @var string Relationship name */
     const REL_CLIENTS = 'clients';
-    
+
     /** @var string Relationship name */
     const REL_TOKENS = 'tokens';
 
@@ -110,6 +110,14 @@ class Scope implements ModelInterface, UuidFields, TimestampFields
      * @inheritDoc
      */
     public static function getRawAttributes(): array
+    {
+        return [];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getVirtualAttributes(): array
     {
         return [];
     }

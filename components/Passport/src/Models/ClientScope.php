@@ -98,4 +98,12 @@ class ClientScope implements ModelInterface, TimestampFields
     {
         return [];
     }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getVirtualAttributes(): array
+    {
+        return [];
+    }
 }

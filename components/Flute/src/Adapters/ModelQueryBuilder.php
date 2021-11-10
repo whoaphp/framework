@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Flute\Adapters;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +16,10 @@ namespace Limoncello\Flute\Adapters;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare (strict_types=1);
+
+namespace Limoncello\Flute\Adapters;
 
 use Closure;
 use DateTimeInterface;
@@ -58,7 +61,7 @@ class ModelQueryBuilder extends QueryBuilder
     /**
      * Condition joining method.
      */
-    public const OR = self::AND + 1;
+    public const OR = self:: AND + 1;
 
     /**
      * @var string
@@ -156,8 +159,12 @@ class ModelQueryBuilder extends QueryBuilder
             $platform = $this->getConnection()->getDatabasePlatform();
             foreach ($rawColumns as $columnOrCallable) {
                 assert(is_string($columnOrCallable) === true || is_callable($columnOrCallable) === true);
-                $quotedColumns[] = is_callable($columnOrCallable) === true ?
-                    call_user_func($columnOrCallable, $tableAlias, $platform) : $columnOrCallable;
+                if (is_callable($columnOrCallable) === true) {
+                    [$callable, $column] = call_user_func($columnOrCallable, $tableAlias, $platform);
+                    $quotedColumns[] = "$callable AS `$column`";
+                } else {
+                    $quotedColumns[] = $columnOrCallable;
+                }
             }
         }
 
@@ -326,8 +333,9 @@ class ModelQueryBuilder extends QueryBuilder
         string $relationshipName,
         string $identity,
         string $secondaryIdBindName
-    ): self {
-        list ($intermediateTable, $primaryKey, $secondaryKey) =
+    ): self
+    {
+        [$intermediateTable, $primaryKey, $secondaryKey] =
             $this->getModelSchemas()->getBelongsToManyRelationship($this->getModelClass(), $relationshipName);
 
         $this
@@ -353,13 +361,14 @@ class ModelQueryBuilder extends QueryBuilder
         string $relationshipName,
         string $identity,
         iterable $secondaryIds
-    ): self {
-        list ($intermediateTable, $primaryKey, $secondaryKey) =
+    ): self
+    {
+        [$intermediateTable, $primaryKey, $secondaryKey] =
             $this->getModelSchemas()->getBelongsToManyRelationship($this->getModelClass(), $relationshipName);
 
         $filters = [
             $primaryKey   => [FilterParameterInterface::OPERATION_EQUALS => [$identity]],
-            $secondaryKey => [FilterParameterInterface::OPERATION_IN     => $secondaryIds],
+            $secondaryKey => [FilterParameterInterface::OPERATION_IN => $secondaryIds],
         ];
 
         $addWith = $this->expr()->andX();
@@ -382,7 +391,7 @@ class ModelQueryBuilder extends QueryBuilder
      */
     public function clearToManyRelationship(string $relationshipName, string $identity): self
     {
-        list ($intermediateTable, $primaryKey) =
+        [$intermediateTable, $primaryKey] =
             $this->getModelSchemas()->getBelongsToManyRelationship($this->getModelClass(), $relationshipName);
 
         $filters = [$primaryKey => [FilterParameterInterface::OPERATION_EQUALS => [$identity]]];
@@ -479,9 +488,10 @@ class ModelQueryBuilder extends QueryBuilder
         string $relationshipName,
         ?iterable $relationshipFilters,
         ?iterable $relationshipSorts,
-        int $joinIndividuals = self::AND,
-        int $joinRelationship = self::AND
-    ): self {
+        int $joinIndividuals = self:: AND,
+        int $joinRelationship = self:: AND
+    ): self
+    {
         $targetAlias = null;
 
         if ($relationshipFilters !== null) {
@@ -492,7 +502,7 @@ class ModelQueryBuilder extends QueryBuilder
             $reversePk = $isBelongsTo === true ?
                 $this->getModelSchemas()->getReversePrimaryKey($this->getModelClass(), $relationshipName)[0] : null;
 
-            $addWith = $joinIndividuals === self::AND ? $this->expr()->andX() : $this->expr()->orX();
+            $addWith = $joinIndividuals === self:: AND ? $this->expr()->andX() : $this->expr()->orX();
 
             foreach ($relationshipFilters as $columnName => $operationsWithArgs) {
                 if ($columnName === $reversePk) {
@@ -519,7 +529,7 @@ class ModelQueryBuilder extends QueryBuilder
                 }
 
                 if ($addWith->count() > 0) {
-                    $joinRelationship === self::AND ? $this->andWhere($addWith) : $this->orWhere($addWith);
+                    $joinRelationship === self:: AND ? $this->andWhere($addWith) : $this->orWhere($addWith);
                 }
             }
         }
@@ -586,7 +596,7 @@ class ModelQueryBuilder extends QueryBuilder
         $relationshipType = $this->getModelSchemas()->getRelationshipType($this->getModelClass(), $name);
         switch ($relationshipType) {
             case RelationshipTypes::BELONGS_TO:
-                list($targetColumn, $targetTable) =
+                [$targetColumn, $targetTable] =
                     $this->getModelSchemas()->getReversePrimaryKey($this->getModelClass(), $name);
                 $targetAlias = $this->innerJoinOneTable(
                     $this->getAlias(),
@@ -597,7 +607,7 @@ class ModelQueryBuilder extends QueryBuilder
                 break;
 
             case RelationshipTypes::HAS_MANY:
-                list($targetColumn, $targetTable) =
+                [$targetColumn, $targetTable] =
                     $this->getModelSchemas()->getReverseForeignKey($this->getModelClass(), $name);
                 $targetAlias = $this->innerJoinOneTable(
                     $this->getAlias(),
@@ -611,9 +621,9 @@ class ModelQueryBuilder extends QueryBuilder
             default:
                 assert($relationshipType === RelationshipTypes::BELONGS_TO_MANY);
                 $primaryKey = $this->getModelSchemas()->getPrimaryKey($this->getModelClass());
-                list ($intermediateTable, $intermediatePk, $intermediateFk) =
+                [$intermediateTable, $intermediatePk, $intermediateFk] =
                     $this->getModelSchemas()->getBelongsToManyRelationship($this->getModelClass(), $name);
-                list($targetPrimaryKey, $targetTable) =
+                [$targetPrimaryKey, $targetTable] =
                     $this->getModelSchemas()->getReversePrimaryKey($this->getModelClass(), $name);
 
                 $targetAlias = $this->innerJoinTwoSequentialTables(
@@ -651,12 +661,23 @@ class ModelQueryBuilder extends QueryBuilder
      */
     public function applyFilters(CompositeExpression $expression, string $tableOrAlias, iterable $filters): self
     {
+        $platform          = $this->getConnection()->getDatabasePlatform();
+        $virtualAttributes = $this->getModelSchemas()->getVirtualAttributes($this->modelClass);
+
         foreach ($filters as $columnName => $operationsWithArgs) {
             assert(
                 is_string($columnName) === true && empty($columnName) === false,
                 "Haven't you forgotten to specify a column name in a relationship that joins `$tableOrAlias` table?"
             );
-            $fullColumnName = $this->quoteDoubleIdentifier($tableOrAlias, $columnName);
+            if (empty($columnOrCallable = $virtualAttributes[$columnName]) === false) {
+                assert(is_callable($columnOrCallable) === true);
+
+                [$callable, $column] = call_user_func($columnOrCallable, $tableOrAlias, $platform);
+
+                $fullColumnName = $callable;
+            } else {
+                $fullColumnName = $this->quoteDoubleIdentifier($tableOrAlias, $columnName);
+            }
             foreach ($operationsWithArgs as $operation => $arguments) {
                 assert(
                     is_iterable($arguments) === true || is_array($arguments) === true,
@@ -680,9 +701,13 @@ class ModelQueryBuilder extends QueryBuilder
      */
     public function applySorts(string $tableOrAlias, iterable $sorts): self
     {
+        $virtualAttributes = $this->getModelSchemas()->getVirtualAttributes($this->modelClass);
+
         foreach ($sorts as $columnName => $isAsc) {
             assert(is_string($columnName) === true && is_bool($isAsc) === true);
-            $fullColumnName = $this->quoteDoubleIdentifier($tableOrAlias, $columnName);
+            $fullColumnName = empty($virtualAttributes[$columnName]) === false ?
+                $columnName :
+                $this->quoteDoubleIdentifier($tableOrAlias, $columnName);
             $this->addOrderBy($fullColumnName, $isAsc === true ? 'ASC' : 'DESC');
         }
 
@@ -776,7 +801,8 @@ class ModelQueryBuilder extends QueryBuilder
         string $fromColumn,
         string $targetTable,
         string $targetColumn
-    ): string {
+    ): string
+    {
         $targetAlias   = $this->createAlias($targetTable);
         $joinCondition = $this->quoteDoubleIdentifier($fromAlias, $fromColumn) . '=' .
             $this->quoteDoubleIdentifier($targetAlias, $targetColumn);
@@ -812,7 +838,8 @@ class ModelQueryBuilder extends QueryBuilder
         string $intToTargetColumn,
         string $targetTable,
         string $targetColumn
-    ): string {
+    ): string
+    {
         $intAlias    = $this->innerJoinOneTable($fromAlias, $fromColumn, $intTable, $intToFromColumn);
         $targetAlias = $this->innerJoinOneTable($intAlias, $intToTargetColumn, $targetTable, $targetColumn);
 

@@ -83,12 +83,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
         $registerModel = function (string $modelClass) use ($modelSchemas, &$registered, $requireReverseRelationships) {
             /** @var ModelInterface $modelClass */
             $modelSchemas->registerClass(
-                (string)$modelClass,
-                $modelClass::getTableName(),
-                $modelClass::getPrimaryKeyName(),
-                $modelClass::getAttributeTypes(),
-                $modelClass::getAttributeLengths(),
-                $modelClass::getRawAttributes()
+                (string)$modelClass, $modelClass::getTableName(), $modelClass::getPrimaryKeyName(), $modelClass::getAttributeTypes(), $modelClass::getAttributeLengths(), $modelClass::getRawAttributes()
             );
 
             $relationships = $modelClass::getRelationships();

@@ -169,4 +169,12 @@ class Token implements ModelInterface, UuidFields, TimestampFields
     {
         return [];
     }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getVirtualAttributes(): array
+    {
+        return [];
+    }
 }

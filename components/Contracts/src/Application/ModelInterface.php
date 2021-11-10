@@ -1,7 +1,8 @@
-<?php namespace Limoncello\Contracts\Application;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2021 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +16,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Limoncello\Contracts\Application;
 
 /**
  * @package Limoncello\Contracts
@@ -50,4 +55,9 @@ interface ModelInterface
      * @return array
      */
     public static function getRawAttributes(): array;
+
+    /**
+     * @return array
+     */
+    public static function getVirtualAttributes(): array;
 }

@@ -147,12 +147,7 @@ class ModelSchemas implements ModelSchemaInfoInterface
      * @inheritdoc
      */
     public function registerClass(
-        string $class,
-        string $tableName,
-        string $primaryKey,
-        array $attributeTypes,
-        array $attributeLengths,
-        array $rawAttributes = []
+        string $class, string $tableName, string $primaryKey, array $attributeTypes, array $attributeLengths, array $rawAttributes = [], array $virtualAttributes = []
     ): ModelSchemaInfoInterface
     {
         if (empty($class) === true) {
