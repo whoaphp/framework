@@ -1,160 +1,11 @@
 {
-    "repositories": [
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\Application",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\Auth",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\Commands",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\Common",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\Container",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\Contracts",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\Core",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\Crypt",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\Data",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\Events",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\Flute",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\L10n",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\OAuthServer",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\Passport",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\Templates",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\Validation",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\Doctrine",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\Testing",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\OAuthClient",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework3\\components\\JsonWebToken",
-            "options": {
-                "symlink": false
-            }
-        }
-    ],
-    "name": "limoncello-php/commands",
+    "name": "whoaphp/commands",
     "type": "composer-plugin",
-    "description": "Limoncello application commands support.",
-    "keywords": ["limoncello", "framework", "composer", "commands"],
-    "homepage": "https://github.com/limoncello-php/framework/tree/master/components/Commands",
+    "description": "Whoa application commands support.",
+    "keywords": ["whoa", "framework", "composer", "commands"],
+    "homepage": "https://github.com/whoaphp/framework/tree/master/components/Commands",
     "support": {
-        "issues": "https://github.com/limoncello-php/framework/issues"
+        "issues": "https://github.com/whoaphp/framework/issues"
     },
     "license": "Apache-2.0",
     "authors": [
@@ -170,8 +21,8 @@
     "require": {
         "php": "^7.4|^8.0",
         "composer-plugin-api": "^1.1",
-        "limoncello-php/common": "dev-master",
-        "limoncello-php/contracts": "dev-master"
+        "whoaphp/common": "dev-master",
+        "whoaphp/contracts": "dev-master"
     },
     "require-dev": {
         "composer/composer": "^1.5.0",
