@@ -1,7 +1,8 @@
-<?php namespace Limoncello\Contracts\Provider;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +17,21 @@
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Contracts\Provider;
+
 /**
- * @package Limoncello\Contracts
+ * @package Whoa\Contracts
  */
 interface ProvidesMessageResourcesInterface
 {
     /**
      * Get message descriptions.
      *
+     * @return array [string $locale, string $namespaceName, string $messageStorageClass]
      * @see MessageStorageInterface
      *
-     * @return array [string $locale, string $namespaceName, string $messageStorageClass]
      */
     public static function getMessageDescriptions(): array;
 }

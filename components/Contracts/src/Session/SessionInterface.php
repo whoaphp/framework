@@ -1,7 +1,8 @@
-<?php namespace Limoncello\Contracts\Session;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +17,17 @@
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Contracts\Session;
+
 use ArrayAccess;
 use IteratorAggregate;
 
 /**
  * Provides individual settings for a component.
  *
- * @package Limoncello\Contracts
+ * @package Whoa\Contracts
  */
 interface SessionInterface extends ArrayAccess, IteratorAggregate
 {

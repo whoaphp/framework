@@ -1,10 +1,10 @@
 {
-    "name": "whoaphp/contracts",
+    "name": "whoa-php/contracts",
     "description": "Whoa PHP Framework Contracts (interfaces) required for components integration.",
     "keywords": ["whoa", "framework", "contracts", "interfaces"],
-    "homepage": "https://github.com/whoaphp/framework/tree/master/components/Contracts",
+    "homepage": "https://github.com/whoa-php/framework/tree/master/components/Contracts",
     "support": {
-        "issues": "https://github.com/whoaphp/framework/issues"
+        "issues": "https://github.com/whoa-php/framework/issues"
     },
     "license": "Apache-2.0",
     "authors": [
@@ -28,7 +28,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Limoncello\\Contracts\\": "src/"
+            "Whoa\\Contracts\\": "src/"
         }
     },
     "scripts": {

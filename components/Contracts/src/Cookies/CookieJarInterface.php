@@ -1,7 +1,8 @@
-<?php namespace Limoncello\Contracts\Cookies;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +17,12 @@
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Contracts\Cookies;
+
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 interface CookieJarInterface
 {
@@ -47,7 +52,7 @@ interface CookieJarInterface
      *
      * @return CookieJarInterface
      */
-    public function delete(string  $cookieName): self;
+    public function delete(string $cookieName): self;
 
     /**
      * @return iterable

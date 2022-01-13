@@ -1,7 +1,8 @@
-<?php namespace Limoncello\Contracts\Commands;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +17,14 @@
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Container\ContainerInterface;
+declare(strict_types=1);
+
+namespace Whoa\Contracts\Commands;
+
+use Whoa\Contracts\Container\ContainerInterface;
 
 /**
- * @package Limoncello\Contracts
+ * @package Whoa\Contracts
  */
 interface ContainerConfiguratorInterface
 {

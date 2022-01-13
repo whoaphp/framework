@@ -1,4 +1,4 @@
-<?php namespace Limoncello\Contracts\L10n;
+<?php namespace Whoa\Contracts\L10n;
 
 /**
  * Copyright 2015-2019 info@neomerx.com
@@ -17,7 +17,7 @@
  */
 
 /**
- * @package Limoncello\l10n
+ * @package Whoa\l10n
  */
 interface FormatterInterface
 {

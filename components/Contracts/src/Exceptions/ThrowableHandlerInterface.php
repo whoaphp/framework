@@ -1,4 +1,4 @@
-<?php namespace Limoncello\Contracts\Exceptions;
+<?php namespace Whoa\Contracts\Exceptions;
 
 /**
  * Copyright 2015-2019 info@neomerx.com
@@ -16,12 +16,12 @@
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Http\ThrowableResponseInterface;
+use Whoa\Contracts\Http\ThrowableResponseInterface;
 use Psr\Container\ContainerInterface;
 use Throwable;
 
 /**
- * @package Limoncello\Contracts
+ * @package Whoa\Contracts
  */
 interface ThrowableHandlerInterface
 {

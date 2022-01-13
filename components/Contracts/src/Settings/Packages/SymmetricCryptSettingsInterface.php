@@ -1,7 +1,8 @@
-<?php namespace Limoncello\Contracts\Settings\Packages;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +17,16 @@
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Settings\SettingsInterface;
+declare(strict_types=1);
+
+namespace Whoa\Contracts\Settings\Packages;
+
+use Whoa\Contracts\Settings\SettingsInterface;
 
 /**
  * Provides individual settings for a component.
  *
- * @package Limoncello\Contracts
+ * @package Whoa\Contracts
  */
 interface SymmetricCryptSettingsInterface extends SettingsInterface
 {
