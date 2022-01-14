@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Core\Routing\Traits;
+<?php
 
 /**
- * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Core\Routing\Traits;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Core\SapiInterface;
-use Limoncello\Core\Application\Application;
+declare(strict_types=1);
+
+namespace Whoa\Core\Routing\Traits;
+
+use Whoa\Contracts\Core\SapiInterface;
+use Whoa\Core\Application\Application;
 use LogicException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * @package Limoncello\Core
+ * @package Whoa\Core
  *
  * @method string getCallableToCacheMessage();
  */

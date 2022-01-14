@@ -1,10 +1,34 @@
 {
-    "name": "whoaphp/core",
+
+    "repositories": [
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework\\components\\contracts",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework\\components\\common",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "V:\\Github\\whoaphp\\framework\\components\\container",
+            "options": {
+                "symlink": false
+            }
+        }
+    ],
+    "name": "whoa-php/core",
     "description": "PHP framework core (PSR-7).",
     "keywords": ["whoa", "framework", "PSR-7", "PSR7"],
-    "homepage": "https://github.com/whoaphp/framework/tree/master/components/Core",
+    "homepage": "https://github.com/whoa-php/framework/tree/master/components/Core",
     "support": {
-        "issues": "https://github.com/whoaphp/framework/issues"
+        "issues": "https://github.com/whoa-php/framework/issues"
     },
     "license": "Apache-2.0",
     "authors": [
@@ -22,8 +46,8 @@
         "nikic/fast-route": "^1.0",
         "laminas/laminas-diactoros": "^2.2",
         "laminas/laminas-httphandlerrunner": "^1.1",
-        "whoaphp/common": "dev-master",
-        "whoaphp/contracts": "dev-master"
+        "whoa-php/common": "dev-master",
+        "whoa-php/contracts": "dev-master"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^2.9",
@@ -31,22 +55,22 @@
         "scrutinizer/ocular": "^1.4",
         "phpunit/phpunit": "^9.5",
         "mockery/mockery": "^0.9|^1.0",
-        "whoaphp/container": "dev-master"
+        "whoa-php/container": "dev-master"
     },
     "autoload": {
         "psr-4": {
-            "Limoncello\\Core\\": "src/"
+            "Whoa\\Core\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Limoncello\\Tests\\Core\\": "tests/"
+            "Whoa\\Tests\\Core\\": "tests/"
         }
     },
     "scripts": {
         "test": ["@test-unit-with-coverage", "@test-cs", "@test-md"],
-        "test-unit": "./vendor/bin/phpunit",
-        "test-unit-with-coverage": "./vendor/bin/phpunit --coverage-text",
+        "test-unit": "./vendor/bin/phpunit --do-not-cache-result",
+        "test-unit-with-coverage": "./vendor/bin/phpunit --coverage-text --do-not-cache-result",
         "test-cs": "./vendor/bin/phpcs -p -s --standard=PSR2 ./src ./tests",
         "test-md": "./vendor/bin/phpmd ./src text codesize,controversial,cleancode,design,unusedcode,naming",
         "test-unit-php-7-4": "docker-compose run --rm cli_7_4_php php ./vendor/bin/phpunit",

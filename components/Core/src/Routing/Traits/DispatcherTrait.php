@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Core\Routing\Traits;
+<?php
 
 /**
- * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +16,16 @@ namespace Limoncello\Core\Routing\Traits;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Whoa\Core\Routing\Traits;
+
 use FastRoute\Dispatcher;
-use Limoncello\Contracts\Routing\DispatcherInterface;
+use Whoa\Contracts\Routing\DispatcherInterface;
 
 /**
- * @package Limoncello\Core
+ * @package Whoa\Core
  *
  * @method dispatch(string $method, string $uri): array
  */

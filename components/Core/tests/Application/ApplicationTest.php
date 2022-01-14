@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Core\Application;
+<?php
 
 /**
- * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,24 +17,28 @@ namespace Limoncello\Tests\Core\Application;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Core\Application;
+
 use Closure;
 use Exception;
 use FastRoute\DataGenerator\GroupCountBased as GroupCountBasedGenerator;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Core\SapiInterface;
-use Limoncello\Contracts\Exceptions\ThrowableHandlerInterface;
-use Limoncello\Contracts\Http\ThrowableResponseInterface;
-use Limoncello\Contracts\Routing\GroupInterface;
-use Limoncello\Contracts\Routing\RouterInterface;
-use Limoncello\Core\Application\Application;
-use Limoncello\Core\Application\Sapi;
-use Limoncello\Core\Application\ThrowableResponseTrait;
-use Limoncello\Core\Routing\Dispatcher\GroupCountBased as GroupCountBasedDispatcher;
-use Limoncello\Core\Routing\Group;
-use Limoncello\Core\Routing\Router;
-use Limoncello\Tests\Core\Application\Data\CoreData;
-use Limoncello\Tests\Core\TestCase;
+use Whoa\Container\Container;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Core\SapiInterface;
+use Whoa\Contracts\Exceptions\ThrowableHandlerInterface;
+use Whoa\Contracts\Http\ThrowableResponseInterface;
+use Whoa\Contracts\Routing\GroupInterface;
+use Whoa\Contracts\Routing\RouterInterface;
+use Whoa\Core\Application\Application;
+use Whoa\Core\Application\Sapi;
+use Whoa\Core\Application\ThrowableResponseTrait;
+use Whoa\Core\Routing\Dispatcher\GroupCountBased as GroupCountBasedDispatcher;
+use Whoa\Core\Routing\Group;
+use Whoa\Core\Routing\Router;
+use Whoa\Tests\Core\Application\Data\CoreData;
+use Whoa\Tests\Core\TestCase;
 use LogicException;
 use Mockery;
 use Mockery\Mock;
@@ -51,7 +54,7 @@ use Zend\Diactoros\ServerRequestFactory;
 use Zend\HttpHandlerRunner\Emitter\EmitterInterface;
 
 /**
- * @package Limoncello\Tests\Core
+ * @package Whoa\Tests\Core
  */
 class ApplicationTest extends TestCase
 {
@@ -118,7 +121,7 @@ class ApplicationTest extends TestCase
     {
         /** @var Application $app */
         /** @var SapiInterface $sapi */
-        list($app, $sapi) = $this->createApp('GET', '/', $this->getRoutesData());
+        [$app, $sapi] = $this->createApp('GET', '/', $this->getRoutesData());
         $app->run();
 
         /** @var ResponseInterface $response */
@@ -143,7 +146,7 @@ class ApplicationTest extends TestCase
     {
         /** @var Application $app */
         /** @var SapiInterface $sapi */
-        list($app, $sapi) = $this->createApp('POST', '/posts', $this->getRoutesData());
+        [$app, $sapi] = $this->createApp('POST', '/posts', $this->getRoutesData());
         $app->run();
 
         /** @var ResponseInterface $response */
@@ -166,7 +169,7 @@ class ApplicationTest extends TestCase
     {
         /** @var Application $app */
         /** @var SapiInterface $sapi */
-        list($app, $sapi) = $this->createApp('GET', '/posts/XYZ', $this->getRoutesData());
+        [$app, $sapi] = $this->createApp('GET', '/posts/XYZ', $this->getRoutesData());
         $app->run();
 
         /** @var ResponseInterface $response */
@@ -189,7 +192,7 @@ class ApplicationTest extends TestCase
     {
         /** @var Application $app */
         /** @var SapiInterface $sapi */
-        list($app, $sapi) = $this->createApp('INFO', '/', $this->getRoutesData());
+        [$app, $sapi] = $this->createApp('INFO', '/', $this->getRoutesData());
         $app->run();
 
         /** @var ResponseInterface $response */
@@ -227,7 +230,7 @@ class ApplicationTest extends TestCase
     {
         /** @var Application $app */
         /** @var SapiInterface $sapi */
-        list($app, $sapi) = $this->createApp('GET', '/', $this->getRoutesDataForNoRequest(), []);
+        [$app, $sapi] = $this->createApp('GET', '/', $this->getRoutesDataForNoRequest(), []);
         $app->run();
 
         /** @var ResponseInterface $response */
@@ -251,7 +254,7 @@ class ApplicationTest extends TestCase
         $execute = function (string $uri): ResponseInterface {
             $container = new Container();
             /** @var Application $app */
-            list($app, $sapi) = $this->createApp('GET', $uri, $this->getRoutesDataForErrorsTesting(), [], $container);
+            [$app, $sapi] = $this->createApp('GET', $uri, $this->getRoutesDataForErrorsTesting(), [], $container);
             $app->run();
             $response = $sapi->{self::FIELD_RESPONSE};
 
@@ -304,7 +307,7 @@ class ApplicationTest extends TestCase
         /** @var SapiInterface $sapi */
         $faultyMiddleware = [self::class, 'faultyMiddlewareItem'];
         $container        = new Container();
-        list($app, $sapi) = $this
+        [$app, $sapi] = $this
             ->createApp('GET', '/', $this->getRoutesData(), [$faultyMiddleware], $container);
         $app->run();
 
@@ -331,7 +334,7 @@ class ApplicationTest extends TestCase
     public function testGetRouter(): void
     {
         /** @var Application $app */
-        list($app) = $this->createApp('GET', '/', $this->getRoutesData());
+        [$app] = $this->createApp('GET', '/', $this->getRoutesData());
         $app->run();
 
         $method = new ReflectionMethod(Application::class, 'getRouter');
@@ -340,11 +343,11 @@ class ApplicationTest extends TestCase
     }
 
     /**
-     * @param string                            $method
-     * @param string                            $uri
-     * @param array                             $routesData
-     * @param array|null                        $globalMiddleware
-     * @param LimoncelloContainerInterface|null $container
+     * @param string                      $method
+     * @param string                      $uri
+     * @param array                       $routesData
+     * @param array|null                  $globalMiddleware
+     * @param WhoaContainerInterface|null $container
      *
      * @return array
      */
@@ -353,12 +356,13 @@ class ApplicationTest extends TestCase
         string $uri,
         array $routesData,
         array $globalMiddleware = null,
-        LimoncelloContainerInterface $container = null
-    ): array {
+        WhoaContainerInterface $container = null
+    ): array
+    {
 
         if ($container === null) {
             /** @var Mock $container */
-            $container = Mockery::mock(LimoncelloContainerInterface::class);
+            $container = Mockery::mock(WhoaContainerInterface::class);
         }
 
         $server['REQUEST_URI']    = $uri;
@@ -489,7 +493,8 @@ class ApplicationTest extends TestCase
         ServerRequestInterface $request,
         Closure $next,
         PsrContainerInterface $container
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         self::assertFalse(self::$isGlobalMiddleware1Called);
         self::assertFalse(self::$isGlobalMiddleware2Called);
 
@@ -545,7 +550,8 @@ class ApplicationTest extends TestCase
         ServerRequestInterface $request,
         Closure $next,
         PsrContainerInterface $container
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
 
         $container ?: null;
 
@@ -558,11 +564,11 @@ class ApplicationTest extends TestCase
     /**
      * Container configurator.
      *
-     * @param LimoncelloContainerInterface $container
+     * @param WhoaContainerInterface $container
      *
      * @return void
      */
-    public static function createGlobalConfigurator(LimoncelloContainerInterface $container): void
+    public static function createGlobalConfigurator(WhoaContainerInterface $container): void
     {
         // dummy for tests
         $container ?: null;
@@ -573,11 +579,11 @@ class ApplicationTest extends TestCase
     /**
      * Container configurator.
      *
-     * @param LimoncelloContainerInterface $container
+     * @param WhoaContainerInterface $container
      *
      * @return void
      */
-    public static function createPostConfigurator(LimoncelloContainerInterface $container): void
+    public static function createPostConfigurator(WhoaContainerInterface $container): void
     {
         // dummy for tests
         $container ?: null;
@@ -588,23 +594,22 @@ class ApplicationTest extends TestCase
     /**
      * Container configurator.
      *
-     * @param LimoncelloContainerInterface $container
+     * @param WhoaContainerInterface $container
      *
      * @return void
      */
-    public static function configureErrorHandler(LimoncelloContainerInterface $container): void
+    public static function configureErrorHandler(WhoaContainerInterface $container): void
     {
-        $container[ThrowableHandlerInterface::class] = new class implements ThrowableHandlerInterface
-        {
+        $container[ThrowableHandlerInterface::class] = new class implements ThrowableHandlerInterface {
             /**
              * @inheritdoc
              */
             public function createResponse(
                 Throwable $throwable,
                 PsrContainerInterface $container
-            ): ThrowableResponseInterface {
-                $response = new class ($throwable) extends TextResponse implements ThrowableResponseInterface
-                {
+            ): ThrowableResponseInterface
+            {
+                $response = new class ($throwable) extends TextResponse implements ThrowableResponseInterface {
                     use ThrowableResponseTrait;
 
                     /**
@@ -635,7 +640,8 @@ class ApplicationTest extends TestCase
         array $params,
         PsrContainerInterface $container,
         ServerRequestInterface $request = null
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         // dummy for tests
 
         $params && $request && $container ?: null;
@@ -658,7 +664,8 @@ class ApplicationTest extends TestCase
         array $params,
         PsrContainerInterface $container,
         ServerRequestInterface $request = null
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         $params && $request && $container ?: null;
 
         throw new Exception('The handler emulates an error in a Controller.');
@@ -677,7 +684,8 @@ class ApplicationTest extends TestCase
         array $params,
         PsrContainerInterface $container,
         ServerRequestInterface $request = null
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         $params && $request && $container ?: null;
 
         // it will produce PHP syntax error and that's exactly what
@@ -717,7 +725,8 @@ EOT;
         array $params,
         PsrContainerInterface $container,
         ServerRequestInterface $request = null
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         // we didn't specified any middleware and request factory was set to null thus request should be null
         self::assertNull($request);
 

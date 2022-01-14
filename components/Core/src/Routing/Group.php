@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Core\Routing;
+<?php
 
 /**
- * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Core\Routing;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Routing\GroupInterface;
+declare(strict_types=1);
+
+namespace Whoa\Core\Routing;
+
+use Whoa\Contracts\Routing\GroupInterface;
 use function assert;
 
 /**
- * @package Limoncello\Core
+ * @package Whoa\Core
  */
 class Group extends BaseGroup
 {
@@ -31,7 +34,7 @@ class Group extends BaseGroup
      */
     public function __construct(array $parameters = [])
     {
-        list($middleware, $configurators, $factoryWasGiven, $requestFactory, $name) =
+        [$middleware, $configurators, $factoryWasGiven, $requestFactory, $name] =
             $this->normalizeGroupParameters($parameters);
 
         if (empty($middleware) === false) {

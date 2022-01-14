@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Core\Application;
+<?php
 
 /**
- * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,18 +17,22 @@ namespace Limoncello\Core\Application;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Core\Application;
+
 use Closure;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\TextResponse;
 use Laminas\Diactoros\ServerRequest;
-use Limoncello\Common\Reflection\CheckCallableTrait;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Core\ApplicationInterface;
-use Limoncello\Contracts\Core\SapiInterface;
-use Limoncello\Contracts\Exceptions\ThrowableHandlerInterface;
-use Limoncello\Contracts\Http\ThrowableResponseInterface;
-use Limoncello\Contracts\Routing\RouterInterface;
-use Limoncello\Core\Routing\Router;
+use Whoa\Common\Reflection\CheckCallableTrait;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Core\ApplicationInterface;
+use Whoa\Contracts\Core\SapiInterface;
+use Whoa\Contracts\Exceptions\ThrowableHandlerInterface;
+use Whoa\Contracts\Http\ThrowableResponseInterface;
+use Whoa\Contracts\Routing\RouterInterface;
+use Whoa\Core\Routing\Router;
 use LogicException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
@@ -44,7 +47,7 @@ use function count;
 use function implode;
 
 /**
- * @package Limoncello\Core
+ * @package Whoa\Core
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
@@ -74,9 +77,9 @@ abstract class Application implements ApplicationInterface
     abstract protected function getCoreData(): array;
 
     /**
-     * @return LimoncelloContainerInterface
+     * @return WhoaContainerInterface
      */
-    abstract protected function createContainerInstance(): LimoncelloContainerInterface;
+    abstract protected function createContainerInstance(): WhoaContainerInterface;
 
     /**
      * @inheritdoc
@@ -106,12 +109,14 @@ abstract class Application implements ApplicationInterface
             $coreData = $this->getCoreData();
 
             // match route from `Request` to handler, route container configurators/middleware, etc
-            list($matchCode, $allowedMethods, $handlerParams, $handler,
-                $routeMiddleware, $routeConfigurators, $requestFactory) = $this->initRouter($coreData)
+            [
+                $matchCode, $allowedMethods, $handlerParams, $handler,
+                $routeMiddleware, $routeConfigurators, $requestFactory
+            ] = $this->initRouter($coreData)
                 ->match($this->sapi->getMethod(), $this->sapi->getUri()->getPath());
 
             // configure container
-            $container = $this->createContainerInstance();
+            $container           = $this->createContainerInstance();
             $globalConfigurators = BaseCoreData::getGlobalConfiguratorsFromData($coreData);
             $this->configureContainer($container, $globalConfigurators, $routeConfigurators);
 
@@ -139,8 +144,8 @@ abstract class Application implements ApplicationInterface
 
             $request =
                 $requestFactory === null && $hasMiddleware === false && $matchCode === RouterInterface::MATCH_FOUND ?
-                null :
-                $this->createRequest($this->sapi, $container, $requestFactory ?? static::getDefaultRequestFactory());
+                    null :
+                    $this->createRequest($this->sapi, $container, $requestFactory ?? static::getDefaultRequestFactory());
 
             // Execute the pipeline by sending `Request` down all middleware (global then route's then
             // terminal handler in `Controller` and back) and then send `Response` to SAPI
@@ -205,7 +210,8 @@ abstract class Application implements ApplicationInterface
     protected function handleThrowable(
         Throwable $throwable,
         ?PsrContainerInterface $container
-    ): ThrowableResponseInterface {
+    ): ThrowableResponseInterface
+    {
         if ($container !== null && $container->has(ThrowableHandlerInterface::class) === true) {
             /** @var ThrowableHandlerInterface $handler */
             /** @noinspection PhpUnhandledExceptionInspection */
@@ -239,8 +245,7 @@ abstract class Application implements ApplicationInterface
     protected function createDefaultThrowableResponse(Throwable $throwable): ThrowableResponseInterface
     {
         $status   = static::DEFAULT_HTTP_ERROR_CODE;
-        $response = new class ($throwable, $status) extends TextResponse implements ThrowableResponseInterface
-        {
+        $response = new class ($throwable, $status) extends TextResponse implements ThrowableResponseInterface {
             use ThrowableResponseTrait;
 
             /**
@@ -266,28 +271,29 @@ abstract class Application implements ApplicationInterface
     }
 
     /**
-     * @param LimoncelloContainerInterface $container
-     * @param callable[]|null              $globalConfigurators
-     * @param callable[]|null              $routeConfigurators
+     * @param WhoaContainerInterface $container
+     * @param callable[]|null        $globalConfigurators
+     * @param callable[]|null        $routeConfigurators
      *
      * @return void
      *
      * @throws ReflectionException
      */
     protected function configureContainer(
-        LimoncelloContainerInterface $container,
+        WhoaContainerInterface $container,
         array $globalConfigurators = null,
         array $routeConfigurators = null
-    ): void {
+    ): void
+    {
         if (empty($globalConfigurators) === false) {
             foreach ($globalConfigurators as $configurator) {
-                assert($this->checkPublicStaticCallable($configurator, [LimoncelloContainerInterface::class]));
+                assert($this->checkPublicStaticCallable($configurator, [WhoaContainerInterface::class]));
                 $configurator($container);
             }
         }
         if (empty($routeConfigurators) === false) {
             foreach ($routeConfigurators as $configurator) {
-                assert($this->checkPublicStaticCallable($configurator, [LimoncelloContainerInterface::class]));
+                assert($this->checkPublicStaticCallable($configurator, [WhoaContainerInterface::class]));
                 $configurator($container);
             }
         }
@@ -308,7 +314,8 @@ abstract class Application implements ApplicationInterface
         PsrContainerInterface $container,
         array $globalMiddleware,
         array $routeMiddleware = null
-    ): Closure {
+    ): Closure
+    {
         $handler = $this->createMiddlewareChainImpl($handler, $container, $routeMiddleware);
         $handler = $this->createMiddlewareChainImpl($handler, $container, $globalMiddleware);
 
@@ -330,7 +337,8 @@ abstract class Application implements ApplicationInterface
         array $handlerParams,
         PsrContainerInterface $container,
         ServerRequestInterface $request = null
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         // check the handler method signature
         assert(
             $this->checkPublicStaticCallable(
@@ -378,7 +386,8 @@ abstract class Application implements ApplicationInterface
         callable $handler,
         array $handlerParams,
         PsrContainerInterface $container
-    ): Closure {
+    ): Closure
+    {
         return function (ServerRequestInterface $request = null) use (
             $handler,
             $handlerParams,
@@ -405,7 +414,8 @@ abstract class Application implements ApplicationInterface
         SapiInterface $sapi,
         PsrContainerInterface $container,
         callable $requestFactory
-    ): ServerRequestInterface {
+    ): ServerRequestInterface
+    {
         // check the factory method signature
         assert(
             $this->checkPublicStaticCallable(
@@ -459,7 +469,8 @@ abstract class Application implements ApplicationInterface
         Closure $handler,
         PsrContainerInterface $container,
         array $middleware = null
-    ): Closure {
+    ): Closure
+    {
         if (empty($middleware) === false) {
             $start = count($middleware) - 1;
             for ($index = $start; $index >= 0; $index--) {
@@ -483,7 +494,8 @@ abstract class Application implements ApplicationInterface
         Closure $next,
         callable $middleware,
         PsrContainerInterface $container
-    ): Closure {
+    ): Closure
+    {
         // check the middleware method signature
         assert(
             $this->checkPublicStaticCallable(

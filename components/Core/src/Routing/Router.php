@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Core\Routing;
+<?php
 
 /**
- * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +17,19 @@ namespace Limoncello\Core\Routing;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Core\Routing;
+
 use FastRoute\DataGenerator;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use FastRoute\RouteParser\Std;
-use Limoncello\Common\Reflection\ClassIsTrait;
-use Limoncello\Contracts\Routing\DispatcherInterface;
-use Limoncello\Contracts\Routing\GroupInterface;
-use Limoncello\Contracts\Routing\RouteInterface;
-use Limoncello\Contracts\Routing\RouterInterface;
+use Whoa\Common\Reflection\ClassIsTrait;
+use Whoa\Contracts\Routing\DispatcherInterface;
+use Whoa\Contracts\Routing\GroupInterface;
+use Whoa\Contracts\Routing\RouteInterface;
+use Whoa\Contracts\Routing\RouterInterface;
 use LogicException;
 use Psr\Http\Message\ServerRequestInterface;
 use function assert;
@@ -35,7 +38,7 @@ use function array_merge;
 use function strlen;
 
 /**
- * @package Limoncello\Core
+ * @package Whoa\Core
  */
 class Router implements RouterInterface
 {
@@ -119,7 +122,7 @@ class Router implements RouterInterface
     public function loadCachedRoutes(array $cachedRoutes): void
     {
         $this->cachedRoutes = $cachedRoutes;
-        list($collectorData) = $cachedRoutes;
+        [$collectorData] = $cachedRoutes;
 
         $this->dispatcher = $this->createDispatcher();
         $this->dispatcher->setData($collectorData);
@@ -136,17 +139,17 @@ class Router implements RouterInterface
 
         // Array contains matching result code, allowed methods list, handler parameters list, handler,
         // middleware list, container configurators list, custom request factory.
-        list ($dispatchResult) = $result;
+        [$dispatchResult] = $result;
         switch ($dispatchResult) {
             case DispatcherInterface::ROUTE_FOUND:
-                list (, $routeIndex, $handlerParams) = $result;
-                list(, $allRoutesInfo) = $this->cachedRoutes;
+                [, $routeIndex, $handlerParams] = $result;
+                [, $allRoutesInfo] = $this->cachedRoutes;
                 $routeInfo = $allRoutesInfo[$routeIndex];
 
                 return array_merge([self::MATCH_FOUND, null, $handlerParams], $routeInfo);
 
             case DispatcherInterface::ROUTE_METHOD_NOT_ALLOWED:
-                list (, $allowedMethods) = $result;
+                [, $allowedMethods] = $result;
 
                 return [self::MATCH_METHOD_NOT_ALLOWED, $allowedMethods, null, null, null, null, null];
 
@@ -162,7 +165,7 @@ class Router implements RouterInterface
     {
         $this->checkRoutesLoaded();
 
-        list(, , $namedRouteUriPaths) = $this->cachedRoutes;
+        [, , $namedRouteUriPaths] = $this->cachedRoutes;
 
         $result = array_key_exists($routeName, $namedRouteUriPaths) === true ? $namedRouteUriPaths[$routeName] : null;
 
@@ -177,7 +180,8 @@ class Router implements RouterInterface
         string $routeName,
         array $placeholders = [],
         array $queryParams = []
-    ): string {
+    ): string
+    {
         $path = $this->getUriPath($routeName);
         $path = $path === null ? $path : $this->replacePlaceholders($path, $placeholders);
         $url  = empty($queryParams) === true ? "$hostUri$path" : "$hostUri$path?" . http_build_query($queryParams);
@@ -286,7 +290,8 @@ class Router implements RouterInterface
         array $namedRouteUriPaths,
         ?string &$url,
         ?string &$otherUrl
-    ): bool {
+    ): bool
+    {
         // check is really simple, the main purpose of the method is to prepare data for assert
         $isUnique = array_key_exists($route->getName(), $namedRouteUriPaths) === false;
 

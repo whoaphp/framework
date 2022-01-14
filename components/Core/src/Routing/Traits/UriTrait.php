@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Core\Routing\Traits;
+<?php
 
 /**
- * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Core\Routing\Traits;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Core\Routing\Traits;
+
 use function strlen;
 use function substr;
 
 /**
- * @package Limoncello\Core
+ * @package Whoa\Core
  */
 trait UriTrait
 {
@@ -35,9 +38,9 @@ trait UriTrait
     protected function normalizeUri(string $uri, bool $trailingSlash): string
     {
         // add starting '/' and cut ending '/' if necessary
-        $uri = strlen($uri) > 0 && $uri[0] === '/' ? $uri : '/' . $uri;
+        $uri       = strlen($uri) > 0 && $uri[0] === '/' ? $uri : '/' . $uri;
         $prefixLen = strlen($uri);
-        $uri = $prefixLen > 1 && substr($uri, -1) === '/' ? substr($uri, 0, $prefixLen - 1) : $uri;
+        $uri       = $prefixLen > 1 && substr($uri, -1) === '/' ? substr($uri, 0, $prefixLen - 1) : $uri;
 
         // feature: trailing slashes are possible when asked
         $uri = $trailingSlash === true && substr($uri, -1) !== '/' ? $uri . '/' : $uri;

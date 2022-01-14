@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Core\Routing\Dispatcher;
+<?php
 
 /**
- * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Core\Routing\Dispatcher;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Routing\DispatcherInterface;
-use Limoncello\Core\Routing\Traits\DispatcherTrait;
+declare(strict_types=1);
+
+namespace Whoa\Core\Routing\Dispatcher;
+
+use Whoa\Contracts\Routing\DispatcherInterface;
+use Whoa\Core\Routing\Traits\DispatcherTrait;
 use function assert;
 
 /**
- * @package Limoncello\Core
+ * @package Whoa\Core
  */
 class MarkBased extends \FastRoute\Dispatcher\MarkBased implements DispatcherInterface
 {
@@ -44,6 +47,6 @@ class MarkBased extends \FastRoute\Dispatcher\MarkBased implements DispatcherInt
      */
     public function setData(array $data): void
     {
-        list($this->staticRouteMap, $this->variableRouteData) = $data;
+        [$this->staticRouteMap, $this->variableRouteData] = $data;
     }
 }

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Core\Routing;
+<?php
 
 /**
- * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,22 +17,26 @@ namespace Limoncello\Tests\Core\Routing;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Core\Routing;
+
 use Exception;
 use FastRoute\DataGenerator\CharCountBased as CharCountBasedGenerator;
 use FastRoute\DataGenerator\GroupCountBased as GroupCountBasedGenerator;
 use FastRoute\DataGenerator\GroupPosBased as GroupPosBasedGenerator;
 use FastRoute\DataGenerator\MarkBased as MarkBasedGenerator;
-use Limoncello\Contracts\Core\SapiInterface;
-use Limoncello\Contracts\Routing\GroupInterface;
-use Limoncello\Contracts\Routing\RouteInterface;
-use Limoncello\Contracts\Routing\RouterInterface;
-use Limoncello\Core\Routing\Dispatcher\CharCountBased;
-use Limoncello\Core\Routing\Dispatcher\GroupCountBased;
-use Limoncello\Core\Routing\Dispatcher\GroupPosBased;
-use Limoncello\Core\Routing\Dispatcher\MarkBased;
-use Limoncello\Core\Routing\Group;
-use Limoncello\Core\Routing\Router;
-use Limoncello\Tests\Core\TestCase;
+use Whoa\Contracts\Core\SapiInterface;
+use Whoa\Contracts\Routing\GroupInterface;
+use Whoa\Contracts\Routing\RouteInterface;
+use Whoa\Contracts\Routing\RouterInterface;
+use Whoa\Core\Routing\Dispatcher\CharCountBased;
+use Whoa\Core\Routing\Dispatcher\GroupCountBased;
+use Whoa\Core\Routing\Dispatcher\GroupPosBased;
+use Whoa\Core\Routing\Dispatcher\MarkBased;
+use Whoa\Core\Routing\Group;
+use Whoa\Core\Routing\Router;
+use Whoa\Tests\Core\TestCase;
 use LogicException;
 use Mockery;
 use Psr\Http\Message\ResponseInterface;
@@ -43,7 +46,7 @@ use Zend\Diactoros\ServerRequest;
 use Zend\Diactoros\Uri;
 
 /**
- * @package Limoncello\Tests\Core
+ * @package Whoa\Tests\Core
  */
 class RouterTest extends TestCase
 {
@@ -217,7 +220,7 @@ class RouterTest extends TestCase
                         RouteInterface::PARAM_REQUEST_FACTORY         => [self::class, 'createRequest'],
                     ])
                     ->delete('{id:\d+}', [self::class, 'postsDelete'], [
-                            RouteInterface::PARAM_NAME => self::ROUTE_NAME_DELETE_POST,
+                        RouteInterface::PARAM_NAME => self::ROUTE_NAME_DELETE_POST,
                     ]);
             })
             ->post('', [self::class, 'createNews']);

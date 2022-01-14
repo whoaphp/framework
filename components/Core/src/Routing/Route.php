@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Core\Routing;
+<?php
 
 /**
- * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Core\Routing;
  * limitations under the License.
  */
 
-use Limoncello\Common\Reflection\CheckCallableTrait;
-use Limoncello\Contracts\Routing\GroupInterface;
-use Limoncello\Contracts\Routing\RouteInterface;
-use Limoncello\Core\Routing\Traits\CallableTrait;
-use Limoncello\Core\Routing\Traits\HasConfiguratorsTrait;
-use Limoncello\Core\Routing\Traits\HasMiddlewareTrait;
-use Limoncello\Core\Routing\Traits\HasRequestFactoryTrait;
-use Limoncello\Core\Routing\Traits\UriTrait;
+declare(strict_types=1);
+
+namespace Whoa\Core\Routing;
+
+use Whoa\Common\Reflection\CheckCallableTrait;
+use Whoa\Contracts\Routing\GroupInterface;
+use Whoa\Contracts\Routing\RouteInterface;
+use Whoa\Core\Routing\Traits\CallableTrait;
+use Whoa\Core\Routing\Traits\HasConfiguratorsTrait;
+use Whoa\Core\Routing\Traits\HasMiddlewareTrait;
+use Whoa\Core\Routing\Traits\HasRequestFactoryTrait;
+use Whoa\Core\Routing\Traits\UriTrait;
 use LogicException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -34,7 +37,7 @@ use ReflectionException;
 use function array_merge;
 
 /**
- * @package Limoncello\Core
+ * @package Whoa\Core
  *
  * @SuppressWarnings(PHPMD.LongVariable)
  */

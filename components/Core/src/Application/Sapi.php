@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Core\Application;
+<?php
 
 /**
- * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Core\Application;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Core\Application;
+
 use Laminas\HttpHandlerRunner\Emitter\EmitterInterface;
-use Limoncello\Contracts\Core\SapiInterface;
+use Whoa\Contracts\Core\SapiInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
- * @package Limoncello\Core
+ * @package Whoa\Core
  */
 class Sapi implements SapiInterface
 {
@@ -108,7 +111,8 @@ class Sapi implements SapiInterface
         array $files = null,
         $messageBody = 'php://input',
         string $protocolVersion = '1.1'
-    ) {
+    )
+    {
         $this->sapiEmitter = $sapiEmitter;
 
         // Code below based on ServerRequestFactory::fromGlobals

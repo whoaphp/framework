@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Core\Routing;
+<?php
 
 /**
- * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +17,19 @@ namespace Limoncello\Tests\Core\Routing;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Core\Routing;
+
 use Closure;
 use Exception;
-use Limoncello\Contracts\Core\SapiInterface;
-use Limoncello\Contracts\Routing\GroupInterface as GI;
-use Limoncello\Contracts\Routing\RouteInterface as RI;
-use Limoncello\Core\Application\Application;
-use Limoncello\Core\Routing\Group;
-use Limoncello\Core\Routing\Traits\CallableTrait;
-use Limoncello\Tests\Core\TestCase;
+use Whoa\Contracts\Core\SapiInterface;
+use Whoa\Contracts\Routing\GroupInterface as GI;
+use Whoa\Contracts\Routing\RouteInterface as RI;
+use Whoa\Core\Application\Application;
+use Whoa\Core\Routing\Group;
+use Whoa\Core\Routing\Traits\CallableTrait;
+use Whoa\Tests\Core\TestCase;
 use LogicException;
 use Mockery;
 use Psr\Http\Message\ResponseInterface;
@@ -34,7 +37,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use ReflectionException;
 
 /**
- * @package Limoncello\Tests\Core
+ * @package Whoa\Tests\Core
  */
 class GroupTest extends TestCase
 {

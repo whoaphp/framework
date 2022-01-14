@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Core\Application;
+<?php
 
 /**
- * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +17,19 @@ namespace Limoncello\Tests\Core\Application;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Core\Application;
+
 use Exception;
-use Limoncello\Core\Application\Sapi;
-use Limoncello\Tests\Core\TestCase;
+use Whoa\Core\Application\Sapi;
+use Whoa\Tests\Core\TestCase;
 use Mockery;
 use Psr\Http\Message\ResponseInterface;
 use Zend\HttpHandlerRunner\Emitter\EmitterInterface;
 
 /**
- * @package Limoncello\Tests\Core
+ * @package Whoa\Tests\Core
  */
 class SapiTest extends TestCase
 {
@@ -38,7 +41,7 @@ class SapiTest extends TestCase
     public function testHomeIndex(): void
     {
         /** @var Mockery\Mock $emitter */
-        $emitter  = Mockery::mock(EmitterInterface::class);
+        $emitter = Mockery::mock(EmitterInterface::class);
         /** @var Mockery\Mock $response */
         $response = Mockery::mock(ResponseInterface::class);
 

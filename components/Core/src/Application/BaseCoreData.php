@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Core\Application;
+<?php
 
 /**
- * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +17,19 @@ namespace Limoncello\Core\Application;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Core\Application;
+
 use FastRoute\DataGenerator;
 use FastRoute\Dispatcher;
-use Limoncello\Common\Reflection\ClassIsTrait;
-use Limoncello\Core\Contracts\CoreDataInterface;
+use Whoa\Common\Reflection\ClassIsTrait;
+use Whoa\Core\Contracts\CoreDataInterface;
 use function assert;
 use function array_key_exists;
 
 /**
- * @package Limoncello\Core
+ * @package Whoa\Core
  */
 abstract class BaseCoreData implements CoreDataInterface
 {
