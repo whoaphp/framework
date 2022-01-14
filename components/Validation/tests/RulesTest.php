@@ -2,7 +2,7 @@
 
 /**
  * Copyright 2015-2020 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,27 +19,27 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Validation;
+namespace Whoa\Tests\Validation;
 
 use DateTimeImmutable;
 use Exception;
-use Limoncello\Validation\Captures\CaptureAggregator;
-use Limoncello\Validation\Contracts\Errors\ErrorCodes;
-use Limoncello\Validation\Contracts\Errors\ErrorInterface;
-use Limoncello\Validation\Contracts\Execution\ContextInterface;
-use Limoncello\Validation\Contracts\Execution\ContextStorageInterface;
-use Limoncello\Validation\Errors\ErrorAggregator;
-use Limoncello\Validation\Execution\ContextStorage;
-use Limoncello\Validation\Rules as v;
-use Limoncello\Validation\SingleValidator;
-use Limoncello\Validation\Validator\ArrayValidation;
+use Whoa\Validation\Captures\CaptureAggregator;
+use Whoa\Validation\Contracts\Errors\ErrorCodes;
+use Whoa\Validation\Contracts\Errors\ErrorInterface;
+use Whoa\Validation\Contracts\Execution\ContextInterface;
+use Whoa\Validation\Contracts\Execution\ContextStorageInterface;
+use Whoa\Validation\Errors\ErrorAggregator;
+use Whoa\Validation\Execution\ContextStorage;
+use Whoa\Validation\Rules as v;
+use Whoa\Validation\SingleValidator;
+use Whoa\Validation\Validator\ArrayValidation;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use function assert;
 use function is_int;
 
 /**
- * @package Limoncello\Tests\Validation
+ * @package Whoa\Tests\Validation
  */
 class RulesTest extends TestCase
 {

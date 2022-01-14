@@ -1,13 +1,4 @@
 {
-    "repositories": [
-        {
-            "type": "path",
-            "url": "V:\\Github\\whoaphp\\framework\\components\\contracts",
-            "options": {
-                "symlink": false
-            }
-        }
-    ],
     "name": "whoa-php/l10n",
     "description": "Whoa framework localization support.",
     "keywords": ["whoa", "framework", "l10n", "localization"],

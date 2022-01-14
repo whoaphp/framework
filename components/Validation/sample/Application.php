@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Sample;
+<?php
 
 /**
- * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,14 @@ namespace Sample;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Sample;
+
 use DateTime;
 use DateTimeInterface;
-use Limoncello\Validation\ArrayValidator as v;
-use Limoncello\Validation\Contracts\Errors\ErrorInterface;
+use Whoa\Validation\ArrayValidator as v;
+use Whoa\Validation\Contracts\Errors\ErrorInterface;
 use MessageFormatter;
 use Sample\Validation\Rules as r;
 

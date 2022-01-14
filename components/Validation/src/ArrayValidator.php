@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +17,19 @@ namespace Limoncello\Validation;
  * limitations under the License.
  */
 
-use Limoncello\Validation\Contracts\Execution\ContextStorageInterface;
-use Limoncello\Validation\Contracts\Rules\RuleInterface;
-use Limoncello\Validation\Execution\ContextStorage;
-use Limoncello\Validation\Validator\ArrayValidation;
-use Limoncello\Validation\Validator\BaseValidator;
+declare(strict_types=1);
+
+namespace Whoa\Validation;
+
+use Whoa\Validation\Contracts\Execution\ContextStorageInterface;
+use Whoa\Validation\Contracts\Rules\RuleInterface;
+use Whoa\Validation\Execution\ContextStorage;
+use Whoa\Validation\Validator\ArrayValidation;
+use Whoa\Validation\Validator\BaseValidator;
 use Psr\Container\ContainerInterface;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  */
 class ArrayValidator extends BaseValidator
 {

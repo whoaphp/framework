@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Exceptions;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Validation\Exceptions;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Exceptions\LimoncelloExceptionInterface;
+declare(strict_types=1);
+
+namespace Whoa\Validation\Exceptions;
+
+use Whoa\Contracts\Exceptions\WhoaExceptionInterface;
 use LogicException;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  */
-class UnknownExecutionBlockType extends LogicException implements LimoncelloExceptionInterface
+class UnknownExecutionBlockType extends LogicException implements WhoaExceptionInterface
 {
 }

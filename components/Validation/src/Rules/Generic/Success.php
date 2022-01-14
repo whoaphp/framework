@@ -2,7 +2,7 @@
 
 /**
  * Copyright 2015-2020 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,14 +19,14 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Validation\Rules\Generic;
+namespace Whoa\Validation\Rules\Generic;
 
-use Limoncello\Validation\Contracts\Execution\ContextInterface;
-use Limoncello\Validation\Rules\ExecuteRule;
+use Whoa\Validation\Contracts\Execution\ContextInterface;
+use Whoa\Validation\Rules\ExecuteRule;
 use function assert;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  */
 final class Success extends ExecuteRule
 {

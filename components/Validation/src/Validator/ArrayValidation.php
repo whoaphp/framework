@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Validator;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Validation\Validator;
  * limitations under the License.
  */
 
-use Limoncello\Validation\Contracts\Captures\CaptureAggregatorInterface;
-use Limoncello\Validation\Contracts\Errors\ErrorAggregatorInterface;
-use Limoncello\Validation\Contracts\Rules\RuleInterface;
-use Limoncello\Validation\Execution\BlockInterpreter;
-use Limoncello\Validation\Execution\BlockSerializer;
+declare(strict_types=1);
+
+namespace Whoa\Validation\Validator;
+
+use Whoa\Validation\Contracts\Captures\CaptureAggregatorInterface;
+use Whoa\Validation\Contracts\Errors\ErrorAggregatorInterface;
+use Whoa\Validation\Contracts\Rules\RuleInterface;
+use Whoa\Validation\Execution\BlockInterpreter;
+use Whoa\Validation\Execution\BlockSerializer;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  *
  * The trait expects the following method to be implemented by a class that uses this trait.
  * - createContextStorageFromBlocks(array $blocks): ContextStorageInterface
@@ -80,8 +83,9 @@ trait ArrayValidation
         array $input,
         CaptureAggregatorInterface $captures,
         ErrorAggregatorInterface $errors
-    ): void {
-        list($indexMap, $serialized) = $this->getSerializedRules();
+    ): void
+    {
+        [$indexMap, $serialized] = $this->getSerializedRules();
 
         $blocks = BlockSerializer::unserializeBlocks($serialized);
 
@@ -107,9 +111,9 @@ trait ArrayValidation
     }
 
     /**
+     * @return array
      * @var RuleInterface[]|iterable $rules
      *
-     * @return array
      */
     private function serializeRules(iterable $rules): array
     {

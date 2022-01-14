@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Execution;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Validation\Execution;
  * limitations under the License.
  */
 
-use Limoncello\Validation\Contracts\Execution\ContextInterface;
+declare(strict_types=1);
+
+namespace Whoa\Validation\Execution;
+
+use Whoa\Validation\Contracts\Execution\ContextInterface;
 use function assert;
 use function count;
 use function is_array;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  */
 final class BlockReplies
 {
@@ -107,7 +110,8 @@ final class BlockReplies
         int $errorCode,
         string $messageTemplate,
         array $messageParams
-    ): array {
+    ): array
+    {
         return [
             static::REPLY_SUCCESS_VALUE => null,
             static::REPLY_ERRORS_INFO   => [
@@ -135,7 +139,8 @@ final class BlockReplies
         int $errorCode,
         string $messageTemplate,
         array $messageParams
-    ): array {
+    ): array
+    {
         $value = null;
 
         return [
@@ -162,7 +167,8 @@ final class BlockReplies
         int $errorCode,
         string $messageTemplate,
         array $messageParams
-    ): array {
+    ): array
+    {
         $value = null;
 
         return [
@@ -191,7 +197,8 @@ final class BlockReplies
         int $code,
         string $messageTemplate,
         array $messageParams
-    ): array {
+    ): array
+    {
         return [
             static::ERROR_INFO_BLOCK_INDEX        => $blockId,
             static::ERROR_INFO_VALUE              => $value,

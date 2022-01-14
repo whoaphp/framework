@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Validator;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,18 +17,22 @@ namespace Limoncello\Validation\Validator;
  * limitations under the License.
  */
 
-use Limoncello\Validation\Contracts\Rules\RuleInterface;
-use Limoncello\Validation\Rules\Generic\AndOperator;
-use Limoncello\Validation\Rules\Types\IsArray;
-use Limoncello\Validation\Rules\Types\IsBool;
-use Limoncello\Validation\Rules\Types\IsDateTime;
-use Limoncello\Validation\Rules\Types\IsFloat;
-use Limoncello\Validation\Rules\Types\IsInt;
-use Limoncello\Validation\Rules\Types\IsNumeric;
-use Limoncello\Validation\Rules\Types\IsString;
+declare(strict_types=1);
+
+namespace Whoa\Validation\Validator;
+
+use Whoa\Validation\Contracts\Rules\RuleInterface;
+use Whoa\Validation\Rules\Generic\AndOperator;
+use Whoa\Validation\Rules\Types\IsArray;
+use Whoa\Validation\Rules\Types\IsBool;
+use Whoa\Validation\Rules\Types\IsDateTime;
+use Whoa\Validation\Rules\Types\IsFloat;
+use Whoa\Validation\Rules\Types\IsInt;
+use Whoa\Validation\Rules\Types\IsNumeric;
+use Whoa\Validation\Rules\Types\IsString;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  */
 trait Types
 {

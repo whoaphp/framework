@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Validator;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,34 +17,38 @@ namespace Limoncello\Validation\Validator;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Validation\Validator;
+
 use DateTimeInterface;
-use Limoncello\Validation\Contracts\Rules\RuleInterface;
-use Limoncello\Validation\Rules\Comparisons\DateTimeBetween;
-use Limoncello\Validation\Rules\Comparisons\DateTimeEquals;
-use Limoncello\Validation\Rules\Comparisons\DateTimeLessOrEquals;
-use Limoncello\Validation\Rules\Comparisons\DateTimeLessThan;
-use Limoncello\Validation\Rules\Comparisons\DateTimeMoreOrEquals;
-use Limoncello\Validation\Rules\Comparisons\DateTimeMoreThan;
-use Limoncello\Validation\Rules\Comparisons\DateTimeNotEquals;
-use Limoncello\Validation\Rules\Comparisons\IsNotNull;
-use Limoncello\Validation\Rules\Comparisons\IsNull;
-use Limoncello\Validation\Rules\Comparisons\NumericBetween;
-use Limoncello\Validation\Rules\Comparisons\NumericLessOrEquals;
-use Limoncello\Validation\Rules\Comparisons\NumericLessThan;
-use Limoncello\Validation\Rules\Comparisons\NumericMoreOrEqualsThan;
-use Limoncello\Validation\Rules\Comparisons\NumericMoreThan;
-use Limoncello\Validation\Rules\Comparisons\ScalarEquals;
-use Limoncello\Validation\Rules\Comparisons\ScalarInValues;
-use Limoncello\Validation\Rules\Comparisons\ScalarNotEquals;
-use Limoncello\Validation\Rules\Comparisons\StringLengthBetween;
-use Limoncello\Validation\Rules\Comparisons\StringLengthMax;
-use Limoncello\Validation\Rules\Comparisons\StringLengthMin;
-use Limoncello\Validation\Rules\Comparisons\StringRegExp;
-use Limoncello\Validation\Rules\Generic\AndOperator;
-use Limoncello\Validation\Rules\Generic\OrOperator;
+use Whoa\Validation\Contracts\Rules\RuleInterface;
+use Whoa\Validation\Rules\Comparisons\DateTimeBetween;
+use Whoa\Validation\Rules\Comparisons\DateTimeEquals;
+use Whoa\Validation\Rules\Comparisons\DateTimeLessOrEquals;
+use Whoa\Validation\Rules\Comparisons\DateTimeLessThan;
+use Whoa\Validation\Rules\Comparisons\DateTimeMoreOrEquals;
+use Whoa\Validation\Rules\Comparisons\DateTimeMoreThan;
+use Whoa\Validation\Rules\Comparisons\DateTimeNotEquals;
+use Whoa\Validation\Rules\Comparisons\IsNotNull;
+use Whoa\Validation\Rules\Comparisons\IsNull;
+use Whoa\Validation\Rules\Comparisons\NumericBetween;
+use Whoa\Validation\Rules\Comparisons\NumericLessOrEquals;
+use Whoa\Validation\Rules\Comparisons\NumericLessThan;
+use Whoa\Validation\Rules\Comparisons\NumericMoreOrEqualsThan;
+use Whoa\Validation\Rules\Comparisons\NumericMoreThan;
+use Whoa\Validation\Rules\Comparisons\ScalarEquals;
+use Whoa\Validation\Rules\Comparisons\ScalarInValues;
+use Whoa\Validation\Rules\Comparisons\ScalarNotEquals;
+use Whoa\Validation\Rules\Comparisons\StringLengthBetween;
+use Whoa\Validation\Rules\Comparisons\StringLengthMax;
+use Whoa\Validation\Rules\Comparisons\StringLengthMin;
+use Whoa\Validation\Rules\Comparisons\StringRegExp;
+use Whoa\Validation\Rules\Generic\AndOperator;
+use Whoa\Validation\Rules\Generic\OrOperator;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  */
 trait Comparisons
 {

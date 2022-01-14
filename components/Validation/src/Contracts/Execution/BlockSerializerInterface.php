@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Contracts\Execution;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,14 @@ namespace Limoncello\Validation\Contracts\Execution;
  * limitations under the License.
  */
 
-use Limoncello\Validation\Contracts\Blocks\ExecutionBlockInterface;
+declare(strict_types=1);
+
+namespace Whoa\Validation\Contracts\Execution;
+
+use Whoa\Validation\Contracts\Blocks\ExecutionBlockInterface;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  */
 interface BlockSerializerInterface
 {

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Validation;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,31 +17,35 @@ namespace Limoncello\Tests\Validation;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Validation;
+
 use Exception;
-use Limoncello\Validation\Blocks\AndBlock;
-use Limoncello\Validation\Blocks\IfBlock;
-use Limoncello\Validation\Blocks\OrBlock;
-use Limoncello\Validation\Blocks\ProcedureBlock;
-use Limoncello\Validation\Captures\CaptureAggregator;
-use Limoncello\Validation\Contracts\Blocks\ExecutionBlockInterface;
-use Limoncello\Validation\Contracts\Errors\ErrorCodes;
-use Limoncello\Validation\Contracts\Errors\ErrorInterface;
-use Limoncello\Validation\Contracts\Execution\ContextInterface;
-use Limoncello\Validation\Errors\ErrorAggregator;
-use Limoncello\Validation\Exceptions\UnknownExecutionBlockType;
-use Limoncello\Validation\Execution\BlockInterpreter;
-use Limoncello\Validation\Execution\BlockReplies;
-use Limoncello\Validation\Execution\BlockSerializer;
-use Limoncello\Validation\Execution\ContextStorage;
-use Limoncello\Validation\I18n\Messages;
-use Limoncello\Validation\Rules\BaseRule;
-use Limoncello\Validation\Rules\Generic\Fail;
-use Limoncello\Validation\Rules\Generic\Success;
+use Whoa\Validation\Blocks\AndBlock;
+use Whoa\Validation\Blocks\IfBlock;
+use Whoa\Validation\Blocks\OrBlock;
+use Whoa\Validation\Blocks\ProcedureBlock;
+use Whoa\Validation\Captures\CaptureAggregator;
+use Whoa\Validation\Contracts\Blocks\ExecutionBlockInterface;
+use Whoa\Validation\Contracts\Errors\ErrorCodes;
+use Whoa\Validation\Contracts\Errors\ErrorInterface;
+use Whoa\Validation\Contracts\Execution\ContextInterface;
+use Whoa\Validation\Errors\ErrorAggregator;
+use Whoa\Validation\Exceptions\UnknownExecutionBlockType;
+use Whoa\Validation\Execution\BlockInterpreter;
+use Whoa\Validation\Execution\BlockReplies;
+use Whoa\Validation\Execution\BlockSerializer;
+use Whoa\Validation\Execution\ContextStorage;
+use Whoa\Validation\I18n\Messages;
+use Whoa\Validation\Rules\BaseRule;
+use Whoa\Validation\Rules\Generic\Fail;
+use Whoa\Validation\Rules\Generic\Success;
 use PHPUnit\Framework\TestCase;
 use function assert;
 
 /**
- * @package Limoncello\Tests\Validation
+ * @package Whoa\Tests\Validation
  */
 class BlockSerializationAndInterpretationTest extends TestCase
 {
@@ -392,8 +395,7 @@ class BlockSerializationAndInterpretationTest extends TestCase
      */
     public function testSerializeUnknownBlockType(): void
     {
-        $unknownTypeBlock = new class implements ExecutionBlockInterface
-        {
+        $unknownTypeBlock = new class implements ExecutionBlockInterface {
             /**
              * @inheritdoc
              */

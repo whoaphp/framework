@@ -2,7 +2,7 @@
 
 /**
  * Copyright 2015-2020 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,14 +19,14 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Validation\Execution;
+namespace Whoa\Validation\Execution;
 
-use Limoncello\Validation\Contracts\Captures\CaptureAggregatorInterface;
-use Limoncello\Validation\Contracts\Errors\ErrorAggregatorInterface;
-use Limoncello\Validation\Contracts\Execution\ContextInterface;
-use Limoncello\Validation\Contracts\Execution\ContextStorageInterface;
-use Limoncello\Validation\Errors\Error;
-use Limoncello\Validation\Rules\BaseRule;
+use Whoa\Validation\Contracts\Captures\CaptureAggregatorInterface;
+use Whoa\Validation\Contracts\Errors\ErrorAggregatorInterface;
+use Whoa\Validation\Contracts\Execution\ContextInterface;
+use Whoa\Validation\Contracts\Execution\ContextStorageInterface;
+use Whoa\Validation\Errors\Error;
+use Whoa\Validation\Rules\BaseRule;
 use function array_key_exists;
 use function assert;
 use function call_user_func;
@@ -37,7 +37,7 @@ use function is_int;
 use function is_iterable;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */

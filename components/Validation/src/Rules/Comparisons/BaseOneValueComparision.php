@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Rules\Comparisons;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,17 +17,21 @@ namespace Limoncello\Validation\Rules\Comparisons;
  * limitations under the License.
  */
 
-use Limoncello\Validation\Contracts\Blocks\ExecutionBlockInterface;
-use Limoncello\Validation\Contracts\Execution\ContextInterface;
-use Limoncello\Validation\Contracts\Rules\ComparisionInterface;
-use Limoncello\Validation\Rules\BaseRule;
-use Limoncello\Validation\Rules\Generic\Fail;
-use Limoncello\Validation\Rules\Generic\IfOperator;
-use Limoncello\Validation\Rules\Generic\Success;
+declare(strict_types=1);
+
+namespace Whoa\Validation\Rules\Comparisons;
+
+use Whoa\Validation\Contracts\Blocks\ExecutionBlockInterface;
+use Whoa\Validation\Contracts\Execution\ContextInterface;
+use Whoa\Validation\Contracts\Rules\ComparisionInterface;
+use Whoa\Validation\Rules\BaseRule;
+use Whoa\Validation\Rules\Generic\Fail;
+use Whoa\Validation\Rules\Generic\IfOperator;
+use Whoa\Validation\Rules\Generic\Success;
 use function assert;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  *
  * @SuppressWarnings(PHPMD.NumberOfChildren)
  */

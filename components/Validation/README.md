@@ -1,7 +1,7 @@
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/limoncello-php-dist/validation/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/limoncello-php-dist/validation/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/limoncello-php-dist/validation/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/limoncello-php-dist/validation/?branch=master)
-[![Build Status](https://travis-ci.org/limoncello-php-dist/validation.svg?branch=master)](https://travis-ci.org/limoncello-php-dist/validation)
-[![License](https://img.shields.io/packagist/l/limoncello-php/validation.svg)](https://packagist.org/packages/limoncello-php/validation)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/whoa-php-dist/validation/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/whoa-php-dist/validation/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/whoa-php-dist/validation/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/whoa-php-dist/validation/?branch=master)
+[![Build Status](https://travis-ci.org/whoa-php-dist/validation.svg?branch=master)](https://travis-ci.org/whoa-php-dist/validation)
+[![License](https://img.shields.io/packagist/l/whoa-php/validation.svg)](https://packagist.org/packages/whoa-php/validation)
 
 This validation library fast, easy to use yet very powerful and flexible solution. Unlike many other libraries it does not try to give you 'validation rules' for all possible cases because those implementations might not fit your requirements and using such libraries is a pain. Instead it provides an extremely simple way of adding custom validation rules.
 
@@ -44,7 +44,7 @@ How easy to write those rules? Many could be made from built-in ones below (e.g.
 > `equals`, `notEquals`, `inValues`, `lessThan`, `lessOrEquals`, `moreThan`, `moreOrEquals`, `between`, `stringLengthBetween`, `stringLengthMin`, `stringLengthMax`, `regexp`, `nullable`, `stringToBool`, `stringToDateTime`, `stringToFloat`, `stringToInt`, `stringArrayToIntArray`, `andX`, `orX`, `ifX`, `success`, `fail`, `required`, `enum`, `filter`, `isArray`, `isString`, `isBool`, `isInt`, `isFloat`, `isNumeric`, `isDateTime`
 
 ```php
-class Rules extends \Limoncello\Validation\Rules
+class Rules extends \Whoa\Validation\Rules
 {
     public static function sku(): RuleInterface
     {
@@ -109,14 +109,14 @@ When validator is created a developer can pass [PSR Container](http://www.php-fi
 #### Installation
 
 ```bash
-$ composer require limoncello-php/validation
+$ composer require whoa-php/validation
 ```
 
 > Note: for message translation PHP-intl is needed.
 
 #### Issues
 
-Any related issues please send to [limoncello](https://github.com/limoncello-php/framework).
+Any related issues please send to [whoa](https://github.com/whoa-php/framework).
 
 #### Testing
 

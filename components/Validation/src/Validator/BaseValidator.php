@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Validator;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Validation\Validator;
  * limitations under the License.
  */
 
-use Limoncello\Validation\Captures\CaptureAggregator;
-use Limoncello\Validation\Contracts\Captures\CaptureAggregatorInterface;
-use Limoncello\Validation\Contracts\Errors\ErrorAggregatorInterface;
-use Limoncello\Validation\Contracts\ValidatorInterface;
-use Limoncello\Validation\Errors\ErrorAggregator;
+declare(strict_types=1);
+
+namespace Whoa\Validation\Validator;
+
+use Whoa\Validation\Captures\CaptureAggregator;
+use Whoa\Validation\Contracts\Captures\CaptureAggregatorInterface;
+use Whoa\Validation\Contracts\Errors\ErrorAggregatorInterface;
+use Whoa\Validation\Contracts\ValidatorInterface;
+use Whoa\Validation\Errors\ErrorAggregator;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  */
 abstract class BaseValidator implements ValidatorInterface
 {

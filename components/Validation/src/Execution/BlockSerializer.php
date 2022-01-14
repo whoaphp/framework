@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Execution;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,19 +17,23 @@ namespace Limoncello\Validation\Execution;
  * limitations under the License.
  */
 
-use Limoncello\Validation\Contracts\Blocks\AndExpressionInterface;
-use Limoncello\Validation\Contracts\Blocks\ExecutionBlockInterface;
-use Limoncello\Validation\Contracts\Blocks\IfExpressionInterface;
-use Limoncello\Validation\Contracts\Blocks\OrExpressionInterface;
-use Limoncello\Validation\Contracts\Blocks\ProcedureBlockInterface;
-use Limoncello\Validation\Contracts\Execution\BlockSerializerInterface;
-use Limoncello\Validation\Exceptions\UnknownExecutionBlockType;
+declare(strict_types=1);
+
+namespace Whoa\Validation\Execution;
+
+use Whoa\Validation\Contracts\Blocks\AndExpressionInterface;
+use Whoa\Validation\Contracts\Blocks\ExecutionBlockInterface;
+use Whoa\Validation\Contracts\Blocks\IfExpressionInterface;
+use Whoa\Validation\Contracts\Blocks\OrExpressionInterface;
+use Whoa\Validation\Contracts\Blocks\ProcedureBlockInterface;
+use Whoa\Validation\Contracts\Execution\BlockSerializerInterface;
+use Whoa\Validation\Exceptions\UnknownExecutionBlockType;
 use function array_key_exists;
 use function assert;
 use function count;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  */
 final class BlockSerializer implements BlockSerializerInterface
 {

@@ -19,10 +19,10 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Validation\Rules;
+namespace Whoa\Tests\Validation\Rules;
 
-use Limoncello\Validation\Contracts\Execution\ContextInterface;
-use Limoncello\Validation\Rules\ExecuteRule;
+use Whoa\Validation\Contracts\Execution\ContextInterface;
+use Whoa\Validation\Rules\ExecuteRule;
 use PDO;
 use function assert;
 

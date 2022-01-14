@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Rules\Comparisons;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Validation\Rules\Comparisons;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Validation\Rules\Comparisons;
+
 use DateTimeInterface;
-use Limoncello\Validation\Contracts\Errors\ErrorCodes;
-use Limoncello\Validation\Contracts\Execution\ContextInterface;
-use Limoncello\Validation\I18n\Messages;
+use Whoa\Validation\Contracts\Errors\ErrorCodes;
+use Whoa\Validation\Contracts\Execution\ContextInterface;
+use Whoa\Validation\I18n\Messages;
 use function assert;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  */
 final class DateTimeEquals extends BaseOneValueComparision
 {

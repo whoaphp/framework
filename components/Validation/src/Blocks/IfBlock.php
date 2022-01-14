@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Blocks;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Validation\Blocks;
  * limitations under the License.
  */
 
-use Limoncello\Common\Reflection\CheckCallableTrait;
-use Limoncello\Validation\Contracts\Blocks\ExecutionBlockInterface;
-use Limoncello\Validation\Contracts\Blocks\IfExpressionInterface;
-use Limoncello\Validation\Contracts\Execution\ContextInterface;
+declare(strict_types=1);
+
+namespace Whoa\Validation\Blocks;
+
+use Whoa\Common\Reflection\CheckCallableTrait;
+use Whoa\Validation\Contracts\Blocks\ExecutionBlockInterface;
+use Whoa\Validation\Contracts\Blocks\IfExpressionInterface;
+use Whoa\Validation\Contracts\Execution\ContextInterface;
 use function assert;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  */
 final class IfBlock implements IfExpressionInterface
 {
@@ -62,7 +65,8 @@ final class IfBlock implements IfExpressionInterface
         ExecutionBlockInterface $onTrue,
         ExecutionBlockInterface $onFalse,
         array $properties = []
-    ) {
+    )
+    {
         assert($this->checkConditionCallableSignature($condition));
 
         $this->condition  = $condition;

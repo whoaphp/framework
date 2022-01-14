@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Blocks;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Validation\Blocks;
  * limitations under the License.
  */
 
-use Limoncello\Validation\Contracts\Blocks\ExecutionBlockInterface;
-use Limoncello\Validation\Contracts\Blocks\OrExpressionInterface;
+declare(strict_types=1);
+
+namespace Whoa\Validation\Blocks;
+
+use Whoa\Validation\Contracts\Blocks\ExecutionBlockInterface;
+use Whoa\Validation\Contracts\Blocks\OrExpressionInterface;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  */
 final class OrBlock implements OrExpressionInterface
 {
@@ -50,7 +53,8 @@ final class OrBlock implements OrExpressionInterface
         ExecutionBlockInterface $primary,
         ExecutionBlockInterface $secondary,
         array $properties = []
-    ) {
+    )
+    {
         $this->primary    = $primary;
         $this->secondary  = $secondary;
         $this->properties = $properties;

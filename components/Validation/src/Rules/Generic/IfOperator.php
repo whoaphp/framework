@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Rules\Generic;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Validation\Rules\Generic;
  * limitations under the License.
  */
 
-use Limoncello\Validation\Blocks\IfBlock;
-use Limoncello\Validation\Contracts\Blocks\ExecutionBlockInterface;
-use Limoncello\Validation\Contracts\Rules\RuleInterface;
-use Limoncello\Validation\Rules\BaseRule;
+declare(strict_types=1);
+
+namespace Whoa\Validation\Rules\Generic;
+
+use Whoa\Validation\Blocks\IfBlock;
+use Whoa\Validation\Contracts\Blocks\ExecutionBlockInterface;
+use Whoa\Validation\Contracts\Rules\RuleInterface;
+use Whoa\Validation\Rules\BaseRule;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  */
 final class IfOperator extends BaseRule
 {
@@ -59,7 +62,8 @@ final class IfOperator extends BaseRule
         RuleInterface $onTrue = null,
         RuleInterface $onFalse = null,
         array $settings = []
-    ) {
+    )
+    {
         $this->onTrue    = $onTrue;
         $this->onFalse   = $onFalse;
         $this->condition = $condition;

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Execution;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Validation\Execution;
  * limitations under the License.
  */
 
-use Limoncello\Validation\Contracts\Execution\BlockPropertiesInterface;
-use Limoncello\Validation\Contracts\Execution\BlockStateInterface;
-use Limoncello\Validation\Contracts\Execution\ContextStorageInterface;
+declare(strict_types=1);
+
+namespace Whoa\Validation\Execution;
+
+use Whoa\Validation\Contracts\Execution\BlockPropertiesInterface;
+use Whoa\Validation\Contracts\Execution\BlockStateInterface;
+use Whoa\Validation\Contracts\Execution\ContextStorageInterface;
 use Psr\Container\ContainerInterface;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  */
 class ContextStorage implements ContextStorageInterface, BlockStateInterface, BlockPropertiesInterface
 {

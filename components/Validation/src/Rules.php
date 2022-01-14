@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +17,19 @@ namespace Limoncello\Validation;
  * limitations under the License.
  */
 
-use Limoncello\Validation\Contracts\Execution\ContextInterface;
-use Limoncello\Validation\Validator\Comparisons;
-use Limoncello\Validation\Validator\Converters;
-use Limoncello\Validation\Validator\Generics;
-use Limoncello\Validation\Validator\Types;
+declare(strict_types=1);
+
+namespace Whoa\Validation;
+
+use Whoa\Validation\Contracts\Execution\ContextInterface;
+use Whoa\Validation\Validator\Comparisons;
+use Whoa\Validation\Validator\Converters;
+use Whoa\Validation\Validator\Generics;
+use Whoa\Validation\Validator\Types;
 use function assert;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  */
 class Rules
 {

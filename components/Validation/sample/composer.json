@@ -1,12 +1,12 @@
 {
     "autoload": {
         "psr-4": {
-            "Limoncello\\Validation\\": "./../src",
+            "Whoa\\Validation\\": "./../src",
             "Sample\\": "./"
         }
     },
     "require": {
-        "limoncello-php/common" : "^0.10.0",
+        "whoa-php/common" : "dev-master",
         "ext-intl" : "*"
     }
 }

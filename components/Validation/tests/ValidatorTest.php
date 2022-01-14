@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Validation;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Tests\Validation;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Validation;
+
 use Exception;
-use Limoncello\Tests\Validation\Rules\DbRule;
-use Limoncello\Validation\ArrayValidator as vv;
-use Limoncello\Validation\Contracts\Execution\ContextInterface;
-use Limoncello\Validation\Rules as r;
-use Limoncello\Validation\SingleValidator as v;
+use Whoa\Tests\Validation\Rules\DbRule;
+use Whoa\Validation\ArrayValidator as vv;
+use Whoa\Validation\Contracts\Execution\ContextInterface;
+use Whoa\Validation\Rules as r;
+use Whoa\Validation\SingleValidator as v;
 use Mockery;
 use PDO;
 use PHPUnit\Framework\TestCase;
@@ -32,7 +35,7 @@ use function assert;
 use function is_int;
 
 /**
- * @package Limoncello\Tests\Validation
+ * @package Whoa\Tests\Validation
  */
 class ValidatorTest extends TestCase
 {

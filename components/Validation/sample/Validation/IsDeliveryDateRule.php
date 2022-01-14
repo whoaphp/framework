@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2020 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,8 +23,8 @@ namespace Sample\Validation;
 
 use DateTime;
 use DateTimeInterface;
-use Limoncello\Validation\Contracts\Execution\ContextInterface;
-use Limoncello\Validation\Rules\ExecuteRule;
+use Whoa\Validation\Contracts\Execution\ContextInterface;
+use Whoa\Validation\Rules\ExecuteRule;
 
 /**
  * @package Sample

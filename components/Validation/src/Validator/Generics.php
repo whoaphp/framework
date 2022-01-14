@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Validator;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,23 +17,27 @@ namespace Limoncello\Validation\Validator;
  * limitations under the License.
  */
 
-use Limoncello\Validation\Contracts\Errors\ErrorCodes;
-use Limoncello\Validation\Contracts\Rules\RuleInterface;
-use Limoncello\Validation\I18n\Messages;
-use Limoncello\Validation\Rules\Generic\AndOperator;
-use Limoncello\Validation\Rules\Generic\Enum;
-use Limoncello\Validation\Rules\Generic\Fail;
-use Limoncello\Validation\Rules\Generic\Filter;
-use Limoncello\Validation\Rules\Generic\IfOperator;
-use Limoncello\Validation\Rules\Generic\OrOperator;
-use Limoncello\Validation\Rules\Generic\Required;
-use Limoncello\Validation\Rules\Generic\Success;
-use Limoncello\Validation\Rules\Generic\Value;
+declare(strict_types=1);
+
+namespace Whoa\Validation\Validator;
+
+use Whoa\Validation\Contracts\Errors\ErrorCodes;
+use Whoa\Validation\Contracts\Rules\RuleInterface;
+use Whoa\Validation\I18n\Messages;
+use Whoa\Validation\Rules\Generic\AndOperator;
+use Whoa\Validation\Rules\Generic\Enum;
+use Whoa\Validation\Rules\Generic\Fail;
+use Whoa\Validation\Rules\Generic\Filter;
+use Whoa\Validation\Rules\Generic\IfOperator;
+use Whoa\Validation\Rules\Generic\OrOperator;
+use Whoa\Validation\Rules\Generic\Required;
+use Whoa\Validation\Rules\Generic\Success;
+use Whoa\Validation\Rules\Generic\Value;
 use function assert;
 use function is_resource;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  */
 trait Generics
 {
@@ -73,7 +76,8 @@ trait Generics
         RuleInterface $onTrue,
         RuleInterface $onFalse,
         array $settings = []
-    ): RuleInterface {
+    ): RuleInterface
+    {
         return new IfOperator($condition, $onTrue, $onFalse, $settings);
     }
 
@@ -96,7 +100,8 @@ trait Generics
         int $errorCode = ErrorCodes::INVALID_VALUE,
         string $messageTemplate = Messages::INVALID_VALUE,
         array $messageParams = []
-    ): RuleInterface {
+    ): RuleInterface
+    {
         return new Fail($errorCode, $messageTemplate, $messageParams);
     }
 
@@ -139,7 +144,8 @@ trait Generics
         int $errorCode = ErrorCodes::INVALID_VALUE,
         string $messageTemplate = Messages::INVALID_VALUE,
         RuleInterface $next = null
-    ): RuleInterface {
+    ): RuleInterface
+    {
         $filterRule = new Filter($filterId, $options, $errorCode, $messageTemplate);
 
         return $next === null ? $filterRule : new AndOperator($filterRule, $next);

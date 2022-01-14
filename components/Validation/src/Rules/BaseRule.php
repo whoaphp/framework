@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Rules;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Validation\Rules;
  * limitations under the License.
  */
 
-use Limoncello\Validation\Contracts\Execution\ContextInterface;
-use Limoncello\Validation\Contracts\Rules\RuleInterface;
-use Limoncello\Validation\Execution\BlockReplies;
+declare(strict_types=1);
+
+namespace Whoa\Validation\Rules;
+
+use Whoa\Validation\Contracts\Execution\ContextInterface;
+use Whoa\Validation\Contracts\Rules\RuleInterface;
+use Whoa\Validation\Execution\BlockReplies;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  *
  * @SuppressWarnings(PHPMD.NumberOfChildren)
  */
@@ -228,7 +231,8 @@ abstract class BaseRule implements RuleInterface
         int $errorCode,
         string $messageTemplate,
         array $messageParams
-    ): array {
+    ): array
+    {
         return BlockReplies::createErrorReply($context, $errorValue, $errorCode, $messageTemplate, $messageParams);
     }
 }

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Validation\Validator;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,17 +17,21 @@ namespace Limoncello\Validation\Validator;
  * limitations under the License.
  */
 
-use Limoncello\Validation\Contracts\Rules\RuleInterface;
-use Limoncello\Validation\Rules\Converters\StringArrayToIntArray;
-use Limoncello\Validation\Rules\Converters\StringToArray;
-use Limoncello\Validation\Rules\Converters\StringToBool;
-use Limoncello\Validation\Rules\Converters\StringToDateTime;
-use Limoncello\Validation\Rules\Converters\StringToFloat;
-use Limoncello\Validation\Rules\Converters\StringToInt;
-use Limoncello\Validation\Rules\Generic\AndOperator;
+declare(strict_types=1);
+
+namespace Whoa\Validation\Validator;
+
+use Whoa\Validation\Contracts\Rules\RuleInterface;
+use Whoa\Validation\Rules\Converters\StringArrayToIntArray;
+use Whoa\Validation\Rules\Converters\StringToArray;
+use Whoa\Validation\Rules\Converters\StringToBool;
+use Whoa\Validation\Rules\Converters\StringToDateTime;
+use Whoa\Validation\Rules\Converters\StringToFloat;
+use Whoa\Validation\Rules\Converters\StringToInt;
+use Whoa\Validation\Rules\Generic\AndOperator;
 
 /**
- * @package Limoncello\Validation
+ * @package Whoa\Validation
  */
 trait Converters
 {
@@ -94,7 +97,8 @@ trait Converters
         string $delimiter,
         int $limit = PHP_INT_MAX,
         RuleInterface $next = null
-    ): RuleInterface {
+    ): RuleInterface
+    {
         return $next === null ?
             new StringToArray($delimiter, $limit) : new AndOperator(new StringToArray($delimiter, $limit), $next);
     }
