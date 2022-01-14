@@ -1,10 +1,10 @@
 {
-    "name": "whoaphp/common",
+    "name": "whoa-php/common",
     "description": "PHP framework common (PSR-7).",
     "keywords": ["whoa", "framework", "PSR-7", "PSR7"],
-    "homepage": "https://github.com/whoaphp/framework/tree/master/components/Common",
+    "homepage": "https://github.com/whoa-php/framework/tree/master/components/Common",
     "support": {
-        "issues": "https://github.com/whoaphp/framework/issues"
+        "issues": "https://github.com/whoa-php/framework/issues"
     },
     "license": "Apache-2.0",
     "authors": [
@@ -19,7 +19,7 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "whoaphp/contracts": "dev-master"
+        "whoa-php/contracts": "dev-master"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^2.9",
@@ -30,18 +30,18 @@
     },
     "autoload": {
         "psr-4": {
-            "Limoncello\\Common\\": "src/"
+            "Whoa\\Common\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Limoncello\\Tests\\Common\\": "tests/"
+            "Whoa\\Tests\\Common\\": "tests/"
         }
     },
     "scripts": {
         "test": ["@test-unit-with-coverage", "@test-cs", "@test-md"],
-        "test-unit": "./vendor/bin/phpunit",
-        "test-unit-with-coverage": "./vendor/bin/phpunit --coverage-text",
+        "test-unit": "./vendor/bin/phpunit --do-not-cache-result",
+        "test-unit-with-coverage": "./vendor/bin/phpunit --coverage-text --do-not-cache-result",
         "test-cs": "./vendor/bin/phpcs -p -s --standard=PSR2 ./src ./tests",
         "test-md": "./vendor/bin/phpmd ./src text codesize,controversial,cleancode,design,unusedcode,naming",
         "test-unit-php-7-4": "docker-compose run --rm cli_7_4_php php ./vendor/bin/phpunit",

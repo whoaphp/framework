@@ -43,7 +43,7 @@
     "scripts": {
         "test": ["@test-unit-with-coverage", "@test-cs", "@test-md"],
         "test-unit": "./vendor/bin/phpunit --do-not-cache-result",
-        "test-unit-with-coverage": "phpdbg -qrr ./vendor/bin/phpunit --coverage-text",
+        "test-unit-with-coverage": "phpdbg -qrr ./vendor/bin/phpunit --coverage-text ",
         "test-cs": "./vendor/bin/phpcs -p -s --standard=PSR2 ./src ./tests",
         "test-md": "./vendor/bin/phpmd ./src text codesize,controversial,cleancode,design,unusedcode,naming",
         "test-unit-php-7-3": "docker-compose run --rm cli_7_3_php php ./vendor/bin/phpunit",

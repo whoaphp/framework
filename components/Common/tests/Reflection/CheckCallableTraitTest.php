@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Common\Reflection;
+<?php
 
 /**
- * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +17,20 @@ namespace Limoncello\Tests\Common\Reflection;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Common\Reflection;
+
 use DateTimeInterface;
 use Exception;
 use InvalidArgumentException;
-use Limoncello\Common\Reflection\CheckCallableTrait;
-use Limoncello\Tests\Common\TestCase;
+use Whoa\Common\Reflection\CheckCallableTrait;
+use Whoa\Tests\Common\TestCase;
 use ReflectionException;
 use ReflectionParameter;
 
 /**
- * @package Limoncello\Tests\Common
+ * @package Whoa\Tests\Common
  */
 class CheckCallableTraitTest extends TestCase
 {
@@ -82,7 +85,7 @@ class CheckCallableTraitTest extends TestCase
         $this->assertFalse($this->checkPublicStaticCallable($dummyClosure));
 
         // if parameters do not match it should fail
-        $nonMatchingParameters    = [
+        $nonMatchingParameters = [
             'int', // <-- this one do not match
             null,
             'array',
@@ -92,7 +95,7 @@ class CheckCallableTraitTest extends TestCase
         $this->assertFalse($this->checkPublicStaticCallable([self::class, 'method1'], $nonMatchingParameters));
 
         // if parameters do not match it should fail
-        $nonMatchingParameters    = [
+        $nonMatchingParameters = [
             'string',
             'int', // <-- this one do not match
             'array',
@@ -102,7 +105,7 @@ class CheckCallableTraitTest extends TestCase
         $this->assertFalse($this->checkPublicStaticCallable([self::class, 'method1'], $nonMatchingParameters));
 
         // if parameters do not match it should fail
-        $nonMatchingParameters    = [
+        $nonMatchingParameters = [
             'string',
             null,
             null, // <-- this one do not match
@@ -112,7 +115,7 @@ class CheckCallableTraitTest extends TestCase
         $this->assertFalse($this->checkPublicStaticCallable([self::class, 'method1'], $nonMatchingParameters));
 
         // if parameter closure return `false` it should fail
-        $retFalseClosure = function (): bool {
+        $retFalseClosure       = function (): bool {
             return false;
         };
         $nonMatchingParameters = [
@@ -133,7 +136,7 @@ class CheckCallableTraitTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         // parameters should be described either by strings, nulls or with Closures.
-        $parameters    = [
+        $parameters = [
             false,
             null,
             null,
@@ -159,7 +162,8 @@ class CheckCallableTraitTest extends TestCase
         array $param3,
         DateTimeInterface $param4,
         int $param5 = null
-    ): bool {
+    ): bool
+    {
         assert($param1 || $param2 || $param3 || $param4 || $param5);
 
         return true;

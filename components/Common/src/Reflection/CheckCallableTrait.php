@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Common\Reflection;
+<?php
 
 /**
- * Copyright 2015-2020 info@neomerx.com
+ * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +17,10 @@ namespace Limoncello\Common\Reflection;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Common\Reflection;
+
 use Closure;
 use InvalidArgumentException;
 use ReflectionException;
@@ -30,7 +33,7 @@ use function is_string;
 use function strpos;
 
 /**
- * @package Limoncello\Common
+ * @package Whoa\Common
  */
 trait CheckCallableTrait
 {
@@ -54,12 +57,13 @@ trait CheckCallableTrait
         $callable,
         array $parameters = [],
         string $returnType = null
-    ): bool {
+    ): bool
+    {
         /** @var callable|array|string $callable */
 
         // first of all check input is callable (class, method) in form of array or string...
         if (is_callable($callable) && is_string($callable) === true && strpos($callable, '::') !== false) {
-            list ($class, $method) = explode('::', $callable, 2);
+            [$class, $method] = explode('::', $callable, 2);
         } elseif (is_callable($callable) &&
             is_array($callable) === true &&
             count($callable) === 2 &&
