@@ -19,17 +19,17 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Crypt;
+namespace Whoa\Tests\Crypt;
 
 use Exception;
-use Limoncello\Crypt\Exceptions\CryptException;
-use Limoncello\Crypt\SymmetricCrypt;
+use Whoa\Crypt\Exceptions\CryptException;
+use Whoa\Crypt\SymmetricCrypt;
 use Mockery;
 use Mockery\Mock;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @package Limoncello\Tests\Crypt
+ * @package Whoa\Tests\Crypt
  */
 class SymmetricCryptTest extends TestCase
 {
@@ -126,7 +126,7 @@ class SymmetricCryptTest extends TestCase
      */
     public function testInvalidInputOnDecrypt1(): void
     {
-        $this->expectException(\Limoncello\Crypt\Exceptions\CryptException::class);
+        $this->expectException(\Whoa\Crypt\Exceptions\CryptException::class);
 
         $encrypted = 'too short';
 
@@ -139,7 +139,7 @@ class SymmetricCryptTest extends TestCase
      */
     public function testInvalidInputOnDecrypt2(): void
     {
-        $this->expectException(\Limoncello\Crypt\Exceptions\CryptException::class);
+        $this->expectException(\Whoa\Crypt\Exceptions\CryptException::class);
 
         // resembles IV but not enough characters for tag
         $encrypted = '1234567890123456_no_tag';
@@ -153,7 +153,7 @@ class SymmetricCryptTest extends TestCase
      */
     public function testInvalidInputOnDecrypt3(): void
     {
-        $this->expectException(\Limoncello\Crypt\Exceptions\CryptException::class);
+        $this->expectException(\Whoa\Crypt\Exceptions\CryptException::class);
 
         // input resembles IV (16 symbols) but no encrypted data
         $encrypted = '1234567890123456';

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Crypt;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +17,13 @@ namespace Limoncello\Crypt;
  * limitations under the License.
  */
 
-use Limoncello\Crypt\Contracts\DecryptInterface;
-use Limoncello\Crypt\Contracts\EncryptInterface;
-use Limoncello\Crypt\Exceptions\CryptException;
+declare(strict_types=1);
+
+namespace Whoa\Crypt;
+
+use Whoa\Crypt\Contracts\DecryptInterface;
+use Whoa\Crypt\Contracts\EncryptInterface;
+use Whoa\Crypt\Exceptions\CryptException;
 use function assert;
 use function in_array;
 use function openssl_cipher_iv_length;
@@ -32,7 +35,7 @@ use function strlen;
 use function substr;
 
 /**
- * @package Limoncello\Crypt
+ * @package Whoa\Crypt
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
@@ -479,7 +482,8 @@ class SymmetricCrypt extends BaseCrypt implements EncryptInterface, DecryptInter
         string $password,
         int $options,
         string $initializationVector
-    ): string {
+    ): string
+    {
         $encrypted = $this->openSslEncryptImpl($data, $method, $password, $options, $initializationVector);
 
         $message = $this->getErrorMessage();
@@ -503,7 +507,8 @@ class SymmetricCrypt extends BaseCrypt implements EncryptInterface, DecryptInter
         string $password,
         int $options,
         string $initializationVector
-    ): string {
+    ): string
+    {
         $decrypted = $this->openSslDecryptImpl($data, $method, $password, $options, $initializationVector);
 
         $decrypted !== false ?: $this->throwException(new CryptException($this->getErrorMessage()));
@@ -532,7 +537,8 @@ class SymmetricCrypt extends BaseCrypt implements EncryptInterface, DecryptInter
         string $aad,
         string &$tag = null,
         int $tagLength = 16
-    ): string {
+    ): string
+    {
         $encrypted = $this->openSslEncryptAuthenticatedImpl(
             $data,
             $method,
@@ -569,7 +575,8 @@ class SymmetricCrypt extends BaseCrypt implements EncryptInterface, DecryptInter
         string $initializationVector,
         string $aad,
         string $tag
-    ): string {
+    ): string
+    {
         $decrypted = $this
             ->openSslDecryptAuthenticatedImpl($data, $method, $password, $options, $initializationVector, $aad, $tag);
 
@@ -633,7 +640,8 @@ class SymmetricCrypt extends BaseCrypt implements EncryptInterface, DecryptInter
         string $password,
         int $options,
         string $initializationVector
-    ) {
+    )
+    {
         return openssl_encrypt($data, $method, $password, $options, $initializationVector);
     }
 
@@ -654,7 +662,8 @@ class SymmetricCrypt extends BaseCrypt implements EncryptInterface, DecryptInter
         string $password,
         int $options,
         string $initializationVector
-    ) {
+    )
+    {
         return openssl_decrypt($data, $method, $password, $options, $initializationVector);
     }
 
@@ -681,7 +690,8 @@ class SymmetricCrypt extends BaseCrypt implements EncryptInterface, DecryptInter
         string $aad,
         string &$tag = null,
         int $tagLength = 16
-    ) {
+    )
+    {
         assert(PHP_VERSION_ID >= 70100);
         assert($this->isTagLengthMightBeValid($tagLength));
 
@@ -711,7 +721,8 @@ class SymmetricCrypt extends BaseCrypt implements EncryptInterface, DecryptInter
         string $initializationVector,
         string $aad,
         string $tag
-    ) {
+    )
+    {
         assert(PHP_VERSION_ID >= 70100);
 
         return openssl_decrypt($data, $method, $password, $options, $initializationVector, $tag, $aad);

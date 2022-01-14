@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Limoncello\Tests\Crypt;
+namespace Whoa\Tests\Crypt;
 
 /**
  * Copyright 2015-2019 info@neomerx.com
@@ -19,14 +19,14 @@ namespace Limoncello\Tests\Crypt;
  */
 
 use Exception;
-use Limoncello\Crypt\PrivateKeyAsymmetricDecrypt;
-use Limoncello\Crypt\PrivateKeyAsymmetricEncrypt;
-use Limoncello\Crypt\PublicKeyAsymmetricDecrypt;
-use Limoncello\Crypt\PublicKeyAsymmetricEncrypt;
+use Whoa\Crypt\PrivateKeyAsymmetricDecrypt;
+use Whoa\Crypt\PrivateKeyAsymmetricEncrypt;
+use Whoa\Crypt\PublicKeyAsymmetricDecrypt;
+use Whoa\Crypt\PublicKeyAsymmetricEncrypt;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @package Limoncello\Tests\Crypt
+ * @package Whoa\Tests\Crypt
  */
 class AsymmetricCryptTest extends TestCase
 {

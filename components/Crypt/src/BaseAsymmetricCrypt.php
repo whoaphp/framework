@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Crypt;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,12 @@ namespace Limoncello\Crypt;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Crypt;
+
 use Generator;
-use Limoncello\Crypt\Exceptions\CryptException;
+use Whoa\Crypt\Exceptions\CryptException;
 use function assert;
 use function file_exists;
 use function openssl_pkey_free;
@@ -28,7 +31,7 @@ use function strlen;
 use function substr;
 
 /**
- * @package Limoncello\Crypt
+ * @package Whoa\Crypt
  */
 abstract class BaseAsymmetricCrypt extends BaseCrypt
 {

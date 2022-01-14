@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Crypt\Package;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +17,20 @@ namespace Limoncello\Crypt\Package;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Crypt\Contracts\HasherInterface;
-use Limoncello\Crypt\Hasher;
+declare(strict_types=1);
+
+namespace Whoa\Crypt\Package;
+
+use Whoa\Contracts\Application\ContainerConfiguratorInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Crypt\Contracts\HasherInterface;
+use Whoa\Crypt\Hasher;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
-use Limoncello\Crypt\Package\HasherSettings as C;
+use Whoa\Crypt\Package\HasherSettings as C;
 
 /**
- * @package Limoncello\Crypt
+ * @package Whoa\Crypt
  */
 class HasherContainerConfigurator implements ContainerConfiguratorInterface
 {
@@ -37,7 +40,7 @@ class HasherContainerConfigurator implements ContainerConfiguratorInterface
     /**
      * @inheritdoc
      */
-    public static function configureContainer(LimoncelloContainerInterface $container): void
+    public static function configureContainer(WhoaContainerInterface $container): void
     {
         $container[HasherInterface::class] = function (PsrContainerInterface $container): HasherInterface {
             $settings = $container->get(SettingsProviderInterface::class)->get(C::class);

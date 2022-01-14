@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Limoncello\Tests\Crypt;
+namespace Whoa\Tests\Crypt;
 
 /**
  * Copyright 2015-2019 info@neomerx.com
@@ -19,12 +19,12 @@ namespace Limoncello\Tests\Crypt;
  */
 
 use Exception;
-use Limoncello\Crypt\Contracts\HasherInterface;
-use Limoncello\Crypt\Hasher;
+use Whoa\Crypt\Contracts\HasherInterface;
+use Whoa\Crypt\Hasher;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @package Limoncello\Tests\Crypt
+ * @package Whoa\Tests\Crypt
  */
 class HasherTest extends TestCase
 {

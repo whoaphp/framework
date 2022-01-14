@@ -19,30 +19,30 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Crypt;
+namespace Whoa\Tests\Crypt;
 
 use Exception;
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface;
-use Limoncello\Contracts\Container\ContainerInterface;
-use Limoncello\Contracts\Settings\SettingsInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Crypt\Contracts\DecryptInterface;
-use Limoncello\Crypt\Contracts\EncryptInterface;
-use Limoncello\Crypt\Contracts\HasherInterface;
-use Limoncello\Crypt\Package\AsymmetricCryptSettings;
-use Limoncello\Crypt\Package\AsymmetricPrivateEncryptPublicDecryptProvider;
-use Limoncello\Crypt\Package\AsymmetricPublicEncryptPrivateDecryptProvider;
-use Limoncello\Crypt\Package\HasherProvider;
-use Limoncello\Crypt\Package\HasherSettings;
-use Limoncello\Crypt\Package\SymmetricCryptProvider;
-use Limoncello\Crypt\Package\SymmetricCryptSettings;
-use Limoncello\Tests\Crypt\Data\TestContainer;
+use Whoa\Contracts\Application\ContainerConfiguratorInterface;
+use Whoa\Contracts\Container\ContainerInterface;
+use Whoa\Contracts\Settings\SettingsInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Crypt\Contracts\DecryptInterface;
+use Whoa\Crypt\Contracts\EncryptInterface;
+use Whoa\Crypt\Contracts\HasherInterface;
+use Whoa\Crypt\Package\AsymmetricCryptSettings;
+use Whoa\Crypt\Package\AsymmetricPrivateEncryptPublicDecryptProvider;
+use Whoa\Crypt\Package\AsymmetricPublicEncryptPrivateDecryptProvider;
+use Whoa\Crypt\Package\HasherProvider;
+use Whoa\Crypt\Package\HasherSettings;
+use Whoa\Crypt\Package\SymmetricCryptProvider;
+use Whoa\Crypt\Package\SymmetricCryptSettings;
+use Whoa\Tests\Crypt\Data\TestContainer;
 use Mockery;
 use Mockery\Mock;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @package Limoncello\Tests\Crypt
+ * @package Whoa\Tests\Crypt
  */
 class PackageTest extends TestCase
 {
@@ -70,7 +70,7 @@ class PackageTest extends TestCase
      */
     public function testAsymmetricPrivateEncryptPublicDecrypt2(): void
     {
-        $this->expectException(\Limoncello\Crypt\Exceptions\CryptConfigurationException::class);
+        $this->expectException(\Whoa\Crypt\Exceptions\CryptConfigurationException::class);
 
         $container = new TestContainer();
 
@@ -88,7 +88,7 @@ class PackageTest extends TestCase
      */
     public function testAsymmetricPrivateEncryptPublicDecrypt3(): void
     {
-        $this->expectException(\Limoncello\Crypt\Exceptions\CryptConfigurationException::class);
+        $this->expectException(\Whoa\Crypt\Exceptions\CryptConfigurationException::class);
 
         $container = new TestContainer();
 
@@ -125,7 +125,7 @@ class PackageTest extends TestCase
      */
     public function testPublicEncryptPrivateDecrypt2(): void
     {
-        $this->expectException(\Limoncello\Crypt\Exceptions\CryptConfigurationException::class);
+        $this->expectException(\Whoa\Crypt\Exceptions\CryptConfigurationException::class);
 
         $container = new TestContainer();
 
@@ -143,7 +143,7 @@ class PackageTest extends TestCase
      */
     public function testPublicEncryptPrivateDecrypt3(): void
     {
-        $this->expectException(\Limoncello\Crypt\Exceptions\CryptConfigurationException::class);
+        $this->expectException(\Whoa\Crypt\Exceptions\CryptConfigurationException::class);
 
         $container = new TestContainer();
 

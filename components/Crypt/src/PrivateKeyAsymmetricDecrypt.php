@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Crypt;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Crypt;
  * limitations under the License.
  */
 
-use Limoncello\Crypt\Contracts\DecryptInterface;
-use Limoncello\Crypt\Exceptions\CryptException;
+declare(strict_types=1);
+
+namespace Whoa\Crypt;
+
+use Whoa\Crypt\Contracts\DecryptInterface;
+use Whoa\Crypt\Exceptions\CryptException;
 use function openssl_private_decrypt;
 
 /**
- * @package Limoncello\Crypt
+ * @package Whoa\Crypt
  */
 class PrivateKeyAsymmetricDecrypt extends BasePrivateKeyAsymmetricCrypt implements DecryptInterface
 {

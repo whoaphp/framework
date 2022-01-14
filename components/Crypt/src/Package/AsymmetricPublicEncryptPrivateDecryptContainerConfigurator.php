@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Crypt\Package;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,19 +17,23 @@ namespace Limoncello\Crypt\Package;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Crypt\Contracts\DecryptInterface;
-use Limoncello\Crypt\Contracts\EncryptInterface;
-use Limoncello\Crypt\Exceptions\CryptConfigurationException;
-use Limoncello\Crypt\Package\AsymmetricCryptSettings as C;
-use Limoncello\Crypt\PrivateKeyAsymmetricDecrypt;
-use Limoncello\Crypt\PublicKeyAsymmetricEncrypt;
+declare(strict_types=1);
+
+namespace Whoa\Crypt\Package;
+
+use Whoa\Contracts\Application\ContainerConfiguratorInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Crypt\Contracts\DecryptInterface;
+use Whoa\Crypt\Contracts\EncryptInterface;
+use Whoa\Crypt\Exceptions\CryptConfigurationException;
+use Whoa\Crypt\Package\AsymmetricCryptSettings as C;
+use Whoa\Crypt\PrivateKeyAsymmetricDecrypt;
+use Whoa\Crypt\PublicKeyAsymmetricEncrypt;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 
 /**
- * @package Limoncello\Crypt
+ * @package Whoa\Crypt
  */
 class AsymmetricPublicEncryptPrivateDecryptContainerConfigurator implements ContainerConfiguratorInterface
 {
@@ -40,7 +43,7 @@ class AsymmetricPublicEncryptPrivateDecryptContainerConfigurator implements Cont
     /**
      * @inheritdoc
      */
-    public static function configureContainer(LimoncelloContainerInterface $container): void
+    public static function configureContainer(WhoaContainerInterface $container): void
     {
         $container[EncryptInterface::class] = function (PsrContainerInterface $container): EncryptInterface {
             $settings  = $container->get(SettingsProviderInterface::class)->get(C::class);

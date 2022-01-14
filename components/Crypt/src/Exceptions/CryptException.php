@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Crypt\Exceptions;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Crypt\Exceptions;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Exceptions\LimoncelloExceptionInterface;
+declare(strict_types=1);
+
+namespace Whoa\Crypt\Exceptions;
+
+use Whoa\Contracts\Exceptions\WhoaExceptionInterface;
 use RuntimeException;
 
 /**
- * @package Limoncello\Crypt
+ * @package Whoa\Crypt
  */
-class CryptException extends RuntimeException implements LimoncelloExceptionInterface
+class CryptException extends RuntimeException implements WhoaExceptionInterface
 {
 }

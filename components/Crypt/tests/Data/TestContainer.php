@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Limoncello\Tests\Crypt\Data;
+namespace Whoa\Tests\Crypt\Data;
 
 /**
  * Copyright 2015-2019 info@neomerx.com
@@ -19,10 +19,10 @@ namespace Limoncello\Tests\Crypt\Data;
  */
 
 use Closure;
-use Limoncello\Contracts\Container\ContainerInterface;
+use Whoa\Contracts\Container\ContainerInterface;
 
 /**
- * @package Limoncello\Tests\Crypt
+ * @package Whoa\Tests\Crypt
  */
 class TestContainer implements ContainerInterface
 {
