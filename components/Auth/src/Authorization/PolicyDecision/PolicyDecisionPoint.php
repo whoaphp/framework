@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Auth\Authorization\PolicyDecision;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,18 +17,22 @@ namespace Limoncello\Auth\Authorization\PolicyDecision;
  * limitations under the License.
  */
 
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\BasePolicyOrSetAlgorithm;
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\DefaultTargetSerializeTrait;
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\Encoder;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\PolicySetInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyDecision\PolicyDecisionPointInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
+declare(strict_types=1);
+
+namespace Whoa\Auth\Authorization\PolicyDecision;
+
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\BasePolicyOrSetAlgorithm;
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\DefaultTargetSerializeTrait;
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\Encoder;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\PolicySetInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyDecision\PolicyDecisionPointInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use function assert;
 
 /**
- * @package Limoncello\Auth
+ * @package Whoa\Auth
  */
 class PolicyDecisionPoint implements PolicyDecisionPointInterface
 {

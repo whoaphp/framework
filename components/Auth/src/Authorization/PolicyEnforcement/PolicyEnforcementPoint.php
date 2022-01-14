@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Auth\Authorization\PolicyEnforcement;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,17 +17,21 @@ namespace Limoncello\Auth\Authorization\PolicyEnforcement;
  * limitations under the License.
  */
 
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\EvaluationEnum;
-use Limoncello\Auth\Contracts\Authorization\PolicyDecision\PolicyDecisionPointInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyEnforcement\PolicyEnforcementPointInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyEnforcement\RequestInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyInformation\PolicyInformationPointInterface;
+declare(strict_types=1);
+
+namespace Whoa\Auth\Authorization\PolicyEnforcement;
+
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\EvaluationEnum;
+use Whoa\Auth\Contracts\Authorization\PolicyDecision\PolicyDecisionPointInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyEnforcement\PolicyEnforcementPointInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyEnforcement\RequestInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyInformation\PolicyInformationPointInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use function call_user_func;
 
 /**
- * @package Limoncello\Auth
+ * @package Whoa\Auth
  */
 class PolicyEnforcementPoint implements PolicyEnforcementPointInterface, LoggerAwareInterface
 {
@@ -69,7 +72,7 @@ class PolicyEnforcementPoint implements PolicyEnforcementPointInterface, LoggerA
         /** @var int $evaluation */
         /** @var callable[] $obligations */
         /** @var callable[] $advice */
-        list ($evaluation, $obligations, $advice) = $this->getPdp()->evaluate($context);
+        [$evaluation, $obligations, $advice] = $this->getPdp()->evaluate($context);
 
         $isAuthorized = $this->interpretEvaluation($evaluation);
 

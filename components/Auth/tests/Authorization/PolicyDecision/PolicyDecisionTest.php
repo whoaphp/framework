@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Auth\Authorization\PolicyDecision;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,26 +17,30 @@ namespace Limoncello\Tests\Auth\Authorization\PolicyDecision;
  * limitations under the License.
  */
 
-use Limoncello\Auth\Authorization\PolicyAdministration\Advice;
-use Limoncello\Auth\Authorization\PolicyAdministration\AllOf;
-use Limoncello\Auth\Authorization\PolicyAdministration\AnyOf;
-use Limoncello\Auth\Authorization\PolicyAdministration\Logical;
-use Limoncello\Auth\Authorization\PolicyAdministration\Obligation;
-use Limoncello\Auth\Authorization\PolicyAdministration\Rule;
-use Limoncello\Auth\Authorization\PolicyAdministration\Target;
-use Limoncello\Auth\Authorization\PolicyDecision\RuleAlgorithm;
-use Limoncello\Auth\Authorization\PolicyEnforcement\Request;
-use Limoncello\Auth\Authorization\PolicyInformation\Context;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\EvaluationEnum;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\RuleCombiningAlgorithmInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\RuleInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\TargetInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Auth\Authorization\PolicyDecision;
+
+use Whoa\Auth\Authorization\PolicyAdministration\Advice;
+use Whoa\Auth\Authorization\PolicyAdministration\AllOf;
+use Whoa\Auth\Authorization\PolicyAdministration\AnyOf;
+use Whoa\Auth\Authorization\PolicyAdministration\Logical;
+use Whoa\Auth\Authorization\PolicyAdministration\Obligation;
+use Whoa\Auth\Authorization\PolicyAdministration\Rule;
+use Whoa\Auth\Authorization\PolicyAdministration\Target;
+use Whoa\Auth\Authorization\PolicyDecision\RuleAlgorithm;
+use Whoa\Auth\Authorization\PolicyEnforcement\Request;
+use Whoa\Auth\Authorization\PolicyInformation\Context;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\EvaluationEnum;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\RuleCombiningAlgorithmInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\RuleInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\TargetInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 /**
- * @package Limoncello\Tests\Auth
+ * @package Whoa\Tests\Auth
  */
 class PolicyDecisionTest extends TestCase
 {
@@ -59,7 +62,7 @@ class PolicyDecisionTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -75,12 +78,12 @@ class PolicyDecisionTest extends TestCase
     {
         $algorithm = RuleAlgorithm::denyUnlessPermit();
 
-        list($callable, $targets, $rules) = $this->optimizedRules($algorithm, $this->createRules());
+        [$callable, $targets, $rules] = $this->optimizedRules($algorithm, $this->createRules());
 
         $this->assertTrue(is_callable($callable));
         $this->assertTrue(is_array($callable));
         $this->assertCount(2, $targets);
-        list($isSwitch, $targetsData) = $targets;
+        [$isSwitch, $targetsData] = $targets;
         $this->assertFalse($isSwitch);
         $this->assertCount(4, $targetsData);
         $this->assertCount(4, $rules);
@@ -94,7 +97,7 @@ class PolicyDecisionTest extends TestCase
     public function testDeny()
     {
         $algorithm = RuleAlgorithm::denyUnlessPermit();
-        list($callable, $targets, $rules) = $this->optimizedRules($algorithm, $this->createRules(false));
+        [$callable, $targets, $rules] = $this->optimizedRules($algorithm, $this->createRules(false));
 
         $logger  = null;
         $context = new Context(new Request([]), []);
@@ -109,7 +112,7 @@ class PolicyDecisionTest extends TestCase
      */
     public function testNoTargetPermit()
     {
-        list($callable, $targets, $rules) = $this->testOptimize();
+        [$callable, $targets, $rules] = $this->testOptimize();
 
         $logger  = null;
         $context = new Context(new Request([]), []);
@@ -124,7 +127,7 @@ class PolicyDecisionTest extends TestCase
      */
     public function testPermit11()
     {
-        list($callable, $targets, $rules) = $this->testOptimize();
+        [$callable, $targets, $rules] = $this->testOptimize();
 
         $logger  = null;
         $context = new Context(new Request([
@@ -143,7 +146,7 @@ class PolicyDecisionTest extends TestCase
      */
     public function testPermit12()
     {
-        list($callable, $targets, $rules) = $this->testOptimize();
+        [$callable, $targets, $rules] = $this->testOptimize();
 
         // value pairs could be split (should be no difference)
         $logger  = null;
@@ -164,7 +167,7 @@ class PolicyDecisionTest extends TestCase
     public function testDenyOverrides()
     {
         $algorithm = RuleAlgorithm::denyOverrides();
-        list($callable, $targets, $rules) = $this->optimizedRules($algorithm, $this->createRules());
+        [$callable, $targets, $rules] = $this->optimizedRules($algorithm, $this->createRules());
 
         $logger  = null;
         $context = new Context(new Request([
@@ -184,7 +187,7 @@ class PolicyDecisionTest extends TestCase
     public function testExceptionInCondition()
     {
         $algorithm = RuleAlgorithm::denyUnlessPermit();
-        list($callable, $targets, $rules) = $this->optimizedRules($algorithm, $this->createRules(false, true));
+        [$callable, $targets, $rules] = $this->optimizedRules($algorithm, $this->createRules(false, true));
 
         $logger  = null;
         $context = new Context(new Request([
@@ -204,7 +207,7 @@ class PolicyDecisionTest extends TestCase
     public function testExceptionInTarget()
     {
         $algorithm = RuleAlgorithm::denyUnlessPermit();
-        list($callable, $targets, $rules) = $this->optimizedRules($algorithm, $this->createRules(false));
+        [$callable, $targets, $rules] = $this->optimizedRules($algorithm, $this->createRules(false));
 
         $logger          = null;
         $exceptionThrown = false;
@@ -229,7 +232,7 @@ class PolicyDecisionTest extends TestCase
         $rule = (new Rule())
             ->setTarget($this->target('key', 'value'))
             ->setCondition(new Logical([self::class, 'ruleConditionFalse']));
-        list($callable, $targets, $rules) = $this->optimizedRules(RuleAlgorithm::denyUnlessPermit(), [$rule]);
+        [$callable, $targets, $rules] = $this->optimizedRules(RuleAlgorithm::denyUnlessPermit(), [$rule]);
 
         $logger  = null;
         $context = new Context(new Request([]), ['key' => 'value']);
@@ -248,7 +251,7 @@ class PolicyDecisionTest extends TestCase
         $rule = (new Rule())
             ->setTarget($this->target('key', 'value'))
             ->setEffect(new Logical([self::class, 'logicalThrowsException']));
-        list($callable, $targets, $rules) = $this->optimizedRules(RuleAlgorithm::permitOverrides(), [$rule]);
+        [$callable, $targets, $rules] = $this->optimizedRules(RuleAlgorithm::permitOverrides(), [$rule]);
 
         $logger  = null;
         $context = new Context(new Request([]), ['key' => 'value']);

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Auth\Authorization\PolicyEnforcement\Data;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,17 +17,22 @@ namespace Limoncello\Tests\Auth\Authorization\PolicyEnforcement\Data;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Auth\Authorization\PolicyEnforcement\Data;
+
 /**
- * @package Limoncello\Tests\Auth
+ * @package Whoa\Tests\Auth
  */
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\BaseRuleAlgorithm;
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\DefaultTargetSerializeTrait;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\EvaluationEnum;
-use Limoncello\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
+
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\BaseRuleAlgorithm;
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\DefaultTargetSerializeTrait;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\EvaluationEnum;
+use Whoa\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * @package Limoncello\Auth
+ * @package Whoa\Auth
  */
 class TestRuleAlgorithm extends BaseRuleAlgorithm
 {
@@ -52,7 +56,8 @@ class TestRuleAlgorithm extends BaseRuleAlgorithm
         array $optimizedTargets,
         array $encodedRules,
         LoggerInterface $logger = null
-    ) {
+    )
+    {
         $context && $optimizedTargets && $encodedRules && $logger ?: null;
 
         return static::packEvaluationResult(static::$result);

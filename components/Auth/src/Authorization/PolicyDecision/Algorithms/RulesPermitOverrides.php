@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Limoncello\Auth\Authorization\PolicyDecision\Algorithms;
+namespace Whoa\Auth\Authorization\PolicyDecision\Algorithms;
 
 /**
  * Copyright 2015-2019 info@neomerx.com
@@ -18,11 +18,11 @@ namespace Limoncello\Auth\Authorization\PolicyDecision\Algorithms;
  * limitations under the License.
  */
 
-use Limoncello\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * @package Limoncello\Auth
+ * @package Whoa\Auth
  */
 class RulesPermitOverrides extends BaseRuleAlgorithm
 {

@@ -1,6 +1,6 @@
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/whoaphp/container/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/whoaphp/container/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/whoaphp/container/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/whoaphp/container/?branch=master)
-[![Build Status](https://travis-ci.org/whoaphp/container.svg?branch=master)](https://travis-ci.org/whoaphp/container)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/whoa-php-dist/container/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/whoa-php-dist/container/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/whoa-php-dist/container/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/whoa-php-dist/container/?branch=master)
+[![Build Status](https://travis-ci.org/whoa-php-dist/container.svg?branch=master)](https://travis-ci.org/whoa-php-dist/container)
 [![License](https://img.shields.io/github/license/whoa-php/framework.svg)](https://packagist.org/packages/whoa-php/framework)
 
 ## Summary

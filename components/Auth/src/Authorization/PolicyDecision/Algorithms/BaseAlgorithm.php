@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Auth\Authorization\PolicyDecision\Algorithms;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +17,19 @@ namespace Limoncello\Auth\Authorization\PolicyDecision\Algorithms;
  * limitations under the License.
  */
 
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\EvaluationEnum;
-use Limoncello\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
+declare(strict_types=1);
+
+namespace Whoa\Auth\Authorization\PolicyDecision\Algorithms;
+
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\EvaluationEnum;
+use Whoa\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
 use Psr\Log\LoggerInterface;
 use function array_key_exists;
 use function array_merge;
 use function call_user_func;
 
 /**
- * @package Limoncello\Auth
+ * @package Whoa\Auth
  */
 abstract class BaseAlgorithm implements BaseAlgorithmInterface
 {
@@ -57,7 +60,8 @@ abstract class BaseAlgorithm implements BaseAlgorithmInterface
         array $optimizedTargets,
         array $encodedItems,
         LoggerInterface $logger = null
-    ): array {
+    ): array
+    {
         return call_user_func($method, $context, $optimizedTargets, $encodedItems, $logger);
     }
 
@@ -138,7 +142,8 @@ abstract class BaseAlgorithm implements BaseAlgorithmInterface
         array $optimizedTargets,
         array $encodedItems,
         ?LoggerInterface $logger
-    ): array {
+    ): array
+    {
         foreach (static::evaluateTargets($context, $optimizedTargets, $logger) as $match => $itemId) {
             $encodedItem      = $encodedItems[$itemId];
             $packedEvaluation = static::evaluateItem($context, $match, $encodedItem, $logger);
@@ -167,7 +172,8 @@ abstract class BaseAlgorithm implements BaseAlgorithmInterface
         array $optimizedTargets,
         array $encodedItems,
         ?LoggerInterface $logger
-    ): array {
+    ): array
+    {
         foreach (static::evaluateTargets($context, $optimizedTargets, $logger) as $match => $itemId) {
             $encodedItem      = $encodedItems[$itemId];
             $packedEvaluation = static::evaluateItem($context, $match, $encodedItem, $logger);
@@ -196,7 +202,8 @@ abstract class BaseAlgorithm implements BaseAlgorithmInterface
         array $optimizedTargets,
         array $encodedItems,
         ?LoggerInterface $logger
-    ): array {
+    ): array
+    {
         foreach (static::evaluateTargets($context, $optimizedTargets, $logger) as $match => $itemId) {
             $encodedItem      = $encodedItems[$itemId];
             $packedEvaluation = static::evaluateItem($context, $match, $encodedItem, $logger);
@@ -229,7 +236,8 @@ abstract class BaseAlgorithm implements BaseAlgorithmInterface
         array $optimizedTargets,
         array $encodedItems,
         ?LoggerInterface $logger
-    ): array {
+    ): array
+    {
         $foundDeny          = false;
         $foundPermit        = false;
         $foundIntDeny       = false;
@@ -307,7 +315,8 @@ abstract class BaseAlgorithm implements BaseAlgorithmInterface
         array $optimizedTargets,
         array $encodedItems,
         ?LoggerInterface $logger
-    ): array {
+    ): array
+    {
         $foundDeny          = false;
         $foundPermit        = false;
         $foundIntDeny       = false;

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Auth\Authorization\PolicyDecision\Algorithms;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Auth\Authorization\PolicyDecision\Algorithms;
  * limitations under the License.
  */
 
-use Limoncello\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
+declare(strict_types=1);
+
+namespace Whoa\Auth\Authorization\PolicyDecision\Algorithms;
+
+use Whoa\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * @package Limoncello\Auth
+ * @package Whoa\Auth
  */
 class RulesDenyUnlessPermit extends BaseRuleAlgorithm
 {
@@ -44,7 +47,8 @@ class RulesDenyUnlessPermit extends BaseRuleAlgorithm
         array $optimizedTargets,
         array $encodedRules,
         ?LoggerInterface $logger
-    ): array {
+    ): array
+    {
         return self::evaluateDenyUnlessPermit($context, $optimizedTargets, $encodedRules, $logger);
     }
 }

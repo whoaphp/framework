@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Auth\Authorization\PolicyAdministration;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Auth\Authorization\PolicyAdministration;
  * limitations under the License.
  */
 
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\EvaluationEnum;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\ObligationInterface;
+declare(strict_types=1);
+
+namespace Whoa\Auth\Authorization\PolicyAdministration;
+
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\EvaluationEnum;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\ObligationInterface;
 use function assert;
 
 /**
- * @package Limoncello\Auth
+ * @package Whoa\Auth
  */
 class Obligation extends Method implements ObligationInterface
 {

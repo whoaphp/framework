@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Auth\Authorization\PolicyEnforcement\Data\Policies;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Tests\Auth\Authorization\PolicyEnforcement\Data\Policies;
  * limitations under the License.
  */
 
-use Limoncello\Auth\Authorization\PolicyAdministration\PolicySet;
-use Limoncello\Auth\Authorization\PolicyDecision\PolicyAlgorithm;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\PolicySetInterface;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Auth\Authorization\PolicyEnforcement\Data\Policies;
+
+use Whoa\Auth\Authorization\PolicyAdministration\PolicySet;
+use Whoa\Auth\Authorization\PolicyDecision\PolicyAlgorithm;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\PolicySetInterface;
 
 /**
- * @package Limoncello\Tests\Auth
+ * @package Whoa\Tests\Auth
  */
 abstract class Application
 {

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Auth\Authorization\PolicyDecision;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,20 +17,24 @@ namespace Limoncello\Tests\Auth\Authorization\PolicyDecision;
  * limitations under the License.
  */
 
-use Limoncello\Auth\Authorization\PolicyAdministration\AllOf;
-use Limoncello\Auth\Authorization\PolicyAdministration\AnyOf;
-use Limoncello\Auth\Authorization\PolicyAdministration\Policy;
-use Limoncello\Auth\Authorization\PolicyAdministration\PolicySet;
-use Limoncello\Auth\Authorization\PolicyAdministration\Rule;
-use Limoncello\Auth\Authorization\PolicyAdministration\Target;
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\Encoder;
-use Limoncello\Auth\Authorization\PolicyDecision\PolicyAlgorithm;
-use Limoncello\Auth\Authorization\PolicyDecision\RuleAlgorithm;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\TargetInterface;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Auth\Authorization\PolicyDecision;
+
+use Whoa\Auth\Authorization\PolicyAdministration\AllOf;
+use Whoa\Auth\Authorization\PolicyAdministration\AnyOf;
+use Whoa\Auth\Authorization\PolicyAdministration\Policy;
+use Whoa\Auth\Authorization\PolicyAdministration\PolicySet;
+use Whoa\Auth\Authorization\PolicyAdministration\Rule;
+use Whoa\Auth\Authorization\PolicyAdministration\Target;
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\Encoder;
+use Whoa\Auth\Authorization\PolicyDecision\PolicyAlgorithm;
+use Whoa\Auth\Authorization\PolicyDecision\RuleAlgorithm;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\TargetInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @package Limoncello\Tests\Auth
+ * @package Whoa\Tests\Auth
  */
 class EncoderTest extends TestCase
 {

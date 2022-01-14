@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Auth\Authorization\PolicyDecision;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +17,19 @@ namespace Limoncello\Auth\Authorization\PolicyDecision;
  * limitations under the License.
  */
 
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsDenyOverrides;
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsDenyUnlessPermit;
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsFirstApplicable;
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsPermitOverrides;
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsPermitUnlessDeny;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\PolicyCombiningAlgorithmInterface;
+declare(strict_types=1);
+
+namespace Whoa\Auth\Authorization\PolicyDecision;
+
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsDenyOverrides;
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsDenyUnlessPermit;
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsFirstApplicable;
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsPermitOverrides;
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsPermitUnlessDeny;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\PolicyCombiningAlgorithmInterface;
 
 /**
- * @package Limoncello\Auth
+ * @package Whoa\Auth
  */
 abstract class PolicyAlgorithm
 {

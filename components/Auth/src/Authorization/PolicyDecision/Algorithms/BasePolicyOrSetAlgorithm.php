@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Auth\Authorization\PolicyDecision\Algorithms;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Auth\Authorization\PolicyDecision\Algorithms;
  * limitations under the License.
  */
 
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\EvaluationEnum;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\PolicyCombiningAlgorithmInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\PolicyInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\PolicySetInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\TargetMatchEnum;
-use Limoncello\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
+declare(strict_types=1);
+
+namespace Whoa\Auth\Authorization\PolicyDecision\Algorithms;
+
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\EvaluationEnum;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\PolicyCombiningAlgorithmInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\PolicyInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\PolicySetInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\TargetMatchEnum;
+use Whoa\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
 use Psr\Log\LoggerInterface;
 use function assert;
 use function array_merge;
@@ -33,7 +36,7 @@ use function is_callable;
 use function is_string;
 
 /**
- * @package Limoncello\Auth
+ * @package Whoa\Auth
  */
 abstract class BasePolicyOrSetAlgorithm extends BaseAlgorithm implements PolicyCombiningAlgorithmInterface
 {
@@ -57,7 +60,8 @@ abstract class BasePolicyOrSetAlgorithm extends BaseAlgorithm implements PolicyC
         ContextInterface $context,
         array $policiesAndSetsData,
         ?LoggerInterface $logger
-    ): array {
+    ): array
+    {
         return static::callAlgorithm(
             static::getCallable($policiesAndSetsData),
             $context,
@@ -118,7 +122,8 @@ abstract class BasePolicyOrSetAlgorithm extends BaseAlgorithm implements PolicyC
         int $match,
         array $encodedPolicy,
         ?LoggerInterface $logger
-    ): array {
+    ): array
+    {
         assert(Encoder::isPolicy($encodedPolicy));
         assert($match !== TargetMatchEnum::NO_TARGET);
 
@@ -141,7 +146,7 @@ abstract class BasePolicyOrSetAlgorithm extends BaseAlgorithm implements PolicyC
         }
 
         if ($match === TargetMatchEnum::MATCH || $match === TargetMatchEnum::INDETERMINATE) {
-            list ($evaluation, $obligations, $advice) = BaseRuleAlgorithm::callRuleAlgorithm(
+            [$evaluation, $obligations, $advice] = BaseRuleAlgorithm::callRuleAlgorithm(
                 $context,
                 Encoder::rulesData(Encoder::policyRules($encodedPolicy)),
                 $logger
@@ -186,7 +191,8 @@ abstract class BasePolicyOrSetAlgorithm extends BaseAlgorithm implements PolicyC
         int $match,
         array $encodedPolicySet,
         ?LoggerInterface $logger
-    ): array {
+    ): array
+    {
         assert(Encoder::isPolicySet($encodedPolicySet));
 
         /** @see http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html #7.13 (table 6) */
@@ -211,7 +217,7 @@ abstract class BasePolicyOrSetAlgorithm extends BaseAlgorithm implements PolicyC
             $match === TargetMatchEnum::NO_TARGET ||
             $match === TargetMatchEnum::INDETERMINATE
         ) {
-            list ($evaluation, $obligations, $advice) = static::callPolicyAlgorithm(
+            [$evaluation, $obligations, $advice] = static::callPolicyAlgorithm(
                 $context,
                 Encoder::policiesAndSetsData(Encoder::policySetChildren($encodedPolicySet)),
                 $logger
@@ -220,7 +226,7 @@ abstract class BasePolicyOrSetAlgorithm extends BaseAlgorithm implements PolicyC
             if ($match === TargetMatchEnum::INDETERMINATE) {
                 // evaluate final result in accordance to table 7
                 $correctedEvaluation = static::correctEvaluationOnIntermediateTarget($evaluation, $logger);
-                $result = static::packEvaluationResult($correctedEvaluation);
+                $result              = static::packEvaluationResult($correctedEvaluation);
             } else {
                 $obligationsMap = Encoder::policySetObligations($encodedPolicySet);
                 $adviceMap      = Encoder::policySetAdvice($encodedPolicySet);
@@ -250,7 +256,8 @@ abstract class BasePolicyOrSetAlgorithm extends BaseAlgorithm implements PolicyC
         int $match,
         array $encodedItem,
         ?LoggerInterface $logger
-    ): array {
+    ): array
+    {
         $isSet = Encoder::isPolicySet($encodedItem);
 
         return $isSet === true ?

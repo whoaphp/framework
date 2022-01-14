@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Auth\Authorization\PolicyEnforcement\Data\Policies;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,22 +17,26 @@ namespace Limoncello\Tests\Auth\Authorization\PolicyEnforcement\Data\Policies;
  * limitations under the License.
  */
 
-use Limoncello\Auth\Authorization\PolicyAdministration\Advice;
-use Limoncello\Auth\Authorization\PolicyAdministration\Logical;
-use Limoncello\Auth\Authorization\PolicyAdministration\Obligation;
-use Limoncello\Auth\Authorization\PolicyAdministration\Policy;
-use Limoncello\Auth\Authorization\PolicyAdministration\Rule;
-use Limoncello\Auth\Authorization\PolicyDecision\RuleAlgorithm;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\EvaluationEnum;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\MethodInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\PolicyInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\RuleInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
-use Limoncello\Tests\Auth\Authorization\PolicyEnforcement\Data\ContextProperties;
-use Limoncello\Tests\Auth\Authorization\PolicyEnforcement\PolicyEnforcementTest;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Auth\Authorization\PolicyEnforcement\Data\Policies;
+
+use Whoa\Auth\Authorization\PolicyAdministration\Advice;
+use Whoa\Auth\Authorization\PolicyAdministration\Logical;
+use Whoa\Auth\Authorization\PolicyAdministration\Obligation;
+use Whoa\Auth\Authorization\PolicyAdministration\Policy;
+use Whoa\Auth\Authorization\PolicyAdministration\Rule;
+use Whoa\Auth\Authorization\PolicyDecision\RuleAlgorithm;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\EvaluationEnum;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\MethodInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\PolicyInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\RuleInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
+use Whoa\Tests\Auth\Authorization\PolicyEnforcement\Data\ContextProperties;
+use Whoa\Tests\Auth\Authorization\PolicyEnforcement\PolicyEnforcementTest;
 
 /**
- * @package Limoncello\Tests\Auth
+ * @package Whoa\Tests\Auth
  */
 abstract class Comments extends General
 {

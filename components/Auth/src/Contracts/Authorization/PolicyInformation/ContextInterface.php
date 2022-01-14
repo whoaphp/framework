@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Auth\Contracts\Authorization\PolicyInformation;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Auth\Contracts\Authorization\PolicyInformation;
  * limitations under the License.
  */
 
-use Limoncello\Auth\Contracts\Authorization\PolicyEnforcement\RequestInterface;
+declare(strict_types=1);
+
+namespace Whoa\Auth\Contracts\Authorization\PolicyInformation;
+
+use Whoa\Auth\Contracts\Authorization\PolicyEnforcement\RequestInterface;
 use Psr\Container\ContainerInterface;
 
 /**
- * @package Limoncello\Auth
+ * @package Whoa\Auth
  */
 interface ContextInterface extends ContainerInterface
 {

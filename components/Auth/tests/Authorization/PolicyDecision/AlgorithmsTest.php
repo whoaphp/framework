@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Auth\Authorization\PolicyDecision;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,32 +17,36 @@ namespace Limoncello\Tests\Auth\Authorization\PolicyDecision;
  * limitations under the License.
  */
 
-use Limoncello\Auth\Authorization\PolicyAdministration\Advice;
-use Limoncello\Auth\Authorization\PolicyAdministration\AllOf;
-use Limoncello\Auth\Authorization\PolicyAdministration\AnyOf;
-use Limoncello\Auth\Authorization\PolicyAdministration\Logical;
-use Limoncello\Auth\Authorization\PolicyAdministration\Policy;
-use Limoncello\Auth\Authorization\PolicyAdministration\PolicySet;
-use Limoncello\Auth\Authorization\PolicyAdministration\Rule;
-use Limoncello\Auth\Authorization\PolicyAdministration\Target;
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsDenyOverrides;
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsDenyUnlessPermit;
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsFirstApplicable;
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsPermitOverrides;
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsPermitUnlessDeny;
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\RulesDenyOverrides;
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\RulesFirstApplicable;
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\RulesPermitOverrides;
-use Limoncello\Auth\Authorization\PolicyDecision\Algorithms\RulesPermitUnlessDeny;
-use Limoncello\Auth\Authorization\PolicyEnforcement\Request;
-use Limoncello\Auth\Authorization\PolicyInformation\Context;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\EvaluationEnum;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\TargetInterface;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Auth\Authorization\PolicyDecision;
+
+use Whoa\Auth\Authorization\PolicyAdministration\Advice;
+use Whoa\Auth\Authorization\PolicyAdministration\AllOf;
+use Whoa\Auth\Authorization\PolicyAdministration\AnyOf;
+use Whoa\Auth\Authorization\PolicyAdministration\Logical;
+use Whoa\Auth\Authorization\PolicyAdministration\Policy;
+use Whoa\Auth\Authorization\PolicyAdministration\PolicySet;
+use Whoa\Auth\Authorization\PolicyAdministration\Rule;
+use Whoa\Auth\Authorization\PolicyAdministration\Target;
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsDenyOverrides;
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsDenyUnlessPermit;
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsFirstApplicable;
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsPermitOverrides;
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\PoliciesOrSetsPermitUnlessDeny;
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\RulesDenyOverrides;
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\RulesFirstApplicable;
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\RulesPermitOverrides;
+use Whoa\Auth\Authorization\PolicyDecision\Algorithms\RulesPermitUnlessDeny;
+use Whoa\Auth\Authorization\PolicyEnforcement\Request;
+use Whoa\Auth\Authorization\PolicyInformation\Context;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\EvaluationEnum;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\TargetInterface;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 /**
- * @package Limoncello\Tests\Auth
+ * @package Whoa\Tests\Auth
  */
 class AlgorithmsTest extends TestCase
 {
@@ -75,7 +78,7 @@ class AlgorithmsTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

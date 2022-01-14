@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Auth\Authorization\PolicyEnforcement;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,25 +17,29 @@ namespace Limoncello\Tests\Auth\Authorization\PolicyEnforcement;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Auth\Authorization\PolicyEnforcement;
+
 use Exception;
-use Limoncello\Auth\Authorization\PolicyDecision\PolicyDecisionPoint;
-use Limoncello\Auth\Authorization\PolicyEnforcement\PolicyEnforcementPoint;
-use Limoncello\Auth\Authorization\PolicyEnforcement\Request;
-use Limoncello\Auth\Authorization\PolicyInformation\PolicyInformationPoint;
-use Limoncello\Auth\Contracts\Authorization\PolicyEnforcement\PolicyEnforcementPointInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyInformation\PolicyInformationPointInterface;
-use Limoncello\Tests\Auth\Authorization\PolicyEnforcement\Data\ContextProperties;
-use Limoncello\Tests\Auth\Authorization\PolicyEnforcement\Data\Policies\Application;
-use Limoncello\Tests\Auth\Authorization\PolicyEnforcement\Data\Policies\Posts;
-use Limoncello\Tests\Auth\Authorization\PolicyEnforcement\Data\RequestProperties;
+use Whoa\Auth\Authorization\PolicyDecision\PolicyDecisionPoint;
+use Whoa\Auth\Authorization\PolicyEnforcement\PolicyEnforcementPoint;
+use Whoa\Auth\Authorization\PolicyEnforcement\Request;
+use Whoa\Auth\Authorization\PolicyInformation\PolicyInformationPoint;
+use Whoa\Auth\Contracts\Authorization\PolicyEnforcement\PolicyEnforcementPointInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyInformation\PolicyInformationPointInterface;
+use Whoa\Tests\Auth\Authorization\PolicyEnforcement\Data\ContextProperties;
+use Whoa\Tests\Auth\Authorization\PolicyEnforcement\Data\Policies\Application;
+use Whoa\Tests\Auth\Authorization\PolicyEnforcement\Data\Policies\Posts;
+use Whoa\Tests\Auth\Authorization\PolicyEnforcement\Data\RequestProperties;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
 /**
- * @package Limoncello\Tests\Auth
+ * @package Whoa\Tests\Auth
  */
 class PolicySwitchOptimizationTest extends TestCase
 {
@@ -160,7 +163,7 @@ class PolicySwitchOptimizationTest extends TestCase
      *
      * @throws Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -186,7 +189,7 @@ class PolicySwitchOptimizationTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Auth\Authorization\PolicyDecision\Algorithms;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,14 @@ namespace Limoncello\Auth\Authorization\PolicyDecision\Algorithms;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Auth\Authorization\PolicyDecision\Algorithms;
+
 use Generator;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\TargetInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\TargetMatchEnum;
-use Limoncello\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\TargetInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\TargetMatchEnum;
+use Whoa\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use function assert;
@@ -31,7 +34,7 @@ use function key;
 use function reset;
 
 /**
- * @package Limoncello\Auth
+ * @package Whoa\Auth
  */
 trait DefaultTargetSerializeTrait
 {
@@ -49,11 +52,12 @@ trait DefaultTargetSerializeTrait
         ContextInterface $context,
         array $optimizedTargets,
         ?LoggerInterface $logger
-    ): Generator {
-        list($isOptimizedForSwitch, $data) = $optimizedTargets;
+    ): Generator
+    {
+        [$isOptimizedForSwitch, $data] = $optimizedTargets;
         if ($isOptimizedForSwitch === true) {
             assert(count($data) === 2);
-            list($contextKey, $valueRuleIdMap) = $data;
+            [$contextKey, $valueRuleIdMap] = $data;
             if ($context->has($contextKey) === true &&
                 array_key_exists($targetValue = $context->get($contextKey), $valueRuleIdMap) === true
             ) {
@@ -103,7 +107,8 @@ trait DefaultTargetSerializeTrait
         ContextInterface $context,
         array $target,
         ?LoggerInterface $logger
-    ): int {
+    ): int
+    {
         /** @see http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html #7.11 (table 4) */
 
         assert(Encoder::isTarget($target) === true);
@@ -157,7 +162,7 @@ trait DefaultTargetSerializeTrait
             assert(count($data) === 2); // context key and value => rule ID pairs.
         } else {
             $isOptimizedForSwitch = false;
-            $data = [];
+            $data                 = [];
             foreach ($targets as $ruleId => $target) {
                 $data[$ruleId] = $this->encodeTarget($target);
             }
@@ -202,7 +207,7 @@ trait DefaultTargetSerializeTrait
     {
         $result = count($targets) > 1;
 
-        $contextKey  = null;
+        $contextKey     = null;
         $valueRuleIdMap = [];
 
         foreach ($targets as $ruleId => $nullableTarget) {

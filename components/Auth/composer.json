@@ -1,10 +1,10 @@
 {
-    "name": "whoaphp/auth",
+    "name": "whoa-php/auth",
     "description": "Whoa framework authorization support.",
     "keywords": ["whoa", "framework", "auth", "authorization"],
-    "homepage": "https://github.com/whoaphp/framework/tree/master/components/Auth",
+    "homepage": "https://github.com/whoa-php/framework/tree/master/components/Auth",
     "support": {
-        "issues": "https://github.com/whoaphp/framework/issues"
+        "issues": "https://github.com/whoa-php/framework/issues"
     },
     "license": "Apache-2.0",
     "authors": [
@@ -20,7 +20,7 @@
     "require": {
         "php": "^7.4|^8.0",
         "psr/log": "^1.0",
-        "whoaphp/container": "dev-master"
+        "whoa-php/container": "dev-master"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^2.9",
@@ -32,17 +32,17 @@
     },
     "autoload": {
         "psr-4": {
-            "Limoncello\\Auth\\": "src/"
+            "Whoa\\Auth\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Limoncello\\Tests\\Auth\\": "tests/"
+            "Whoa\\Tests\\Auth\\": "tests/"
         }
     },
     "scripts": {
         "test": ["@test-unit-with-coverage", "@test-cs", "@test-md"],
-        "test-unit": "./vendor/bin/phpunit",
+        "test-unit": "./vendor/bin/phpunit --do-not-cache-result",
         "test-unit-with-coverage": "phpdbg -qrr ./vendor/bin/phpunit --coverage-text",
         "test-cs": "./vendor/bin/phpcs -p -s --standard=PSR2 ./src ./tests",
         "test-md": "./vendor/bin/phpmd ./src text codesize,controversial,cleancode,design,unusedcode,naming",

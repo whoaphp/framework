@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Auth\Authorization\PolicyDecision\Algorithms;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,19 +17,23 @@ namespace Limoncello\Auth\Authorization\PolicyDecision\Algorithms;
  * limitations under the License.
  */
 
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\AdviceInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\MethodInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\ObligationInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\PolicyCombiningAlgorithmInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\PolicyInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\PolicySetInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\RuleCombiningAlgorithmInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\RuleInterface;
+declare(strict_types=1);
+
+namespace Whoa\Auth\Authorization\PolicyDecision\Algorithms;
+
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\AdviceInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\MethodInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\ObligationInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\PolicyCombiningAlgorithmInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\PolicyInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\PolicySetInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\RuleCombiningAlgorithmInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\RuleInterface;
 use function assert;
 use function array_key_exists;
 
 /**
- * @package Limoncello\Auth
+ * @package Whoa\Auth
  *
  * @SuppressWarnings(PHPMD.TooManyMethods)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
@@ -521,7 +524,7 @@ class Encoder
     {
         $result = [];
         foreach ($obligations as $item) {
-            /** @var ObligationInterface $item*/
+            /** @var ObligationInterface $item */
             $result[$item->getFulfillOn()][] = $item->getCallable();
         }
 
@@ -537,7 +540,7 @@ class Encoder
     {
         $result = [];
         foreach ($advice as $item) {
-            /** @var AdviceInterface $item*/
+            /** @var AdviceInterface $item */
             $result[$item->getAppliesTo()][] = $item->getCallable();
         }
 
@@ -567,7 +570,8 @@ class Encoder
     private static function serializePoliciesAndSets(
         PolicyCombiningAlgorithmInterface $algorithm,
         array $policiesAndSets
-    ): array {
+    ): array
+    {
         return [
             static::TYPE                   => static::TYPE_POLICIES_AND_SETS,
             static::POLICIES_AND_SETS_DATA => $algorithm->optimize($policiesAndSets)

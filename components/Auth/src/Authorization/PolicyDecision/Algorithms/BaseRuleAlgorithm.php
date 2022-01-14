@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Auth\Authorization\PolicyDecision\Algorithms;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Auth\Authorization\PolicyDecision\Algorithms;
  * limitations under the License.
  */
 
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\EvaluationEnum;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\RuleCombiningAlgorithmInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\RuleInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\TargetMatchEnum;
-use Limoncello\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
+declare(strict_types=1);
+
+namespace Whoa\Auth\Authorization\PolicyDecision\Algorithms;
+
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\EvaluationEnum;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\RuleCombiningAlgorithmInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\RuleInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\TargetMatchEnum;
+use Whoa\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use function assert;
@@ -32,7 +35,7 @@ use function is_callable;
 use function is_string;
 
 /**
- * @package Limoncello\Auth
+ * @package Whoa\Auth
  */
 abstract class BaseRuleAlgorithm extends BaseAlgorithm implements RuleCombiningAlgorithmInterface
 {
@@ -56,7 +59,8 @@ abstract class BaseRuleAlgorithm extends BaseAlgorithm implements RuleCombiningA
         ContextInterface $context,
         array $rulesData,
         LoggerInterface $logger = null
-    ): array {
+    ): array
+    {
         return static::callAlgorithm(
             static::getCallable($rulesData),
             $context,
@@ -110,7 +114,8 @@ abstract class BaseRuleAlgorithm extends BaseAlgorithm implements RuleCombiningA
         int $match,
         array $encodedItem,
         ?LoggerInterface $logger
-    ): array {
+    ): array
+    {
         return static::evaluateRule($context, $match, $encodedItem, $logger);
     }
 
@@ -131,7 +136,8 @@ abstract class BaseRuleAlgorithm extends BaseAlgorithm implements RuleCombiningA
         int $match,
         array $encodedRule,
         LoggerInterface $logger = null
-    ): array {
+    ): array
+    {
         assert(Encoder::isRule($encodedRule));
 
         $ruleName = null;
