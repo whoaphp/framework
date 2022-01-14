@@ -2,7 +2,7 @@
 
 /** @noinspection SpellCheckingInspection */
 
-namespace Limoncello\Tests\l10n\Messages;
+namespace Whoa\Tests\l10n\Messages;
 
 /**
  * Copyright 2015-2019 info@neomerx.com
@@ -20,18 +20,18 @@ namespace Limoncello\Tests\l10n\Messages;
  * limitations under the License.
  */
 
-use Limoncello\l10n\Contracts\Format\TranslatorInterface;
-use Limoncello\l10n\Format\Formatter;
-use Limoncello\l10n\Format\Translator;
-use Limoncello\l10n\Messages\BundleStorage;
-use Limoncello\l10n\Messages\FileBundleEncoder;
-use Limoncello\Tests\l10n\Messages\Resources2\DeAtMessages;
-use Limoncello\Tests\l10n\Messages\Resources2\DeMessages;
-use Limoncello\Tests\l10n\Messages\Resources2\OriginalMessages;
+use Whoa\l10n\Contracts\Format\TranslatorInterface;
+use Whoa\l10n\Format\Formatter;
+use Whoa\l10n\Format\Translator;
+use Whoa\l10n\Messages\BundleStorage;
+use Whoa\l10n\Messages\FileBundleEncoder;
+use Whoa\Tests\l10n\Messages\Resources2\DeAtMessages;
+use Whoa\Tests\l10n\Messages\Resources2\DeMessages;
+use Whoa\Tests\l10n\Messages\Resources2\OriginalMessages;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @package Limoncello\Tests\l10n
+ * @package Whoa\Tests\l10n
  */
 class FileBundleEncoderTest extends TestCase
 {

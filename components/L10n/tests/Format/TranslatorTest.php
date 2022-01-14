@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Limoncello\Tests\l10n\Format;
+namespace Whoa\Tests\l10n\Format;
 
 /**
  * Copyright 2015-2019 info@neomerx.com
@@ -18,14 +18,14 @@ namespace Limoncello\Tests\l10n\Format;
  * limitations under the License.
  */
 
-use Limoncello\l10n\Contracts\Format\TranslatorInterface;
-use Limoncello\l10n\Format\Translator;
-use Limoncello\l10n\Messages\BundleStorage;
-use Limoncello\l10n\Messages\FileBundleEncoder;
+use Whoa\l10n\Contracts\Format\TranslatorInterface;
+use Whoa\l10n\Format\Translator;
+use Whoa\l10n\Messages\BundleStorage;
+use Whoa\l10n\Messages\FileBundleEncoder;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @package Limoncello\Tests\l10n
+ * @package Whoa\Tests\l10n
  */
 class TranslatorTest extends TestCase
 {

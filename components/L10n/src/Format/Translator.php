@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\l10n\Format;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,12 @@ namespace Limoncello\l10n\Format;
  * limitations under the License.
  */
 
-use Limoncello\l10n\Contracts\Format\TranslatorInterface;
-use Limoncello\l10n\Contracts\Messages\BundleStorageInterface;
+declare (strict_types=1);
+
+namespace Whoa\l10n\Format;
+
+use Whoa\l10n\Contracts\Format\TranslatorInterface;
+use Whoa\l10n\Contracts\Messages\BundleStorageInterface;
 use MessageFormatter;
 use function assert;
 use function call_user_func;
@@ -28,7 +31,7 @@ use function is_scalar;
 use function method_exists;
 
 /**
- * @package Limoncello\l10n
+ * @package Whoa\l10n
  */
 class Translator implements TranslatorInterface
 {

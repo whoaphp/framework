@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\l10n\Messages;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +17,13 @@ namespace Limoncello\l10n\Messages;
  * limitations under the License.
  */
 
-use Limoncello\l10n\Contracts\Messages\BundleEncoderInterface;
-use Limoncello\l10n\Contracts\Messages\BundleStorageInterface;
-use Limoncello\l10n\Contracts\Messages\ResourceBundleInterface;
+declare (strict_types=1);
+
+namespace Whoa\l10n\Messages;
+
+use Whoa\l10n\Contracts\Messages\BundleEncoderInterface;
+use Whoa\l10n\Contracts\Messages\BundleStorageInterface;
+use Whoa\l10n\Contracts\Messages\ResourceBundleInterface;
 use function array_diff;
 use function array_intersect;
 use function array_keys;
@@ -28,7 +31,7 @@ use function assert;
 use function in_array;
 
 /**
- * @package Limoncello\l10n
+ * @package Whoa\l10n
  */
 class BundleEncoder implements BundleEncoderInterface
 {
@@ -50,7 +53,7 @@ class BundleEncoder implements BundleEncoderInterface
     /**
      * @inheritdoc
      */
-    public function getStorageData(string  $defaultLocale): array
+    public function getStorageData(string $defaultLocale): array
     {
         $defaultNamespaces = $this->getNamespaces($defaultLocale);
 
@@ -59,8 +62,8 @@ class BundleEncoder implements BundleEncoderInterface
             $localizedNamespaces = $this->getNamespaces($locale);
             $combinedNamespaces  = $defaultNamespaces + $localizedNamespaces;
             foreach ($combinedNamespaces as $namespace) {
-                $bundle = $this->getBundle($locale, $namespace);
-                $bundle = $bundle !== null ? $bundle : $this->getBundle($defaultLocale, $namespace);
+                $bundle                    = $this->getBundle($locale, $namespace);
+                $bundle                    = $bundle !== null ? $bundle : $this->getBundle($defaultLocale, $namespace);
                 $data[$locale][$namespace] = $defaultLocale === $locale ? $this->encodeBundle($bundle) :
                     $this->encodeMergedBundles($bundle, $this->getBundle($defaultLocale, $namespace));
             }
@@ -121,7 +124,8 @@ class BundleEncoder implements BundleEncoderInterface
     private function encodeMergedBundles(
         ResourceBundleInterface $localizedBundle,
         ResourceBundleInterface $defaultBundle = null
-    ): array {
+    ): array
+    {
         if ($defaultBundle === null) {
             // there is no default bundle for this localized one
             return $this->encodeBundle($localizedBundle);

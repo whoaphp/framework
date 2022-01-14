@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\l10n\Messages;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,12 @@ namespace Limoncello\l10n\Messages;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\L10n\MessageStorageInterface;
-use Limoncello\l10n\Contracts\Messages\ResourceBundleInterface;
+declare (strict_types=1);
+
+namespace Whoa\l10n\Messages;
+
+use Whoa\Contracts\L10n\MessageStorageInterface;
+use Whoa\l10n\Contracts\Messages\ResourceBundleInterface;
 use function assert;
 use function class_exists;
 use function class_implements;
@@ -32,7 +35,7 @@ use function realpath;
 use function scandir;
 
 /**
- * @package Limoncello\l10n
+ * @package Whoa\l10n
  */
 class FileBundleEncoder extends BundleEncoder
 {
@@ -50,7 +53,8 @@ class FileBundleEncoder extends BundleEncoder
         ?iterable $messageDescriptions,
         string $localesDir,
         string $globMessagePatterns = '*.php'
-    ) {
+    )
+    {
         $this
             ->setGlobMessagePatterns($globMessagePatterns)
             ->loadDescriptions($messageDescriptions)
@@ -60,16 +64,16 @@ class FileBundleEncoder extends BundleEncoder
     /**
      * Method is used for loading resources from packages.
      *
-     * @see ProvidesMessageResourcesInterface
-     *
      * @param iterable|null $messageDescriptions
      *
      * @return FileBundleEncoder
+     * @see ProvidesMessageResourcesInterface
+     *
      */
     protected function loadDescriptions(?iterable $messageDescriptions): self
     {
         if ($messageDescriptions !== null) {
-            foreach ($messageDescriptions as list($locale, $namespace, $messageStorage)) {
+            foreach ($messageDescriptions as [$locale, $namespace, $messageStorage]) {
                 assert(is_string($locale) === true && empty($locale) === false);
                 assert(is_string($namespace) === true && empty($namespace) === false);
                 assert(is_string($messageStorage) === true && empty($messageStorage) === false);
@@ -147,7 +151,8 @@ class FileBundleEncoder extends BundleEncoder
         string $fileFullPath,
         string $localeDir,
         string $messageFile
-    ): ResourceBundleInterface {
+    ): ResourceBundleInterface
+    {
         /** @noinspection PhpIncludeInspection */
         $properties = require $fileFullPath;
         $bundle     = new ResourceBundle($localeDir, $messageFile, $properties);

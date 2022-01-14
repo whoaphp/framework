@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\l10n\Messages;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +17,11 @@ namespace Limoncello\l10n\Messages;
  * limitations under the License.
  */
 
-use Limoncello\l10n\Contracts\Messages\BundleStorageInterface;
+declare (strict_types=1);
+
+namespace Whoa\l10n\Messages;
+
+use Whoa\l10n\Contracts\Messages\BundleStorageInterface;
 use function array_keys;
 use function assert;
 use function count;
@@ -27,7 +30,7 @@ use function locale_lookup;
 use function strlen;
 
 /**
- * @package Limoncello\l10n
+ * @package Whoa\l10n
  */
 class BundleStorage implements BundleStorageInterface
 {

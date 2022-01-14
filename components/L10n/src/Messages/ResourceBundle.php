@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\l10n\Messages;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +17,11 @@ namespace Limoncello\l10n\Messages;
  * limitations under the License.
  */
 
-use Limoncello\l10n\Contracts\Messages\ResourceBundleInterface;
+declare (strict_types=1);
+
+namespace Whoa\l10n\Messages;
+
+use Whoa\l10n\Contracts\Messages\ResourceBundleInterface;
 use function array_keys;
 use function assert;
 use function is_scalar;
@@ -27,7 +30,7 @@ use function locale_canonicalize;
 use function strlen;
 
 /**
- * @package Limoncello\l10n
+ * @package Whoa\l10n
  */
 class ResourceBundle implements ResourceBundleInterface
 {

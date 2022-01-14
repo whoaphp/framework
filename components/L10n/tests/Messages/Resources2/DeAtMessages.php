@@ -16,12 +16,12 @@
  * limitations under the License.
  */
 
-namespace Limoncello\Tests\l10n\Messages\Resources2;
+namespace Whoa\Tests\l10n\Messages\Resources2;
 
-use Limoncello\Contracts\L10n\MessageStorageInterface;
+use Whoa\Contracts\L10n\MessageStorageInterface;
 
 /**
- * @package Limoncello\Tests\l10n
+ * @package Whoa\Tests\l10n
  */
 class DeAtMessages implements MessageStorageInterface
 {

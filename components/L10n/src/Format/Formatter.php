@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\l10n\Format;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\l10n\Format;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\L10n\FormatterInterface;
-use Limoncello\l10n\Contracts\Format\TranslatorInterface;
+declare (strict_types=1);
+
+namespace Whoa\l10n\Format;
+
+use Whoa\Contracts\L10n\FormatterInterface;
+use Whoa\l10n\Contracts\Format\TranslatorInterface;
 use function assert;
 
 /**
- * @package Limoncello\l10n
+ * @package Whoa\l10n
  */
 class Formatter implements FormatterInterface
 {

@@ -1,6 +1,6 @@
 <?php declare (strict_types = 1);
 
-namespace Limoncello\Tests\l10n\Messages;
+namespace Whoa\Tests\l10n\Messages;
 
 /**
  * Copyright 2015-2019 info@neomerx.com
@@ -18,11 +18,11 @@ namespace Limoncello\Tests\l10n\Messages;
  * limitations under the License.
  */
 
-use Limoncello\l10n\Messages\ResourceBundle;
+use Whoa\l10n\Messages\ResourceBundle;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @package Limoncello\Tests\l10n
+ * @package Whoa\Tests\l10n
  */
 class ResourceBundleTest extends TestCase
 {
