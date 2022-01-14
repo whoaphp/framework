@@ -2,7 +2,7 @@
 
 /**
  * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,10 +19,10 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Doctrine\Json;
+namespace Whoa\Doctrine\Json;
 
 /**
- * @package Limoncello\Doctrine
+ * @package Whoa\Doctrine
  */
 class Date extends \DateTimeImmutable implements \JsonSerializable
 {

@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,14 +18,14 @@
 
 declare (strict_types=1);
 
-namespace Limoncello\Doctrine\Traits;
+namespace Whoa\Doctrine\Traits;
 
 use DateTimeInterface;
 use Doctrine\DBAL\Types\ConversionException;
-use Limoncello\Doctrine\Json\Time as LimocelloTime;
+use Whoa\Doctrine\Json\Time as LimocelloTime;
 
 /**
- * @package Limoncello\Doctrine
+ * @package Whoa\Doctrine
  */
 trait TimeTypeTrait
 {

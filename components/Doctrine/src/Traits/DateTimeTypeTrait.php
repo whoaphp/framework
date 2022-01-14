@@ -2,7 +2,7 @@
 
 /**
  * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,14 +19,14 @@
 
 declare (strict_types=1);
 
-namespace Limoncello\Doctrine\Traits;
+namespace Whoa\Doctrine\Traits;
 
 use DateTimeInterface;
 use Doctrine\DBAL\Types\ConversionException;
-use Limoncello\Doctrine\Json\DateTime as LimoncelloDateTime;
+use Whoa\Doctrine\Json\DateTime as WhoaDateTime;
 
 /**
- * @package Limoncello\Doctrine
+ * @package Whoa\Doctrine
  */
 trait DateTimeTypeTrait
 {
@@ -47,9 +47,9 @@ trait DateTimeTypeTrait
         if ($value instanceof DateTimeInterface || $value === null) {
             $result = $value;
         } elseif (is_string($value) === true) {
-            $result = LimoncelloDateTime::createFromFormat($nonJsonFormat, $value);
+            $result = WhoaDateTime::createFromFormat($nonJsonFormat, $value);
             $result = $result !== false ?
-                $result : LimoncelloDateTime::createFromFormat(LimoncelloDateTime::JSON_API_FORMAT, $value);
+                $result : WhoaDateTime::createFromFormat(WhoaDateTime::JSON_API_FORMAT, $value);
             if ($result === false) {
                 throw ConversionException::conversionFailed($value, $typeName);
             }
@@ -57,7 +57,7 @@ trait DateTimeTypeTrait
             throw ConversionException::conversionFailedInvalidType(
                 $value,
                 DateTimeInterface::class,
-                [DateTimeInterface::class, LimoncelloDateTime::class, 'string']
+                [DateTimeInterface::class, WhoaDateTime::class, 'string']
             );
         }
 

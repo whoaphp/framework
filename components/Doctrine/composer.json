@@ -1,10 +1,10 @@
 {
-    "name": "whoaphp/doctrine",
+    "name": "whoa-php/doctrine",
     "description": "Doctrine types library for Whoa PHP framework.",
     "keywords": ["whoa", "framework", "doctrine", "doctrine-types"],
-    "homepage": "https://github.com/whoaphp/framework/tree/master/components/Doctrine",
+    "homepage": "https://github.com/whoa-php/framework/tree/master/components/Doctrine",
     "support": {
-        "issues": "https://github.com/whoaphp/framework/issues"
+        "issues": "https://github.com/whoa-php/framework/issues"
     },
     "license": "Apache-2.0",
     "authors": [
@@ -24,18 +24,18 @@
     },
     "autoload": {
         "psr-4": {
-            "Limoncello\\Doctrine\\": "src/"
+            "Whoa\\Doctrine\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Limoncello\\Tests\\Doctrine\\": "tests/"
+            "Whoa\\Tests\\Doctrine\\": "tests/"
         }
     },
     "scripts": {
         "test": ["@test-unit-with-coverage", "@test-cs", "@test-md"],
-        "test-unit": "./vendor/bin/phpunit",
-        "test-unit-with-coverage": "phpdbg -qrr ./vendor/bin/phpunit --coverage-text",
+        "test-unit": "./vendor/bin/phpunit --do-not-cache-result",
+        "test-unit-with-coverage": "phpdbg -qrr ./vendor/bin/phpunit --coverage-text --do-not-cache-result",
         "test-cs": "./vendor/bin/phpcs -p -s --standard=PSR2 ./src ./tests",
         "test-md": "./vendor/bin/phpmd ./src text codesize,controversial,cleancode,design,unusedcode,naming",
         "test-unit-php-7-3": "docker-compose run --rm cli_7_3_php php ./vendor/bin/phpunit",

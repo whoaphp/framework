@@ -2,7 +2,7 @@
 
 /**
  * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,14 +19,14 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Doctrine\Types;
+namespace Whoa\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Limoncello\Doctrine\Json\Time;
-use Limoncello\Doctrine\Traits\TimeTypeTrait;
+use Whoa\Doctrine\Json\Time;
+use Whoa\Doctrine\Traits\TimeTypeTrait;
 
 /**
- * @package Limoncello\Doctrine
+ * @package Whoa\Doctrine
  */
 class TimeType extends \Doctrine\DBAL\Types\TimeType
 {

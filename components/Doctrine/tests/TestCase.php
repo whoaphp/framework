@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Doctrine;
+namespace Whoa\Tests\Doctrine;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
@@ -28,7 +28,7 @@ use Exception;
 use Mockery;
 
 /**
- * @package Limoncello\Tests\Doctrine
+ * @package Whoa\Tests\Doctrine
  */
 class TestCase extends \PHPUnit\Framework\TestCase
 {
@@ -41,7 +41,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
         Mockery::close();
     }
-    
+
     /**
      * @return Connection
      *

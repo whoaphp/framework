@@ -18,17 +18,17 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Doctrine\Types;
+namespace Whoa\Tests\Doctrine\Types;
 
 use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Types\Type;
-use Limoncello\Doctrine\Types\UuidType;
-use Limoncello\Tests\Doctrine\TestCase;
+use Whoa\Doctrine\Types\UuidType;
+use Whoa\Tests\Doctrine\TestCase;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * @package Limoncello\Tests\Doctrine
+ * @package Whoa\Tests\Doctrine
  */
 class UuidTypesTest extends TestCase
 {

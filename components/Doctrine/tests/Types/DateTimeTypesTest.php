@@ -19,22 +19,22 @@
 
 declare (strict_types=1);
 
-namespace Limoncello\Tests\Doctrine\Types;
+namespace Whoa\Tests\Doctrine\Types;
 
 use DateTime;
 use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Types\Type;
 use Exception;
-use Limoncello\Doctrine\Json\Date as LimoncelloDate;
-use Limoncello\Doctrine\Json\DateTime as LimoncelloDateTime;
-use Limoncello\Doctrine\Json\Time as LimoncelloTime;
-use Limoncello\Doctrine\Types\DateTimeType;
-use Limoncello\Doctrine\Types\DateType;
-use Limoncello\Doctrine\Types\TimeType;
-use Limoncello\Tests\Doctrine\TestCase;
+use Whoa\Doctrine\Json\Date as WhoaDate;
+use Whoa\Doctrine\Json\DateTime as WhoaDateTime;
+use Whoa\Doctrine\Json\Time as WhoaTime;
+use Whoa\Doctrine\Types\DateTimeType;
+use Whoa\Doctrine\Types\DateType;
+use Whoa\Doctrine\Types\TimeType;
+use Whoa\Tests\Doctrine\TestCase;
 
 /**
- * @package Limoncello\Tests\Doctrine
+ * @package Whoa\Tests\Doctrine
  */
 class DateTimeTypesTest extends TestCase
 {
@@ -67,10 +67,10 @@ class DateTimeTypesTest extends TestCase
 
         $this->assertIsString($dateTime);
 
-        /** @var LimoncelloDateTime $phpValue */
+        /** @var WhoaDateTime $phpValue */
         $phpValue = $type->convertToPHPValue($dateTime, $platform);
 
-        $this->assertInstanceOf(LimoncelloDateTime::class, $phpValue);
+        $this->assertInstanceOf(WhoaDateTime::class, $phpValue);
         $this->assertEquals(981173106, $phpValue->getTimestamp());
         $this->assertEquals($dateTime, $phpValue->jsonSerialize());
     }
@@ -90,12 +90,12 @@ class DateTimeTypesTest extends TestCase
 
         $this->assertInstanceOf(DateTime::class, $dateTime);
 
-        /** @var LimoncelloDateTime $phpValue */
+        /** @var WhoaDateTime $phpValue */
         $phpValue = $type->convertToPHPValue($dateTime, $platform);
 
-        $this->assertInstanceOf(LimoncelloDateTime::class, $phpValue);
+        $this->assertInstanceOf(WhoaDateTime::class, $phpValue);
         $this->assertEquals(981173106, $phpValue->getTimestamp());
-        $this->assertEquals($dateTime->format(LimoncelloDateTime::JSON_API_FORMAT), $phpValue->jsonSerialize());
+        $this->assertEquals($dateTime->format(WhoaDateTime::JSON_API_FORMAT), $phpValue->jsonSerialize());
     }
 
     /**
@@ -109,16 +109,16 @@ class DateTimeTypesTest extends TestCase
         $type     = Type::getType(DateTimeType::NAME);
         $platform = $this->createConnection()->getDatabasePlatform();
 
-        $dateTime = new LimoncelloDateTime('2001-02-03T04:05:06+0000');
+        $dateTime = new WhoaDateTime('2001-02-03T04:05:06+0000');
 
-        $this->assertInstanceOf(LimoncelloDateTime::class, $dateTime);
+        $this->assertInstanceOf(WhoaDateTime::class, $dateTime);
 
-        /** @var LimoncelloDateTime $phpValue */
+        /** @var WhoaDateTime $phpValue */
         $phpValue = $type->convertToPHPValue($dateTime, $platform);
 
-        $this->assertInstanceOf(LimoncelloDateTime::class, $phpValue);
+        $this->assertInstanceOf(WhoaDateTime::class, $phpValue);
         $this->assertEquals(981173106, $phpValue->getTimestamp());
-        $this->assertEquals($dateTime->format(LimoncelloDateTime::JSON_API_FORMAT), $phpValue->jsonSerialize());
+        $this->assertEquals($dateTime->format(WhoaDateTime::JSON_API_FORMAT), $phpValue->jsonSerialize());
     }
 
     /**
@@ -175,9 +175,9 @@ class DateTimeTypesTest extends TestCase
         $type     = Type::getType(DateTimeType::NAME);
         $platform = $this->createConnection()->getDatabasePlatform();
 
-        $dateTime = new LimoncelloDateTime('2001-02-03 04:05:06');
+        $dateTime = new WhoaDateTime('2001-02-03 04:05:06');
 
-        $this->assertInstanceOf(LimoncelloDateTime::class, $dateTime);
+        $this->assertInstanceOf(WhoaDateTime::class, $dateTime);
 
         /** @var string $databaseValue */
         $databaseValue = $type->convertToDatabaseValue($dateTime, $platform);
@@ -241,7 +241,7 @@ class DateTimeTypesTest extends TestCase
         /** @var DateTime $phpValue */
         $phpValue = $type->convertToPHPValue($date, $platform);
 
-        $this->assertInstanceOf(LimoncelloDate::class, $phpValue);
+        $this->assertInstanceOf(WhoaDate::class, $phpValue);
 
         $this->assertEquals(981158400, $phpValue->getTimestamp());
         $this->assertEquals($date, $phpValue->jsonSerialize());
@@ -265,9 +265,9 @@ class DateTimeTypesTest extends TestCase
         /** @var DateTime $phpValue */
         $phpValue = $type->convertToPHPValue($date, $platform);
 
-        $this->assertInstanceOf(LimoncelloDate::class, $phpValue);
+        $this->assertInstanceOf(WhoaDate::class, $phpValue);
         $this->assertEquals(981158400, $phpValue->getTimestamp());
-        $this->assertEquals($date->format(LimoncelloDate::JSON_API_FORMAT), $phpValue->jsonSerialize());
+        $this->assertEquals($date->format(WhoaDate::JSON_API_FORMAT), $phpValue->jsonSerialize());
     }
 
     /**
@@ -281,16 +281,16 @@ class DateTimeTypesTest extends TestCase
         $type     = Type::getType(DateType::NAME);
         $platform = $this->createConnection()->getDatabasePlatform();
 
-        $date = new LimoncelloDate('2001-02-03');
+        $date = new WhoaDate('2001-02-03');
 
-        $this->assertInstanceOf(LimoncelloDate::class, $date);
+        $this->assertInstanceOf(WhoaDate::class, $date);
 
         /** @var DateTime $phpValue */
         $phpValue = $type->convertToPHPValue($date, $platform);
 
-        $this->assertInstanceOf(LimoncelloDate::class, $phpValue);
+        $this->assertInstanceOf(WhoaDate::class, $phpValue);
         $this->assertEquals(981158400, $phpValue->getTimestamp());
-        $this->assertEquals($date->format(LimoncelloDate::JSON_API_FORMAT), $phpValue->jsonSerialize());
+        $this->assertEquals($date->format(WhoaDate::JSON_API_FORMAT), $phpValue->jsonSerialize());
     }
 
     /**
@@ -351,9 +351,9 @@ class DateTimeTypesTest extends TestCase
         $type     = Type::getType(DateType::NAME);
         $platform = $this->createConnection()->getDatabasePlatform();
 
-        $date = new LimoncelloDate('2001-02-03');
+        $date = new WhoaDate('2001-02-03');
 
-        $this->assertInstanceOf(LimoncelloDate::class, $date);
+        $this->assertInstanceOf(WhoaDate::class, $date);
 
         /** @var string $databaseValue */
         $databaseValue = $type->convertToDatabaseValue($date, $platform);
@@ -416,7 +416,7 @@ class DateTimeTypesTest extends TestCase
         /** @var DateTime $phpValue */
         $phpValue = $type->convertToPHPValue($time, $platform);
 
-        $this->assertInstanceOf(LimoncelloTime::class, $phpValue);
+        $this->assertInstanceOf(WhoaTime::class, $phpValue);
 
         $this->assertEquals(79801, $phpValue->getTimestamp());
         $this->assertEquals($time, $phpValue->jsonSerialize());
@@ -480,9 +480,9 @@ class DateTimeTypesTest extends TestCase
         $type     = Type::getType(TimeType::NAME);
         $platform = $this->createConnection()->getDatabasePlatform();
 
-        $date = new LimoncelloTime('22:10:01');
+        $date = new WhoaTime('22:10:01');
 
-        $this->assertInstanceOf(LimoncelloTime::class, $date);
+        $this->assertInstanceOf(WhoaTime::class, $date);
 
         /** @var string $databaseValue */
         $databaseValue = $type->convertToDatabaseValue($date, $platform);
@@ -537,7 +537,7 @@ class DateTimeTypesTest extends TestCase
         date_default_timezone_set('Antarctica/Casey');
 
         $dateTime     = new DateTime('2001-02-03 04:05:06');
-        $jsonDateTime = LimoncelloDateTime::createFromDateTime($dateTime);
+        $jsonDateTime = WhoaDateTime::createFromDateTime($dateTime);
 
         $this->assertEquals('"2001-02-03T04:05:06+0800"', json_encode($jsonDateTime));
 
