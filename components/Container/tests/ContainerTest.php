@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Container;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Tests\Container;
  * limitations under the License.
  */
 
-use Limoncello\Container\Container;
-use Limoncello\Container\Exceptions\NotFoundException;
-use Limoncello\Container\Traits\HasContainerTrait;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Container;
+
+use Whoa\Container\Container;
+use Whoa\Container\Exceptions\NotFoundException;
+use Whoa\Container\Traits\HasContainerTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @package Limoncello\Tests\Container
+ * @package Whoa\Tests\Container
  */
 class ContainerTest extends TestCase
 {
@@ -49,7 +52,7 @@ class ContainerTest extends TestCase
     public function testNotFound(): void
     {
         $this->expectException(NotFoundException::class);
-        
+
         (new Container())->get('non-existing');
     }
 
@@ -59,8 +62,7 @@ class ContainerTest extends TestCase
     public function testHasContainerTrait(): void
     {
         $container = new Container();
-        $class     = new class
-        {
+        $class     = new class {
             use HasContainerTrait {
                 getContainer as public;
                 setContainer as public;

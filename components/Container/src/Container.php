@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Container;
+<?php
 
 /**
  * Copyright 2015-2019 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Container;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Container;
+
 use InvalidArgumentException;
-use Limoncello\Container\Exceptions\NotFoundException;
-use Limoncello\Contracts\Container\ContainerInterface;
+use Whoa\Container\Exceptions\NotFoundException;
+use Whoa\Contracts\Container\ContainerInterface;
 
 /**
- * @package Limoncello\Container
+ * @package Whoa\Container
  */
 class Container extends \Pimple\Container implements ContainerInterface
 {
