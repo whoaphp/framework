@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Events\Data\Subscribers;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +17,19 @@ namespace Limoncello\Tests\Events\Data\Subscribers;
  * limitations under the License.
  */
 
-use Limoncello\Events\Contracts\EventHandlerInterface;
-use Limoncello\Tests\Events\Data\Events\BaseOrderEvent;
-use Limoncello\Tests\Events\Data\Events\OrderCreatedEvent;
-use Limoncello\Tests\Events\Data\Events\OrderEvent;
-use Limoncello\Tests\Events\Data\Events\OrderUpdatedEvent;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Events\Data\Subscribers;
+
+use Whoa\Events\Contracts\EventHandlerInterface;
+use Whoa\Tests\Events\Data\Events\BaseOrderEvent;
+use Whoa\Tests\Events\Data\Events\OrderCreatedEvent;
+use Whoa\Tests\Events\Data\Events\OrderEvent;
+use Whoa\Tests\Events\Data\Events\OrderUpdatedEvent;
 use function assert;
 
 /**
- * @package Limoncello\Tests\Events
+ * @package Whoa\Tests\Events
  */
 class OrderSubscribers implements EventHandlerInterface
 {

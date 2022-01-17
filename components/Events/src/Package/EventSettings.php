@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Events\Package;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Events\Package;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Settings\Packages\EventSettingsInterface;
-use Limoncello\Common\Reflection\ClassIsTrait;
-use Limoncello\Events\Contracts\EventHandlerInterface;
-use Limoncello\Events\Contracts\EventInterface;
-use Limoncello\Events\SimpleEventEmitter;
+declare(strict_types=1);
+
+namespace Whoa\Events\Package;
+
+use Whoa\Contracts\Settings\Packages\EventSettingsInterface;
+use Whoa\Common\Reflection\ClassIsTrait;
+use Whoa\Events\Contracts\EventHandlerInterface;
+use Whoa\Events\Contracts\EventInterface;
+use Whoa\Events\SimpleEventEmitter;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
@@ -36,7 +39,7 @@ use function interface_exists;
 use function iterator_to_array;
 
 /**
- * @package Limoncello\Events
+ * @package Whoa\Events
  */
 abstract class EventSettings implements EventSettingsInterface
 {
@@ -76,7 +79,7 @@ abstract class EventSettings implements EventSettingsInterface
         $eventsPath      = $eventsFolder . DIRECTORY_SEPARATOR . $eventsFileMask;
         $subscribersPath = $subscribersFolder . DIRECTORY_SEPARATOR . $subscribersFileMask;
 
-        $emitter      = new SimpleEventEmitter();
+        $emitter = new SimpleEventEmitter();
         /** @noinspection PhpParamsInspection */
         $eventClasses = iterator_to_array(
             $this->selectClasses($eventsPath, EventInterface::class)

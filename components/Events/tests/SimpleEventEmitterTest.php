@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Events;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,22 +17,27 @@ namespace Limoncello\Tests\Events;
  * limitations under the License.
  */
 
-use Limoncello\Events\SimpleEventEmitter;
-use Limoncello\Tests\Events\Data\Events\OrderCreatedEvent;
-use Limoncello\Tests\Events\Data\Events\OrderUpdatedEvent;
-use Limoncello\Tests\Events\Data\Events\UserCreatedEvent;
-use Limoncello\Tests\Events\Data\Events\NoHandlerEvent;
-use Limoncello\Tests\Events\Data\Events\UserUpdatedEvent;
-use Limoncello\Tests\Events\Data\EventSettings;
-use Limoncello\Tests\Events\Data\Subscribers\GenericSubscribers;
-use Limoncello\Tests\Events\Data\Subscribers\OrderSubscribers;
-use Limoncello\Tests\Events\Data\Subscribers\UserSubscribers;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Events;
+
+use Whoa\Events\Exceptions\EventNotFoundException;
+use Whoa\Events\SimpleEventEmitter;
+use Whoa\Tests\Events\Data\Events\OrderCreatedEvent;
+use Whoa\Tests\Events\Data\Events\OrderUpdatedEvent;
+use Whoa\Tests\Events\Data\Events\UserCreatedEvent;
+use Whoa\Tests\Events\Data\Events\NoHandlerEvent;
+use Whoa\Tests\Events\Data\Events\UserUpdatedEvent;
+use Whoa\Tests\Events\Data\EventSettings;
+use Whoa\Tests\Events\Data\Subscribers\GenericSubscribers;
+use Whoa\Tests\Events\Data\Subscribers\OrderSubscribers;
+use Whoa\Tests\Events\Data\Subscribers\UserSubscribers;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 use ReflectionMethod;
 
 /**
- * @package Limoncello\Tests\Events
+ * @package Whoa\Tests\Events
  */
 class SimpleEventEmitterTest extends TestCase
 {
@@ -80,7 +84,7 @@ class SimpleEventEmitterTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -103,7 +107,7 @@ class SimpleEventEmitterTest extends TestCase
 
         $this->assertEquals([
             ['event1' => true, 'event2' => true],
-            ['event1' => [[self::class, self::PUBLIC_STATIC_NAME], ],]
+            ['event1' => [[self::class, self::PUBLIC_STATIC_NAME],],]
         ], $emitter->getData());
 
         $emitter->emit('event1');
@@ -168,11 +172,11 @@ class SimpleEventEmitterTest extends TestCase
 
     /**
      * Test emitting non existing event should fail.
-     *
-     * @expectedException \Limoncello\Events\Exceptions\EventNotFoundException
      */
     public function testEmitNonExistingEvent()
     {
+        $this->expectException(\Whoa\Events\Exceptions\EventNotFoundException::class);
+
         (new SimpleEventEmitter())->emit('event1');
     }
 

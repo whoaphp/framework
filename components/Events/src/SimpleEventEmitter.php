@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Events;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Events;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Events;
+
 use Closure;
-use Limoncello\Events\Contracts\EventDispatcherInterface;
-use Limoncello\Events\Contracts\EventEmitterInterface;
-use Limoncello\Events\Contracts\EventInterface;
-use Limoncello\Events\Exceptions\EventNotFoundException;
+use Whoa\Events\Contracts\EventDispatcherInterface;
+use Whoa\Events\Contracts\EventEmitterInterface;
+use Whoa\Events\Contracts\EventInterface;
+use Whoa\Events\Exceptions\EventNotFoundException;
 use ReflectionException;
 use ReflectionMethod;
 use function assert;
@@ -36,7 +39,7 @@ use function is_array;
 use function is_string;
 
 /**
- * @package Limoncello\Events
+ * @package Whoa\Events
  */
 class SimpleEventEmitter implements EventEmitterInterface, EventDispatcherInterface
 {
@@ -366,9 +369,9 @@ class SimpleEventEmitter implements EventEmitterInterface, EventDispatcherInterf
         if (is_string($mightBeCallable) === true &&
             count($mightBeCallablePair = explode('::', $mightBeCallable, 2)) === 2
         ) {
-            list ($mightBeClassName, $mightBeMethodName) = $mightBeCallablePair;
+            [$mightBeClassName, $mightBeMethodName] = $mightBeCallablePair;
         } elseif (is_array($mightBeCallable) === true && count($mightBeCallable) === 2) {
-            list ($mightBeClassName, $mightBeMethodName) = $mightBeCallable;
+            [$mightBeClassName, $mightBeMethodName] = $mightBeCallable;
         } else {
             return null;
         }

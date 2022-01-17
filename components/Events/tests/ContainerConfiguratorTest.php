@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Events;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,22 +17,26 @@ namespace Limoncello\Tests\Events;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface;
-use Limoncello\Contracts\Container\ContainerInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Events\Contracts\EventDispatcherInterface;
-use Limoncello\Events\Contracts\EventEmitterInterface;
-use Limoncello\Events\Package\EventProvider;
-use Limoncello\Events\Package\EventSettings as BaseEventSettings;
-use Limoncello\Tests\Events\Data\EventSettings;
-use Limoncello\Tests\Events\Data\TestContainer;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Events;
+
+use Whoa\Contracts\Application\ContainerConfiguratorInterface;
+use Whoa\Contracts\Container\ContainerInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Events\Contracts\EventDispatcherInterface;
+use Whoa\Events\Contracts\EventEmitterInterface;
+use Whoa\Events\Package\EventProvider;
+use Whoa\Events\Package\EventSettings as BaseEventSettings;
+use Whoa\Tests\Events\Data\EventSettings;
+use Whoa\Tests\Events\Data\TestContainer;
 use Mockery;
 use Mockery\Mock;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
 /**
- * @package Limoncello\Tests\Events
+ * @package Whoa\Tests\Events
  */
 class ContainerConfiguratorTest extends TestCase
 {
@@ -45,7 +48,7 @@ class ContainerConfiguratorTest extends TestCase
     public function testEventProvider()
     {
         /** @var ContainerConfiguratorInterface $configuratorClass */
-        list($configuratorClass) = EventProvider::getContainerConfigurators();
+        [$configuratorClass] = EventProvider::getContainerConfigurators();
         $container = new TestContainer();
 
         $appConfig = [];

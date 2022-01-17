@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Events\Data\Subscribers;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +17,19 @@ namespace Limoncello\Tests\Events\Data\Subscribers;
  * limitations under the License.
  */
 
-use Limoncello\Events\Contracts\EventHandlerInterface;
-use Limoncello\Tests\Events\Data\Events\BaseUserEvent;
-use Limoncello\Tests\Events\Data\Events\UserCreatedEvent;
-use Limoncello\Tests\Events\Data\Events\UserEvent;
-use Limoncello\Tests\Events\Data\Events\UserUpdatedEvent;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Events\Data\Subscribers;
+
+use Whoa\Events\Contracts\EventHandlerInterface;
+use Whoa\Tests\Events\Data\Events\BaseUserEvent;
+use Whoa\Tests\Events\Data\Events\UserCreatedEvent;
+use Whoa\Tests\Events\Data\Events\UserEvent;
+use Whoa\Tests\Events\Data\Events\UserUpdatedEvent;
 use function assert;
 
 /**
- * @package Limoncello\Tests\Events
+ * @package Whoa\Tests\Events
  */
 class UserSubscribers implements EventHandlerInterface
 {
