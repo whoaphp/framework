@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Testing\Data;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,41 +17,46 @@ namespace Limoncello\Tests\Testing\Data;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Testing\Data;
+
 use Closure;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Testing\ApplicationWrapperInterface;
-use Limoncello\Testing\ApplicationWrapperTrait;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Testing\ApplicationWrapperInterface;
+use Whoa\Testing\ApplicationWrapperTrait;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * @package Limoncello\Tests\Testing
+ * @package Whoa\Tests\Testing
  */
 class ApplicationWrapper extends ApplicationStub implements ApplicationWrapperInterface
 {
     use ApplicationWrapperTrait;
 
     /**
-     * @return LimoncelloContainerInterface
+     * @return WhoaContainerInterface
      */
-    public function invokeCreateContainer(): LimoncelloContainerInterface
+    public function invokeCreateContainer(): WhoaContainerInterface
     {
         return $this->createContainerInstance();
     }
 
     /**
-     * @param LimoncelloContainerInterface $container
-     * @param array|null                   $globalConfigurators
-     * @param array|null                   $routeConfigurators
+     * @param WhoaContainerInterface $container
+     * @param array|null             $globalConfigurators
+     * @param array|null             $routeConfigurators
      *
      * @return void
      */
     public function invokeConfigureContainer(
-        LimoncelloContainerInterface $container,
+        WhoaContainerInterface $container,
         array $globalConfigurators = null,
         array $routeConfigurators = null
-    ) {
+    )
+    {
         $this->configureContainer($container, $globalConfigurators, $routeConfigurators);
     }
 

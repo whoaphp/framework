@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Testing;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Tests\Testing;
  * limitations under the License.
  */
 
-use Limoncello\Tests\Testing\Data\ApplicationWrapper;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Testing;
+
+use Whoa\Tests\Testing\Data\ApplicationWrapper;
 use Psr\Container\ContainerInterface;
 
 /**
- * @package Limoncello\Tests\Testing
+ * @package Whoa\Tests\Testing
  */
 class ApplicationWrapperTraitTest extends TestCase
 {

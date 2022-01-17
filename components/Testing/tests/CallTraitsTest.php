@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Testing;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,18 +17,22 @@ namespace Limoncello\Tests\Testing;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Core\ApplicationInterface;
-use Limoncello\Testing\HttpCallsTrait;
-use Limoncello\Testing\JsonApiCallsTrait;
-use Limoncello\Testing\Sapi;
-use Limoncello\Testing\TestCaseTrait;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Testing;
+
+use Whoa\Contracts\Core\ApplicationInterface;
+use Whoa\Testing\HttpCallsTrait;
+use Whoa\Testing\JsonApiCallsTrait;
+use Whoa\Testing\Sapi;
+use Whoa\Testing\TestCaseTrait;
 use Mockery;
 use Mockery\Mock;
 use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\Stream;
 
 /**
- * @package Limoncello\Tests\Testing
+ * @package Whoa\Tests\Testing
  */
 class CallTraitsTest extends TestCase
 {
@@ -260,7 +263,8 @@ class CallTraitsTest extends TestCase
         array $files = null,
         $messageBody = 'php://input',
         string $protocolVersion = '1.1'
-    ): Sapi {
+    ): Sapi
+    {
         assert(
             $server || $queryParams || $parsedBody || $cookies || $files ||
             $messageBody || $protocolVersion || true

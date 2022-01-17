@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Testing;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Testing;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Testing;
+
 use Closure;
-use Limoncello\Contracts\Core\ApplicationInterface;
+use Whoa\Contracts\Core\ApplicationInterface;
 
 /**
- * @package Limoncello\Testing
+ * @package Whoa\Testing
  */
 interface ApplicationWrapperInterface extends ApplicationInterface
 {

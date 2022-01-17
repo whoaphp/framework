@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Testing\Data;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +17,20 @@ namespace Limoncello\Tests\Testing\Data;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Testing\Data;
+
 use Closure;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Core\ApplicationInterface;
-use Limoncello\Contracts\Core\SapiInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Core\ApplicationInterface;
+use Whoa\Contracts\Core\SapiInterface;
 use Mockery;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * @package Limoncello\Tests\Testing
+ * @package Whoa\Tests\Testing
  */
 class ApplicationStub implements ApplicationInterface
 {
@@ -42,7 +45,7 @@ class ApplicationStub implements ApplicationInterface
     /**
      * @inheritdoc
      */
-    public function createContainer(string $method = null, string $path = null): LimoncelloContainerInterface
+    public function createContainer(string $method = null, string $path = null): WhoaContainerInterface
     {
         $container = $this->createContainerInstance();
 
@@ -59,29 +62,30 @@ class ApplicationStub implements ApplicationInterface
     }
 
     /**
-     * @return LimoncelloContainerInterface
+     * @return WhoaContainerInterface
      */
-    protected function createContainerInstance(): LimoncelloContainerInterface
+    protected function createContainerInstance(): WhoaContainerInterface
     {
-        /** @var LimoncelloContainerInterface $mock */
-        $mock = Mockery::mock(LimoncelloContainerInterface::class);
+        /** @var WhoaContainerInterface $mock */
+        $mock = Mockery::mock(WhoaContainerInterface::class);
 
         return $mock;
     }
 
 
     /**
-     * @param LimoncelloContainerInterface $container
-     * @param array|null                   $globalConfigurators
-     * @param array|null                   $routeConfigurators
+     * @param WhoaContainerInterface $container
+     * @param array|null             $globalConfigurators
+     * @param array|null             $routeConfigurators
      *
      * @return void
      */
     protected function configureContainer(
-        LimoncelloContainerInterface $container,
+        WhoaContainerInterface $container,
         array $globalConfigurators = null,
         array $routeConfigurators = null
-    ) {
+    )
+    {
         $container && $globalConfigurators && $routeConfigurators ?: null;
     }
 

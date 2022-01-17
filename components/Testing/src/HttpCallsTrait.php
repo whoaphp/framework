@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Testing;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,14 @@ namespace Limoncello\Testing;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Testing;
+
 use Psr\Http\Message\ResponseInterface;
 
-/** @noinspection PhpTooManyParametersInspection
- * @package Limoncello\Testing
- *
- * @@codingStandardsIgnoreLine
- * @method ResponseInterface call(string $method, string $uri, array $queryParams = [], array $parsedBody = [], array $headers = [], array $cookies = [], array $files = [], array $server = [], string $messageBody = 'php://input')
+/**
+ * @package Whoa\Testing
  */
 trait HttpCallsTrait
 {
@@ -41,7 +41,8 @@ trait HttpCallsTrait
         array $queryParams = [],
         array $headers = [],
         array $cookies = []
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         return $this->call('GET', $uri, $queryParams, [], $headers, $cookies);
     }
 
@@ -60,7 +61,8 @@ trait HttpCallsTrait
         array $headers = [],
         array $cookies = [],
         array $files = []
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         $headers['CONTENT_TYPE'] = 'application/x-www-form-urlencoded';
 
         return $this->call('POST', $uri, [], $data, $headers, $cookies, $files);
@@ -81,7 +83,8 @@ trait HttpCallsTrait
         array $headers = [],
         array $cookies = [],
         array $files = []
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         $headers['CONTENT_TYPE'] = 'application/x-www-form-urlencoded';
 
         return $this->call('PUT', $uri, [], $data, $headers, $cookies, $files);
@@ -102,7 +105,8 @@ trait HttpCallsTrait
         array $headers = [],
         array $cookies = [],
         array $files = []
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         $headers['CONTENT_TYPE'] = 'application/x-www-form-urlencoded';
 
         return $this->call('PATCH', $uri, [], $data, $headers, $cookies, $files);
@@ -121,7 +125,8 @@ trait HttpCallsTrait
         array $data = [],
         array $headers = [],
         array $cookies = []
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         return $this->call('DELETE', $uri, [], $data, $headers, $cookies);
     }
 }

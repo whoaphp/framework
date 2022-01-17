@@ -1,10 +1,10 @@
 {
-    "name": "whoaphp/testing",
+    "name": "whoa-php/testing",
     "description": "Whoa framework testing support",
     "keywords": ["whoa", "framework", "tests", "testing"],
-    "homepage": "https://github.com/whoaphp/framework/tree/master/components/Testing",
+    "homepage": "https://github.com/whoa-php/framework/tree/master/components/Testing",
     "support": {
-        "issues": "https://github.com/whoaphp/framework/issues"
+        "issues": "https://github.com/whoa-php/framework/issues"
     },
     "license": "Apache-2.0",
     "authors": [
@@ -19,8 +19,8 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "whoaphp/contracts": "dev-master",
-        "whoaphp/core": "dev-master"
+        "whoa-php/contracts": "dev-master",
+        "whoa-php/core": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
@@ -31,18 +31,18 @@
     },
     "autoload": {
         "psr-4": {
-            "Limoncello\\Testing\\": "src/"
+            "Whoa\\Testing\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Limoncello\\Tests\\Testing\\": "tests/"
+            "Whoa\\Tests\\Testing\\": "tests/"
         }
     },
     "scripts": {
         "test": ["@test-unit-with-coverage", "@test-cs", "@test-md"],
-        "test-unit": "./vendor/bin/phpunit",
-        "test-unit-with-coverage": "phpdbg -qrr ./vendor/bin/phpunit --coverage-text",
+        "test-unit": "./vendor/bin/phpunit --do-not-cache-result",
+        "test-unit-with-coverage": "phpdbg -qrr ./vendor/bin/phpunit --coverage-text --do-not-cache-result",
         "test-cs": "./vendor/bin/phpcs -p -s --standard=PSR2 ./src ./tests",
         "test-md": "./vendor/bin/phpmd ./src text codesize,controversial,cleancode,design,unusedcode,naming",
         "test-unit-php-7-4": "docker-compose run --rm cli_7_4_php php ./vendor/bin/phpunit",

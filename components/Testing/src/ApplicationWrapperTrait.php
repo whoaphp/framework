@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Testing;
+<?php
 
 /**
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,12 @@ namespace Limoncello\Testing;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Testing;
+
 use Closure;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -29,7 +32,7 @@ use function call_user_func_array;
 use function in_array;
 
 /**
- * @package Limoncello\Testing
+ * @package Whoa\Testing
  */
 trait ApplicationWrapperTrait
 {
@@ -122,9 +125,9 @@ trait ApplicationWrapperTrait
     }
 
     /**
-     * @return LimoncelloContainerInterface
+     * @return WhoaContainerInterface
      */
-    protected function createContainerInstance(): LimoncelloContainerInterface
+    protected function createContainerInstance(): WhoaContainerInterface
     {
         /** @noinspection PhpUndefinedMethodInspection */
         $this->container = parent::createContainerInstance();
@@ -135,17 +138,18 @@ trait ApplicationWrapperTrait
     }
 
     /**
-     * @param LimoncelloContainerInterface $container
-     * @param array|null                   $globalConfigurators
-     * @param array|null                   $routeConfigurators
+     * @param WhoaContainerInterface $container
+     * @param array|null             $globalConfigurators
+     * @param array|null             $routeConfigurators
      *
      * @return void
      */
     protected function configureContainer(
-        LimoncelloContainerInterface $container,
+        WhoaContainerInterface $container,
         array $globalConfigurators = null,
         array $routeConfigurators = null
-    ): void {
+    ): void
+    {
         /** @noinspection PhpUndefinedMethodInspection */
         parent::configureContainer($container, $globalConfigurators, $routeConfigurators);
 
