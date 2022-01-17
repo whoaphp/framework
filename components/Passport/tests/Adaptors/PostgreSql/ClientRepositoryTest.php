@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Adaptors\PostgreSql;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +17,20 @@ namespace Limoncello\Tests\Passport\Adaptors\PostgreSql;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Passport\Adaptors\PostgreSql;
+
 use Doctrine\DBAL\Connection;
 use Exception;
-use Limoncello\Passport\Adaptors\PostgreSql\Client;
-use Limoncello\Passport\Adaptors\PostgreSql\ClientRepository;
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Whoa\Passport\Adaptors\PostgreSql\Client;
+use Whoa\Passport\Adaptors\PostgreSql\ClientRepository;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
 use Mockery;
 use ReflectionMethod;
 
 /**
- * @package Limoncello\Tests\Passport
+ * @package Whoa\Tests\Passport
  */
 class ClientRepositoryTest extends TestCase
 {

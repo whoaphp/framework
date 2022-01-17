@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,14 +19,14 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Passport\Entities;
+namespace Whoa\Passport\Entities;
 
 use DateTimeInterface;
-use Limoncello\Passport\Contracts\Entities\ScopeInterface;
-use Limoncello\Passport\Models\Scope as Model;
+use Whoa\Passport\Contracts\Entities\ScopeInterface;
+use Whoa\Passport\Models\Scope as Model;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 abstract class Scope extends DatabaseItem implements ScopeInterface
 {

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Adaptors\MySql;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,27 +17,31 @@ namespace Limoncello\Tests\Passport\Adaptors\MySql;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Passport\Adaptors\MySql;
+
 use Doctrine\DBAL\Connection;
 use Exception;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Passport\Adaptors\MySql\RedirectUri;
-use Limoncello\Passport\Adaptors\MySql\RedirectUriRepository;
-use Limoncello\Passport\Adaptors\MySql\Scope;
-use Limoncello\Passport\Adaptors\MySql\ScopeRepository;
-use Limoncello\Passport\Adaptors\MySql\Token;
-use Limoncello\Passport\Adaptors\MySql\TokenRepository;
-use Limoncello\Passport\Contracts\PassportServerIntegrationInterface;
-use Limoncello\Passport\Entities\DatabaseSchema;
-use Limoncello\Passport\Package\MySqlPassportContainerConfigurator;
-use Limoncello\Tests\Passport\Data\TestContainer;
-use Limoncello\Tests\Passport\Package\PassportContainerConfiguratorTest;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Passport\Adaptors\MySql\RedirectUri;
+use Whoa\Passport\Adaptors\MySql\RedirectUriRepository;
+use Whoa\Passport\Adaptors\MySql\Scope;
+use Whoa\Passport\Adaptors\MySql\ScopeRepository;
+use Whoa\Passport\Adaptors\MySql\Token;
+use Whoa\Passport\Adaptors\MySql\TokenRepository;
+use Whoa\Passport\Contracts\PassportServerIntegrationInterface;
+use Whoa\Passport\Entities\DatabaseSchema;
+use Whoa\Passport\Package\MySqlPassportContainerConfigurator;
+use Whoa\Tests\Passport\Data\TestContainer;
+use Whoa\Tests\Passport\Package\PassportContainerConfiguratorTest;
 use Mockery;
 use ReflectionMethod;
 
 /**
  * Class ClientTest
  *
- * @package Limoncello\Tests\Passport
+ * @package Whoa\Tests\Passport
  */
 class ServerIntegrationTest extends TestCase
 {
@@ -87,7 +90,7 @@ class ServerIntegrationTest extends TestCase
      */
     private function createInstance(): PassportServerIntegrationInterface
     {
-        $container = new TestContainer();
+        $container                                   = new TestContainer();
         $container[SettingsProviderInterface::class] = PassportContainerConfiguratorTest::createSettingsProvider();
         $container[Connection::class]                = Mockery::mock(Connection::class);
 

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Repositories;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Passport\Repositories;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Passport\Repositories;
+
 use DateTimeImmutable;
-use Limoncello\Passport\Contracts\Entities\ScopeInterface;
-use Limoncello\Passport\Contracts\Repositories\ScopeRepositoryInterface;
-use Limoncello\Passport\Exceptions\RepositoryException;
+use Whoa\Passport\Contracts\Entities\ScopeInterface;
+use Whoa\Passport\Contracts\Repositories\ScopeRepositoryInterface;
+use Whoa\Passport\Exceptions\RepositoryException;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 abstract class ScopeRepository extends BaseRepository implements ScopeRepositoryInterface
 {

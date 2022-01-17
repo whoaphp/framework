@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,12 +19,12 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Passport\Package;
+namespace Whoa\Passport\Package;
 
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface as A;
-use Limoncello\Contracts\Settings\Packages\PassportSettingsInterface;
-use Limoncello\Common\Reflection\CheckCallableTrait;
-use Limoncello\Passport\Contracts\Entities\TokenInterface;
+use Whoa\Contracts\Application\ApplicationConfigurationInterface as A;
+use Whoa\Contracts\Settings\Packages\PassportSettingsInterface;
+use Whoa\Common\Reflection\CheckCallableTrait;
+use Whoa\Passport\Contracts\Entities\TokenInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionException;
@@ -32,7 +32,7 @@ use ReflectionParameter;
 use function assert;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 class PassportSettings implements PassportSettingsInterface
 {

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Authentication;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +17,19 @@ namespace Limoncello\Passport\Authentication;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Passport\PassportAccountInterface;
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
+declare(strict_types=1);
+
+namespace Whoa\Passport\Authentication;
+
+use Whoa\Contracts\Passport\PassportAccountInterface;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
 use function array_key_exists;
 use function assert;
 use function is_int;
 use function is_string;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 class PassportAccount implements PassportAccountInterface
 {

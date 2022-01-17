@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,15 +19,15 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Passport\Adaptors\MySql;
+namespace Whoa\Passport\Adaptors\MySql;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception as DBALException;
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
-use Limoncello\Passport\Traits\DatabaseSchemaMigrationTrait as BaseDatabaseSchemaMigrationTrait;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Whoa\Passport\Traits\DatabaseSchemaMigrationTrait as BaseDatabaseSchemaMigrationTrait;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 trait DatabaseSchemaMigrationTrait
 {

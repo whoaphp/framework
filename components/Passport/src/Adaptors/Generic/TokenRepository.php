@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Adaptors\Generic;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,20 +17,24 @@ namespace Limoncello\Passport\Adaptors\Generic;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Passport\Adaptors\Generic;
+
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException as DBALEx;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
-use Limoncello\Passport\Contracts\Entities\TokenInterface;
-use Limoncello\Passport\Exceptions\RepositoryException;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Whoa\Passport\Contracts\Entities\TokenInterface;
+use Whoa\Passport\Exceptions\RepositoryException;
 use PDO;
 use function assert;
 use function is_numeric;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
-class TokenRepository extends \Limoncello\Passport\Repositories\TokenRepository
+class TokenRepository extends \Whoa\Passport\Repositories\TokenRepository
 {
     /**
      * @var string
@@ -47,7 +50,8 @@ class TokenRepository extends \Limoncello\Passport\Repositories\TokenRepository
         Connection $connection,
         DatabaseSchemaInterface $databaseSchema,
         string $modelClass = Token::class
-    ) {
+    )
+    {
         $this->setConnection($connection)->setDatabaseSchema($databaseSchema);
         $this->modelClass = $modelClass;
     }
@@ -219,7 +223,8 @@ class TokenRepository extends \Limoncello\Passport\Repositories\TokenRepository
     private function createPassportDataQuery(
         string $tokenValue,
         int $expirationInSeconds
-    ): QueryBuilder {
+    ): QueryBuilder
+    {
         $schema = $this->getDatabaseSchema();
         $query  = $this->createEnabledTokenByColumnWithExpirationCheckQuery(
             $tokenValue,

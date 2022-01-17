@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Adaptors\Generic;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Passport\Adaptors\Generic;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Passport\Adaptors\Generic;
+
 use Doctrine\DBAL\Connection;
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
-class ScopeRepository extends \Limoncello\Passport\Repositories\ScopeRepository
+class ScopeRepository extends \Whoa\Passport\Repositories\ScopeRepository
 {
     /**
      * @var string
@@ -40,7 +43,8 @@ class ScopeRepository extends \Limoncello\Passport\Repositories\ScopeRepository
         Connection $connection,
         DatabaseSchemaInterface $databaseSchema,
         string $modelClass = Scope::class
-    ) {
+    )
+    {
         $this->setConnection($connection)->setDatabaseSchema($databaseSchema);
         $this->modelClass = $modelClass;
     }

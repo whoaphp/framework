@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Package;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +17,20 @@ namespace Limoncello\Passport\Package;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Passport\Package;
+
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
-use Limoncello\Contracts\Data\MigrationInterface;
-use Limoncello\Passport\Adaptors\MySql\DatabaseSchemaMigrationTrait;
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Whoa\Contracts\Data\MigrationInterface;
+use Whoa\Passport\Adaptors\MySql\DatabaseSchemaMigrationTrait;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
 use Psr\Container\ContainerInterface;
 use function assert;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 class MySqlPassportMigration implements MigrationInterface
 {

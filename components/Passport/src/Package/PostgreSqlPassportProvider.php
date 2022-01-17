@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Package;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Passport\Package;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Provider\ProvidesContainerConfiguratorsInterface as CCI;
-use Limoncello\Contracts\Provider\ProvidesMigrationsInterface as MI;
-use Limoncello\Contracts\Provider\ProvidesRouteConfiguratorsInterface as CI;
-use Limoncello\Contracts\Provider\ProvidesMiddlewareInterface as MWI;
-use Limoncello\Passport\Authentication\PassportMiddleware;
+declare(strict_types=1);
+
+namespace Whoa\Passport\Package;
+
+use Whoa\Contracts\Provider\ProvidesContainerConfiguratorsInterface as CCI;
+use Whoa\Contracts\Provider\ProvidesMigrationsInterface as MI;
+use Whoa\Contracts\Provider\ProvidesRouteConfiguratorsInterface as CI;
+use Whoa\Contracts\Provider\ProvidesMiddlewareInterface as MWI;
+use Whoa\Passport\Authentication\PassportMiddleware;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 class PostgreSqlPassportProvider implements CCI, MI, CI, MWI
 {

@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,17 +19,17 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Passport\Traits;
+namespace Whoa\Passport\Traits;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Types;
-use Limoncello\Doctrine\Types\UuidType;
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Whoa\Doctrine\Types\UuidType;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 trait DatabaseSchemaMigrationTrait
 {

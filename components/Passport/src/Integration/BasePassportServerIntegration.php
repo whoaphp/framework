@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,18 +19,18 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Passport\Integration;
+namespace Whoa\Passport\Integration;
 
 use Doctrine\DBAL\Connection;
 use Exception;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\OAuthServer\Contracts\ClientInterface;
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
-use Limoncello\Passport\Contracts\Entities\TokenInterface;
-use Limoncello\Passport\Contracts\PassportServerIntegrationInterface;
-use Limoncello\Passport\Entities\Client;
-use Limoncello\Passport\Entities\DatabaseSchema;
-use Limoncello\Passport\Package\PassportSettings as C;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\OAuthServer\Contracts\ClientInterface;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Whoa\Passport\Contracts\Entities\TokenInterface;
+use Whoa\Passport\Contracts\PassportServerIntegrationInterface;
+use Whoa\Passport\Entities\Client;
+use Whoa\Passport\Entities\DatabaseSchema;
+use Whoa\Passport\Package\PassportSettings as C;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
@@ -48,7 +48,7 @@ use function random_bytes;
 use function uniqid;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
@@ -293,8 +293,8 @@ abstract class BasePassportServerIntegration implements PassportServerIntegratio
      */
     public function verifyClientCredentials(ClientInterface $client, string $credentials): bool
     {
-        /** @var \Limoncello\Passport\Contracts\Entities\ClientInterface $client */
-        assert($client instanceof \Limoncello\Passport\Contracts\Entities\ClientInterface);
+        /** @var \Whoa\Passport\Contracts\Entities\ClientInterface $client */
+        assert($client instanceof \Whoa\Passport\Contracts\Entities\ClientInterface);
 
         return password_verify($credentials, $client->getCredentials());
     }

@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,17 +19,17 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Passport\Entities;
+namespace Whoa\Passport\Entities;
 
 use DateTimeInterface;
-use Limoncello\Passport\Contracts\Entities\RedirectUriInterface;
-use Limoncello\Passport\Exceptions\InvalidArgumentException;
-use Limoncello\Passport\Models\RedirectUri as Model;
+use Whoa\Passport\Contracts\Entities\RedirectUriInterface;
+use Whoa\Passport\Exceptions\InvalidArgumentException;
+use Whoa\Passport\Models\RedirectUri as Model;
 use Psr\Http\Message\UriInterface;
 use Zend\Diactoros\Uri;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 abstract class RedirectUri extends DatabaseItem implements RedirectUriInterface
 {

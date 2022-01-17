@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Package;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Tests\Passport\Package;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Passport\Package;
+
 use Exception;
-use Limoncello\Passport\Package\PostgreSqlPassportProvider;
+use Whoa\Passport\Package\PostgreSqlPassportProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @package Limoncello\Tests\Templates
+ * @package Whoa\Tests\Templates
  */
 class PostgreSqlPassportProviderTest extends TestCase
 {

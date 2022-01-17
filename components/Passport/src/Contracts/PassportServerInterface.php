@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Contracts;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Passport\Contracts;
  * limitations under the License.
  */
 
-use Limoncello\OAuthServer\Contracts\AuthorizationServerInterface;
-use Limoncello\Passport\Contracts\Entities\TokenInterface;
+declare(strict_types=1);
+
+namespace Whoa\Passport\Contracts;
+
+use Whoa\OAuthServer\Contracts\AuthorizationServerInterface;
+use Whoa\Passport\Contracts\Entities\TokenInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 interface PassportServerInterface extends AuthorizationServerInterface
 {

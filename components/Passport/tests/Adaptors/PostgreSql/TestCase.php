@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Passport\Adaptors\PostgreSql;
+namespace Whoa\Tests\Passport\Adaptors\PostgreSql;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Column;
@@ -31,7 +31,7 @@ use Mockery;
 /**
  * Class ClientTest
  *
- * @package Limoncello\Tests\Passport
+ * @package Whoa\Tests\Passport
  */
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
@@ -52,7 +52,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function createConnection(): Connection
     {
-        return \Limoncello\Tests\Passport\TestCase::createConnection();
+        return \Whoa\Tests\Passport\TestCase::createConnection();
     }
 
     /**

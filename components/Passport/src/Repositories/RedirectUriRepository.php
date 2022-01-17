@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Repositories;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +17,19 @@ namespace Limoncello\Passport\Repositories;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Passport\Repositories;
+
 use DateTimeImmutable;
 use Doctrine\DBAL\Exception as DBALException;
-use Limoncello\Passport\Contracts\Entities\RedirectUriInterface;
-use Limoncello\Passport\Contracts\Repositories\RedirectUriRepositoryInterface;
-use Limoncello\Passport\Exceptions\RepositoryException;
+use Whoa\Passport\Contracts\Entities\RedirectUriInterface;
+use Whoa\Passport\Contracts\Repositories\RedirectUriRepositoryInterface;
+use Whoa\Passport\Exceptions\RepositoryException;
 use PDO;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 abstract class RedirectUriRepository extends BaseRepository implements RedirectUriRepositoryInterface
 {

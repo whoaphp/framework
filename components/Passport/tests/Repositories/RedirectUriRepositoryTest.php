@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,23 +19,23 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Passport\Repositories;
+namespace Whoa\Tests\Passport\Repositories;
 
 use DateTimeImmutable;
 use Exception;
-use Limoncello\Passport\Adaptors\Generic\Client;
-use Limoncello\Passport\Adaptors\Generic\ClientRepository;
-use Limoncello\Passport\Adaptors\Generic\RedirectUri;
-use Limoncello\Passport\Adaptors\Generic\RedirectUriRepository;
-use Limoncello\Passport\Contracts\Entities\RedirectUriInterface;
-use Limoncello\Passport\Contracts\Repositories\ClientRepositoryInterface;
-use Limoncello\Passport\Contracts\Repositories\RedirectUriRepositoryInterface;
-use Limoncello\Passport\Exceptions\InvalidArgumentException;
-use Limoncello\Passport\Traits\DatabaseSchemaMigrationTrait;
-use Limoncello\Tests\Passport\TestCase;
+use Whoa\Passport\Adaptors\Generic\Client;
+use Whoa\Passport\Adaptors\Generic\ClientRepository;
+use Whoa\Passport\Adaptors\Generic\RedirectUri;
+use Whoa\Passport\Adaptors\Generic\RedirectUriRepository;
+use Whoa\Passport\Contracts\Entities\RedirectUriInterface;
+use Whoa\Passport\Contracts\Repositories\ClientRepositoryInterface;
+use Whoa\Passport\Contracts\Repositories\RedirectUriRepositoryInterface;
+use Whoa\Passport\Exceptions\InvalidArgumentException;
+use Whoa\Passport\Traits\DatabaseSchemaMigrationTrait;
+use Whoa\Tests\Passport\TestCase;
 
 /**
- * @package Limoncello\Tests\Passport
+ * @package Whoa\Tests\Passport
  */
 class RedirectUriRepositoryTest extends TestCase
 {

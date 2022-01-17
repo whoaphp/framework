@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Authentication;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,21 +17,25 @@ namespace Limoncello\Passport\Authentication;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Authentication\AccountInterface;
-use Limoncello\Contracts\Authentication\AccountManagerInterface;
-use Limoncello\Contracts\Passport\PassportAccountInterface;
-use Limoncello\Contracts\Passport\PassportAccountManagerInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
-use Limoncello\Passport\Contracts\Repositories\TokenRepositoryInterface;
-use Limoncello\Passport\Exceptions\AuthenticationException;
+declare(strict_types=1);
+
+namespace Whoa\Passport\Authentication;
+
+use Whoa\Contracts\Authentication\AccountInterface;
+use Whoa\Contracts\Authentication\AccountManagerInterface;
+use Whoa\Contracts\Passport\PassportAccountInterface;
+use Whoa\Contracts\Passport\PassportAccountManagerInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Whoa\Passport\Contracts\Repositories\TokenRepositoryInterface;
+use Whoa\Passport\Exceptions\AuthenticationException;
 use Psr\Container\ContainerInterface;
-use Limoncello\Passport\Package\PassportSettings as S;
+use Whoa\Passport\Package\PassportSettings as S;
 use Psr\Log\LoggerAwareTrait;
 use function assert;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 class AccountManager implements PassportAccountManagerInterface
 {

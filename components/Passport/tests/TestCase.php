@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Passport;
+namespace Whoa\Tests\Passport;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
@@ -27,9 +27,9 @@ use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Types;
 use Dotenv\Dotenv;
 use Exception;
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
-use Limoncello\Passport\Entities\DatabaseSchema;
-use Limoncello\Tests\Passport\Data\User;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Whoa\Passport\Entities\DatabaseSchema;
+use Whoa\Tests\Passport\Data\User;
 use Mockery;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -40,7 +40,7 @@ use Zend\Diactoros\ServerRequestFactory;
 use Zend\Diactoros\Uri;
 
 /**
- * @package Limoncello\Tests\Passport
+ * @package Whoa\Tests\Passport
  */
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {

@@ -19,7 +19,7 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Passport\Repositories;
+namespace Whoa\Passport\Repositories;
 
 use Closure;
 use DateTimeInterface;
@@ -30,8 +30,8 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
 use Exception;
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
-use Limoncello\Passport\Exceptions\RepositoryException;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Whoa\Passport\Exceptions\RepositoryException;
 use PDO;
 use function assert;
 use function call_user_func;
@@ -41,7 +41,7 @@ use function is_numeric;
 use function is_string;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */

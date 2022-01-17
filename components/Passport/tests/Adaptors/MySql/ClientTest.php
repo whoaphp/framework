@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,18 +19,18 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Passport\Adaptors\MySql;
+namespace Whoa\Tests\Passport\Adaptors\MySql;
 
 use Doctrine\DBAL\Types\Types;
 use Exception;
-use Limoncello\Passport\Adaptors\MySql\Client;
-use Limoncello\Passport\Entities\DatabaseSchema;
+use Whoa\Passport\Adaptors\MySql\Client;
+use Whoa\Passport\Entities\DatabaseSchema;
 use PDO;
 
 /**
  * Class ClientTest
  *
- * @package Limoncello\Tests\Passport
+ * @package Whoa\Tests\Passport
  */
 class ClientTest extends TestCase
 {

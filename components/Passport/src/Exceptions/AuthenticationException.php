@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Exceptions;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,14 @@ namespace Limoncello\Passport\Exceptions;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Exceptions\AuthenticationExceptionInterface;
+declare(strict_types=1);
+
+namespace Whoa\Passport\Exceptions;
+
+use Whoa\Contracts\Exceptions\AuthenticationExceptionInterface;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 class AuthenticationException extends PassportException implements AuthenticationExceptionInterface
 {

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Authentication;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Tests\Passport\Authentication;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Passport\Authentication;
+
 use Exception;
-use Limoncello\Contracts\Passport\PassportAccountInterface;
-use Limoncello\Contracts\Passport\PassportAccountManagerInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Passport\Authentication\PassportMiddleware;
-use Limoncello\Passport\Exceptions\AuthenticationException;
-use Limoncello\Tests\Passport\Data\TestContainer;
-use Limoncello\Tests\Passport\Package\PassportContainerConfiguratorTest;
+use Whoa\Contracts\Passport\PassportAccountInterface;
+use Whoa\Contracts\Passport\PassportAccountManagerInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Passport\Authentication\PassportMiddleware;
+use Whoa\Passport\Exceptions\AuthenticationException;
+use Whoa\Tests\Passport\Data\TestContainer;
+use Whoa\Tests\Passport\Package\PassportContainerConfiguratorTest;
 use Mockery;
 use Mockery\Mock;
 use PHPUnit\Framework\TestCase;
@@ -35,7 +38,7 @@ use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
 
 /**
- * @package Limoncello\Tests\Passport
+ * @package Whoa\Tests\Passport
  */
 class PassportMiddlewareTest extends TestCase
 {

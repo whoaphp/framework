@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphpc.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,38 +19,38 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Passport;
+namespace Whoa\Tests\Passport;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Types\Type;
 use Exception;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Doctrine\Types\UuidType as LimoncelloUuidType;
-use Limoncello\OAuthServer\Contracts\GrantTypes;
-use Limoncello\OAuthServer\Exceptions\OAuthRedirectException;
-use Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException;
-use Limoncello\Passport\Adaptors\Generic\PassportServerIntegration;
-use Limoncello\Passport\Adaptors\Generic\Client;
-use Limoncello\Passport\Adaptors\Generic\ClientRepository;
-use Limoncello\Passport\Adaptors\Generic\RedirectUri;
-use Limoncello\Passport\Adaptors\Generic\RedirectUriRepository;
-use Limoncello\Passport\Adaptors\Generic\Scope;
-use Limoncello\Passport\Adaptors\Generic\ScopeRepository;
-use Limoncello\Passport\Adaptors\Generic\Token;
-use Limoncello\Passport\Adaptors\Generic\TokenRepository;
-use Limoncello\Passport\Contracts\PassportServerIntegrationInterface;
-use Limoncello\Passport\Contracts\PassportServerInterface;
-use Limoncello\Passport\Package\MySqlPassportContainerConfigurator;
-use Limoncello\Passport\PassportServer;
-use Limoncello\Passport\Traits\DatabaseSchemaMigrationTrait;
-use Limoncello\Tests\Passport\Data\TestContainer;
-use Limoncello\Tests\Passport\Package\PassportContainerConfiguratorTest;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Doctrine\Types\UuidType as WhoaUuidType;
+use Whoa\OAuthServer\Contracts\GrantTypes;
+use Whoa\OAuthServer\Exceptions\OAuthRedirectException;
+use Whoa\OAuthServer\Exceptions\OAuthTokenBodyException;
+use Whoa\Passport\Adaptors\Generic\PassportServerIntegration;
+use Whoa\Passport\Adaptors\Generic\Client;
+use Whoa\Passport\Adaptors\Generic\ClientRepository;
+use Whoa\Passport\Adaptors\Generic\RedirectUri;
+use Whoa\Passport\Adaptors\Generic\RedirectUriRepository;
+use Whoa\Passport\Adaptors\Generic\Scope;
+use Whoa\Passport\Adaptors\Generic\ScopeRepository;
+use Whoa\Passport\Adaptors\Generic\Token;
+use Whoa\Passport\Adaptors\Generic\TokenRepository;
+use Whoa\Passport\Contracts\PassportServerIntegrationInterface;
+use Whoa\Passport\Contracts\PassportServerInterface;
+use Whoa\Passport\Package\MySqlPassportContainerConfigurator;
+use Whoa\Passport\PassportServer;
+use Whoa\Passport\Traits\DatabaseSchemaMigrationTrait;
+use Whoa\Tests\Passport\Data\TestContainer;
+use Whoa\Tests\Passport\Package\PassportContainerConfiguratorTest;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Uri;
-use Limoncello\Tests\Passport\Package\PassportContainerConfiguratorTest as T;
+use Whoa\Tests\Passport\Package\PassportContainerConfiguratorTest as T;
 
 /**
- * @package Limoncello\Tests\Passport
+ * @package Whoa\Tests\Passport
  */
 class PassportServerTest extends TestCase
 {
@@ -65,7 +65,7 @@ class PassportServerTest extends TestCase
     {
         parent::setUp();
 
-        Type::hasType(LimoncelloUuidType::NAME) === true ?: Type::addType(LimoncelloUuidType::NAME, LimoncelloUuidType::class);
+        Type::hasType(WhoaUuidType::NAME) === true ?: Type::addType(WhoaUuidType::NAME, WhoaUuidType::class);
 
         $this->initDatabase();
     }

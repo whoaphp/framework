@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Traits;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +17,13 @@ namespace Limoncello\Passport\Traits;
  * limitations under the License.
  */
 
-use Limoncello\OAuthServer\Contracts\ClientInterface;
-use Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException;
-use Limoncello\Passport\Contracts\PassportServerIntegrationInterface;
+declare(strict_types=1);
+
+namespace Whoa\Passport\Traits;
+
+use Whoa\OAuthServer\Contracts\ClientInterface;
+use Whoa\OAuthServer\Exceptions\OAuthTokenBodyException;
+use Whoa\Passport\Contracts\PassportServerIntegrationInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use function array_key_exists;
 use function assert;
@@ -31,7 +34,7 @@ use function is_string;
 use function substr;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 trait BasicClientAuthenticationTrait
 {
@@ -52,7 +55,8 @@ trait BasicClientAuthenticationTrait
         ServerRequestInterface $request,
         array $parameters,
         $realm = 'OAuth'
-    ): ?ClientInterface {
+    ): ?ClientInterface
+    {
         // A client may use Basic authentication.
         //
         // Or

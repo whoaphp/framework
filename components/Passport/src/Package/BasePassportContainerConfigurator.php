@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Package;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,22 +17,26 @@ namespace Limoncello\Passport\Package;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Authentication\AccountManagerInterface;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Passport\PassportAccountManagerInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Passport\Authentication\AccountManager;
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
-use Limoncello\Passport\Contracts\PassportServerIntegrationInterface;
-use Limoncello\Passport\Contracts\PassportServerInterface;
-use Limoncello\Passport\Entities\DatabaseSchema;
-use Limoncello\Passport\Package\PassportSettings as C;
-use Limoncello\Passport\PassportServer;
+declare(strict_types=1);
+
+namespace Whoa\Passport\Package;
+
+use Whoa\Contracts\Authentication\AccountManagerInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Passport\PassportAccountManagerInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Passport\Authentication\AccountManager;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Whoa\Passport\Contracts\PassportServerIntegrationInterface;
+use Whoa\Passport\Contracts\PassportServerInterface;
+use Whoa\Passport\Entities\DatabaseSchema;
+use Whoa\Passport\Package\PassportSettings as C;
+use Whoa\Passport\PassportServer;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
@@ -42,10 +45,10 @@ abstract class BasePassportContainerConfigurator
     /**
      * @inheritdoc
      */
-    protected static function baseConfigureContainer(LimoncelloContainerInterface $container): void
+    protected static function baseConfigureContainer(WhoaContainerInterface $container): void
     {
-        $accountManager = null;
-        $factory        = function (
+        $accountManager                                    = null;
+        $factory                                           = function (
             PsrContainerInterface $container
         ) use (&$accountManager): PassportAccountManagerInterface {
             if ($accountManager === null) {

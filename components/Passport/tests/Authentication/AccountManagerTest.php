@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,24 +19,24 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Passport\Authentication;
+namespace Whoa\Tests\Passport\Authentication;
 
 use Exception;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Passport\Authentication\AccountManager;
-use Limoncello\Contracts\Authentication\AccountManagerInterface;
-use Limoncello\Passport\Authentication\PassportAccount;
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
-use Limoncello\Passport\Contracts\Repositories\TokenRepositoryInterface;
-use Limoncello\Passport\Entities\DatabaseSchema;
-use Limoncello\Passport\Package\PassportSettings;
-use Limoncello\Tests\Passport\Data\TestContainer;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Passport\Authentication\AccountManager;
+use Whoa\Contracts\Authentication\AccountManagerInterface;
+use Whoa\Passport\Authentication\PassportAccount;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Whoa\Passport\Contracts\Repositories\TokenRepositoryInterface;
+use Whoa\Passport\Entities\DatabaseSchema;
+use Whoa\Passport\Package\PassportSettings;
+use Whoa\Tests\Passport\Data\TestContainer;
 use Mockery;
 use Mockery\Mock;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @package Limoncello\Tests\Passport
+ * @package Whoa\Tests\Passport
  */
 class AccountManagerTest extends TestCase
 {
@@ -106,7 +106,7 @@ class AccountManagerTest extends TestCase
      */
     public function testSetAccountWithInvalidTokenValue()
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\AuthenticationException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\AuthenticationException::class);
 
         $container = new TestContainer();
 

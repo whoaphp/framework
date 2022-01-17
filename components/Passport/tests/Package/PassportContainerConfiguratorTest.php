@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,33 +19,33 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Passport\Package;
+namespace Whoa\Tests\Passport\Package;
 
 use Doctrine\DBAL\Connection;
 use Exception;
-use Limoncello\Contracts\Authentication\AccountManagerInterface;
-use Limoncello\Contracts\Passport\PassportAccountManagerInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
-use Limoncello\Passport\Contracts\Entities\TokenInterface;
-use Limoncello\Passport\Contracts\PassportServerIntegrationInterface;
-use Limoncello\Passport\Contracts\PassportServerInterface;
-use Limoncello\Passport\Contracts\Repositories\TokenRepositoryInterface;
-use Limoncello\Passport\Package\MySqlPassportContainerConfigurator;
-use Limoncello\Passport\Package\PassportContainerConfigurator;
-use Limoncello\Passport\Package\PassportSettings as C;
-use Limoncello\Passport\Package\PostgreSqlPassportContainerConfigurator;
-use Limoncello\Tests\Passport\Data\TestContainer;
-use Limoncello\Tests\Passport\PassportServerTest;
+use Whoa\Contracts\Authentication\AccountManagerInterface;
+use Whoa\Contracts\Passport\PassportAccountManagerInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Whoa\Passport\Contracts\Entities\TokenInterface;
+use Whoa\Passport\Contracts\PassportServerIntegrationInterface;
+use Whoa\Passport\Contracts\PassportServerInterface;
+use Whoa\Passport\Contracts\Repositories\TokenRepositoryInterface;
+use Whoa\Passport\Package\MySqlPassportContainerConfigurator;
+use Whoa\Passport\Package\PassportContainerConfigurator;
+use Whoa\Passport\Package\PassportSettings as C;
+use Whoa\Passport\Package\PostgreSqlPassportContainerConfigurator;
+use Whoa\Tests\Passport\Data\TestContainer;
+use Whoa\Tests\Passport\PassportServerTest;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
-use Limoncello\Tests\Passport\Package\PassportContainerConfiguratorTest as T;
+use Whoa\Tests\Passport\Package\PassportContainerConfiguratorTest as T;
 
 /**
- * @package Limoncello\Tests\Templates
+ * @package Whoa\Tests\Templates
  */
 class PassportContainerConfiguratorTest extends TestCase
 {

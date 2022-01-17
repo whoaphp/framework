@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Passport\Adaptors\Generic;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Tests\Passport\Adaptors\Generic;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Passport\Adaptors\Generic;
+
 use Exception;
-use Limoncello\Passport\Adaptors\Generic\Client;
+use Whoa\Passport\Adaptors\Generic\Client;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @package Limoncello\Tests\Passport
+ * @package Whoa\Tests\Passport
  */
 class ClientTest extends TestCase
 {

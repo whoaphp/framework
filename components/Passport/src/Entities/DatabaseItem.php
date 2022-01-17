@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,19 +19,19 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Passport\Entities;
+namespace Whoa\Passport\Entities;
 
 use DateTimeImmutable;
 use DateTimeInterface;
-use Limoncello\Contracts\Data\TimestampFields;
-use Limoncello\Contracts\Data\UuidFields;
-use Limoncello\Doctrine\Traits\UuidTypeTrait;
+use Whoa\Contracts\Data\TimestampFields;
+use Whoa\Contracts\Data\UuidFields;
+use Whoa\Doctrine\Traits\UuidTypeTrait;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use function property_exists;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 abstract class DatabaseItem implements UuidFields, TimestampFields
 {

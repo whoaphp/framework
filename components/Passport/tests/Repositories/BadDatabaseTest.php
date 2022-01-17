@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,33 +19,33 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Passport\Repositories;
+namespace Whoa\Tests\Passport\Repositories;
 
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception as DBALException;
 use Exception;
-use Limoncello\Passport\Adaptors\Generic\Client;
-use Limoncello\Passport\Adaptors\Generic\ClientRepository;
-use Limoncello\Passport\Adaptors\Generic\RedirectUri;
-use Limoncello\Passport\Adaptors\Generic\RedirectUriRepository;
-use Limoncello\Passport\Adaptors\Generic\Scope;
-use Limoncello\Passport\Adaptors\Generic\ScopeRepository;
-use Limoncello\Passport\Adaptors\Generic\Token;
-use Limoncello\Passport\Adaptors\Generic\TokenRepository;
-use Limoncello\Passport\Contracts\Repositories\ClientRepositoryInterface;
-use Limoncello\Passport\Contracts\Repositories\RedirectUriRepositoryInterface;
-use Limoncello\Passport\Contracts\Repositories\ScopeRepositoryInterface;
-use Limoncello\Passport\Contracts\Repositories\TokenRepositoryInterface;
-use Limoncello\Passport\Traits\DatabaseSchemaMigrationTrait;
-use Limoncello\Tests\Passport\TestCase;
+use Whoa\Passport\Adaptors\Generic\Client;
+use Whoa\Passport\Adaptors\Generic\ClientRepository;
+use Whoa\Passport\Adaptors\Generic\RedirectUri;
+use Whoa\Passport\Adaptors\Generic\RedirectUriRepository;
+use Whoa\Passport\Adaptors\Generic\Scope;
+use Whoa\Passport\Adaptors\Generic\ScopeRepository;
+use Whoa\Passport\Adaptors\Generic\Token;
+use Whoa\Passport\Adaptors\Generic\TokenRepository;
+use Whoa\Passport\Contracts\Repositories\ClientRepositoryInterface;
+use Whoa\Passport\Contracts\Repositories\RedirectUriRepositoryInterface;
+use Whoa\Passport\Contracts\Repositories\ScopeRepositoryInterface;
+use Whoa\Passport\Contracts\Repositories\TokenRepositoryInterface;
+use Whoa\Passport\Traits\DatabaseSchemaMigrationTrait;
+use Whoa\Tests\Passport\TestCase;
 use Mockery;
 use ReflectionException;
 use ReflectionMethod;
 
 /**
- * @package Limoncello\Tests\Passport
+ * @package Whoa\Tests\Passport
  */
 class BadDatabaseTest extends TestCase
 {
@@ -56,7 +56,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testClientIndex(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createClientRepository()->index();
     }
@@ -66,7 +66,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testClientCreate(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createClientRepository()->create(new Client());
     }
@@ -76,7 +76,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testClientBindScopeIdentifiers(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createClientRepository()->bindScopeIdentifiers('fakeClientId1', ['fakeScopeId1']);
     }
@@ -86,7 +86,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testClientUnbindScopeIdentifiers(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createClientRepository()->unbindScopes('fakeClientId1');
     }
@@ -96,7 +96,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testClientRead(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createClientRepository()->read('fakeClientId1');
     }
@@ -106,7 +106,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testClientReadScopeIdentifiers(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createClientRepository()->readScopeIdentifiers('fakeClientId1');
     }
@@ -116,7 +116,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testClientReadRedirectUriStrings(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createClientRepository()->readRedirectUriStrings('fakeClientId1');
     }
@@ -126,7 +126,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testClientUpdate(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createClientRepository()->update(new Client());
     }
@@ -136,7 +136,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testClientDelete(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createClientRepository()->delete('fakeClientId1');
     }
@@ -146,7 +146,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testRedirectUriIndexClientUris(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createRedirectUriRepository()->indexClientUris('fakeClientId1');
     }
@@ -156,7 +156,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testRedirectUriCreate(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createRedirectUriRepository()->create(new RedirectUri());
     }
@@ -166,7 +166,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testRedirectUriRead(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createRedirectUriRepository()->read(1);
     }
@@ -176,7 +176,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testRedirectUriUpdate(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createRedirectUriRepository()->update(new RedirectUri());
     }
@@ -186,7 +186,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testRedirectUriDelete(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createRedirectUriRepository()->delete(1);
     }
@@ -196,7 +196,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testScopeIndex(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createScopeRepository()->index();
     }
@@ -206,7 +206,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testScopeCreate(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createScopeRepository()->create(new Scope());
     }
@@ -216,7 +216,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testScopeRead(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createScopeRepository()->read('fakeScopeId');
     }
@@ -226,7 +226,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testScopeUpdate(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createScopeRepository()->update(new Scope());
     }
@@ -236,7 +236,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testScopeDelete(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createScopeRepository()->delete('fakeScopeId');
     }
@@ -246,7 +246,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testTokenCreateCode(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createTokenRepository()->createCode((new Token())->setCode('fakeCode'));
     }
@@ -256,7 +256,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testTokenAssignValuesToCode(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createTokenRepository()->assignValuesToCode((new Token())->setCode('fakeCode'), 123);
     }
@@ -266,7 +266,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testTokenCreateToken(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createTokenRepository()->createToken(new Token());
     }
@@ -276,7 +276,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testTokenBindScopeIdentifiers(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createTokenRepository()->bindScopeIdentifiers(1, ['fakeToken1']);
     }
@@ -286,7 +286,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testTokenUnbindScopes(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createTokenRepository()->unbindScopes(1);
     }
@@ -296,7 +296,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testTokenRead(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createTokenRepository()->read(1);
     }
@@ -306,7 +306,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testTokenReadByCode(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createTokenRepository()->readByCode('fakeCode', 123);
     }
@@ -316,7 +316,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testTokenReadByUser(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createTokenRepository()->readByUser(1, 123);
     }
@@ -326,7 +326,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testTokenReadPassport(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createTokenRepository()->readPassport('fakeToken', 123);
     }
@@ -336,7 +336,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testTokenReadScopeIdentifiers(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createTokenRepository()->readScopeIdentifiers(1);
     }
@@ -346,7 +346,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testTokenUpdateValues(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $this->createTokenRepository()->updateValues(new Token());
     }
@@ -359,7 +359,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testInTransactionAddCoverage(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $connection = Mockery::mock(Connection::class);
         $connection->shouldReceive('beginTransaction')->once()->withNoArgs()->andReturnUndefined();
@@ -384,7 +384,7 @@ class BadDatabaseTest extends TestCase
      */
     public function testGetDateTimeForDbAddCoverage(): void
     {
-        $this->expectException(\Limoncello\Passport\Exceptions\RepositoryException::class);
+        $this->expectException(\Whoa\Passport\Exceptions\RepositoryException::class);
 
         $connection = Mockery::mock(Connection::class);
         $connection->shouldReceive('getDatabasePlatform')->once()->withNoArgs()->andThrow(new DBALException());

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,18 +17,22 @@ namespace Limoncello\Passport;
  * limitations under the License.
  */
 
-use Limoncello\OAuthServer\BaseAuthorizationServer;
-use Limoncello\OAuthServer\Contracts\AuthorizationCodeInterface;
-use Limoncello\OAuthServer\Contracts\ClientInterface;
-use Limoncello\OAuthServer\Contracts\GrantTypes;
-use Limoncello\OAuthServer\Contracts\ResponseTypes;
-use Limoncello\OAuthServer\Exceptions\OAuthCodeRedirectException;
-use Limoncello\OAuthServer\Exceptions\OAuthRedirectException;
-use Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException;
-use Limoncello\Passport\Contracts\Entities\TokenInterface;
-use Limoncello\Passport\Contracts\PassportServerIntegrationInterface;
-use Limoncello\Passport\Contracts\PassportServerInterface;
-use Limoncello\Passport\Entities\Token;
+declare(strict_types=1);
+
+namespace Whoa\Passport;
+
+use Whoa\OAuthServer\BaseAuthorizationServer;
+use Whoa\OAuthServer\Contracts\AuthorizationCodeInterface;
+use Whoa\OAuthServer\Contracts\ClientInterface;
+use Whoa\OAuthServer\Contracts\GrantTypes;
+use Whoa\OAuthServer\Contracts\ResponseTypes;
+use Whoa\OAuthServer\Exceptions\OAuthCodeRedirectException;
+use Whoa\OAuthServer\Exceptions\OAuthRedirectException;
+use Whoa\OAuthServer\Exceptions\OAuthTokenBodyException;
+use Whoa\Passport\Contracts\Entities\TokenInterface;
+use Whoa\Passport\Contracts\PassportServerIntegrationInterface;
+use Whoa\Passport\Contracts\PassportServerInterface;
+use Whoa\Passport\Entities\Token;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerAwareInterface as LAI;
@@ -44,7 +47,7 @@ use function is_int;
 use function is_string;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -95,7 +98,7 @@ abstract class BasePassportServer extends BaseAuthorizationServer implements Pas
     protected function createAuthorization(array $parameters): ResponseInterface
     {
         try {
-            list($client, $redirectUri) = $this->getValidClientAndRedirectUri(
+            [$client, $redirectUri] = $this->getValidClientAndRedirectUri(
                 $this->codeGetClientId($parameters),
                 $this->codeGetRedirectUri($parameters)
             );
@@ -212,7 +215,7 @@ abstract class BasePassportServer extends BaseAuthorizationServer implements Pas
             return $this->getIntegration()->createInvalidClientAndRedirectUriErrorResponse();
         }
 
-        list($tokenValue, $tokenType, $tokenExpiresIn) = $this->getIntegration()->generateTokenValues($token);
+        [$tokenValue, $tokenType, $tokenExpiresIn] = $this->getIntegration()->generateTokenValues($token);
 
         // refresh value must be null by the spec
         $refreshValue = null;
@@ -236,7 +239,8 @@ abstract class BasePassportServer extends BaseAuthorizationServer implements Pas
         array $scopeList = null,
         string $state = null,
         array $extraParameters = []
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         $this->logDebug('Asking resource owner for scope approval (code grant).');
         return $this->getIntegration()->createAskResourceOwnerForApprovalResponse(
             ResponseTypes::AUTHORIZATION_CODE,
@@ -264,7 +268,8 @@ abstract class BasePassportServer extends BaseAuthorizationServer implements Pas
     public function codeCreateAccessTokenResponse(
         AuthorizationCodeInterface $code,
         array $extraParameters = []
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         /** @var Token $code */
         assert($code instanceof Token);
         $updatedToken = clone $code;
@@ -305,7 +310,8 @@ abstract class BasePassportServer extends BaseAuthorizationServer implements Pas
         array $scopeList = null,
         string $state = null,
         array $extraParameters = []
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         $response = $this->getIntegration()->createAskResourceOwnerForApprovalResponse(
             ResponseTypes::IMPLICIT,
             $client,
@@ -333,7 +339,8 @@ abstract class BasePassportServer extends BaseAuthorizationServer implements Pas
         bool $isScopeModified = false,
         array $scope = null,
         array $extraParameters = []
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         assert($client !== null);
 
         if (($userIdentifier = $this->getIntegration()->validateUserId($userName, $password)) === null) {
@@ -374,7 +381,7 @@ abstract class BasePassportServer extends BaseAuthorizationServer implements Pas
 
         assert(is_string($defaultClientId) === true && empty($defaultClientId) === false);
 
-        $defaultClient   = $this->readClientByIdentifier($defaultClientId);
+        $defaultClient = $this->readClientByIdentifier($defaultClientId);
 
         assert($defaultClient !== null);
 
@@ -389,7 +396,8 @@ abstract class BasePassportServer extends BaseAuthorizationServer implements Pas
         bool $isScopeModified,
         array $scope = null,
         array $extraParameters = []
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         $this->logDebug('Prepare token for client.');
         assert($client !== null);
 
@@ -413,7 +421,7 @@ abstract class BasePassportServer extends BaseAuthorizationServer implements Pas
      *
      * @return TokenInterface|null
      */
-    public function readTokenByRefreshValue(string $refreshValue): ?\Limoncello\OAuthServer\Contracts\TokenInterface
+    public function readTokenByRefreshValue(string $refreshValue): ?\Whoa\OAuthServer\Contracts\TokenInterface
     {
         return $this->getIntegration()->getTokenRepository()->readByRefresh(
             $refreshValue,
@@ -428,11 +436,12 @@ abstract class BasePassportServer extends BaseAuthorizationServer implements Pas
      */
     public function refreshCreateAccessTokenResponse(
         ClientInterface $client,
-        \Limoncello\OAuthServer\Contracts\TokenInterface $token,
+        \Whoa\OAuthServer\Contracts\TokenInterface $token,
         bool $isScopeModified,
         array $scope = null,
         array $extraParameters = []
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         $this->logDebug('Prepare refresh token.');
 
         /** @var TokenInterface $token */
@@ -507,7 +516,7 @@ abstract class BasePassportServer extends BaseAuthorizationServer implements Pas
     {
         $this->logDebug('Sending token as JSON response.');
 
-        $scopeList  = $token->isScopeModified() === false || empty($token->getScopeIdentifiers()) === true ?
+        $scopeList = $token->isScopeModified() === false || empty($token->getScopeIdentifiers()) === true ?
             null : $token->getScopeList();
 
         // for access token format @link https://tools.ietf.org/html/rfc6749#section-5.1
@@ -568,10 +577,11 @@ abstract class BasePassportServer extends BaseAuthorizationServer implements Pas
         TokenInterface $token,
         int $tokenExpiresIn,
         string $state = null
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         $this->logDebug('Sending token as redirect response.');
 
-        $scopeList  = $token->isScopeModified() === false || empty($token->getScopeIdentifiers()) === true ?
+        $scopeList = $token->isScopeModified() === false || empty($token->getScopeIdentifiers()) === true ?
             null : $token->getScopeList();
 
         // for access token format @link https://tools.ietf.org/html/rfc6749#section-5.1
@@ -641,7 +651,7 @@ abstract class BasePassportServer extends BaseAuthorizationServer implements Pas
      */
     protected function setUpTokenValue(TokenInterface $token): int
     {
-        list($tokenValue, $tokenType, $tokenExpiresIn) =
+        [$tokenValue, $tokenType, $tokenExpiresIn] =
             $this->getIntegration()->generateTokenValues($token);
         $token->setValue($tokenValue)->setType($tokenType);
 
@@ -655,7 +665,7 @@ abstract class BasePassportServer extends BaseAuthorizationServer implements Pas
      */
     protected function setUpTokenValues(TokenInterface $token): int
     {
-        list($tokenValue, $tokenType, $tokenExpiresIn, $refreshValue) =
+        [$tokenValue, $tokenType, $tokenExpiresIn, $refreshValue] =
             $this->getIntegration()->generateTokenValues($token);
         $token->setValue($tokenValue)->setType($tokenType)->setRefreshValue($refreshValue);
 

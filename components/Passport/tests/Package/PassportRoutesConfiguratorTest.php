@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,21 +19,21 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Passport\Package;
+namespace Whoa\Tests\Passport\Package;
 
 use Doctrine\DBAL\Connection;
 use Exception;
-use Limoncello\Core\Routing\Group;
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
-use Limoncello\Passport\Package\PassportMigration;
-use Limoncello\Passport\Package\PassportProvider;
-use Limoncello\Passport\Package\PassportRoutesConfigurator;
-use Limoncello\Tests\Passport\Data\TestContainer;
+use Whoa\Core\Routing\Group;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Whoa\Passport\Package\PassportMigration;
+use Whoa\Passport\Package\PassportProvider;
+use Whoa\Passport\Package\PassportRoutesConfigurator;
+use Whoa\Tests\Passport\Data\TestContainer;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @package Limoncello\Tests\Templates
+ * @package Whoa\Tests\Templates
  */
 class PassportRoutesConfiguratorTest extends TestCase
 {

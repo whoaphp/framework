@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,18 +19,18 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Passport\Entities;
+namespace Whoa\Passport\Entities;
 
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
-use Limoncello\Passport\Models\Client as ClientModel;
-use Limoncello\Passport\Models\ClientScope as ClientScopeModel;
-use Limoncello\Passport\Models\RedirectUri as RedirectUriModel;
-use Limoncello\Passport\Models\Scope as ScopeModel;
-use Limoncello\Passport\Models\Token as TokenModel;
-use Limoncello\Passport\Models\TokenScope as TokenScopeModel;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Whoa\Passport\Models\Client as ClientModel;
+use Whoa\Passport\Models\ClientScope as ClientScopeModel;
+use Whoa\Passport\Models\RedirectUri as RedirectUriModel;
+use Whoa\Passport\Models\Scope as ScopeModel;
+use Whoa\Passport\Models\Token as TokenModel;
+use Whoa\Passport\Models\TokenScope as TokenScopeModel;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  *
  * @SuppressWarnings(PHPMD)
  */

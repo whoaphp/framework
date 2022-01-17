@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Adaptors\MySql;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +17,19 @@ namespace Limoncello\Passport\Adaptors\MySql;
  * limitations under the License.
  */
 
-use Limoncello\Passport\Contracts\Entities\TokenInterface;
-use Limoncello\Passport\Contracts\Repositories\ClientRepositoryInterface;
-use Limoncello\Passport\Contracts\Repositories\RedirectUriRepositoryInterface;
-use Limoncello\Passport\Contracts\Repositories\ScopeRepositoryInterface;
-use Limoncello\Passport\Contracts\Repositories\TokenRepositoryInterface;
-use Limoncello\Passport\Integration\BasePassportServerIntegration;
+declare(strict_types=1);
+
+namespace Whoa\Passport\Adaptors\MySql;
+
+use Whoa\Passport\Contracts\Entities\TokenInterface;
+use Whoa\Passport\Contracts\Repositories\ClientRepositoryInterface;
+use Whoa\Passport\Contracts\Repositories\RedirectUriRepositoryInterface;
+use Whoa\Passport\Contracts\Repositories\ScopeRepositoryInterface;
+use Whoa\Passport\Contracts\Repositories\TokenRepositoryInterface;
+use Whoa\Passport\Integration\BasePassportServerIntegration;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 class PassportServerIntegration extends BasePassportServerIntegration
 {

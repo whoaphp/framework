@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Package;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,25 +17,29 @@ namespace Limoncello\Passport\Package;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Passport\Package;
+
 use Doctrine\DBAL\Connection;
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface as CCI;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Passport\Adaptors\PostgreSql\PassportServerIntegration;
-use Limoncello\Passport\Adaptors\PostgreSql\TokenRepository;
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
-use Limoncello\Passport\Contracts\PassportServerIntegrationInterface;
-use Limoncello\Passport\Contracts\Repositories\TokenRepositoryInterface;
+use Whoa\Contracts\Application\ContainerConfiguratorInterface as CCI;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Passport\Adaptors\PostgreSql\PassportServerIntegration;
+use Whoa\Passport\Adaptors\PostgreSql\TokenRepository;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Whoa\Passport\Contracts\PassportServerIntegrationInterface;
+use Whoa\Passport\Contracts\Repositories\TokenRepositoryInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 class PostgreSqlPassportContainerConfigurator extends BasePassportContainerConfigurator implements CCI
 {
     /**
      * @inheritdoc
      */
-    public static function configureContainer(LimoncelloContainerInterface $container): void
+    public static function configureContainer(WhoaContainerInterface $container): void
     {
         static::baseConfigureContainer($container);
 

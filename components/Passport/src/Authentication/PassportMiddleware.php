@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Authentication;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Passport\Authentication;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Passport\Authentication;
+
 use Closure;
-use Limoncello\Contracts\Application\MiddlewareInterface;
-use Limoncello\Contracts\Passport\PassportAccountManagerInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Passport\Exceptions\AuthenticationException;
-use Limoncello\Passport\Package\PassportSettings as S;
+use Whoa\Contracts\Application\MiddlewareInterface;
+use Whoa\Contracts\Passport\PassportAccountManagerInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Passport\Exceptions\AuthenticationException;
+use Whoa\Passport\Package\PassportSettings as S;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -36,7 +39,7 @@ use function is_string;
 use function substr;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 class PassportMiddleware implements MiddlewareInterface
 {
@@ -52,7 +55,8 @@ class PassportMiddleware implements MiddlewareInterface
         ServerRequestInterface $request,
         Closure $next,
         ContainerInterface $container
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         $header = $request->getHeader('Authorization');
         // if value has Bearer token and it is a valid json with 2 required fields and they are strings
         if (empty($header) === false &&

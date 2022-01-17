@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,19 +19,19 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Passport\Package;
+namespace Whoa\Tests\Passport\Package;
 
 use Doctrine\DBAL\Connection;
 use Exception;
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
-use Limoncello\Passport\Package\PostgreSqlPassportMigration;
-use Limoncello\Tests\Passport\Data\TestContainer;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Whoa\Passport\Package\PostgreSqlPassportMigration;
+use Whoa\Tests\Passport\Data\TestContainer;
 use Mockery;
 use Mockery\Mock;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @package Limoncello\Tests\Templates
+ * @package Whoa\Tests\Templates
  */
 class PostgreSqlPassportMigrationTest extends TestCase
 {

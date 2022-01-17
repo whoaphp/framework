@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,18 +19,18 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Passport\Contracts;
+namespace Whoa\Passport\Contracts;
 
-use Limoncello\OAuthServer\Contracts\ClientInterface;
-use Limoncello\Passport\Contracts\Entities\TokenInterface;
-use Limoncello\Passport\Contracts\Repositories\ClientRepositoryInterface;
-use Limoncello\Passport\Contracts\Repositories\RedirectUriRepositoryInterface;
-use Limoncello\Passport\Contracts\Repositories\ScopeRepositoryInterface;
-use Limoncello\Passport\Contracts\Repositories\TokenRepositoryInterface;
+use Whoa\OAuthServer\Contracts\ClientInterface;
+use Whoa\Passport\Contracts\Entities\TokenInterface;
+use Whoa\Passport\Contracts\Repositories\ClientRepositoryInterface;
+use Whoa\Passport\Contracts\Repositories\RedirectUriRepositoryInterface;
+use Whoa\Passport\Contracts\Repositories\ScopeRepositoryInterface;
+use Whoa\Passport\Contracts\Repositories\TokenRepositoryInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 interface PassportServerIntegrationInterface
 {

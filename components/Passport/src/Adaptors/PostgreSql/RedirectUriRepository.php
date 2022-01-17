@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Adaptors\PostgreSql;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Passport\Adaptors\PostgreSql;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Passport\Adaptors\PostgreSql;
+
 use Doctrine\DBAL\Connection;
-use Limoncello\Passport\Contracts\Entities\DatabaseSchemaInterface;
+use Whoa\Passport\Contracts\Entities\DatabaseSchemaInterface;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
-class RedirectUriRepository extends \Limoncello\Passport\Repositories\RedirectUriRepository
+class RedirectUriRepository extends \Whoa\Passport\Repositories\RedirectUriRepository
 {
     /**
      * @var string
@@ -40,7 +43,8 @@ class RedirectUriRepository extends \Limoncello\Passport\Repositories\RedirectUr
         Connection $connection,
         DatabaseSchemaInterface $databaseSchema,
         string $modelClass = RedirectUri::class
-    ) {
+    )
+    {
         $this->setConnection($connection)->setDatabaseSchema($databaseSchema);
         $this->modelClass = $modelClass;
     }

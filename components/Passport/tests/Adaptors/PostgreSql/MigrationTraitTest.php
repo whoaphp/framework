@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,23 +19,23 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Passport\Adaptors\PostgreSql;
+namespace Whoa\Tests\Passport\Adaptors\PostgreSql;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Types\Type;
 use Exception;
-use Limoncello\Doctrine\Types\UuidType as LimoncelloUuidType;
-use Limoncello\Passport\Adaptors\PostgreSql\DatabaseSchemaMigrationTrait;
-use Limoncello\Passport\Adaptors\PostgreSql\DbDateFormatTrait;
-use Limoncello\Passport\Entities\DatabaseSchema;
+use Whoa\Doctrine\Types\UuidType as WhoaUuidType;
+use Whoa\Passport\Adaptors\PostgreSql\DatabaseSchemaMigrationTrait;
+use Whoa\Passport\Adaptors\PostgreSql\DbDateFormatTrait;
+use Whoa\Passport\Entities\DatabaseSchema;
 use Mockery;
 use Mockery\Mock;
 
 /**
  * Class ClientTest
  *
- * @package Limoncello\Tests\Passport
+ * @package Whoa\Tests\Passport
  */
 class MigrationTraitTest extends TestCase
 {
@@ -58,7 +58,7 @@ class MigrationTraitTest extends TestCase
     {
         parent::setUp();
 
-        Type::hasType(LimoncelloUuidType::NAME) === true ?: Type::addType(LimoncelloUuidType::NAME, LimoncelloUuidType::class);
+        Type::hasType(WhoaUuidType::NAME) === true ?: Type::addType(WhoaUuidType::NAME, WhoaUuidType::class);
     }
 
     /**

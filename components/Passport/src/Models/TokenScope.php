@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +18,15 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Passport\Models;
+namespace Whoa\Passport\Models;
 
 use Doctrine\DBAL\Types\Types;
-use Limoncello\Contracts\Application\ModelInterface;
-use Limoncello\Contracts\Data\TimestampFields;
-use Limoncello\Doctrine\Types\DateTimeType;
+use Whoa\Contracts\Application\ModelInterface;
+use Whoa\Contracts\Data\TimestampFields;
+use Whoa\Doctrine\Types\DateTimeType;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 class TokenScope implements ModelInterface, TimestampFields
 {

@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,12 +19,12 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Passport\Traits;
+namespace Whoa\Tests\Passport\Traits;
 
-use Limoncello\Passport\Adaptors\MySql\Client;
-use Limoncello\Passport\Contracts\PassportServerIntegrationInterface;
-use Limoncello\Passport\Contracts\Repositories\ClientRepositoryInterface;
-use Limoncello\Passport\Traits\BasicClientAuthenticationTrait;
+use Whoa\Passport\Adaptors\MySql\Client;
+use Whoa\Passport\Contracts\PassportServerIntegrationInterface;
+use Whoa\Passport\Contracts\Repositories\ClientRepositoryInterface;
+use Whoa\Passport\Traits\BasicClientAuthenticationTrait;
 use Mockery;
 use Mockery\Mock;
 use PHPUnit\Framework\TestCase;
@@ -32,7 +32,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\ServerRequest;
 
 /**
- * @package Limoncello\Tests\Passport
+ * @package Whoa\Tests\Passport
  */
 class BasicClientAuthenticationTest extends TestCase
 {
@@ -79,7 +79,7 @@ class BasicClientAuthenticationTest extends TestCase
      */
     public function testNoAuthorizationHeader()
     {
-        $this->expectException(\Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException::class);
+        $this->expectException(\Whoa\OAuthServer\Exceptions\OAuthTokenBodyException::class);
 
         $this->determineClient(
             $this->integration,
@@ -93,7 +93,7 @@ class BasicClientAuthenticationTest extends TestCase
      */
     public function testUnknownClientLogin()
     {
-        $this->expectException(\Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException::class);
+        $this->expectException(\Whoa\OAuthServer\Exceptions\OAuthTokenBodyException::class);
 
         $this->integrationMock
             ->shouldReceive('getClientRepository')->once()->withNoArgs()->andReturn($this->clientRepoMock);
@@ -112,7 +112,7 @@ class BasicClientAuthenticationTest extends TestCase
      */
     public function testNotMatchingClientIdentifiers()
     {
-        $this->expectException(\Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException::class);
+        $this->expectException(\Whoa\OAuthServer\Exceptions\OAuthTokenBodyException::class);
 
         $this->determineClient(
             $this->integration,
@@ -126,7 +126,7 @@ class BasicClientAuthenticationTest extends TestCase
      */
     public function testInvalidClientCredentials()
     {
-        $this->expectException(\Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException::class);
+        $this->expectException(\Whoa\OAuthServer\Exceptions\OAuthTokenBodyException::class);
 
         $credentials = 'whatever';
         $password    = 'some_password';
@@ -153,8 +153,8 @@ class BasicClientAuthenticationTest extends TestCase
      */
     public function testNoClientPassword()
     {
-        $this->expectException(\Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException::class);
-        
+        $this->expectException(\Whoa\OAuthServer\Exceptions\OAuthTokenBodyException::class);
+
         $credentials = 'whatever';
 
         $client = (new Client())

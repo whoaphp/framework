@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Passport\Contracts\Repositories;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Passport\Contracts\Repositories;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Passport\Contracts\Repositories;
+
 use Closure;
-use Limoncello\Passport\Contracts\Entities\ScopeInterface;
+use Whoa\Passport\Contracts\Entities\ScopeInterface;
 
 /**
- * @package Limoncello\Passport
+ * @package Whoa\Passport
  */
 interface ScopeRepositoryInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,26 +19,26 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\Passport\Repositories;
+namespace Whoa\Tests\Passport\Repositories;
 
 use DateTimeImmutable;
 use Exception;
-use Limoncello\Passport\Adaptors\Generic\Client;
-use Limoncello\Passport\Adaptors\Generic\ClientRepository;
-use Limoncello\Passport\Adaptors\Generic\Token;
-use Limoncello\Passport\Adaptors\Generic\TokenRepository;
-use Limoncello\Passport\Adaptors\Generic\Scope;
-use Limoncello\Passport\Adaptors\Generic\ScopeRepository;
-use Limoncello\Passport\Contracts\Entities\TokenInterface;
-use Limoncello\Passport\Contracts\Repositories\ClientRepositoryInterface;
-use Limoncello\Passport\Contracts\Repositories\TokenRepositoryInterface;
-use Limoncello\Passport\Contracts\Repositories\ScopeRepositoryInterface;
-use Limoncello\Passport\Traits\DatabaseSchemaMigrationTrait;
-use Limoncello\Tests\Passport\PassportServerTest;
-use Limoncello\Tests\Passport\TestCase;
+use Whoa\Passport\Adaptors\Generic\Client;
+use Whoa\Passport\Adaptors\Generic\ClientRepository;
+use Whoa\Passport\Adaptors\Generic\Token;
+use Whoa\Passport\Adaptors\Generic\TokenRepository;
+use Whoa\Passport\Adaptors\Generic\Scope;
+use Whoa\Passport\Adaptors\Generic\ScopeRepository;
+use Whoa\Passport\Contracts\Entities\TokenInterface;
+use Whoa\Passport\Contracts\Repositories\ClientRepositoryInterface;
+use Whoa\Passport\Contracts\Repositories\TokenRepositoryInterface;
+use Whoa\Passport\Contracts\Repositories\ScopeRepositoryInterface;
+use Whoa\Passport\Traits\DatabaseSchemaMigrationTrait;
+use Whoa\Tests\Passport\PassportServerTest;
+use Whoa\Tests\Passport\TestCase;
 
 /**
- * @package Limoncello\Tests\Passport
+ * @package Whoa\Tests\Passport
  */
 class TokenRepositoryTest extends TestCase
 {
