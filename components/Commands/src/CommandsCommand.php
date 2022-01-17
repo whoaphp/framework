@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Commands;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +17,20 @@ namespace Limoncello\Commands;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Commands;
+
 use Composer\Command\BaseCommand;
-use Limoncello\Commands\Traits\CacheFilePathTrait;
-use Limoncello\Commands\Traits\CommandSerializationTrait;
-use Limoncello\Commands\Traits\CommandTrait;
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface as S;
-use Limoncello\Contracts\Application\CacheSettingsProviderInterface;
-use Limoncello\Contracts\Commands\CommandInterface;
-use Limoncello\Contracts\Commands\CommandStorageInterface;
-use Limoncello\Contracts\Commands\IoInterface;
-use Limoncello\Contracts\FileSystem\FileSystemInterface;
+use Whoa\Commands\Traits\CacheFilePathTrait;
+use Whoa\Commands\Traits\CommandSerializationTrait;
+use Whoa\Commands\Traits\CommandTrait;
+use Whoa\Contracts\Application\ApplicationConfigurationInterface as S;
+use Whoa\Contracts\Application\CacheSettingsProviderInterface;
+use Whoa\Contracts\Commands\CommandInterface;
+use Whoa\Contracts\Commands\CommandStorageInterface;
+use Whoa\Contracts\Commands\IoInterface;
+use Whoa\Contracts\FileSystem\FileSystemInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -45,7 +48,7 @@ use function array_key_exists;
  *
  * Also it provides such a nice feature as generation of an empty/template command for the developer.
  *
- * @package Limoncello\Commands
+ * @package Whoa\Commands
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */

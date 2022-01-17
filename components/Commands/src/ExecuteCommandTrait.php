@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Commands;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +17,20 @@ namespace Limoncello\Commands;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Commands;
+
 use Closure;
-use Limoncello\Common\Reflection\CheckCallableTrait;
-use Limoncello\Common\Reflection\ClassIsTrait;
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface;
-use Limoncello\Contracts\Application\CacheSettingsProviderInterface;
-use Limoncello\Contracts\Commands\IoInterface;
-use Limoncello\Contracts\Commands\RoutesConfiguratorInterface;
-use Limoncello\Contracts\Commands\RoutesInterface;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\FileSystem\FileSystemInterface;
+use Whoa\Common\Reflection\CheckCallableTrait;
+use Whoa\Common\Reflection\ClassIsTrait;
+use Whoa\Contracts\Application\ApplicationConfigurationInterface;
+use Whoa\Contracts\Application\CacheSettingsProviderInterface;
+use Whoa\Contracts\Commands\IoInterface;
+use Whoa\Contracts\Commands\RoutesConfiguratorInterface;
+use Whoa\Contracts\Commands\RoutesInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\FileSystem\FileSystemInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use ReflectionException;
 use function assert;
@@ -39,7 +42,7 @@ use function count;
  * Code for command execution is separated from the main code to get rid of a dependency from Composer.
  * This code could be executed independently in tests without composer dependency.
  *
- * @package Limoncello\Commands
+ * @package Whoa\Commands
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
@@ -48,10 +51,10 @@ trait ExecuteCommandTrait
     use ClassIsTrait;
 
     /**
-     * @param string                       $name
-     * @param callable                     $handler
-     * @param IoInterface                  $inOut
-     * @param LimoncelloContainerInterface $container
+     * @param string                 $name
+     * @param callable               $handler
+     * @param IoInterface            $inOut
+     * @param WhoaContainerInterface $container
      *
      * @return void
      *
@@ -63,7 +66,7 @@ trait ExecuteCommandTrait
         string $name,
         callable $handler,
         IoInterface $inOut,
-        LimoncelloContainerInterface $container
+        WhoaContainerInterface $container
     ): void {
         // This method does bootstrap for every command (e.g. configure containers)
         // and then calls the actual command handler.
@@ -224,7 +227,7 @@ trait ExecuteCommandTrait
                     $result = $result === true &&
                         $this->checkPublicStaticCallable(
                             $mightBeCallable,
-                            [LimoncelloContainerInterface::class],
+                            [WhoaContainerInterface::class],
                             'void'
                         );
                 }
@@ -262,12 +265,12 @@ trait ExecuteCommandTrait
     }
 
     /**
-     * @param callable[]                   $configurators
-     * @param LimoncelloContainerInterface $container
+     * @param callable[]             $configurators
+     * @param WhoaContainerInterface $container
      *
      * @return void
      */
-    private function executeContainerConfigurators(array $configurators, LimoncelloContainerInterface $container): void
+    private function executeContainerConfigurators(array $configurators, WhoaContainerInterface $container): void
     {
         foreach ($configurators as $configurator) {
             call_user_func($configurator, $container);

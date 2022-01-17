@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Commands\Traits;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Commands\Traits;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Commands\Traits;
+
 use Composer\Composer;
-use Limoncello\Commands\CommandConstants;
-use Limoncello\Commands\Exceptions\ConfigurationException;
-use Limoncello\Commands\Wrappers\ConsoleIoWrapper;
-use Limoncello\Contracts\Commands\IoInterface;
-use Limoncello\Contracts\Core\ApplicationInterface;
+use Whoa\Commands\CommandConstants;
+use Whoa\Commands\Exceptions\ConfigurationException;
+use Whoa\Commands\Wrappers\ConsoleIoWrapper;
+use Whoa\Contracts\Commands\IoInterface;
+use Whoa\Contracts\Core\ApplicationInterface;
 use Psr\Container\ContainerInterface;
 use ReflectionClass;
 use ReflectionException;
@@ -32,7 +35,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use function file_exists;
 
 /**
- * @package Limoncello\Commands
+ * @package Whoa\Commands
  */
 trait CommandTrait
 {

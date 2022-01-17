@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Commands;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Tests\Commands;
  * limitations under the License.
  */
 
-use Limoncello\Commands\Wrappers\ConsoleIoWrapper;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Commands;
+
+use Whoa\Commands\Wrappers\ConsoleIoWrapper;
 use Mockery;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @package Limoncello\Tests\Commands
+ * @package Whoa\Tests\Commands
  */
 class ConsoleIoWrapperTest extends TestCase
 {
@@ -65,8 +68,7 @@ class ConsoleIoWrapperTest extends TestCase
      */
     public function testVerbosityConvert(): void
     {
-        $testWrapper = new class extends ConsoleIoWrapper
-        {
+        $testWrapper = new class extends ConsoleIoWrapper {
             /**
              * Constructor.
              */

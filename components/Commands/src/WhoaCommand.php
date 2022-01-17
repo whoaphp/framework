@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Commands;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,24 +17,28 @@ namespace Limoncello\Commands;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Commands;
+
 use Composer\Command\BaseCommand;
 use Exception;
-use Limoncello\Commands\Traits\CommandSerializationTrait;
-use Limoncello\Commands\Traits\CommandTrait;
-use Limoncello\Commands\Wrappers\DataArgumentWrapper;
-use Limoncello\Commands\Wrappers\DataOptionWrapper;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Exceptions\ThrowableHandlerInterface;
+use Whoa\Commands\Traits\CommandSerializationTrait;
+use Whoa\Commands\Traits\CommandTrait;
+use Whoa\Commands\Wrappers\DataArgumentWrapper;
+use Whoa\Commands\Wrappers\DataOptionWrapper;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Exceptions\ThrowableHandlerInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use function assert;
 
 /**
- * @package Limoncello\Commands
+ * @package Whoa\Commands
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class LimoncelloCommand extends BaseCommand
+class WhoaCommand extends BaseCommand
 {
     use CommandTrait, CommandSerializationTrait, ExecuteCommandTrait;
 
@@ -79,7 +82,8 @@ class LimoncelloCommand extends BaseCommand
         array $arguments,
         array $options,
         array $callable
-    ) {
+    )
+    {
         $this->description = $description;
         $this->help        = $help;
         $this->arguments   = $arguments;
@@ -131,9 +135,9 @@ class LimoncelloCommand extends BaseCommand
         $container = null;
         try {
             // There is a tiny hack here. We need editable container and we know that at this point
-            // container still can be edited so we cast it to `LimoncelloContainerInterface`.
+            // container still can be edited so we cast it to `WhoaContainerInterface`.
             $container = $this->createContainer($this->getComposer());
-            assert($container instanceof LimoncelloContainerInterface);
+            assert($container instanceof WhoaContainerInterface);
 
             $this->executeCommand($this->getName(), $this->callable, $this->wrapIo($input, $output), $container);
         } catch (Exception $exception) {

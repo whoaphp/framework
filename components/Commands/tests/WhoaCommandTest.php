@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Commands;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,23 +17,27 @@ namespace Limoncello\Tests\Commands;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Commands;
+
 use Composer\Composer;
 use Exception;
-use Limoncello\Commands\CommandConstants;
-use Limoncello\Commands\LimoncelloCommand;
-use Limoncello\Commands\Traits\CacheFilePathTrait;
-use Limoncello\Commands\Traits\CommandSerializationTrait;
-use Limoncello\Commands\Traits\CommandTrait;
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface;
-use Limoncello\Contracts\Application\CacheSettingsProviderInterface;
-use Limoncello\Contracts\Commands\CommandInterface;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Exceptions\ThrowableHandlerInterface;
-use Limoncello\Contracts\FileSystem\FileSystemInterface;
-use Limoncello\Contracts\Http\ThrowableResponseInterface;
-use Limoncello\Tests\Commands\Data\TestApplication;
-use Limoncello\Tests\Commands\Data\TestCliRoutesConfigurator;
-use Limoncello\Tests\Commands\Data\TestCommand;
+use Whoa\Commands\CommandConstants;
+use Whoa\Commands\WhoaCommand;
+use Whoa\Commands\Traits\CacheFilePathTrait;
+use Whoa\Commands\Traits\CommandSerializationTrait;
+use Whoa\Commands\Traits\CommandTrait;
+use Whoa\Contracts\Application\ApplicationConfigurationInterface;
+use Whoa\Contracts\Application\CacheSettingsProviderInterface;
+use Whoa\Contracts\Commands\CommandInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Exceptions\ThrowableHandlerInterface;
+use Whoa\Contracts\FileSystem\FileSystemInterface;
+use Whoa\Contracts\Http\ThrowableResponseInterface;
+use Whoa\Tests\Commands\Data\TestApplication;
+use Whoa\Tests\Commands\Data\TestCliRoutesConfigurator;
+use Whoa\Tests\Commands\Data\TestCommand;
 use Mockery;
 use Mockery\MockInterface;
 use ReflectionException;
@@ -42,9 +45,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @package Limoncello\Tests\Commands
+ * @package Whoa\Tests\Commands
  */
-class LimoncelloCommandTest extends TestCase
+class WhoaCommandTest extends TestCase
 {
     use CacheFilePathTrait, CommandSerializationTrait, CommandTrait;
 
@@ -54,7 +57,7 @@ class LimoncelloCommandTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         static::$executedFlag = false;
@@ -73,7 +76,7 @@ class LimoncelloCommandTest extends TestCase
 
         $command->shouldReceive('createContainer')->once()->withAnyArgs()->andReturn($this->createContainerMock());
 
-        /** @var LimoncelloCommand $command */
+        /** @var WhoaCommand $command */
 
         $this->assertEquals($name, $command->getName());
 
@@ -109,7 +112,7 @@ class LimoncelloCommandTest extends TestCase
         $command->shouldReceive('createContainer')
             ->once()->withAnyArgs()->andThrow(new Exception('Oops, container failed'));
 
-        /** @var LimoncelloCommand $command */
+        /** @var WhoaCommand $command */
 
         $input    = Mockery::mock(InputInterface::class);
         $output   = Mockery::mock(OutputInterface::class);
@@ -154,7 +157,7 @@ class LimoncelloCommandTest extends TestCase
 
         $command->shouldReceive('createContainer')->once()->withAnyArgs()->andReturn($container);
 
-        /** @var LimoncelloCommand $command */
+        /** @var WhoaCommand $command */
 
         $input    = Mockery::mock(InputInterface::class);
         $output   = Mockery::mock(OutputInterface::class);
@@ -248,12 +251,13 @@ class LimoncelloCommandTest extends TestCase
     /**
      * Test trait method.
      *
-     * @expectedException \Limoncello\Commands\Exceptions\ConfigurationException
-     *
      * @throws ReflectionException
      */
     public function testCreateContainerForInvalidAppClass(): void
     {
+
+        $this->expectException(\Whoa\Commands\Exceptions\ConfigurationException::class);
+
         /** @var Mockery\Mock $composer */
         $composer = Mockery::mock(Composer::class);
 
@@ -320,7 +324,7 @@ class LimoncelloCommandTest extends TestCase
 
         /** @var Mockery\Mock $command */
         $command = Mockery::mock(
-            LimoncelloCommand::class . '[createContainer]',
+            WhoaCommand::class . '[createContainer]',
             [$name, $description, $help, $arguments, $options, $callable]
         );
         $command->shouldAllowMockingProtectedMethods();
@@ -333,7 +337,7 @@ class LimoncelloCommandTest extends TestCase
      */
     private function createContainerMock(): MockInterface
     {
-        $container = Mockery::mock(LimoncelloContainerInterface::class);
+        $container = Mockery::mock(WhoaContainerInterface::class);
 
         // add some app settings to container
         $routesFolder = implode(DIRECTORY_SEPARATOR, [__DIR__, 'Data',]);

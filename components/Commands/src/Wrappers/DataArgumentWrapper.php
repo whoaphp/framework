@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Commands\Wrappers;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Commands\Wrappers;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Commands\CommandInterface;
+declare(strict_types=1);
+
+namespace Whoa\Commands\Wrappers;
+
+use Whoa\Contracts\Commands\CommandInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use function assert;
 use function is_string;
 
 /**
- * @package Limoncello\Commands
+ * @package Whoa\Commands
  */
 class DataArgumentWrapper
 {
@@ -104,7 +107,7 @@ class DataArgumentWrapper
 
         $this->isRequired() === false ?: $mode = (int)$mode | InputArgument::REQUIRED;
         $this->isOptional() === false ?: $mode = (int)$mode | InputArgument::OPTIONAL;
-        $this->isArray() === false    ?: $mode = (int)$mode | InputArgument::IS_ARRAY;
+        $this->isArray() === false ?: $mode = (int)$mode | InputArgument::IS_ARRAY;
 
         return $mode;
     }

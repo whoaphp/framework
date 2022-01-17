@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Commands;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,22 +17,26 @@ namespace Limoncello\Tests\Commands;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Commands;
+
 use Composer\Composer;
 use Composer\IO\NullIO;
-use Limoncello\Commands\CommandConstants;
-use Limoncello\Commands\ComposerCommandProvider;
-use Limoncello\Commands\ComposerPlugin;
+use Whoa\Commands\CommandConstants;
+use Whoa\Commands\ComposerCommandProvider;
+use Whoa\Commands\ComposerPlugin;
 use Mockery;
 
 /**
- * @package Limoncello\Tests\Commands
+ * @package Whoa\Tests\Commands
  */
 class ComposerPluginTest extends TestCase
 {
     /**
      * @inheritdoc
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
     }

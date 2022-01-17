@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Commands;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,18 +17,22 @@ namespace Limoncello\Commands;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Commands;
+
 use Composer\Composer;
 use Composer\IO\IOInterface;
 use Composer\Plugin\Capability\CommandProvider;
 use Composer\Plugin\Capable;
 use Composer\Plugin\PluginInterface;
-use Limoncello\Commands\Traits\CacheFilePathTrait;
+use Whoa\Commands\Traits\CacheFilePathTrait;
 use function assert;
 use function array_merge;
 use function is_array;
 
 /**
- * @package Limoncello\Commands
+ * @package Whoa\Commands
  */
 class ComposerPlugin implements PluginInterface, Capable
 {
@@ -58,8 +61,8 @@ class ComposerPlugin implements PluginInterface, Capable
             $cacheData = require $commandsCacheFile;
             assert(is_array($cacheData));
             foreach ($cacheData as $commandData) {
-                list($name, $description, $help, $arguments, $options, $callable) = $commandData;
-                $commands[] = new LimoncelloCommand($name, $description, $help, $arguments, $options, $callable);
+                [$name, $description, $help, $arguments, $options, $callable] = $commandData;
+                $commands[] = new WhoaCommand($name, $description, $help, $arguments, $options, $callable);
             }
         }
 

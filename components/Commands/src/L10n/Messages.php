@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Commands\L10n;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Commands\L10n;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Commands\L10n;
+
 /**
- * @package Limoncello\Commands
+ * @package Whoa\Commands
  */
 interface Messages
 {
     /**
      * Namespace for string resources.
      */
-    const RESOURCES_NAMESPACE = 'Limoncello.Commands';
+    const RESOURCES_NAMESPACE = 'Whoa.Commands';
 }

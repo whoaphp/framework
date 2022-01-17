@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Commands\Data;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Tests\Commands\Data;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Container\ContainerInterface;
-use Limoncello\Contracts\Core\ApplicationInterface;
-use Limoncello\Contracts\Core\SapiInterface;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Commands\Data;
+
+use Whoa\Contracts\Container\ContainerInterface;
+use Whoa\Contracts\Core\ApplicationInterface;
+use Whoa\Contracts\Core\SapiInterface;
 use Mockery;
 
 /**
- * @package Limoncello\Tests\Commands
+ * @package Whoa\Tests\Commands
  */
 class TestApplication implements ApplicationInterface
 {

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Commands;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +17,20 @@ namespace Limoncello\Tests\Commands;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Commands;
+
 use Composer\Composer;
-use Limoncello\Commands\CommandsCommand;
-use Limoncello\Commands\Traits\CacheFilePathTrait;
-use Limoncello\Commands\Traits\CommandSerializationTrait;
-use Limoncello\Commands\Traits\CommandTrait;
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface as S;
-use Limoncello\Contracts\Application\CacheSettingsProviderInterface;
-use Limoncello\Contracts\Commands\CommandStorageInterface;
-use Limoncello\Contracts\FileSystem\FileSystemInterface;
-use Limoncello\Tests\Commands\Data\TestCommand;
+use Whoa\Commands\CommandsCommand;
+use Whoa\Commands\Traits\CacheFilePathTrait;
+use Whoa\Commands\Traits\CommandSerializationTrait;
+use Whoa\Commands\Traits\CommandTrait;
+use Whoa\Contracts\Application\ApplicationConfigurationInterface as S;
+use Whoa\Contracts\Application\CacheSettingsProviderInterface;
+use Whoa\Contracts\Commands\CommandStorageInterface;
+use Whoa\Contracts\FileSystem\FileSystemInterface;
+use Whoa\Tests\Commands\Data\TestCommand;
 use Mockery;
 use Mockery\Mock;
 use Psr\Container\ContainerInterface;
@@ -36,7 +39,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @package Limoncello\Tests\Commands
+ * @package Whoa\Tests\Commands
  */
 class CommandsCommandTest extends TestCase
 {
@@ -48,7 +51,7 @@ class CommandsCommandTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         static::$executedFlag = false;

@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
 return [
-//    \Limoncello\Commands\L10n\Messages::MSG_KEY => 'Message text.',
+//    \Whoa\Commands\L10n\Messages::MSG_KEY => 'Message text.',
 ];

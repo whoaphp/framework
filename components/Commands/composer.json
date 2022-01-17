@@ -1,11 +1,11 @@
 {
-    "name": "whoaphp/commands",
+    "name": "whoa-php/commands",
     "type": "composer-plugin",
     "description": "Whoa application commands support.",
     "keywords": ["whoa", "framework", "composer", "commands"],
-    "homepage": "https://github.com/whoaphp/framework/tree/master/components/Commands",
+    "homepage": "https://github.com/whoa-php/framework/tree/master/components/Commands",
     "support": {
-        "issues": "https://github.com/whoaphp/framework/issues"
+        "issues": "https://github.com/whoa-php/framework/issues"
     },
     "license": "Apache-2.0",
     "authors": [
@@ -21,8 +21,8 @@
     "require": {
         "php": "^7.4|^8.0",
         "composer-plugin-api": "^1.1",
-        "whoaphp/common": "dev-master",
-        "whoaphp/contracts": "dev-master"
+        "whoa-php/common": "dev-master",
+        "whoa-php/contracts": "dev-master"
     },
     "require-dev": {
         "composer/composer": "^1.5.0",
@@ -34,18 +34,18 @@
     },
     "autoload": {
         "psr-4": {
-            "Limoncello\\Commands\\": "src/"
+            "Whoa\\Commands\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Limoncello\\Tests\\Commands\\": "tests/"
+            "Whoa\\Tests\\Commands\\": "tests/"
         }
     },
     "scripts": {
         "test": ["@test-unit-with-coverage", "@test-cs", "@test-md"],
-        "test-unit": "./vendor/bin/phpunit",
-        "test-unit-with-coverage": "phpdbg -qrr ./vendor/bin/phpunit --coverage-text",
+        "test-unit": "./vendor/bin/phpunit --do-not-cache-result",
+        "test-unit-with-coverage": "phpdbg -qrr ./vendor/bin/phpunit --coverage-text --do-not-cache-result",
         "test-cs": "./vendor/bin/phpcs -p -s --standard=PSR2 ./src ./tests",
         "test-md": "./vendor/bin/phpmd ./src text codesize,controversial,cleancode,design,unusedcode,naming",
         "test-unit-php-7-3": "docker-compose run --rm cli_7_3_php php ./vendor/bin/phpunit",
@@ -60,7 +60,7 @@
         "branch-alias": {
             "dev-develop": "0.10.x-dev"
         },
-        "class": "Limoncello\\Commands\\ComposerPlugin"
+        "class": "Whoa\\Commands\\ComposerPlugin"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
