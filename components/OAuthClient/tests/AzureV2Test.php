@@ -18,21 +18,21 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\OAuthClient;
+namespace Whoa\Tests\OAuthClient;
 
 use Exception;
 use Jose\Component\Core\JWK;
 use Jose\Component\Core\JWKSet;
 use Jose\Easy\Build;
-use Limoncello\OAuthClient\Contracts\JsonWebToken\AzureV2JwtClaimInterface;
-use Limoncello\OAuthClient\Exceptions\InvalidArgumentException;
-use Limoncello\OAuthClient\Clients\AzureV2;
-use Limoncello\OAuthClient\Contracts\IdentityPlatform\IdentityPlatformInterface;
-use Limoncello\OAuthClient\Exceptions\RuntimeException;
-use Limoncello\Tests\OAuthClient\Settings\AzureV2 as S;
+use Whoa\OAuthClient\Contracts\JsonWebToken\AzureV2JwtClaimInterface;
+use Whoa\OAuthClient\Exceptions\InvalidArgumentException;
+use Whoa\OAuthClient\Clients\AzureV2;
+use Whoa\OAuthClient\Contracts\IdentityPlatform\IdentityPlatformInterface;
+use Whoa\OAuthClient\Exceptions\RuntimeException;
+use Whoa\Tests\OAuthClient\Settings\AzureV2 as S;
 
 /**
- * @package Limoncello\Tests\OAuthClient
+ * @package Whoa\Tests\OAuthClient
  */
 class AzureV2Test extends TestCase
 {
@@ -44,6 +44,8 @@ class AzureV2Test extends TestCase
         [$jwk, $serializeJwt] = $this->createValidJwt();
 
         $azureV2 = (new AzureV2())
+//            ->setProviderIdentifier(S::PROVIDER_IDENTIFIER)
+//            ->setProviderName(S::PROVIDER_NAME)
             ->setClientIdentifier(S::CLIENT_IDENTIFIER)
             ->setTenantIdentifier(S::TENANT_IDENTIFIER)
             ->setJwk($jwk)

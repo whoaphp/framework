@@ -18,10 +18,10 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\OAuthClient\Traits;
+namespace Whoa\OAuthClient\Traits;
 
 /**
- * @package Limoncello\OAuthClient
+ * @package Whoa\OAuthClient
  */
 trait JsonTrait
 {

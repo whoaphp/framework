@@ -18,10 +18,10 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\OAuthClient\Contracts\JsonWebToken;
+namespace Whoa\OAuthClient\Contracts\JsonWebToken;
 
 /**
- * @package Limoncello\OAuthClient
+ * @package Whoa\OAuthClient
  */
 interface AzureV2JwtHeaderInterface
 {

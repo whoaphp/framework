@@ -18,14 +18,14 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\OAuthClient\Traits;
+namespace Whoa\OAuthClient\Traits;
 
 use Jose\Component\Core\JWK;
 use Jose\Component\Core\JWKSet;
-use Limoncello\OAuthClient\Exceptions\RuntimeException;
+use Whoa\OAuthClient\Exceptions\RuntimeException;
 
 /**
- * @package Limoncello\OAuthClient
+ * @package Whoa\OAuthClient
  */
 trait JwkTrait
 {

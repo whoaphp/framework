@@ -18,14 +18,14 @@
 
 declare (strict_types=1);
 
-namespace Limoncello\OAuthClient\Contracts\Clients;
+namespace Whoa\OAuthClient\Contracts\Clients;
 
-use Limoncello\OAuthClient\Contracts\IdentityPlatform\IdentityPlatformInterface;
-use Limoncello\OAuthClient\Contracts\JsonWebToken\AzureV2JwtClaimInterface;
-use Limoncello\OAuthClient\Contracts\JsonWebToken\AzureV2JwtHeaderInterface;
+use Whoa\OAuthClient\Contracts\IdentityPlatform\IdentityPlatformInterface;
+use Whoa\OAuthClient\Contracts\JsonWebToken\AzureV2JwtClaimInterface;
+use Whoa\OAuthClient\Contracts\JsonWebToken\AzureV2JwtHeaderInterface;
 
 /**
- * @package Limoncello\OAuthClient
+ * @package Whoa\OAuthClient
  */
 interface AzureV2Interface extends IdentityPlatformInterface
 {

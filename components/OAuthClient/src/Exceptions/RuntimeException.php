@@ -18,15 +18,15 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\OAuthClient\Exceptions;
+namespace Whoa\OAuthClient\Exceptions;
 
 use Exception;
-use Limoncello\Contracts\Exceptions\LimoncelloExceptionInterface;
+use Whoa\Contracts\Exceptions\WhoaExceptionInterface;
 
 /**
- * @package Limoncello\OAuthClient
+ * @package Whoa\OAuthClient
  */
-class RuntimeException extends \RuntimeException implements LimoncelloExceptionInterface
+class RuntimeException extends \RuntimeException implements WhoaExceptionInterface
 {
     /** @var string */
     const ERROR_INVALID_REQUEST = 'error_invalid_request';

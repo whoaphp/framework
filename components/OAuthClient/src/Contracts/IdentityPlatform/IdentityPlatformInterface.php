@@ -18,12 +18,12 @@
 
 declare (strict_types=1);
 
-namespace Limoncello\OAuthClient\Contracts\IdentityPlatform;
+namespace Whoa\OAuthClient\Contracts\IdentityPlatform;
 
 use Jose\Component\Core\JWKSet;
 
 /**
- * @package Limoncello\OAuthClient
+ * @package Whoa\OAuthClient
  */
 interface IdentityPlatformInterface
 {

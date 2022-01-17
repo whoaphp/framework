@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\OAuthClient\Traits;
+namespace Whoa\OAuthClient\Traits;
 
 use Jose\Component\Checker\ClaimChecker;
 use Jose\Component\Checker\ClaimCheckerManager;
@@ -31,10 +31,10 @@ use Jose\Component\Signature\JWSLoader;
 use Jose\Component\Signature\JWSVerifier;
 use Jose\Component\Signature\Serializer\JWSSerializer;
 use Jose\Component\Signature\Serializer\JWSSerializerManager;
-use Limoncello\OAuthClient\Exceptions\InvalidArgumentException;
+use Whoa\OAuthClient\Exceptions\InvalidArgumentException;
 
 /**
- * @package Limoncello\OAuthClient
+ * @package Whoa\OAuthClient
  */
 trait JwtTrait
 {

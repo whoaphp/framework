@@ -18,13 +18,19 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\OAuthClient\Settings;
+namespace Whoa\Tests\OAuthClient\Settings;
 
 /**
- * @package Limoncello\Tests\OAuthClient
+ * @package Whoa\Tests\OAuthClient
  */
 interface AzureV2
 {
+    /** @var string */
+    const PROVIDER_IDENTIFIER = 'generic_provider';
+
+    /** @var string */
+    const PROVIDER_NAME = 'generic provider';
+
     /** @var string */
     const CLIENT_IDENTIFIER = '03f6e001-8322-4e47-aca1-5a8835ae132b';
 

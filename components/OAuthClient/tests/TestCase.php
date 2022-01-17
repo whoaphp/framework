@@ -18,7 +18,7 @@
 
 declare (strict_types=1);
 
-namespace Limoncello\Tests\OAuthClient;
+namespace Whoa\Tests\OAuthClient;
 
 use Jose\Component\Core\AlgorithmManagerFactory;
 use Jose\Component\Signature\Algorithm\EdDSA;
@@ -46,7 +46,7 @@ use Jose\Component\Signature\Serializer\JWSSerializerManagerFactory;
 use Mockery;
 
 /**
- * @package Limoncello\Tests\OAuthClient
+ * @package Whoa\Tests\OAuthClient
  */
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {

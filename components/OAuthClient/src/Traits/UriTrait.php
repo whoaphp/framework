@@ -18,12 +18,12 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\OAuthClient\Traits;
+namespace Whoa\OAuthClient\Traits;
 
-use Limoncello\OAuthClient\Exceptions\InvalidArgumentException;
+use Whoa\OAuthClient\Exceptions\InvalidArgumentException;
 
 /**
- * @package Limoncello\OAuthClient
+ * @package Whoa\OAuthClient
  */
 trait UriTrait
 {

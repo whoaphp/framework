@@ -18,19 +18,19 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\OAuthClient\IdentityPlatform;
+namespace Whoa\OAuthClient\IdentityPlatform;
 
 use Jose\Component\Core\JWKSet;
 use Jose\Component\Signature\JWS;
-use Limoncello\OAuthClient\Contracts\IdentityPlatform\IdentityPlatformInterface;
-use Limoncello\OAuthClient\Traits\HttpClientTrait;
-use Limoncello\OAuthClient\Traits\JsonTrait;
-use Limoncello\OAuthClient\Traits\JwkTrait;
-use Limoncello\OAuthClient\Traits\JwtTrait;
-use Limoncello\OAuthClient\Traits\UriTrait;
+use Whoa\OAuthClient\Contracts\IdentityPlatform\IdentityPlatformInterface;
+use Whoa\OAuthClient\Traits\HttpClientTrait;
+use Whoa\OAuthClient\Traits\JsonTrait;
+use Whoa\OAuthClient\Traits\JwkTrait;
+use Whoa\OAuthClient\Traits\JwtTrait;
+use Whoa\OAuthClient\Traits\UriTrait;
 
 /**
- * @package Limoncello\OAuthClient
+ * @package Whoa\OAuthClient
  */
 abstract class IdentityPlatform implements IdentityPlatformInterface
 {

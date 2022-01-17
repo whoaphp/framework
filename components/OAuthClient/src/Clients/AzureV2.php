@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\OAuthClient\Clients;
+namespace Whoa\OAuthClient\Clients;
 
 use GuzzleHttp\Exception\GuzzleException;
 use Jose\Component\Checker\AlgorithmChecker;
@@ -34,17 +34,17 @@ use Jose\Component\Signature\Algorithm\RS256;
 use Jose\Component\Signature\JWS;
 use Jose\Component\Signature\JWSTokenSupport;
 use Jose\Component\Signature\Serializer\CompactSerializer;
-use Limoncello\JsonWebToken\Checkers\TenantChecker;
-use Limoncello\OAuthClient\Contracts\Clients\AzureV2Interface;
-use Limoncello\OAuthClient\Contracts\IdentityPlatform\IdentityPlatformInterface;
-use Limoncello\OAuthClient\Contracts\JsonWebToken\AzureV2JwtClaimInterface as JwtClaimInterface;
-use Limoncello\OAuthClient\Contracts\JsonWebToken\AzureV2JwtIdentityInterface as JwtIdentityInterface;
-use Limoncello\OAuthClient\Exceptions\InvalidArgumentException;
-use Limoncello\OAuthClient\Exceptions\RuntimeException;
-use Limoncello\OAuthClient\IdentityPlatform\IdentityPlatform;
+use Whoa\JsonWebToken\Checkers\TenantChecker;
+use Whoa\OAuthClient\Contracts\Clients\AzureV2Interface;
+use Whoa\OAuthClient\Contracts\IdentityPlatform\IdentityPlatformInterface;
+use Whoa\OAuthClient\Contracts\JsonWebToken\AzureV2JwtClaimInterface as JwtClaimInterface;
+use Whoa\OAuthClient\Contracts\JsonWebToken\AzureV2JwtIdentityInterface as JwtIdentityInterface;
+use Whoa\OAuthClient\Exceptions\InvalidArgumentException;
+use Whoa\OAuthClient\Exceptions\RuntimeException;
+use Whoa\OAuthClient\IdentityPlatform\IdentityPlatform;
 
 /**
- * @package Limoncello\OAuthClient
+ * @package Whoa\OAuthClient
  */
 class AzureV2 extends IdentityPlatform implements AzureV2Interface
 {
