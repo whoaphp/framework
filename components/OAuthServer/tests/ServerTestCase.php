@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\OAuthServer;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Tests\OAuthServer;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\OAuthServer;
+
 use Exception;
-use Limoncello\OAuthServer\Exceptions\OAuthCodeRedirectException;
-use Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException;
-use Limoncello\OAuthServer\Exceptions\OAuthTokenRedirectException;
-use Limoncello\Tests\OAuthServer\Data\SampleServer;
+use Whoa\OAuthServer\Exceptions\OAuthCodeRedirectException;
+use Whoa\OAuthServer\Exceptions\OAuthTokenBodyException;
+use Whoa\OAuthServer\Exceptions\OAuthTokenRedirectException;
+use Whoa\Tests\OAuthServer\Data\SampleServer;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -31,14 +34,14 @@ use Zend\Diactoros\ServerRequestFactory;
 use Zend\Diactoros\Uri;
 
 /**
- * @package Limoncello\Tests\OAuthServer
+ * @package Whoa\Tests\OAuthServer
  */
 abstract class ServerTestCase extends TestCase
 {
     /**
      * @inheritdoc
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

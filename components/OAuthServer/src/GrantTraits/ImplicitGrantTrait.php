@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\OAuthServer\GrantTraits;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +17,13 @@ namespace Limoncello\OAuthServer\GrantTraits;
  * limitations under the License.
  */
 
-use Limoncello\OAuthServer\Contracts\ClientInterface;
-use Limoncello\OAuthServer\Contracts\Integration\ImplicitIntegrationInterface;
-use Limoncello\OAuthServer\Exceptions\OAuthTokenRedirectException;
+declare(strict_types=1);
+
+namespace Whoa\OAuthServer\GrantTraits;
+
+use Whoa\OAuthServer\Contracts\ClientInterface;
+use Whoa\OAuthServer\Contracts\Integration\ImplicitIntegrationInterface;
+use Whoa\OAuthServer\Exceptions\OAuthTokenRedirectException;
 use Psr\Http\Message\ResponseInterface;
 use function array_key_exists;
 use function explode;
@@ -30,10 +33,10 @@ use function strlen;
 /**
  * Implements Implicit Grant.
  *
- * @package Limoncello\OAuthServer
+ * @package Whoa\OAuthServer
  *
- * @link https://tools.ietf.org/html/rfc6749#section-1.3
- * @link https://tools.ietf.org/html/rfc6749#section-4.2
+ * @link    https://tools.ietf.org/html/rfc6749#section-1.3
+ * @link    https://tools.ietf.org/html/rfc6749#section-4.2
  */
 trait ImplicitGrantTrait
 {
@@ -115,7 +118,8 @@ trait ImplicitGrantTrait
         ClientInterface $client,
         string $redirectUri = null,
         int $maxStateLength = null
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         $state = $this->implicitGetState($parameters);
         if ($maxStateLength !== null && strlen($state) > $maxStateLength) {
             throw new OAuthTokenRedirectException(
@@ -134,7 +138,7 @@ trait ImplicitGrantTrait
         }
 
         $scope = $this->implicitGetScope($parameters);
-        list ($isScopeValid, $scopeList, $isScopeModified) =
+        [$isScopeValid, $scopeList, $isScopeModified] =
             $this->implicitGetIntegration()->implicitValidateScope($client, $scope);
         if ($isScopeValid === false) {
             throw new OAuthTokenRedirectException(

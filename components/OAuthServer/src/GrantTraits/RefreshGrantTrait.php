@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\OAuthServer\GrantTraits;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +17,13 @@ namespace Limoncello\OAuthServer\GrantTraits;
  * limitations under the License.
  */
 
-use Limoncello\OAuthServer\Contracts\ClientInterface;
-use Limoncello\OAuthServer\Contracts\Integration\RefreshIntegrationInterface;
-use Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException;
+declare(strict_types=1);
+
+namespace Whoa\OAuthServer\GrantTraits;
+
+use Whoa\OAuthServer\Contracts\ClientInterface;
+use Whoa\OAuthServer\Contracts\Integration\RefreshIntegrationInterface;
+use Whoa\OAuthServer\Exceptions\OAuthTokenBodyException;
 use Psr\Http\Message\ResponseInterface;
 use function array_diff;
 use function array_key_exists;
@@ -28,7 +31,7 @@ use function explode;
 use function is_string;
 
 /**
- * @package Limoncello\OAuthServer
+ * @package Whoa\OAuthServer
  *
  * @link    https://tools.ietf.org/html/rfc6749#section-6
  */

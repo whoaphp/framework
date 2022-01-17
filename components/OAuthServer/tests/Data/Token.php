@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\OAuthServer\Data;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,14 @@ namespace Limoncello\Tests\OAuthServer\Data;
  * limitations under the License.
  */
 
-use Limoncello\OAuthServer\Contracts\TokenInterface;
+declare(strict_types=1);
+
+namespace Whoa\Tests\OAuthServer\Data;
+
+use Whoa\OAuthServer\Contracts\TokenInterface;
 
 /**
- * @package Limoncello\Tests\OAuthServer
+ * @package Whoa\Tests\OAuthServer
  */
 class Token implements TokenInterface
 {
@@ -65,7 +68,8 @@ class Token implements TokenInterface
         array $scopeIdentifiers = [],
         string $tokenValue = null,
         string $refreshValue = null
-    ) {
+    )
+    {
         $this->clientIdentifier = $clientIdentifier;
         $this->userIdentifier   = $userIdentifier;
         $this->scopeIdentifiers = $scopeIdentifiers;

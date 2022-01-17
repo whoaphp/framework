@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\OAuthServer\Data;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Tests\OAuthServer\Data;
  * limitations under the License.
  */
 
-use Limoncello\OAuthServer\BaseAuthorizationServer;
-use Limoncello\OAuthServer\Contracts\AuthorizationCodeInterface;
-use Limoncello\OAuthServer\Contracts\ClientInterface;
-use Limoncello\OAuthServer\Contracts\GrantTypes;
-use Limoncello\OAuthServer\Contracts\ResponseTypes;
-use Limoncello\OAuthServer\Contracts\TokenInterface;
-use Limoncello\OAuthServer\Exceptions\OAuthRedirectException;
-use Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException;
+declare(strict_types=1);
+
+namespace Whoa\Tests\OAuthServer\Data;
+
+use Whoa\OAuthServer\BaseAuthorizationServer;
+use Whoa\OAuthServer\Contracts\AuthorizationCodeInterface;
+use Whoa\OAuthServer\Contracts\ClientInterface;
+use Whoa\OAuthServer\Contracts\GrantTypes;
+use Whoa\OAuthServer\Contracts\ResponseTypes;
+use Whoa\OAuthServer\Contracts\TokenInterface;
+use Whoa\OAuthServer\Exceptions\OAuthRedirectException;
+use Whoa\OAuthServer\Exceptions\OAuthTokenBodyException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\HtmlResponse;
@@ -42,7 +45,7 @@ use function is_string;
 use function substr;
 
 /**
- * @package Limoncello\Tests\OAuthServer
+ * @package Whoa\Tests\OAuthServer
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -123,7 +126,7 @@ class SampleServer extends BaseAuthorizationServer
             $responseType = $this->getResponseType($parameters);
             switch ($responseType) {
                 case ResponseTypes::AUTHORIZATION_CODE:
-                    list($client, $redirectUri) = $this->getValidClientAndRedirectUri(
+                    [$client, $redirectUri] = $this->getValidClientAndRedirectUri(
                         $this->codeGetClientId($parameters),
                         $this->codeGetRedirectUri($parameters)
                     );
@@ -137,7 +140,7 @@ class SampleServer extends BaseAuthorizationServer
                         );
                     break;
                 case ResponseTypes::IMPLICIT:
-                    list($client, $redirectUri) = $this->getValidClientAndRedirectUri(
+                    [$client, $redirectUri] = $this->getValidClientAndRedirectUri(
                         $this->implicitGetClientId($parameters),
                         $this->implicitGetRedirectUri($parameters)
                     );
@@ -205,7 +208,8 @@ class SampleServer extends BaseAuthorizationServer
         array $scopeList = null,
         string $state = null,
         array $extraParameters = []
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         // This method should return some kind of HTML response with a list of scopes asking resource owner for
         // approval. If the scope is approved the controller should create and save authentication code and
         // make redirect with this code to client.
@@ -246,7 +250,8 @@ class SampleServer extends BaseAuthorizationServer
     public function codeCreateAccessTokenResponse(
         AuthorizationCodeInterface $code,
         array $extraParameters = []
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         $token        = static::TEST_TOKEN;
         $type         = static::TEST_TOKEN_TYPE;
         $expiresIn    = static::TEST_TOKEN_EXPIRES_IN;
@@ -278,7 +283,8 @@ class SampleServer extends BaseAuthorizationServer
         array $scopeList = null,
         string $state = null,
         array $extraParameters = []
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         // This method should return some kind of HTML response with a list of scopes asking resource owner for
         // approval. If the scope is approved the controller should create and save token and return it.
         // As this logic is app specific it's not a part of server code.
@@ -307,7 +313,8 @@ class SampleServer extends BaseAuthorizationServer
         bool $isScopeModified = false,
         array $scope = null,
         array $extraParameters = []
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         // let's pretend we've made a query to our database and checked the credentials
         $areCredentialsValid = $userName === static::TEST_USER_NAME && $password === static::TEST_PASSWORD;
 
@@ -343,7 +350,8 @@ class SampleServer extends BaseAuthorizationServer
         bool $isScopeModified,
         array $scope = null,
         array $extraParameters = []
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         $token     = static::TEST_TOKEN;
         $type      = static::TEST_TOKEN_TYPE;
         $expiresIn = static::TEST_TOKEN_EXPIRES_IN;
@@ -360,11 +368,12 @@ class SampleServer extends BaseAuthorizationServer
      */
     public function refreshCreateAccessTokenResponse(
         ClientInterface $client,
-        TokenInterface  $token,
+        TokenInterface $token,
         bool $isScopeModified,
         array $scope = null,
         array $extraParameters = []
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         $token     = static::TEST_TOKEN_NEW;
         $type      = static::TEST_TOKEN_TYPE;
         $expiresIn = static::TEST_TOKEN_EXPIRES_IN;
@@ -518,7 +527,8 @@ class SampleServer extends BaseAuthorizationServer
         ClientInterface $client,
         AuthorizationCodeInterface $code,
         string $state = null
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         // for authorization code format @link https://tools.ietf.org/html/rfc6749#section-4.1.2
         $parameters = $this->filterNulls([
             'code'  => $code->getCode(),
@@ -528,7 +538,7 @@ class SampleServer extends BaseAuthorizationServer
         $fragment = $this->encodeAsXWwwFormUrlencoded($parameters);
 
         $redirectUri = $this->selectValidRedirectUri($client, $code->getRedirectUriString());
-        $response = new RedirectResponse((new Uri($redirectUri))->withFragment($fragment));
+        $response    = new RedirectResponse((new Uri($redirectUri))->withFragment($fragment));
 
         return $response;
     }
@@ -550,7 +560,8 @@ class SampleServer extends BaseAuthorizationServer
         int $expiresIn,
         array $scopeIdentifiers = null,
         string $state = null
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         // for access token format @link https://tools.ietf.org/html/rfc6749#section-4.2.2
         //
         // Also from #4.2.2
@@ -591,7 +602,8 @@ class SampleServer extends BaseAuthorizationServer
         int $expiresIn,
         string $refreshToken = null,
         array $scopeList = null
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         // for access token format @link https://tools.ietf.org/html/rfc6749#section-5.1
         $scope      = $scopeList === null ? null : implode(' ', $scopeList);
         $parameters = $this->filterNulls([
@@ -623,8 +635,8 @@ class SampleServer extends BaseAuthorizationServer
             'error_uri'         => $exception->getErrorUri(),
             'state'             => $exception->getState(),
         ]);
-        $fragment = $this->encodeAsXWwwFormUrlencoded($parameters);
-        $uri      = (new Uri($exception->getRedirectUri()))->withFragment($fragment);
+        $fragment   = $this->encodeAsXWwwFormUrlencoded($parameters);
+        $uri        = (new Uri($exception->getRedirectUri()))->withFragment($fragment);
 
         $response = new RedirectResponse($uri, 302, $exception->getHttpHeaders());
 

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\OAuthServer\Contracts\Integration;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\OAuthServer\Contracts\Integration;
  * limitations under the License.
  */
 
-use Limoncello\OAuthServer\Contracts\ClientInterface;
-use Limoncello\OAuthServer\Contracts\TokenInterface;
+declare(strict_types=1);
+
+namespace Whoa\OAuthServer\Contracts\Integration;
+
+use Whoa\OAuthServer\Contracts\ClientInterface;
+use Whoa\OAuthServer\Contracts\TokenInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * Refresh token integration interface for server.
  *
- * @package Limoncello\OAuthServer
+ * @package Whoa\OAuthServer
  */
 interface RefreshIntegrationInterface extends IntegrationInterface
 {

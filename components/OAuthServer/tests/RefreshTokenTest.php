@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\OAuthServer;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,20 +17,24 @@ namespace Limoncello\Tests\OAuthServer;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\OAuthServer;
+
 use Exception;
-use Limoncello\OAuthServer\Contracts\ClientInterface;
-use Limoncello\OAuthServer\Contracts\TokenInterface;
-use Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException;
-use Limoncello\Tests\OAuthServer\Data\Client;
-use Limoncello\Tests\OAuthServer\Data\RepositoryInterface;
-use Limoncello\Tests\OAuthServer\Data\SampleServer;
-use Limoncello\Tests\OAuthServer\Data\Token;
+use Whoa\OAuthServer\Contracts\ClientInterface;
+use Whoa\OAuthServer\Contracts\TokenInterface;
+use Whoa\OAuthServer\Exceptions\OAuthTokenBodyException;
+use Whoa\Tests\OAuthServer\Data\Client;
+use Whoa\Tests\OAuthServer\Data\RepositoryInterface;
+use Whoa\Tests\OAuthServer\Data\SampleServer;
+use Whoa\Tests\OAuthServer\Data\Token;
 use Mockery;
 use Mockery\Mock;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * @package Limoncello\Tests\OAuthServer
+ * @package Whoa\Tests\OAuthServer
  */
 class RefreshTokenTest extends ServerTestCase
 {
@@ -241,7 +244,8 @@ class RefreshTokenTest extends ServerTestCase
     private function createClientRepositoryMock(
         ClientInterface $client,
         TokenInterface $token = null
-    ): RepositoryInterface {
+    ): RepositoryInterface
+    {
         /** @var Mock $mock */
         $mock = Mockery::mock(RepositoryInterface::class);
         $mock->shouldReceive('readClient')->zeroOrMoreTimes()->with($client->getIdentifier())->andReturn($client);
@@ -284,7 +288,8 @@ class RefreshTokenTest extends ServerTestCase
         string $scope = null,
         string $clientId = null,
         array $headers = []
-    ) {
+    )
+    {
         $request = $this->createServerRequest([
             'grant_type'    => 'refresh_token',
             'refresh_token' => $refreshValue,
@@ -304,7 +309,8 @@ class RefreshTokenTest extends ServerTestCase
         int $expiresIn = 3600,
         string $refreshToken = SampleServer::TEST_REFRESH_TOKEN_NEW,
         string $scope = null
-    ): array {
+    ): array
+    {
         return parent::getExpectedBodyToken($token, $type, $expiresIn, $refreshToken, $scope);
     }
 
@@ -339,7 +345,8 @@ class RefreshTokenTest extends ServerTestCase
         array $scopeIdentifiers = SampleServer::TEST_SCOPES,
         string $tokenValue = SampleServer::TEST_TOKEN,
         string $refreshValue = SampleServer::TEST_REFRESH_TOKEN
-    ): TokenInterface {
+    ): TokenInterface
+    {
         return new Token($client->getIdentifier(), $userIdentifier, $scopeIdentifiers, $tokenValue, $refreshValue);
     }
 }

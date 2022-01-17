@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\OAuthServer;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,18 +17,22 @@ namespace Limoncello\Tests\OAuthServer;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\OAuthServer;
+
 use Exception;
-use Limoncello\OAuthServer\Contracts\ClientInterface;
-use Limoncello\OAuthServer\Exceptions\OAuthTokenRedirectException;
-use Limoncello\Tests\OAuthServer\Data\Client;
-use Limoncello\Tests\OAuthServer\Data\RepositoryInterface;
-use Limoncello\Tests\OAuthServer\Data\SampleServer;
+use Whoa\OAuthServer\Contracts\ClientInterface;
+use Whoa\OAuthServer\Exceptions\OAuthTokenRedirectException;
+use Whoa\Tests\OAuthServer\Data\Client;
+use Whoa\Tests\OAuthServer\Data\RepositoryInterface;
+use Whoa\Tests\OAuthServer\Data\SampleServer;
 use Mockery;
 use Mockery\Mock;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * @package Limoncello\Tests\OAuthServer
+ * @package Whoa\Tests\OAuthServer
  */
 class ImplicitServerTest extends ServerTestCase
 {
@@ -63,7 +66,7 @@ class ImplicitServerTest extends ServerTestCase
         $server = new SampleServer($this->createRepositoryMock($this->createClient()));
         $state  = '123';
 
-        $request = $this->createPostAuthRequest(
+        $request  = $this->createPostAuthRequest(
             static::CLIENT_ID,
             static::REDIRECT_URI_1,
             static::CLIENT_DEFAULT_SCOPE,
@@ -87,7 +90,7 @@ class ImplicitServerTest extends ServerTestCase
         $server = new SampleServer($this->createRepositoryMock($client));
         $state  = '123';
 
-        $request = $this->createPostAuthRequest(
+        $request  = $this->createPostAuthRequest(
             static::CLIENT_ID,
             static::REDIRECT_URI_1,
             '', // <-- empty scope
@@ -160,7 +163,7 @@ class ImplicitServerTest extends ServerTestCase
         $server = new SampleServer($this->createRepositoryMock($client));
 
         // limit max state length so it will cause an error
-        $state  = '123';
+        $state = '123';
         $server->setMaxStateLength(1);
 
         $request  = $this->createGetAuthRequest(
@@ -268,7 +271,8 @@ class ImplicitServerTest extends ServerTestCase
         string $redirectUri = null,
         string $scope = null,
         string $state = null
-    ) {
+    )
+    {
         $request = $this->createServerRequest(null, [
             'response_type' => 'token',
             'client_id'     => $clientId,
@@ -293,7 +297,8 @@ class ImplicitServerTest extends ServerTestCase
         string $redirectUri = null,
         string $scope = null,
         string $state = null
-    ) {
+    )
+    {
         $request = $this->createServerRequest([
             'response_type' => 'token',
             'client_id'     => $clientId,

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\OAuthServer;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,26 +17,30 @@ namespace Limoncello\OAuthServer;
  * limitations under the License.
  */
 
-use Limoncello\OAuthServer\Contracts\AuthorizationServerInterface;
-use Limoncello\OAuthServer\Contracts\ClientInterface;
-use Limoncello\OAuthServer\Contracts\Integration\ClientIntegrationInterface as CII;
-use Limoncello\OAuthServer\Contracts\Integration\CodeIntegrationInterface as AII;
-use Limoncello\OAuthServer\Contracts\Integration\ImplicitIntegrationInterface as III;
-use Limoncello\OAuthServer\Contracts\Integration\PasswordIntegrationInterface as PII;
-use Limoncello\OAuthServer\Contracts\Integration\RefreshIntegrationInterface as RII;
-use Limoncello\OAuthServer\GrantTraits\ClientGrantTrait;
-use Limoncello\OAuthServer\GrantTraits\CodeGrantTrait;
-use Limoncello\OAuthServer\GrantTraits\ImplicitGrantTrait;
-use Limoncello\OAuthServer\GrantTraits\PasswordGrantTrait;
-use Limoncello\OAuthServer\GrantTraits\RefreshGrantTrait;
-use Limoncello\OAuthServer\ServerTraits\OAuthServerTrait;
+declare(strict_types=1);
+
+namespace Whoa\OAuthServer;
+
+use Whoa\OAuthServer\Contracts\AuthorizationServerInterface;
+use Whoa\OAuthServer\Contracts\ClientInterface;
+use Whoa\OAuthServer\Contracts\Integration\ClientIntegrationInterface as CII;
+use Whoa\OAuthServer\Contracts\Integration\CodeIntegrationInterface as AII;
+use Whoa\OAuthServer\Contracts\Integration\ImplicitIntegrationInterface as III;
+use Whoa\OAuthServer\Contracts\Integration\PasswordIntegrationInterface as PII;
+use Whoa\OAuthServer\Contracts\Integration\RefreshIntegrationInterface as RII;
+use Whoa\OAuthServer\GrantTraits\ClientGrantTrait;
+use Whoa\OAuthServer\GrantTraits\CodeGrantTrait;
+use Whoa\OAuthServer\GrantTraits\ImplicitGrantTrait;
+use Whoa\OAuthServer\GrantTraits\PasswordGrantTrait;
+use Whoa\OAuthServer\GrantTraits\RefreshGrantTrait;
+use Whoa\OAuthServer\ServerTraits\OAuthServerTrait;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use function assert;
 use function http_build_query;
 
 /**
- * @package Limoncello\OAuthServer
+ * @package Whoa\OAuthServer
  */
 abstract class BaseAuthorizationServer implements AuthorizationServerInterface, AII, III, PII, CII, RII
 {

@@ -1,11 +1,11 @@
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/limoncello-php-dist/redis-tagged-cache/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/limoncello-php-dist/redis-tagged-cache/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/limoncello-php-dist/redis-tagged-cache/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/limoncello-php-dist/redis-tagged-cache/?branch=master)
-[![Build Status](https://travis-ci.org/limoncello-php-dist/redis-tagged-cache.svg?branch=master)](https://travis-ci.org/limoncello-php-dist/redis-tagged-cache)
-[![License](https://img.shields.io/github/license/limoncello-php/framework.svg)](https://packagist.org/packages/limoncello-php/framework)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/whoa-php-dist/redis-tagged-cache/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/whoa-php-dist/redis-tagged-cache/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/whoa-php-dist/redis-tagged-cache/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/whoa-php-dist/redis-tagged-cache/?branch=master)
+[![Build Status](https://travis-ci.org/whoa-php-dist/redis-tagged-cache.svg?branch=master)](https://travis-ci.org/whoa-php-dist/redis-tagged-cache)
+[![License](https://img.shields.io/github/license/whoa-php/framework.svg)](https://packagist.org/packages/whoa-php/framework)
 
 ## Summary
 
-This is component for [Limoncello Framework](https://github.com/limoncello-php/framework) that adds storing extra information (tags) in [Redis](https://redis.io/) cache.
+This is component for [Whoa Framework](https://github.com/whoa-php/framework) that adds storing extra information (tags) in [Redis](https://redis.io/) cache.
 
 Each method works in transactional way. The methods implement
 
@@ -18,7 +18,7 @@ It is designed to be easily combined with classes that work with Redis cache. Al
 Integration example
 
 ```php
-use Limoncello\RedisTaggedCache\RedisTaggedCacheTrait;
+use Whoa\RedisTaggedCache\RedisTaggedCacheTrait;
 use Redis;
 
 /** @var Redis $redis */
@@ -45,7 +45,7 @@ $cache->removeTaggedValue('key1');
 $cache->invalidateTag('author:1');
 ```
 
-[More info](https://github.com/limoncello-php/framework).
+[More info](https://github.com/whoa-php/framework).
 
 ## Testing
 

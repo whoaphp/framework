@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\OAuthServer;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,17 +17,21 @@ namespace Limoncello\Tests\OAuthServer;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\OAuthServer;
+
 use Exception;
-use Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException;
-use Limoncello\Tests\OAuthServer\Data\Client;
-use Limoncello\Tests\OAuthServer\Data\RepositoryInterface;
-use Limoncello\Tests\OAuthServer\Data\SampleServer;
+use Whoa\OAuthServer\Exceptions\OAuthTokenBodyException;
+use Whoa\Tests\OAuthServer\Data\Client;
+use Whoa\Tests\OAuthServer\Data\RepositoryInterface;
+use Whoa\Tests\OAuthServer\Data\SampleServer;
 use Mockery;
 use Mockery\Mock;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * @package Limoncello\Tests\OAuthServer
+ * @package Whoa\Tests\OAuthServer
  */
 class PasswordServerTest extends ServerTestCase
 {
@@ -261,7 +264,8 @@ class PasswordServerTest extends ServerTestCase
         string $password = null,
         string $scope = null,
         array $headers = []
-    ) {
+    )
+    {
         $request = $this->createServerRequest([
             'grant_type' => $grantType,
             'username'   => $username,

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\OAuthServer;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,19 +17,23 @@ namespace Limoncello\Tests\OAuthServer;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\OAuthServer;
+
 use Exception;
-use Limoncello\OAuthServer\Contracts\ClientInterface;
-use Limoncello\OAuthServer\Exceptions\OAuthCodeRedirectException;
-use Limoncello\OAuthServer\Exceptions\OAuthTokenBodyException;
-use Limoncello\Tests\OAuthServer\Data\Client;
-use Limoncello\Tests\OAuthServer\Data\RepositoryInterface;
-use Limoncello\Tests\OAuthServer\Data\SampleServer;
+use Whoa\OAuthServer\Contracts\ClientInterface;
+use Whoa\OAuthServer\Exceptions\OAuthCodeRedirectException;
+use Whoa\OAuthServer\Exceptions\OAuthTokenBodyException;
+use Whoa\Tests\OAuthServer\Data\Client;
+use Whoa\Tests\OAuthServer\Data\RepositoryInterface;
+use Whoa\Tests\OAuthServer\Data\SampleServer;
 use Mockery;
 use Mockery\Mock;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * @package Limoncello\Tests\OAuthServer
+ * @package Whoa\Tests\OAuthServer
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
@@ -189,7 +192,7 @@ class CodeServerTest extends ServerTestCase
         $server = new SampleServer($this->createRepositoryMock($client));
 
         // limit max state length so it will cause an error
-        $state  = '123';
+        $state = '123';
         $server->setMaxStateLength(1);
 
         $request  = $this->createAuthRequest(
@@ -503,7 +506,8 @@ class CodeServerTest extends ServerTestCase
         string $redirectUri = null,
         string $scope = null,
         string $state = null
-    ) {
+    )
+    {
         $request = $this->createServerRequest(null, [
             'response_type' => 'code',
             'client_id'     => $clientId,
@@ -528,7 +532,8 @@ class CodeServerTest extends ServerTestCase
         string $code,
         string $redirectUri = null,
         array $headers = null
-    ) {
+    )
+    {
         $request = $this->createServerRequest([
             'grant_type'   => 'authorization_code',
             'code'         => $code,
