@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\RedisTaggedCache;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,12 @@ namespace Limoncello\RedisTaggedCache;
  * limitations under the License.
  */
 
-use Limoncello\RedisTaggedCache\Exceptions\RedisTaggedCacheException;
-use Limoncello\RedisTaggedCache\Scripts\RedisTaggedScripts;
+declare(strict_types=1);
+
+namespace Whoa\RedisTaggedCache;
+
+use Whoa\RedisTaggedCache\Exceptions\RedisTaggedCacheException;
+use Whoa\RedisTaggedCache\Scripts\RedisTaggedScripts;
 use Redis;
 use RuntimeException;
 use function array_values;
@@ -27,7 +30,7 @@ use function assert;
 use function json_encode;
 
 /**
- * @package Limoncello\RedisTaggedCache
+ * @package Whoa\RedisTaggedCache
  */
 trait RedisTaggedCacheTrait
 {
@@ -45,6 +48,7 @@ trait RedisTaggedCacheTrait
      * @var string
      */
     private $internalTagsPrefix = '_:t:';
+
     /**
      * @return Redis
      */
@@ -85,8 +89,7 @@ trait RedisTaggedCacheTrait
         );
 
         if ($isOk === false) {
-            throw new class extends RuntimeException implements RedisTaggedCacheException
-            {
+            throw new class extends RuntimeException implements RedisTaggedCacheException {
             };
         }
     }
@@ -107,8 +110,7 @@ trait RedisTaggedCacheTrait
         );
 
         if ($isOk === false) {
-            throw new class extends RuntimeException implements RedisTaggedCacheException
-            {
+            throw new class extends RuntimeException implements RedisTaggedCacheException {
             };
         }
     }
@@ -129,8 +131,7 @@ trait RedisTaggedCacheTrait
         );
 
         if ($isOk === false) {
-            throw new class extends RuntimeException implements RedisTaggedCacheException
-            {
+            throw new class extends RuntimeException implements RedisTaggedCacheException {
             };
         }
     }

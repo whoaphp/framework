@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Limoncello\RedisTaggedCache\Scripts;
+namespace Whoa\RedisTaggedCache\Scripts;
 
 /**
  * Copyright 2015-2019 info@neomerx.com
@@ -21,7 +21,7 @@ namespace Limoncello\RedisTaggedCache\Scripts;
 use function assert;
 
 /**
- * @package Limoncello\RedisTaggedCache
+ * @package Whoa\RedisTaggedCache
  */
 class RedisTaggedScripts
 {
