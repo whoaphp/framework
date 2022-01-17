@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Templates;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,21 +17,25 @@ namespace Limoncello\Tests\Templates;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Commands\IoInterface;
-use Limoncello\Contracts\Container\ContainerInterface;
-use Limoncello\Contracts\FileSystem\FileSystemInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Templates\Commands\TemplatesCommand;
-use Limoncello\Templates\Contracts\TemplatesCacheInterface;
-use Limoncello\Templates\Package\TemplatesSettings;
-use Limoncello\Tests\Templates\Data\Templates;
-use Limoncello\Tests\Templates\Data\TestContainer;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Templates;
+
+use Whoa\Contracts\Commands\IoInterface;
+use Whoa\Contracts\Container\ContainerInterface;
+use Whoa\Contracts\FileSystem\FileSystemInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Templates\Commands\TemplatesCommand;
+use Whoa\Templates\Contracts\TemplatesCacheInterface;
+use Whoa\Templates\Package\TemplatesSettings;
+use Whoa\Tests\Templates\Data\Templates;
+use Whoa\Tests\Templates\Data\TestContainer;
 use Mockery;
 use Mockery\Mock;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @package Limoncello\Tests\Templates
+ * @package Whoa\Tests\Templates
  */
 class CommandsTest extends TestCase
 {

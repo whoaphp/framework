@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Templates;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,12 @@ namespace Limoncello\Templates;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Templates\TemplatesInterface;
-use Limoncello\Templates\Contracts\TemplatesCacheInterface;
+declare(strict_types=1);
+
+namespace Whoa\Templates;
+
+use Whoa\Contracts\Templates\TemplatesInterface;
+use Whoa\Templates\Contracts\TemplatesCacheInterface;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -27,7 +30,7 @@ use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 
 /**
- * @package Limoncello\Templates
+ * @package Whoa\Templates
  */
 class TwigTemplates implements TemplatesInterface, TemplatesCacheInterface
 {

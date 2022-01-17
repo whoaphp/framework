@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Templates\Package;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,17 +17,21 @@ namespace Limoncello\Templates\Package;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Contracts\Templates\TemplatesInterface;
-use Limoncello\Templates\Contracts\TemplatesCacheInterface;
-use Limoncello\Templates\Package\TemplatesSettings as C;
-use Limoncello\Templates\TwigTemplates;
+declare(strict_types=1);
+
+namespace Whoa\Templates\Package;
+
+use Whoa\Contracts\Application\ContainerConfiguratorInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Contracts\Templates\TemplatesInterface;
+use Whoa\Templates\Contracts\TemplatesCacheInterface;
+use Whoa\Templates\Package\TemplatesSettings as C;
+use Whoa\Templates\TwigTemplates;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 
 /**
- * @package Limoncello\Templates
+ * @package Whoa\Templates
  */
 class TwigTemplatesContainerConfigurator implements ContainerConfiguratorInterface
 {
@@ -38,7 +41,7 @@ class TwigTemplatesContainerConfigurator implements ContainerConfiguratorInterfa
     /**
      * @inheritdoc
      */
-    public static function configureContainer(LimoncelloContainerInterface $container): void
+    public static function configureContainer(WhoaContainerInterface $container): void
     {
         $container[TemplatesInterface::class] = function (PsrContainerInterface $container): TemplatesInterface {
             $settings  = $container->get(SettingsProviderInterface::class)->get(C::class);

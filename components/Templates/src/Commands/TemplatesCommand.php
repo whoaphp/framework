@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Templates\Commands;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,25 +17,29 @@ namespace Limoncello\Templates\Commands;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Commands\CommandInterface;
-use Limoncello\Contracts\Commands\IoInterface;
-use Limoncello\Contracts\FileSystem\FileSystemInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Templates\Contracts\TemplatesCacheInterface;
-use Limoncello\Templates\Package\TemplatesSettings;
+declare(strict_types=1);
+
+namespace Whoa\Templates\Commands;
+
+use Whoa\Contracts\Commands\CommandInterface;
+use Whoa\Contracts\Commands\IoInterface;
+use Whoa\Contracts\FileSystem\FileSystemInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Templates\Contracts\TemplatesCacheInterface;
+use Whoa\Templates\Package\TemplatesSettings;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
 /**
- * @package Limoncello\Templates
+ * @package Whoa\Templates
  */
 class TemplatesCommand implements CommandInterface
 {
     /**
      * Command name.
      */
-    const NAME = 'l:templates';
+    const NAME = 'w:templates';
 
     /** Argument name */
     const ARG_ACTION = 'action';

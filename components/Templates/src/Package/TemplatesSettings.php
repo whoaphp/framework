@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Templates\Package;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,12 @@ namespace Limoncello\Templates\Package;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface as A;
-use Limoncello\Contracts\Settings\Packages\TemplatesSettingsInterface;
+declare(strict_types=1);
+
+namespace Whoa\Templates\Package;
+
+use Whoa\Contracts\Application\ApplicationConfigurationInterface as A;
+use Whoa\Contracts\Settings\Packages\TemplatesSettingsInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -33,7 +36,7 @@ use function realpath;
 use function str_replace;
 
 /**
- * @package Limoncello\Templates
+ * @package Whoa\Templates
  */
 class TemplatesSettings implements TemplatesSettingsInterface
 {

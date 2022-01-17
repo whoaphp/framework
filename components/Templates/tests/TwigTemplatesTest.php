@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Templates;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +17,11 @@ namespace Limoncello\Tests\Templates;
  * limitations under the License.
  */
 
-use Limoncello\Templates\TwigTemplates;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Templates;
+
+use Whoa\Templates\TwigTemplates;
 use Mockery;
 use Mockery\Mock;
 use PHPUnit\Framework\TestCase;
@@ -28,7 +31,7 @@ use Twig\Error\SyntaxError;
 use Twig\Environment;
 
 /**
- * @package Limoncello\Tests\Templates
+ * @package Whoa\Tests\Templates
  */
 class TwigTemplatesTest extends TestCase
 {
@@ -65,8 +68,8 @@ class TwigTemplatesTest extends TestCase
     public function testGetTwig()
     {
         // '[]' means no methods will be mocked
-        /** @var TwigTemplates $templates */
-        $templates = Mockery::mock(TwigTemplates::class . '[]', [
+        /** @var Mock $templates */
+        $templates = Mockery::mock(TwigTemplates::class . '[getTwig]', [
             __DIR__,
             __DIR__,
             __DIR__,
@@ -74,6 +77,12 @@ class TwigTemplatesTest extends TestCase
             false,
         ]);
 
+        /** @var Mock $twig */
+        $twig = Mockery::mock(Environment::class);
+
+        $templates->shouldReceive('getTwig')->once()->withNoArgs()->andReturn($twig);
+
+        /** @var TwigTemplates $templates */
         $this->assertNotNull($templates->getTwig());
     }
 

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
-
-namespace Limoncello\Tests\Templates;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,20 +17,24 @@ namespace Limoncello\Tests\Templates;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Contracts\Templates\TemplatesInterface;
-use Limoncello\Templates\Contracts\TemplatesCacheInterface;
-use Limoncello\Templates\Package\TwigTemplatesContainerConfigurator;
-use Limoncello\Templates\Package\TwigTemplatesProvider;
-use Limoncello\Templates\Package\TemplatesSettings;
-use Limoncello\Tests\Templates\Data\Templates;
-use Limoncello\Tests\Templates\Data\TestContainer;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Templates;
+
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Contracts\Templates\TemplatesInterface;
+use Whoa\Templates\Contracts\TemplatesCacheInterface;
+use Whoa\Templates\Package\TwigTemplatesContainerConfigurator;
+use Whoa\Templates\Package\TwigTemplatesProvider;
+use Whoa\Templates\Package\TemplatesSettings;
+use Whoa\Tests\Templates\Data\Templates;
+use Whoa\Tests\Templates\Data\TestContainer;
 use Mockery;
 use Mockery\Mock;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @package Limoncello\Tests\Templates
+ * @package Whoa\Tests\Templates
  */
 class PackageTest extends TestCase
 {
@@ -89,6 +92,8 @@ class PackageTest extends TestCase
 
         $this->assertNotEmpty($settings[Templates::KEY_CACHE_FOLDER]);
         $this->assertNotEmpty($settings[Templates::KEY_TEMPLATES_FOLDER]);
-        $this->assertEquals(['Samples/en/test.html.twig'], $settings[Templates::KEY_TEMPLATES_LIST]);
+
+        $sampleTemplatePath = 'Samples' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'test.html.twig';
+        $this->assertEquals([$sampleTemplatePath], $settings[Templates::KEY_TEMPLATES_LIST]);
     }
 }
