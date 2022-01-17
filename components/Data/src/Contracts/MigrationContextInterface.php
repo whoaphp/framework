@@ -1,9 +1,8 @@
-<?php declare (strict_types = 1);
-
-namespace Limoncello\Data\Contracts;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,14 @@ namespace Limoncello\Data\Contracts;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
+declare (strict_types=1);
+
+namespace Whoa\Data\Contracts;
+
+use Whoa\Contracts\Data\ModelSchemaInfoInterface;
 
 /**
- * @package Limoncello\Data
+ * @package Whoa\Data
  */
 interface MigrationContextInterface
 {

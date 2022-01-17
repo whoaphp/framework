@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 
 declare (strict_types=1);
 
-namespace Limoncello\Data\Migrations;
+namespace Whoa\Data\Migrations;
 
 use Closure;
 use Doctrine\DBAL\Connection;
@@ -28,13 +28,13 @@ use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
-use Limoncello\Contracts\Data\MigrationInterface;
-use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
-use Limoncello\Contracts\Data\RelationshipTypes;
-use Limoncello\Contracts\Data\TimestampFields;
-use Limoncello\Contracts\Data\UuidFields;
-use Limoncello\Data\Contracts\MigrationContextInterface;
-use Limoncello\Doctrine\Types\UuidType;
+use Whoa\Contracts\Data\MigrationInterface;
+use Whoa\Contracts\Data\ModelSchemaInfoInterface;
+use Whoa\Contracts\Data\RelationshipTypes;
+use Whoa\Contracts\Data\TimestampFields;
+use Whoa\Contracts\Data\UuidFields;
+use Whoa\Data\Contracts\MigrationContextInterface;
+use Whoa\Doctrine\Types\UuidType;
 use Psr\Container\ContainerInterface;
 use function array_key_exists;
 use function assert;
@@ -43,7 +43,7 @@ use function implode;
 use function is_string;
 
 /**
- * @package Limoncello\Data
+ * @package Whoa\Data
  */
 trait MigrationTrait
 {

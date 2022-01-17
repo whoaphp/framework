@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +17,14 @@
  * limitations under the License.
  */
 
-
 declare (strict_types=1);
 
-namespace Limoncello\Tests\Data;
+namespace Whoa\Tests\Data;
 
 use Mockery;
 
 /**
- * @package Limoncello\Tests\Data
+ * @package Whoa\Tests\Data
  */
 class TestCase extends \PHPUnit\Framework\TestCase
 {

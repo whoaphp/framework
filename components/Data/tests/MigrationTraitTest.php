@@ -1,9 +1,8 @@
-<?php declare (strict_types=1);
-
-namespace Limoncello\Tests\Data;
+<?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +17,10 @@ namespace Limoncello\Tests\Data;
  * limitations under the License.
  */
 
+declare (strict_types=1);
+
+namespace Whoa\Tests\Data;
+
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Exception as DBALException;
@@ -25,23 +28,23 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
-use Limoncello\Contracts\Data\MigrationInterface;
-use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
-use Limoncello\Contracts\Data\RelationshipTypes;
-use Limoncello\Contracts\Data\TimestampFields as TSF;
-use Limoncello\Contracts\Data\UuidFields as UF;
-use Limoncello\Data\Migrations\MigrationTrait;
-use Limoncello\Data\Migrations\RawNameType;
-use Limoncello\Doctrine\Types\UuidType;
-use Limoncello\Tests\Data\Data\TestContainer;
-use Limoncello\Tests\Data\Data\TestTableMigration;
+use Whoa\Contracts\Data\MigrationInterface;
+use Whoa\Contracts\Data\ModelSchemaInfoInterface;
+use Whoa\Contracts\Data\RelationshipTypes;
+use Whoa\Contracts\Data\TimestampFields as TSF;
+use Whoa\Contracts\Data\UuidFields as UF;
+use Whoa\Data\Migrations\MigrationTrait;
+use Whoa\Data\Migrations\RawNameType;
+use Whoa\Doctrine\Types\UuidType;
+use Whoa\Tests\Data\Data\TestContainer;
+use Whoa\Tests\Data\Data\TestTableMigration;
 use Mockery;
 use Mockery\Mock;
 use Mockery\MockInterface;
 use Psr\Container\ContainerInterface;
 
 /**
- * @package Limoncello\Tests\Data
+ * @package Whoa\Tests\Data
  */
 class MigrationTraitTest extends TestCase implements MigrationInterface
 {
@@ -92,10 +95,10 @@ class MigrationTraitTest extends TestCase implements MigrationInterface
         $columnNonNullDateTime  = 'col_non_null_datetime';
         $columnNullableDateTime = 'col_nullable_datetime';
 
-        $columnUuid           = 'col_uuid';
-        $columnNullableUuid   = 'col_nullable_uuid';
-        $columnTime           = 'col_time';
-        $columnNullableTime   = 'col_nullable_time';
+        $columnUuid         = 'col_uuid';
+        $columnNullableUuid = 'col_nullable_uuid';
+        $columnTime         = 'col_time';
+        $columnNullableTime = 'col_nullable_time';
 
         $defaultUInt    = 123;
         $columnToCreate = [

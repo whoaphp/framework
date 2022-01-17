@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 
 declare (strict_types=1);
 
-namespace Limoncello\Data\Seeds;
+namespace Whoa\Data\Seeds;
 
 use Closure;
 use DateTimeImmutable;
@@ -29,16 +29,16 @@ use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Types\Type;
 use Exception;
-use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
-use Limoncello\Contracts\Data\SeedInterface;
-use Limoncello\Doctrine\Traits\UuidTypeTrait;
+use Whoa\Contracts\Data\ModelSchemaInfoInterface;
+use Whoa\Contracts\Data\SeedInterface;
+use Whoa\Doctrine\Traits\UuidTypeTrait;
 use PDO;
 use Psr\Container\ContainerInterface;
 use function array_key_exists;
 use function assert;
 
 /**
- * @package Limoncello\Data
+ * @package Whoa\Data
  */
 trait SeedTrait
 {

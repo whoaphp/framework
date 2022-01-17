@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,16 +19,16 @@
 
 declare (strict_types=1);
 
-namespace Limoncello\Tests\Data;
+namespace Whoa\Tests\Data;
 
 use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
-use Limoncello\Data\Migrations\EnumType;
+use Whoa\Data\Migrations\EnumType;
 use Mockery;
 
 /**
- * @package Limoncello\Tests\Data
+ * @package Whoa\Tests\Data
  */
 class EnumTypeTest extends TestCase
 {

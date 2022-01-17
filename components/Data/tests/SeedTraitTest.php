@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright 2015-2019 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 
 declare (strict_types=1);
 
-namespace Limoncello\Tests\Data;
+namespace Whoa\Tests\Data;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
@@ -28,17 +28,17 @@ use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
-use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
-use Limoncello\Contracts\Data\SeedInterface;
-use Limoncello\Data\Seeds\SeedTrait;
-use Limoncello\Tests\Data\Data\TestContainer;
+use Whoa\Contracts\Data\ModelSchemaInfoInterface;
+use Whoa\Contracts\Data\SeedInterface;
+use Whoa\Data\Seeds\SeedTrait;
+use Whoa\Tests\Data\Data\TestContainer;
 use Mockery;
 use Mockery\Mock;
 use Mockery\MockInterface;
 use Psr\Container\ContainerInterface;
 
 /**
- * @package Limoncello\Tests\Data
+ * @package Whoa\Tests\Data
  */
 class SeedTraitTest extends TestCase
 {

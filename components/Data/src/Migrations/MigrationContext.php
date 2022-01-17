@@ -1,6 +1,6 @@
 <?php declare (strict_types = 1);
 
-namespace Limoncello\Data\Migrations;
+namespace Whoa\Data\Migrations;
 
 /**
  * Copyright 2015-2019 info@neomerx.com
@@ -18,11 +18,11 @@ namespace Limoncello\Data\Migrations;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
-use Limoncello\Data\Contracts\MigrationContextInterface;
+use Whoa\Contracts\Data\ModelSchemaInfoInterface;
+use Whoa\Data\Contracts\MigrationContextInterface;
 
 /**
- * @package Limoncello\Data
+ * @package Whoa\Data
  */
 class MigrationContext implements MigrationContextInterface
 {
