@@ -1,10 +1,10 @@
 {
-    "name": "whoaphp/json-web-token",
+    "name": "whoa-php/json-web-token",
     "description": "Whoa framework JSON Web Tokens support.",
     "keywords": ["whoa", "framework", "jwt", "json-web-tokens"],
-    "homepage": "https://github.com/whoaphp/framework/tree/master/components/JsonWebToken",
+    "homepage": "https://github.com/whoa-php/framework/tree/master/components/JsonWebToken",
     "support": {
-        "issues": "https://github.com/whoaphp/framework/issues"
+        "issues": "https://github.com/whoa-php/framework/issues"
     },
     "license": "Apache-2.0",
     "authors": [
@@ -23,18 +23,18 @@
     },
     "autoload": {
         "psr-4": {
-            "Limoncello\\JsonWebToken\\": "src/"
+            "Whoa\\JsonWebToken\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Limoncello\\Tests\\JsonWebToken\\": "tests/"
+            "Whoa\\Tests\\JsonWebToken\\": "tests/"
         }
     },
     "scripts": {
         "test": ["@test-unit-with-coverage", "@test-cs", "@test-md"],
-        "test-unit": "./vendor/bin/phpunit",
-        "test-unit-with-coverage": "phpdbg -qrr ./vendor/bin/phpunit --coverage-text",
+        "test-unit": "./vendor/bin/phpunit --do-not-cache-result",
+        "test-unit-with-coverage": "phpdbg -qrr ./vendor/bin/phpunit --coverage-text --do-not-cache-result",
         "test-cs": "./vendor/bin/phpcs -p -s --standard=PSR2 ./src ./tests",
         "test-md": "./vendor/bin/phpmd ./src text codesize,controversial,cleancode,design,unusedcode,naming",
         "test-unit-php-7-3": "docker-compose run --rm cli_7_3_php php ./vendor/bin/phpunit",

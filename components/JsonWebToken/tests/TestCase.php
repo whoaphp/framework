@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2021 info@whoaphp.com
+ * Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,12 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Tests\JsonWebToken;
+namespace Whoa\Tests\JsonWebToken;
 
 use Mockery;
 
 /**
- * @package Limoncello\Tests\JsonWebToken
+ * @package Whoa\Tests\JsonWebToken
  */
 class TestCase extends \PHPUnit\Framework\TestCase
 {
