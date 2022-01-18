@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Authorization;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Application\Packages\Authorization;
  * limitations under the License.
  */
 
-use Limoncello\Application\Authorization\AuthorizationRulesLoader;
-use Limoncello\Contracts\Settings\Packages\AuthorizationSettingsInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Authorization;
+
+use Whoa\Application\Authorization\AuthorizationRulesLoader;
+use Whoa\Contracts\Settings\Packages\AuthorizationSettingsInterface;
 use ReflectionException;
 use function assert;
 use function glob;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 abstract class AuthorizationSettings implements AuthorizationSettingsInterface
 {
@@ -38,7 +41,7 @@ abstract class AuthorizationSettings implements AuthorizationSettingsInterface
     {
         $defaults = $this->getSettings();
 
-        $policiesFolder   = $defaults[static::KEY_POLICIES_FOLDER] ?? null;
+        $policiesFolder = $defaults[static::KEY_POLICIES_FOLDER] ?? null;
         $policiesFileMask = $defaults[static::KEY_POLICIES_FILE_MASK] ?? null;
 
         assert(
@@ -63,8 +66,8 @@ abstract class AuthorizationSettings implements AuthorizationSettingsInterface
     protected function getSettings(): array
     {
         return [
-            static::KEY_LOG_IS_ENABLED     => true,
-            static::KEY_TOP_POLICY_NAME    => 'Application',
+            static::KEY_LOG_IS_ENABLED => true,
+            static::KEY_TOP_POLICY_NAME => 'Application',
             static::KEY_POLICIES_FILE_MASK => '*.php',
         ];
     }

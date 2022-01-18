@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\ExceptionHandlers;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Tests\Application\ExceptionHandlers;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\ExceptionHandlers;
+
 use Exception;
-use Limoncello\Application\ExceptionHandlers\WhoopsThrowableHtmlHandler;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface as A;
-use Limoncello\Contracts\Application\CacheSettingsProviderInterface;
-use Limoncello\Contracts\Http\ThrowableResponseInterface;
-use Limoncello\Tests\Application\TestCase;
+use Whoa\Application\ExceptionHandlers\WhoopsThrowableHtmlHandler;
+use Whoa\Container\Container;
+use Whoa\Contracts\Application\ApplicationConfigurationInterface as A;
+use Whoa\Contracts\Application\CacheSettingsProviderInterface;
+use Whoa\Contracts\Http\ThrowableResponseInterface;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Mockery\Mock;
 use Psr\Container\ContainerInterface;
@@ -33,7 +36,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class ExceptionHandlersTest extends TestCase
 {
@@ -91,8 +94,8 @@ class ExceptionHandlersTest extends TestCase
         $provider = Mockery::mock(CacheSettingsProviderInterface::class);
         $container[CacheSettingsProviderInterface::class] = $provider;
         $provider->shouldReceive('getApplicationConfiguration')->once()->withNoArgs()->andReturn([
-            A::KEY_IS_DEBUG         => $debugEnabled,
-            A::KEY_APP_NAME         => 'Test App',
+            A::KEY_IS_DEBUG => $debugEnabled,
+            A::KEY_APP_NAME => 'Test App',
             A::KEY_EXCEPTION_DUMPER => [self::class, 'exceptionDumper'],
         ]);
 
@@ -107,8 +110,7 @@ class ExceptionHandlersTest extends TestCase
         /** @var Container $container */
         $container = $this->createContainer(true);
 
-        $container[LoggerInterface::class] = new class extends AbstractLogger implements LoggerInterface
-        {
+        $container[LoggerInterface::class] = new class extends AbstractLogger implements LoggerInterface {
             /**
              * @inheritdoc
              */

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Packages\FileSystem;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Tests\Application\Packages\FileSystem;
  * limitations under the License.
  */
 
-use Limoncello\Application\Packages\FileSystem\FileSystemContainerConfigurator;
-use Limoncello\Application\Packages\FileSystem\FileSystemProvider;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\FileSystem\FileSystemInterface;
-use Limoncello\Tests\Application\TestCase;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Packages\FileSystem;
+
+use Whoa\Application\Packages\FileSystem\FileSystemContainerConfigurator;
+use Whoa\Application\Packages\FileSystem\FileSystemProvider;
+use Whoa\Container\Container;
+use Whoa\Contracts\FileSystem\FileSystemInterface;
+use Whoa\Tests\Application\TestCase;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class FileSystemPackageTest extends TestCase
 {

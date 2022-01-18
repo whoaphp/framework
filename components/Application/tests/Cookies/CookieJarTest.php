@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Cookies;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Tests\Application\Cookies;
  * limitations under the License.
  */
 
-use Limoncello\Application\Cookies\CookieJar;
-use Limoncello\Application\Exceptions\InvalidArgumentException;
-use Limoncello\Tests\Application\TestCase;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Cookies;
+
+use Whoa\Application\Cookies\CookieJar;
+use Whoa\Application\Exceptions\InvalidArgumentException;
+use Whoa\Tests\Application\TestCase;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class CookieJarTest extends TestCase
 {
@@ -32,14 +35,14 @@ class CookieJarTest extends TestCase
      */
     public function testBasicCookieProperties(): void
     {
-        $name       = 'name';
-        $value      = 'value';
-        $expire     = 123;
-        $path       = '/path';
-        $domain     = 'domain';
-        $isSecure   = true;
+        $name = 'name';
+        $value = 'value';
+        $expire = 123;
+        $path = '/path';
+        $domain = 'domain';
+        $isSecure = true;
         $isHttpOnly = true;
-        $isRaw      = true;
+        $isRaw = true;
 
         $jar = new CookieJar($path, $domain, $isSecure, $isHttpOnly, $isRaw);
 

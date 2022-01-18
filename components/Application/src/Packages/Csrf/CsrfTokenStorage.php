@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Csrf;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +17,13 @@ namespace Limoncello\Application\Packages\Csrf;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Csrf;
+
 use ArrayAccess;
 use Exception;
-use Limoncello\Application\Contracts\Csrf\CsrfTokenStorageInterface;
+use Whoa\Application\Contracts\Csrf\CsrfTokenStorageInterface;
 use function array_key_exists;
 use function array_slice;
 use function asort;
@@ -31,7 +34,7 @@ use function random_bytes;
 use function time;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class CsrfTokenStorage implements CsrfTokenStorageInterface
 {
@@ -62,16 +65,17 @@ class CsrfTokenStorage implements CsrfTokenStorageInterface
 
     /**
      * @param ArrayAccess $sessionStorage
-     * @param string      $tokenStorageKey
-     * @param int|null    $maxTokens
-     * @param int         $maxTokensGcThreshold
+     * @param string $tokenStorageKey
+     * @param int|null $maxTokens
+     * @param int $maxTokensGcThreshold
      */
     public function __construct(
         ArrayAccess $sessionStorage,
-        string $tokenStorageKey,
-        ?int $maxTokens,
-        int $maxTokensGcThreshold
-    ) {
+        string      $tokenStorageKey,
+        ?int        $maxTokens,
+        int         $maxTokensGcThreshold
+    )
+    {
         $this->setSessionStorage($sessionStorage)
             ->setTokenStorageKey($tokenStorageKey)
             ->setMaxTokens($maxTokens)
@@ -86,8 +90,8 @@ class CsrfTokenStorage implements CsrfTokenStorageInterface
     public function create(): string
     {
         $tokenStorage = $this->getTokenStorage();
-        $value        = $this->createTokenValue();
-        $timestamp    = $this->createTokenTimestamp();
+        $value = $this->createTokenValue();
+        $timestamp = $this->createTokenTimestamp();
 
         $tokenStorage[$value] = $timestamp;
 
@@ -113,7 +117,7 @@ class CsrfTokenStorage implements CsrfTokenStorageInterface
     public function check(string $token): bool
     {
         $tokenStorage = $this->getTokenStorage();
-        $tokenFound   = array_key_exists($token, $tokenStorage);
+        $tokenFound = array_key_exists($token, $tokenStorage);
         if ($tokenFound === true) {
             // remove the token so it cannot be used again
             unset($tokenStorage[$token]);
@@ -237,7 +241,7 @@ class CsrfTokenStorage implements CsrfTokenStorageInterface
     protected function getTokenStorage(): array
     {
         $sessionStorage = $this->getSessionStorage();
-        $storageKey     = $this->getTokenStorageKey();
+        $storageKey = $this->getTokenStorageKey();
 
         $tokenStorage
             = $sessionStorage->offsetExists($storageKey) === true ? $sessionStorage->offsetGet($storageKey) : [];

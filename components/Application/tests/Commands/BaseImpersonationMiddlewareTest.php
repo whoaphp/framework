@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Commands;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,21 +17,25 @@ namespace Limoncello\Tests\Application\Commands;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Commands;
+
 use Closure;
-use Limoncello\Application\Commands\BaseImpersonationMiddleware;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Authentication\AccountManagerInterface;
-use Limoncello\Contracts\Commands\IoInterface;
-use Limoncello\Contracts\Commands\MiddlewareInterface;
-use Limoncello\Contracts\Passport\PassportAccountInterface;
-use Limoncello\Contracts\Settings\Packages\CommandSettingsInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Tests\Application\TestCase;
+use Whoa\Application\Commands\BaseImpersonationMiddleware;
+use Whoa\Container\Container;
+use Whoa\Contracts\Authentication\AccountManagerInterface;
+use Whoa\Contracts\Commands\IoInterface;
+use Whoa\Contracts\Commands\MiddlewareInterface;
+use Whoa\Contracts\Passport\PassportAccountInterface;
+use Whoa\Contracts\Settings\Packages\CommandSettingsInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Psr\Container\ContainerInterface;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class BaseImpersonationMiddlewareTest extends TestCase
 {
@@ -73,17 +76,18 @@ class BaseImpersonationMiddlewareTest extends TestCase
     /**
      * Create container with given user impersonation properties.
      *
-     * @param string                   $identity
-     * @param array                    $properties
+     * @param string $identity
+     * @param array $properties
      * @param PassportAccountInterface $passportSet
      *
      * @return ContainerInterface
      */
     private function createContainer(
-        string $identity,
-        array $properties,
+        string                    $identity,
+        array                     $properties,
         ?PassportAccountInterface &$passportSet
-    ): ContainerInterface {
+    ): ContainerInterface
+    {
         $container = new Container();
 
         $container[SettingsProviderInterface::class] = $provider = Mockery::mock(SettingsProviderInterface::class);
@@ -91,7 +95,7 @@ class BaseImpersonationMiddlewareTest extends TestCase
             ->shouldReceive('get')->once()
             ->with(CommandSettingsInterface::class)
             ->andReturn([
-                CommandSettingsInterface::KEY_IMPERSONATE_AS_USER_IDENTITY     => $identity,
+                CommandSettingsInterface::KEY_IMPERSONATE_AS_USER_IDENTITY => $identity,
                 CommandSettingsInterface::KEY_IMPERSONATE_WITH_USER_PROPERTIES => $properties,
             ]);
 
@@ -118,8 +122,7 @@ class BaseImpersonationMiddlewareTest extends TestCase
      */
     private function createMiddleware(array $scopes): MiddlewareInterface
     {
-        $middleware = new class extends BaseImpersonationMiddleware
-        {
+        $middleware = new class extends BaseImpersonationMiddleware {
             public static $scopes;
 
             /**

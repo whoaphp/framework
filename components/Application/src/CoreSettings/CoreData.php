@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\CoreSettings;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,29 +17,33 @@ namespace Limoncello\Application\CoreSettings;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Application\CoreSettings;
+
 use FastRoute\DataGenerator\GroupCountBased as GroupCountBasedGenerator;
 use Generator;
-use Limoncello\Common\Reflection\CheckCallableTrait;
-use Limoncello\Common\Reflection\ClassIsTrait;
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface;
-use Limoncello\Contracts\Application\MiddlewareInterface;
-use Limoncello\Contracts\Application\RoutesConfiguratorInterface;
-use Limoncello\Contracts\Container\ContainerInterface;
-use Limoncello\Contracts\Provider\ProvidesContainerConfiguratorsInterface;
-use Limoncello\Contracts\Provider\ProvidesMiddlewareInterface;
-use Limoncello\Contracts\Provider\ProvidesRouteConfiguratorsInterface;
-use Limoncello\Contracts\Routing\GroupInterface;
-use Limoncello\Contracts\Routing\RouterInterface;
-use Limoncello\Core\Application\BaseCoreData;
-use Limoncello\Core\Routing\Dispatcher\GroupCountBased as GroupCountBasedDispatcher;
-use Limoncello\Core\Routing\Group;
-use Limoncello\Core\Routing\Router;
+use Whoa\Common\Reflection\CheckCallableTrait;
+use Whoa\Common\Reflection\ClassIsTrait;
+use Whoa\Contracts\Application\ContainerConfiguratorInterface;
+use Whoa\Contracts\Application\MiddlewareInterface;
+use Whoa\Contracts\Application\RoutesConfiguratorInterface;
+use Whoa\Contracts\Container\ContainerInterface;
+use Whoa\Contracts\Provider\ProvidesContainerConfiguratorsInterface;
+use Whoa\Contracts\Provider\ProvidesMiddlewareInterface;
+use Whoa\Contracts\Provider\ProvidesRouteConfiguratorsInterface;
+use Whoa\Contracts\Routing\GroupInterface;
+use Whoa\Contracts\Routing\RouterInterface;
+use Whoa\Core\Application\BaseCoreData;
+use Whoa\Core\Routing\Dispatcher\GroupCountBased as GroupCountBasedDispatcher;
+use Whoa\Core\Routing\Group;
+use Whoa\Core\Routing\Router;
 use ReflectionException;
 use function assert;
 use function iterator_to_array;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
@@ -64,15 +67,15 @@ class CoreData extends BaseCoreData
     private $providerClasses;
 
     /**
-     * @param string   $routesPath
-     * @param string   $configuratorsPath
+     * @param string $routesPath
+     * @param string $configuratorsPath
      * @param string[] $providerClasses
      */
     public function __construct(string $routesPath, string $configuratorsPath, array $providerClasses)
     {
-        $this->routesPath        = $routesPath;
+        $this->routesPath = $routesPath;
         $this->configuratorsPath = $configuratorsPath;
-        $this->providerClasses   = $providerClasses;
+        $this->providerClasses = $providerClasses;
     }
 
     /**
@@ -89,16 +92,16 @@ class CoreData extends BaseCoreData
             ->getCachedRoutes($this->addRoutes($this->createGroup()));
 
         $globalConfigurators = iterator_to_array($this->getGlobalContainerConfigurators(), false);
-        $globalMiddleware    = iterator_to_array($this->getGlobalMiddleWareHandlers(), false);
+        $globalMiddleware = iterator_to_array($this->getGlobalMiddleWareHandlers(), false);
 
         return [
-            static::KEY_ROUTER_PARAMS                  => [
-                static::KEY_ROUTER_PARAMS__GENERATOR  => $generatorClass,
+            static::KEY_ROUTER_PARAMS => [
+                static::KEY_ROUTER_PARAMS__GENERATOR => $generatorClass,
                 static::KEY_ROUTER_PARAMS__DISPATCHER => $dispatcherClass,
             ],
-            static::KEY_ROUTES_DATA                    => $routesData,
+            static::KEY_ROUTES_DATA => $routesData,
             static::KEY_GLOBAL_CONTAINER_CONFIGURATORS => $globalConfigurators,
-            static::KEY_GLOBAL_MIDDLEWARE              => $globalMiddleware,
+            static::KEY_GLOBAL_MIDDLEWARE => $globalMiddleware,
         ];
     }
 

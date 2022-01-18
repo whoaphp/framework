@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Session;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Application\Packages\Session;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Provider\ProvidesContainerConfiguratorsInterface as CCI;
-use Limoncello\Contracts\Provider\ProvidesMiddlewareInterface as MI;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Session;
+
+use Whoa\Contracts\Provider\ProvidesContainerConfiguratorsInterface as CCI;
+use Whoa\Contracts\Provider\ProvidesMiddlewareInterface as MI;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class SessionProvider extends SessionMinimalProvider implements CCI, MI
 {

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Monolog;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Application\Packages\Monolog;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Monolog;
+
 use Exception;
-use Limoncello\Application\Packages\Monolog\MonologFileSettings as C;
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface as A;
-use Limoncello\Contracts\Application\CacheSettingsProviderInterface;
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
+use Whoa\Application\Packages\Monolog\MonologFileSettings as C;
+use Whoa\Contracts\Application\ApplicationConfigurationInterface as A;
+use Whoa\Contracts\Application\CacheSettingsProviderInterface;
+use Whoa\Contracts\Application\ContainerConfiguratorInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\NullHandler;
@@ -37,7 +40,7 @@ use function array_key_exists;
 use function assert;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
@@ -49,13 +52,13 @@ class MonologFileContainerConfigurator implements ContainerConfiguratorInterface
     /**
      * @inheritdoc
      */
-    public static function configureContainer(LimoncelloContainerInterface $container): void
+    public static function configureContainer(WhoaContainerInterface $container): void
     {
         $container[LoggerInterface::class] = function (PsrContainerInterface $container) {
             /** @var CacheSettingsProviderInterface $settingsProvider */
             $settingsProvider = $container->get(CacheSettingsProviderInterface::class);
-            $appConfig        = $settingsProvider->getApplicationConfiguration();
-            $monologSettings  = $settingsProvider->get(C::class);
+            $appConfig = $settingsProvider->getApplicationConfiguration();
+            $monologSettings = $settingsProvider->get(C::class);
 
             $monolog = new Logger($appConfig[A::KEY_APP_NAME]);
             $handler = $monologSettings[C::KEY_IS_ENABLED] === true ?
@@ -78,9 +81,9 @@ class MonologFileContainerConfigurator implements ContainerConfiguratorInterface
     {
         assert(array_key_exists(C::KEY_LOG_PATH, $settings) === true);
 
-        $logPath  = $settings[C::KEY_LOG_PATH];
+        $logPath = $settings[C::KEY_LOG_PATH];
         $logLevel = $settings[C::KEY_LOG_LEVEL] ?? Logger::ERROR;
-        $handler  = new StreamHandler($logPath, $logLevel);
+        $handler = new StreamHandler($logPath, $logLevel);
         $handler->setFormatter(new LineFormatter(null, null, true, true));
         $handler->pushProcessor(new WebProcessor());
         $handler->pushProcessor(new UidProcessor());

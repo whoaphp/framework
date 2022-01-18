@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Packages\PDO;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,19 +17,23 @@ namespace Limoncello\Tests\Application\Packages\PDO;
  * limitations under the License.
  */
 
-use Limoncello\Application\Packages\PDO\PdoContainerConfigurator;
-use Limoncello\Application\Packages\PDO\PdoProvider;
-use Limoncello\Application\Packages\PDO\PdoSettings;
-use Limoncello\Application\Packages\PDO\PdoSettings as C;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Tests\Application\TestCase;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Packages\PDO;
+
+use Whoa\Application\Packages\PDO\PdoContainerConfigurator;
+use Whoa\Application\Packages\PDO\PdoProvider;
+use Whoa\Application\Packages\PDO\PdoSettings;
+use Whoa\Application\Packages\PDO\PdoSettings as C;
+use Whoa\Container\Container;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Mockery\Mock;
 use PDO;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class PdoPackageTest extends TestCase
 {
@@ -74,8 +77,7 @@ class PdoPackageTest extends TestCase
      */
     private function createSettings(): PdoSettings
     {
-        return new class extends PdoSettings
-        {
+        return new class extends PdoSettings {
             /**
              * @inheritdoc
              */

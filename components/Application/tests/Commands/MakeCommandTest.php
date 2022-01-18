@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Commands;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,21 +17,25 @@ namespace Limoncello\Tests\Application\Commands;
  * limitations under the License.
  */
 
-use Limoncello\Application\Commands\MakeCommand;
-use Limoncello\Application\Exceptions\InvalidArgumentException;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Commands\IoInterface;
-use Limoncello\Contracts\FileSystem\FileSystemInterface;
-use Limoncello\Contracts\Settings\Packages\AuthorizationSettingsInterface;
-use Limoncello\Contracts\Settings\Packages\DataSettingsInterface;
-use Limoncello\Contracts\Settings\Packages\FluteSettingsInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Tests\Application\TestCase;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Commands;
+
+use Whoa\Application\Commands\MakeCommand;
+use Whoa\Application\Exceptions\InvalidArgumentException;
+use Whoa\Container\Container;
+use Whoa\Contracts\Commands\IoInterface;
+use Whoa\Contracts\FileSystem\FileSystemInterface;
+use Whoa\Contracts\Settings\Packages\AuthorizationSettingsInterface;
+use Whoa\Contracts\Settings\Packages\DataSettingsInterface;
+use Whoa\Contracts\Settings\Packages\FluteSettingsInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Mockery\Mock;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class MakeCommandTest extends TestCase
 {
@@ -60,68 +63,68 @@ class MakeCommandTest extends TestCase
     {
         $this->checkOutputs(MakeCommand::ITEM_FULL_RESOURCE, 'Board', 'Boards', [
             [
-                'Model.txt'         => '{%SINGULAR_CC%},{%SINGULAR_LC%},{%SINGULAR_UC%},{%PLURAL_LC%},{%PLURAL_UC%}',
+                'Model.txt' => '{%SINGULAR_CC%},{%SINGULAR_LC%},{%SINGULAR_UC%},{%PLURAL_LC%},{%PLURAL_UC%}',
                 '/models/Board.php' => 'Board,board,BOARD,boards,BOARDS',
             ],
             [
-                'Migration.txt'                   => '{%SINGULAR_CC%},{%PLURAL_CC%}',
+                'Migration.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%}',
                 '/migrations/BoardsMigration.php' => 'Board,Boards',
             ],
             [
-                'Seed.txt'              => '{%SINGULAR_CC%},{%PLURAL_CC%}',
+                'Seed.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%}',
                 '/seeds/BoardsSeed.php' => 'Board,Boards',
             ],
             [
-                'Schema.txt'               => '{%SINGULAR_CC%},{%PLURAL_LC%}',
+                'Schema.txt' => '{%SINGULAR_CC%},{%PLURAL_LC%}',
                 '/schemas/BoardSchema.php' => 'Board,boards',
             ],
             [
-                'Api.txt'            => '{%SINGULAR_CC%},{%PLURAL_CC%},{%SINGULAR_UC%},{%PLURAL_UC%}',
+                'Api.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%},{%SINGULAR_UC%},{%PLURAL_UC%}',
                 '/api/BoardsApi.php' => 'Board,Boards,BOARD,BOARDS',
             ],
             [
-                'QueryRulesOnRead.txt'                  => '{%SINGULAR_CC%},{%PLURAL_CC%}',
+                'QueryRulesOnRead.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%}',
                 '/validators/Board/BoardsReadQuery.php' => 'Board,Boards',
             ],
             [
-                'ApiAuthorization.txt'     =>
+                'ApiAuthorization.txt' =>
                     '{%SINGULAR_CC%},{%PLURAL_CC%},{%SINGULAR_UC%},{%PLURAL_UC%},{%SINGULAR_LC%}',
                 '/policies/BoardRules.php' => 'Board,Boards,BOARD,BOARDS,board',
             ],
             [
-                'ValidationRules.txt'         => '{%SINGULAR_CC%},{%PLURAL_LC%},{%SINGULAR_LC%}',
+                'ValidationRules.txt' => '{%SINGULAR_CC%},{%PLURAL_LC%},{%SINGULAR_LC%}',
                 '/rules/Board/BoardRules.php' => 'Board,boards,board',
             ],
             [
-                'JsonRulesOnCreate.txt'                 => '{%SINGULAR_CC%},{%SINGULAR_LC%}',
+                'JsonRulesOnCreate.txt' => '{%SINGULAR_CC%},{%SINGULAR_LC%}',
                 '/validators/Board/BoardCreateJson.php' => 'Board,board',
             ],
             [
-                'JsonRulesOnUpdate.txt'                 => '{%SINGULAR_CC%},{%SINGULAR_LC%}',
+                'JsonRulesOnUpdate.txt' => '{%SINGULAR_CC%},{%SINGULAR_LC%}',
                 '/validators/Board/BoardUpdateJson.php' => 'Board,board',
             ],
             [
-                'JsonController.txt'                     => '{%SINGULAR_CC%},{%PLURAL_CC%}',
+                'JsonController.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%}',
                 '/json-controllers/BoardsController.php' => 'Board,Boards',
             ],
             [
-                'JsonRoutes.txt'             => '{%SINGULAR_CC%},{%PLURAL_CC%}',
+                'JsonRoutes.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%}',
                 '/routes/BoardApiRoutes.php' => 'Board,Boards',
             ],
             [
-                'WebRulesOnCreate.txt'                  => '{%SINGULAR_CC%}',
+                'WebRulesOnCreate.txt' => '{%SINGULAR_CC%}',
                 '/validators/Board/BoardCreateForm.php' => 'Board',
             ],
             [
-                'WebRulesOnUpdate.txt'                  => '{%SINGULAR_CC%}',
+                'WebRulesOnUpdate.txt' => '{%SINGULAR_CC%}',
                 '/validators/Board/BoardUpdateForm.php' => 'Board',
             ],
             [
-                'WebController.txt'                     => '{%SINGULAR_CC%},{%PLURAL_CC%},{%PLURAL_LC%},{%PLURAL_UC%}',
+                'WebController.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%},{%PLURAL_LC%},{%PLURAL_UC%}',
                 '/web-controllers/BoardsController.php' => 'Board,Boards,boards,BOARDS',
             ],
             [
-                'WebRoutes.txt'              => '{%SINGULAR_CC%},{%PLURAL_CC%}',
+                'WebRoutes.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%}',
                 '/routes/BoardWebRoutes.php' => 'Board,Boards',
             ],
         ]);
@@ -134,52 +137,52 @@ class MakeCommandTest extends TestCase
     {
         $this->checkOutputs(MakeCommand::ITEM_JSON_API_RESOURCE, 'Board', 'Boards', [
             [
-                'Model.txt'         => '{%SINGULAR_CC%},{%SINGULAR_LC%},{%SINGULAR_UC%},{%PLURAL_LC%},{%PLURAL_UC%}',
+                'Model.txt' => '{%SINGULAR_CC%},{%SINGULAR_LC%},{%SINGULAR_UC%},{%PLURAL_LC%},{%PLURAL_UC%}',
                 '/models/Board.php' => 'Board,board,BOARD,boards,BOARDS',
             ],
             [
-                'Migration.txt'                   => '{%SINGULAR_CC%},{%PLURAL_CC%}',
+                'Migration.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%}',
                 '/migrations/BoardsMigration.php' => 'Board,Boards',
             ],
             [
-                'Seed.txt'              => '{%SINGULAR_CC%},{%PLURAL_CC%}',
+                'Seed.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%}',
                 '/seeds/BoardsSeed.php' => 'Board,Boards',
             ],
             [
-                'Schema.txt'               => '{%SINGULAR_CC%},{%PLURAL_LC%}',
+                'Schema.txt' => '{%SINGULAR_CC%},{%PLURAL_LC%}',
                 '/schemas/BoardSchema.php' => 'Board,boards',
             ],
             [
-                'Api.txt'            => '{%SINGULAR_CC%},{%PLURAL_CC%},{%SINGULAR_UC%},{%PLURAL_UC%}',
+                'Api.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%},{%SINGULAR_UC%},{%PLURAL_UC%}',
                 '/api/BoardsApi.php' => 'Board,Boards,BOARD,BOARDS',
             ],
             [
-                'QueryRulesOnRead.txt'                  => '{%SINGULAR_CC%},{%PLURAL_CC%}',
+                'QueryRulesOnRead.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%}',
                 '/validators/Board/BoardsReadQuery.php' => 'Board,Boards',
             ],
             [
-                'ApiAuthorization.txt'     =>
+                'ApiAuthorization.txt' =>
                     '{%SINGULAR_CC%},{%PLURAL_CC%},{%SINGULAR_UC%},{%PLURAL_UC%},{%SINGULAR_LC%}',
                 '/policies/BoardRules.php' => 'Board,Boards,BOARD,BOARDS,board',
             ],
             [
-                'ValidationRules.txt'         => '{%SINGULAR_CC%},{%PLURAL_LC%},{%SINGULAR_LC%}',
+                'ValidationRules.txt' => '{%SINGULAR_CC%},{%PLURAL_LC%},{%SINGULAR_LC%}',
                 '/rules/Board/BoardRules.php' => 'Board,boards,board',
             ],
             [
-                'JsonRulesOnCreate.txt'                 => '{%SINGULAR_CC%},{%SINGULAR_LC%}',
+                'JsonRulesOnCreate.txt' => '{%SINGULAR_CC%},{%SINGULAR_LC%}',
                 '/validators/Board/BoardCreateJson.php' => 'Board,board',
             ],
             [
-                'JsonRulesOnUpdate.txt'                 => '{%SINGULAR_CC%},{%SINGULAR_LC%}',
+                'JsonRulesOnUpdate.txt' => '{%SINGULAR_CC%},{%SINGULAR_LC%}',
                 '/validators/Board/BoardUpdateJson.php' => 'Board,board',
             ],
             [
-                'JsonController.txt'                     => '{%SINGULAR_CC%},{%PLURAL_CC%}',
+                'JsonController.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%}',
                 '/json-controllers/BoardsController.php' => 'Board,Boards',
             ],
             [
-                'JsonRoutes.txt'             => '{%SINGULAR_CC%},{%PLURAL_CC%}',
+                'JsonRoutes.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%}',
                 '/routes/BoardApiRoutes.php' => 'Board,Boards',
             ],
         ]);
@@ -192,52 +195,52 @@ class MakeCommandTest extends TestCase
     {
         $this->checkOutputs(MakeCommand::ITEM_WEB_RESOURCE, 'Board', 'Boards', [
             [
-                'Model.txt'         => '{%SINGULAR_CC%},{%SINGULAR_LC%},{%SINGULAR_UC%},{%PLURAL_LC%},{%PLURAL_UC%}',
+                'Model.txt' => '{%SINGULAR_CC%},{%SINGULAR_LC%},{%SINGULAR_UC%},{%PLURAL_LC%},{%PLURAL_UC%}',
                 '/models/Board.php' => 'Board,board,BOARD,boards,BOARDS',
             ],
             [
-                'Migration.txt'                   => '{%SINGULAR_CC%},{%PLURAL_CC%}',
+                'Migration.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%}',
                 '/migrations/BoardsMigration.php' => 'Board,Boards',
             ],
             [
-                'Seed.txt'              => '{%SINGULAR_CC%},{%PLURAL_CC%}',
+                'Seed.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%}',
                 '/seeds/BoardsSeed.php' => 'Board,Boards',
             ],
             [
-                'Schema.txt'               => '{%SINGULAR_CC%},{%PLURAL_LC%}',
+                'Schema.txt' => '{%SINGULAR_CC%},{%PLURAL_LC%}',
                 '/schemas/BoardSchema.php' => 'Board,boards',
             ],
             [
-                'Api.txt'            => '{%SINGULAR_CC%},{%PLURAL_CC%},{%SINGULAR_UC%},{%PLURAL_UC%}',
+                'Api.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%},{%SINGULAR_UC%},{%PLURAL_UC%}',
                 '/api/BoardsApi.php' => 'Board,Boards,BOARD,BOARDS',
             ],
             [
-                'QueryRulesOnRead.txt'                  => '{%SINGULAR_CC%},{%PLURAL_CC%}',
+                'QueryRulesOnRead.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%}',
                 '/validators/Board/BoardsReadQuery.php' => 'Board,Boards',
             ],
             [
-                'ApiAuthorization.txt'     =>
+                'ApiAuthorization.txt' =>
                     '{%SINGULAR_CC%},{%PLURAL_CC%},{%SINGULAR_UC%},{%PLURAL_UC%},{%SINGULAR_LC%}',
                 '/policies/BoardRules.php' => 'Board,Boards,BOARD,BOARDS,board',
             ],
             [
-                'ValidationRules.txt'         => '{%SINGULAR_CC%},{%PLURAL_LC%},{%SINGULAR_LC%}',
+                'ValidationRules.txt' => '{%SINGULAR_CC%},{%PLURAL_LC%},{%SINGULAR_LC%}',
                 '/rules/Board/BoardRules.php' => 'Board,boards,board',
             ],
             [
-                'WebRulesOnCreate.txt'                  => '{%SINGULAR_CC%}',
+                'WebRulesOnCreate.txt' => '{%SINGULAR_CC%}',
                 '/validators/Board/BoardCreateForm.php' => 'Board',
             ],
             [
-                'WebRulesOnUpdate.txt'                  => '{%SINGULAR_CC%}',
+                'WebRulesOnUpdate.txt' => '{%SINGULAR_CC%}',
                 '/validators/Board/BoardUpdateForm.php' => 'Board',
             ],
             [
-                'WebController.txt'                     => '{%SINGULAR_CC%},{%PLURAL_CC%},{%PLURAL_LC%},{%PLURAL_UC%}',
+                'WebController.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%},{%PLURAL_LC%},{%PLURAL_UC%}',
                 '/web-controllers/BoardsController.php' => 'Board,Boards,boards,BOARDS',
             ],
             [
-                'WebRoutes.txt'              => '{%SINGULAR_CC%},{%PLURAL_CC%}',
+                'WebRoutes.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%}',
                 '/routes/BoardWebRoutes.php' => 'Board,Boards',
             ],
         ]);
@@ -250,15 +253,15 @@ class MakeCommandTest extends TestCase
     {
         $this->checkOutputs(MakeCommand::ITEM_DATA_RESOURCE, 'Board', 'Boards', [
             [
-                'Model.txt'         => '{%SINGULAR_CC%},{%SINGULAR_LC%},{%SINGULAR_UC%},{%PLURAL_LC%},{%PLURAL_UC%}',
+                'Model.txt' => '{%SINGULAR_CC%},{%SINGULAR_LC%},{%SINGULAR_UC%},{%PLURAL_LC%},{%PLURAL_UC%}',
                 '/models/Board.php' => 'Board,board,BOARD,boards,BOARDS',
             ],
             [
-                'Migration.txt'                   => '{%SINGULAR_CC%},{%PLURAL_CC%}',
+                'Migration.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%}',
                 '/migrations/BoardsMigration.php' => 'Board,Boards',
             ],
             [
-                'Seed.txt'              => '{%SINGULAR_CC%},{%PLURAL_CC%}',
+                'Seed.txt' => '{%SINGULAR_CC%},{%PLURAL_CC%}',
                 '/seeds/BoardsSeed.php' => 'Board,Boards',
             ],
         ]);
@@ -282,9 +285,9 @@ class MakeCommandTest extends TestCase
     public function testInvalidClassName1(): void
     {
         $inOut = $this->createInOutMock([
-            MakeCommand::ARG_ITEM     => MakeCommand::ITEM_FULL_RESOURCE,
+            MakeCommand::ARG_ITEM => MakeCommand::ITEM_FULL_RESOURCE,
             MakeCommand::ARG_SINGULAR => 'Invalid Class Name',
-            MakeCommand::ARG_PLURAL   => 'Boards',
+            MakeCommand::ARG_PLURAL => 'Boards',
         ]);
 
         $this->expectException(InvalidArgumentException::class);
@@ -298,9 +301,9 @@ class MakeCommandTest extends TestCase
     public function testInvalidClassName2(): void
     {
         $inOut = $this->createInOutMock([
-            MakeCommand::ARG_ITEM     => MakeCommand::ITEM_FULL_RESOURCE,
+            MakeCommand::ARG_ITEM => MakeCommand::ITEM_FULL_RESOURCE,
             MakeCommand::ARG_SINGULAR => 'Board',
-            MakeCommand::ARG_PLURAL   => 'Invalid Class Name',
+            MakeCommand::ARG_PLURAL => 'Invalid Class Name',
         ]);
 
 
@@ -315,9 +318,9 @@ class MakeCommandTest extends TestCase
     {
         $inOut = $this->createInOutMock(
             [
-                MakeCommand::ARG_ITEM     => 'non_existing_item',
+                MakeCommand::ARG_ITEM => 'non_existing_item',
                 MakeCommand::ARG_SINGULAR => 'Board',
-                MakeCommand::ARG_PLURAL   => 'Boards',
+                MakeCommand::ARG_PLURAL => 'Boards',
             ],
             [],
             true
@@ -401,27 +404,27 @@ class MakeCommandTest extends TestCase
      * @param string $command
      * @param string $singular
      * @param string $plural
-     * @param array  $fileExpectations
+     * @param array $fileExpectations
      *
      * @return void
      */
     private function checkOutputs(string $command, string $singular, string $plural, array $fileExpectations): void
     {
-        $dataSettings  = [
-            DataSettingsInterface::KEY_MODELS_FOLDER     => '/models',
+        $dataSettings = [
+            DataSettingsInterface::KEY_MODELS_FOLDER => '/models',
             DataSettingsInterface::KEY_MIGRATIONS_FOLDER => '/migrations',
-            DataSettingsInterface::KEY_SEEDS_FOLDER      => '/seeds',
+            DataSettingsInterface::KEY_SEEDS_FOLDER => '/seeds',
         ];
         $fluteSettings = [
-            FluteSettingsInterface::KEY_SCHEMAS_FOLDER               => '/schemas',
+            FluteSettingsInterface::KEY_SCHEMAS_FOLDER => '/schemas',
             FluteSettingsInterface::KEY_JSON_VALIDATION_RULES_FOLDER => '/rules',
-            FluteSettingsInterface::KEY_JSON_VALIDATORS_FOLDER       => '/validators',
-            FluteSettingsInterface::KEY_JSON_CONTROLLERS_FOLDER      => '/json-controllers',
-            FluteSettingsInterface::KEY_WEB_CONTROLLERS_FOLDER       => '/web-controllers',
-            FluteSettingsInterface::KEY_ROUTES_FOLDER                => '/routes',
-            FluteSettingsInterface::KEY_API_FOLDER                   => '/api',
+            FluteSettingsInterface::KEY_JSON_VALIDATORS_FOLDER => '/validators',
+            FluteSettingsInterface::KEY_JSON_CONTROLLERS_FOLDER => '/json-controllers',
+            FluteSettingsInterface::KEY_WEB_CONTROLLERS_FOLDER => '/web-controllers',
+            FluteSettingsInterface::KEY_ROUTES_FOLDER => '/routes',
+            FluteSettingsInterface::KEY_API_FOLDER => '/api',
         ];
-        $authSettings  = [
+        $authSettings = [
             AuthorizationSettingsInterface::KEY_POLICIES_FOLDER => '/policies',
         ];
 
@@ -438,14 +441,14 @@ class MakeCommandTest extends TestCase
         $this->fileSystemMock->shouldReceive('createFolder')->zeroOrMoreTimes()->withAnyArgs()->andReturnUndefined();
 
         $container = $this->createContainerWithSettings($dataSettings, $fluteSettings, $authSettings);
-        $inOut     = $this->createInOutMock([
-            MakeCommand::ARG_ITEM     => $command,
+        $inOut = $this->createInOutMock([
+            MakeCommand::ARG_ITEM => $command,
             MakeCommand::ARG_SINGULAR => $singular,
-            MakeCommand::ARG_PLURAL   => $plural,
+            MakeCommand::ARG_PLURAL => $plural,
         ]);
 
         foreach ($fileExpectations as $expectation) {
-            $files  = array_keys($expectation);
+            $files = array_keys($expectation);
             $bodies = array_values($expectation);
             $this->fileSystemMock->shouldReceive('read')->once()
                 ->with($this->getPathToResource($files[0]))->andReturn($bodies[1]);
@@ -464,10 +467,10 @@ class MakeCommandTest extends TestCase
      */
     private function prepareDataForDataResourceToEmulateFileSystemIssuesAndRunTheCommand(): void
     {
-        $dataSettings  = [
-            DataSettingsInterface::KEY_MODELS_FOLDER     => '/models',
+        $dataSettings = [
+            DataSettingsInterface::KEY_MODELS_FOLDER => '/models',
             DataSettingsInterface::KEY_MIGRATIONS_FOLDER => '/migrations',
-            DataSettingsInterface::KEY_SEEDS_FOLDER      => '/seeds',
+            DataSettingsInterface::KEY_SEEDS_FOLDER => '/seeds',
         ];
 
         $this->fileSystemMock->shouldReceive('exists')->zeroOrMoreTimes()->withAnyArgs()->andReturnFalse();
@@ -475,29 +478,29 @@ class MakeCommandTest extends TestCase
         $this->fileSystemMock->shouldReceive('createFolder')->zeroOrMoreTimes()->withAnyArgs()->andReturnUndefined();
 
         $container = $this->createContainerWithSettings($dataSettings, [], []);
-        $inOut     = $this->createInOutMock([
-            MakeCommand::ARG_ITEM     => MakeCommand::ITEM_DATA_RESOURCE,
+        $inOut = $this->createInOutMock([
+            MakeCommand::ARG_ITEM => MakeCommand::ITEM_DATA_RESOURCE,
             MakeCommand::ARG_SINGULAR => 'Board',
-            MakeCommand::ARG_PLURAL   => 'Boards',
+            MakeCommand::ARG_PLURAL => 'Boards',
         ]);
 
         $fileExpectations = [
             [
-                'Model.txt'         => 'content does not matter for this test',
+                'Model.txt' => 'content does not matter for this test',
                 '/models/Board.php' => 'content does not matter for this test',
             ],
             [
-                'Migration.txt'                   => 'content does not matter for this test',
+                'Migration.txt' => 'content does not matter for this test',
                 '/migrations/BoardsMigration.php' => 'content does not matter for this test',
             ],
             [
-                'Seed.txt'              => 'content does not matter for this test',
+                'Seed.txt' => 'content does not matter for this test',
                 '/seeds/BoardsSeed.php' => 'content does not matter for this test',
             ],
         ];
 
         foreach ($fileExpectations as $expectation) {
-            $files  = array_keys($expectation);
+            $files = array_keys($expectation);
             $bodies = array_values($expectation);
             $this->fileSystemMock->shouldReceive('read')->once()
                 ->with($this->getPathToResource($files[0]))->andReturn($bodies[1]);
@@ -520,7 +523,8 @@ class MakeCommandTest extends TestCase
         array $dataSettings = [],
         array $fluteSettings = [],
         array $authSettings = []
-    ): Container {
+    ): Container
+    {
         $container = new Container();
 
         /** @var Mock $providerMock */
@@ -540,7 +544,7 @@ class MakeCommandTest extends TestCase
     /**
      * @param array $arguments
      * @param array $options
-     * @param bool  $expectErrors
+     * @param bool $expectErrors
      *
      * @return IoInterface
      */
@@ -566,8 +570,8 @@ class MakeCommandTest extends TestCase
      */
     private function getPathToResource(string $fileName): string
     {
-        $root       = implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..']);
-        $filePath   = realpath(implode(DIRECTORY_SEPARATOR, [$root, 'src', 'Commands', 'MakeCommand.php']));
+        $root = implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..']);
+        $filePath = realpath(implode(DIRECTORY_SEPARATOR, [$root, 'src', 'Commands', 'MakeCommand.php']));
         $folderPath = substr($filePath, 0, -16);
 
         return implode(DIRECTORY_SEPARATOR, [$folderPath, '..', '..', 'res', 'CodeTemplates', $fileName]);

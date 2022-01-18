@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Config;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,20 +17,24 @@ namespace Limoncello\Tests\Application\Config;
  * limitations under the License.
  */
 
-use Limoncello\Application\Exceptions\AmbiguousSettingsException;
-use Limoncello\Application\Exceptions\NotRegisteredSettingsException;
-use Limoncello\Application\Settings\CacheSettingsProvider;
-use Limoncello\Application\Settings\FileSettingsProvider;
-use Limoncello\Tests\Application\CoreData\CoreDataTest;
-use Limoncello\Tests\Application\Data\Application\Settings\Application;
-use Limoncello\Tests\Application\Data\Config\MarkerInterfaceChild1;
-use Limoncello\Tests\Application\Data\Config\MarkerInterfaceTop;
-use Limoncello\Tests\Application\Data\Config\SampleSettingsAA;
-use Limoncello\Tests\Application\TestCase;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Config;
+
+use Whoa\Application\Exceptions\AmbiguousSettingsException;
+use Whoa\Application\Exceptions\NotRegisteredSettingsException;
+use Whoa\Application\Settings\CacheSettingsProvider;
+use Whoa\Application\Settings\FileSettingsProvider;
+use Whoa\Tests\Application\CoreData\CoreDataTest;
+use Whoa\Tests\Application\Data\Application\Settings\Application;
+use Whoa\Tests\Application\Data\Config\MarkerInterfaceChild1;
+use Whoa\Tests\Application\Data\Config\MarkerInterfaceTop;
+use Whoa\Tests\Application\Data\Config\SampleSettingsAA;
+use Whoa\Tests\Application\TestCase;
 use ReflectionException;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class CacheSettingsProviderTest extends TestCase
 {
@@ -46,7 +49,7 @@ class CacheSettingsProviderTest extends TestCase
         $provider->unserialize($provider->serialize());
 
         $appSettings = [];
-        $valuesA     = (new SampleSettingsAA())->get($appSettings);
+        $valuesA = (new SampleSettingsAA())->get($appSettings);
 
         $this->assertFalse($provider->has(MarkerInterfaceTop::class));
         $this->assertTrue($provider->isAmbiguous(MarkerInterfaceTop::class));
@@ -63,7 +66,7 @@ class CacheSettingsProviderTest extends TestCase
      */
     private function createProvider(): CacheSettingsProvider
     {
-        $appSettings          = [];
+        $appSettings = [];
         $fileSettingsProvider = (new FileSettingsProvider($appSettings))->load(
             __DIR__ . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . 'Data' . DIRECTORY_SEPARATOR . 'Config'
@@ -71,7 +74,7 @@ class CacheSettingsProviderTest extends TestCase
         );
 
         $appConfig = new Application();
-        $coreData  = CoreDataTest::createCoreData();
+        $coreData = CoreDataTest::createCoreData();
 
         return (new CacheSettingsProvider())->setInstanceSettings($appConfig, $coreData, $fileSettingsProvider);
     }

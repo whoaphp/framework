@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Json\Controllers;
 
@@ -8,7 +10,7 @@ use App\Json\Schemas\{%SINGULAR_CC%}Schema as Schema;
 use App\Validation\{%SINGULAR_CC%}\{%SINGULAR_CC%}CreateJson;
 use App\Validation\{%SINGULAR_CC%}\{%PLURAL_CC%}ReadQuery;
 use App\Validation\{%SINGULAR_CC%}\{%SINGULAR_CC%}UpdateJson;
-//use Limoncello\Flute\Validation\JsonApi\Rules\DefaultQueryValidationRules;
+//use Whoa\Flute\Validation\JsonApi\Rules\DefaultQueryValidationRules;
 //use Psr\Container\ContainerExceptionInterface;
 //use Psr\Container\ContainerInterface;
 //use Psr\Container\NotFoundExceptionInterface;

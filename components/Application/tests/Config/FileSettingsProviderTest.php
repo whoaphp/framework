@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Config;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,31 +17,35 @@ namespace Limoncello\Tests\Application\Config;
  * limitations under the License.
  */
 
-use Limoncello\Application\Exceptions\AlreadyRegisteredSettingsException;
-use Limoncello\Application\Exceptions\AmbiguousSettingsException;
-use Limoncello\Application\Exceptions\InvalidSettingsClassException;
-use Limoncello\Application\Exceptions\NotRegisteredSettingsException;
-use Limoncello\Application\Settings\FileSettingsProvider;
-use Limoncello\Contracts\Settings\SettingsInterface;
-use Limoncello\Tests\Application\Data\Config\MarkerInterfaceChild1;
-use Limoncello\Tests\Application\Data\Config\MarkerInterfaceChild11;
-use Limoncello\Tests\Application\Data\Config\MarkerInterfaceChild11And21;
-use Limoncello\Tests\Application\Data\Config\MarkerInterfaceChild2;
-use Limoncello\Tests\Application\Data\Config\MarkerInterfaceChild21;
-use Limoncello\Tests\Application\Data\Config\MarkerInterfaceStandalone;
-use Limoncello\Tests\Application\Data\Config\MarkerInterfaceTop;
-use Limoncello\Tests\Application\Data\Config\NoDefaultConstructorClass;
-use Limoncello\Tests\Application\Data\Config\PrivateConstructorClass;
-use Limoncello\Tests\Application\Data\Config\SampleSettingsA;
-use Limoncello\Tests\Application\Data\Config\SampleSettingsAA;
-use Limoncello\Tests\Application\Data\Config\SampleSettingsB;
-use Limoncello\Tests\Application\Data\Config\SampleSettingsBB;
-use Limoncello\Tests\Application\TestCase;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Config;
+
+use Whoa\Application\Exceptions\AlreadyRegisteredSettingsException;
+use Whoa\Application\Exceptions\AmbiguousSettingsException;
+use Whoa\Application\Exceptions\InvalidSettingsClassException;
+use Whoa\Application\Exceptions\NotRegisteredSettingsException;
+use Whoa\Application\Settings\FileSettingsProvider;
+use Whoa\Contracts\Settings\SettingsInterface;
+use Whoa\Tests\Application\Data\Config\MarkerInterfaceChild1;
+use Whoa\Tests\Application\Data\Config\MarkerInterfaceChild11;
+use Whoa\Tests\Application\Data\Config\MarkerInterfaceChild11And21;
+use Whoa\Tests\Application\Data\Config\MarkerInterfaceChild2;
+use Whoa\Tests\Application\Data\Config\MarkerInterfaceChild21;
+use Whoa\Tests\Application\Data\Config\MarkerInterfaceStandalone;
+use Whoa\Tests\Application\Data\Config\MarkerInterfaceTop;
+use Whoa\Tests\Application\Data\Config\NoDefaultConstructorClass;
+use Whoa\Tests\Application\Data\Config\PrivateConstructorClass;
+use Whoa\Tests\Application\Data\Config\SampleSettingsA;
+use Whoa\Tests\Application\Data\Config\SampleSettingsAA;
+use Whoa\Tests\Application\Data\Config\SampleSettingsB;
+use Whoa\Tests\Application\Data\Config\SampleSettingsBB;
+use Whoa\Tests\Application\TestCase;
 use ReflectionException;
 use ReflectionMethod;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
@@ -58,8 +61,8 @@ class FileSettingsProviderTest extends TestCase
         $provider = $this->createProvider();
 
         $appSettings = [];
-        $valuesA     = (new SampleSettingsAA())->get($appSettings);
-        $valuesB     = (new SampleSettingsBB())->get($appSettings);
+        $valuesA = (new SampleSettingsAA())->get($appSettings);
+        $valuesB = (new SampleSettingsBB())->get($appSettings);
 
         $this->assertFalse($provider->has(MarkerInterfaceTop::class));
         $this->assertTrue($provider->isAmbiguous(MarkerInterfaceTop::class));
@@ -104,9 +107,9 @@ class FileSettingsProviderTest extends TestCase
         $this->assertEquals($valuesB, $provider->get(SampleSettingsBB::class));
 
         $this->assertEquals([
-            MarkerInterfaceTop::class          => true,
+            MarkerInterfaceTop::class => true,
             MarkerInterfaceChild11And21::class => true,
-            SettingsInterface::class           => true,
+            SettingsInterface::class => true,
         ], $provider->getAmbiguousMap());
 
         $this->assertEquals([
@@ -115,14 +118,14 @@ class FileSettingsProviderTest extends TestCase
         ], $provider->getSettingsData());
 
         $this->assertEmpty(array_diff_assoc($provider->getSettingsMap(), [
-            SampleSettingsA::class           => 0,
-            SampleSettingsAA::class          => 0,
-            MarkerInterfaceChild1::class     => 0,
-            MarkerInterfaceChild11::class    => 0,
-            SampleSettingsB::class           => 1,
-            SampleSettingsBB::class          => 1,
-            MarkerInterfaceChild2::class     => 1,
-            MarkerInterfaceChild21::class    => 1,
+            SampleSettingsA::class => 0,
+            SampleSettingsAA::class => 0,
+            MarkerInterfaceChild1::class => 0,
+            MarkerInterfaceChild11::class => 0,
+            SampleSettingsB::class => 1,
+            SampleSettingsBB::class => 1,
+            MarkerInterfaceChild2::class => 1,
+            MarkerInterfaceChild21::class => 1,
             MarkerInterfaceStandalone::class => 1,
         ]));
     }

@@ -1,11 +1,13 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Validation\{%SINGULAR_CC%};
 
 use App\Json\Schemas\{%SINGULAR_CC%}Schema as Schema;
 use App\Validation\{%SINGULAR_CC%}\{%SINGULAR_CC%}Rules as r;
-use Limoncello\Flute\Contracts\Validation\JsonApiDataRulesInterface;
-use Limoncello\Validation\Contracts\Rules\RuleInterface;
+use Whoa\Flute\Contracts\Validation\JsonApiDataRulesInterface;
+use Whoa\Validation\Contracts\Rules\RuleInterface;
 
 /**
  * @package App

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Authorization;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +17,13 @@ namespace Limoncello\Application\Authorization;
  * limitations under the License.
  */
 
-use Limoncello\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
-use Limoncello\Contracts\Authentication\AccountInterface;
-use Limoncello\Contracts\Authentication\AccountManagerInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Authorization;
+
+use Whoa\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
+use Whoa\Contracts\Authentication\AccountInterface;
+use Whoa\Contracts\Authentication\AccountManagerInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -29,7 +32,7 @@ use function is_array;
 use function is_string;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 trait AuthorizationRulesTrait
 {
@@ -173,8 +176,8 @@ trait AuthorizationRulesTrait
     {
         /** @var AccountManagerInterface $manager */
         $container = static::ctxGetContainer($context);
-        $manager   = $container->get(AccountManagerInterface::class);
-        $account   = $manager->getAccount();
+        $manager = $container->get(AccountManagerInterface::class);
+        $account = $manager->getAccount();
 
         return $account !== null;
     }
@@ -193,8 +196,8 @@ trait AuthorizationRulesTrait
 
         /** @var AccountManagerInterface $manager */
         $container = static::ctxGetContainer($context);
-        $manager   = $container->get(AccountManagerInterface::class);
-        $account   = $manager->getAccount();
+        $manager = $container->get(AccountManagerInterface::class);
+        $account = $manager->getAccount();
 
         return $account;
     }

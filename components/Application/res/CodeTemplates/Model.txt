@@ -1,11 +1,13 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Data\Models;
 
 use Doctrine\DBAL\Types\Type;
-use Limoncello\Contracts\Application\ModelInterface;
-//use Limoncello\Contracts\Data\RelationshipTypes;
-use Limoncello\Flute\Types\DateTimeType;
+use Whoa\Contracts\Application\ModelInterface;
+//use Whoa\Contracts\Data\RelationshipTypes;
+use Whoa\Flute\Types\DateTimeType;
 
 /**
  * @package App

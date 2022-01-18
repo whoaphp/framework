@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Application;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +17,20 @@ namespace Limoncello\Application\Packages\Application;
  * limitations under the License.
  */
 
-use Limoncello\Application\ExceptionHandlers\WhoopsThrowableHtmlHandler;
-use Limoncello\Application\ExceptionHandlers\WhoopsThrowableTextHandler;
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Exceptions\ThrowableHandlerInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Application;
+
+use Whoa\Application\ExceptionHandlers\WhoopsThrowableHtmlHandler;
+use Whoa\Application\ExceptionHandlers\WhoopsThrowableTextHandler;
+use Whoa\Contracts\Application\ContainerConfiguratorInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Exceptions\ThrowableHandlerInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use function php_sapi_name;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class WhoopsContainerConfigurator implements ContainerConfiguratorInterface
 {
@@ -40,7 +43,7 @@ class WhoopsContainerConfigurator implements ContainerConfiguratorInterface
     /**
      * @inheritdoc
      */
-    public static function configureContainer(LimoncelloContainerInterface $container): void
+    public static function configureContainer(WhoaContainerInterface $container): void
     {
         $container[ThrowableHandlerInterface::class] =
             function (PsrContainerInterface $container): ThrowableHandlerInterface {

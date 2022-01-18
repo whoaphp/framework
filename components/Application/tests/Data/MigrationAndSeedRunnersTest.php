@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Data;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,18 +17,22 @@ namespace Limoncello\Tests\Application\Data;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Data;
+
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Exception\InvalidArgumentException;
-use Limoncello\Application\Data\BaseMigrationRunner;
-use Limoncello\Application\Data\FileMigrationRunner;
-use Limoncello\Application\Data\FileSeedRunner;
-use Limoncello\Application\FileSystem\FileSystem;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Commands\IoInterface;
-use Limoncello\Contracts\FileSystem\FileSystemInterface;
-use Limoncello\Tests\Application\TestCase;
+use Whoa\Application\Data\BaseMigrationRunner;
+use Whoa\Application\Data\FileMigrationRunner;
+use Whoa\Application\Data\FileSeedRunner;
+use Whoa\Application\FileSystem\FileSystem;
+use Whoa\Container\Container;
+use Whoa\Contracts\Commands\IoInterface;
+use Whoa\Contracts\FileSystem\FileSystemInterface;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Mockery\Mock;
 use Psr\Container\ContainerExceptionInterface;
@@ -39,7 +42,7 @@ use ReflectionException;
 use ReflectionMethod;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class MigrationAndSeedRunnersTest extends TestCase
 {
@@ -66,12 +69,12 @@ class MigrationAndSeedRunnersTest extends TestCase
         /** @var IoInterface $inOut */
 
         $migrationRunner = new FileMigrationRunner($inOut, static::MIGRATIONS_PATH);
-        $seedRunner      = new FileSeedRunner($inOut, static::SEEDS_PATH, [static::class, 'seedInit']);
+        $seedRunner = new FileSeedRunner($inOut, static::SEEDS_PATH, [static::class, 'seedInit']);
 
-        $container  = $this->createContainer();
+        $container = $this->createContainer();
         /** @var Connection $connection */
         $connection = $container->get(Connection::class);
-        $manager    = $connection->getSchemaManager();
+        $manager = $connection->getSchemaManager();
 
         $migrationRunner->migrate($container);
 
@@ -115,7 +118,7 @@ class MigrationAndSeedRunnersTest extends TestCase
         $runner = Mockery::mock(BaseMigrationRunner::class);
         $runner->makePartial();
 
-        $container  = $this->createContainer();
+        $container = $this->createContainer();
 
         $method = new ReflectionMethod(BaseMigrationRunner::class, 'setIO');
         $method->setAccessible(true);
@@ -130,7 +133,7 @@ class MigrationAndSeedRunnersTest extends TestCase
 
     /**
      * @param ContainerInterface $container
-     * @param string             $seederClass
+     * @param string $seederClass
      *
      * @return void
      */
@@ -149,7 +152,7 @@ class MigrationAndSeedRunnersTest extends TestCase
         $container = new Container();
 
         $container[FileSystemInterface::class] = new FileSystem();
-        $container[Connection::class]          = $this->createConnection();
+        $container[Connection::class] = $this->createConnection();
 
         return $container;
     }
@@ -163,10 +166,10 @@ class MigrationAndSeedRunnersTest extends TestCase
     {
         // user and password are needed for HHVM
         $connection = DriverManager::getConnection([
-            'url'      => 'sqlite:///',
-            'memory'   => true,
-            'dbname'   => 'test',
-            'user'     => '',
+            'url' => 'sqlite:///',
+            'memory' => true,
+            'dbname' => 'test',
+            'user' => '',
             'password' => '',
         ]);
         $this->assertNotSame(false, $connection->exec('PRAGMA foreign_keys = ON;'));

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Data;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +17,10 @@ namespace Limoncello\Application\Data;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Application\Data;
+
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
@@ -26,8 +29,8 @@ use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Type;
 use Exception;
 use Generator;
-use Limoncello\Contracts\Commands\IoInterface;
-use Limoncello\Contracts\Data\SeedInterface;
+use Whoa\Contracts\Commands\IoInterface;
+use Whoa\Contracts\Data\SeedInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -36,7 +39,7 @@ use function assert;
 use function call_user_func;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
@@ -73,18 +76,19 @@ abstract class BaseSeedRunner
 
     /**
      * @param IoInterface $inOut
-     * @param callable    $seedInit
-     * @param string      $seedsTable
+     * @param callable $seedInit
+     * @param string $seedsTable
      */
     public function __construct(
         IoInterface $inOut,
-        callable $seedInit = null,
-        string $seedsTable = BaseMigrationRunner::SEEDS_TABLE
-    ) {
+        callable    $seedInit = null,
+        string      $seedsTable = BaseMigrationRunner::SEEDS_TABLE
+    )
+    {
         assert(empty($seedsTable) === false);
 
-        $this->seedInit    = $seedInit;
-        $this->seedsTable  = $seedsTable;
+        $this->seedInit = $seedInit;
+        $this->seedsTable = $seedsTable;
 
         $this->setIO($inOut);
     }
@@ -124,7 +128,7 @@ abstract class BaseSeedRunner
     protected function getSeeds(ContainerInterface $container): Generator
     {
         $connection = $this->getConnection($container);
-        $manager    = $connection->getSchemaManager();
+        $manager = $connection->getSchemaManager();
 
         if ($manager->tablesExist([$this->getSeedsTable()]) === true) {
             $seeded = $this->readSeeded($connection);
@@ -156,7 +160,7 @@ abstract class BaseSeedRunner
 
     /**
      * @param ContainerInterface $container
-     * @param string             $seedClass
+     * @param string $seedClass
      *
      * @return void
      */
@@ -222,7 +226,7 @@ abstract class BaseSeedRunner
     private function readSeeded(Connection $connection): array
     {
         $builder = $connection->createQueryBuilder();
-        $seeded  = [];
+        $seeded = [];
 
         if ($connection->getSchemaManager()->tablesExist([$this->getSeedsTable()]) === true) {
             $seeds = $builder
@@ -232,8 +236,8 @@ abstract class BaseSeedRunner
                 ->execute()
                 ->fetchAll();
             foreach ($seeds as $seed) {
-                $index          = $seed[static::SEEDS_COLUMN_ID];
-                $class          = $seed[static::SEEDS_COLUMN_CLASS];
+                $index = $seed[static::SEEDS_COLUMN_ID];
+                $class = $seed[static::SEEDS_COLUMN_CLASS];
                 $seeded[$index] = $class;
             }
         }
@@ -253,9 +257,9 @@ abstract class BaseSeedRunner
     private function saveSeed(Connection $connection, string $class): void
     {
         $format = $connection->getSchemaManager()->getDatabasePlatform()->getDateTimeFormatString();
-        $now    = (new DateTimeImmutable())->format($format);
+        $now = (new DateTimeImmutable())->format($format);
         $connection->insert($this->getSeedsTable(), [
-            static::SEEDS_COLUMN_CLASS     => $class,
+            static::SEEDS_COLUMN_CLASS => $class,
             static::SEEDS_COLUMN_SEEDED_AT => $now,
         ]);
     }

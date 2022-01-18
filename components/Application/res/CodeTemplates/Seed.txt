@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Data\Seeds;
 
@@ -6,8 +8,8 @@ use App\Data\Models\{%SINGULAR_CC%} as Model;
 //use App\Data\Models\User;
 use Doctrine\DBAL\DBALException;
 use Faker\Generator;
-use Limoncello\Contracts\Data\SeedInterface;
-use Limoncello\Data\Seeds\SeedTrait;
+use Whoa\Contracts\Data\SeedInterface;
+use Whoa\Data\Seeds\SeedTrait;
 use Psr\Container\ContainerInterface;
 
 /**

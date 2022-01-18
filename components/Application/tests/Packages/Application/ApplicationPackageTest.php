@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Packages\Application;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,23 +17,27 @@ namespace Limoncello\Tests\Application\Packages\Application;
  * limitations under the License.
  */
 
-use Limoncello\Application\Packages\Application\ApplicationContainerConfigurator;
-use Limoncello\Application\Packages\Application\ApplicationProvider;
-use Limoncello\Application\Packages\Application\WhoopsContainerConfigurator;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface as S;
-use Limoncello\Contracts\Application\CacheSettingsProviderInterface;
-use Limoncello\Contracts\Commands\CommandStorageInterface;
-use Limoncello\Contracts\Exceptions\ThrowableHandlerInterface;
-use Limoncello\Tests\Application\Data\CoreSettings\Providers\Provider1;
-use Limoncello\Tests\Application\TestCase;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Packages\Application;
+
+use Whoa\Application\Packages\Application\ApplicationContainerConfigurator;
+use Whoa\Application\Packages\Application\ApplicationProvider;
+use Whoa\Application\Packages\Application\WhoopsContainerConfigurator;
+use Whoa\Container\Container;
+use Whoa\Contracts\Application\ApplicationConfigurationInterface as S;
+use Whoa\Contracts\Application\CacheSettingsProviderInterface;
+use Whoa\Contracts\Commands\CommandStorageInterface;
+use Whoa\Contracts\Exceptions\ThrowableHandlerInterface;
+use Whoa\Tests\Application\Data\CoreSettings\Providers\Provider1;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Mockery\Mock;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class ApplicationPackageTest extends TestCase
 {
@@ -79,8 +82,7 @@ class ApplicationPackageTest extends TestCase
      */
     private function getApplicationSettings(): S
     {
-        return new class implements S
-        {
+        return new class implements S {
             /**
              * @return array
              */
@@ -90,7 +92,7 @@ class ApplicationPackageTest extends TestCase
 
                 return [
                     S::KEY_PROVIDER_CLASSES => [Provider1::class],
-                    S::KEY_COMMANDS_FOLDER  => $commandsFolder,
+                    S::KEY_COMMANDS_FOLDER => $commandsFolder,
                 ];
             }
         };

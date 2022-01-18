@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Data\Authorization;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Tests\Application\Data\Authorization;
  * limitations under the License.
  */
 
-use Limoncello\Application\Contracts\Authorization\AuthorizationRulesInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Data\Authorization;
+
+use Whoa\Application\Contracts\Authorization\AuthorizationRulesInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class NotificationRules implements AuthorizationRulesInterface
 {

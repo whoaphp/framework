@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Cors;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Application\Packages\Cors;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface as A;
-use Limoncello\Contracts\Settings\SettingsInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Cors;
+
+use Whoa\Contracts\Application\ApplicationConfigurationInterface as A;
+use Whoa\Contracts\Settings\SettingsInterface;
 use Neomerx\Cors\Strategies\Settings;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class CorsSettings implements SettingsInterface
 {
@@ -73,8 +76,8 @@ class CorsSettings implements SettingsInterface
         $this->appConfig = $appConfig;
 
         $serverOriginScheme = $appConfig[A::KEY_APP_ORIGIN_SCHEMA];
-        $serverOriginHost   = $appConfig[A::KEY_APP_ORIGIN_HOST];
-        $serverOriginPort   = $appConfig[A::KEY_APP_ORIGIN_PORT] ? (int)$appConfig[A::KEY_APP_ORIGIN_PORT] : null;
+        $serverOriginHost = $appConfig[A::KEY_APP_ORIGIN_HOST];
+        $serverOriginPort = $appConfig[A::KEY_APP_ORIGIN_PORT] ? (int)$appConfig[A::KEY_APP_ORIGIN_PORT] : null;
 
         $corsSettings = (new Settings())->init($serverOriginScheme, $serverOriginHost, $serverOriginPort);
 
@@ -115,16 +118,16 @@ class CorsSettings implements SettingsInterface
         $isLogEnabled = (bool)($appConfig[A::KEY_IS_LOG_ENABLED] ?? false);
 
         return [
-            static::KEY_ALLOWED_ORIGINS      => empty($serverOrigin) === true ? [] : [$serverOrigin],
-            static::KEY_ALLOWED_METHODS      => [],
-            static::KEY_ALLOWED_HEADERS      => [],
-            static::KEY_EXPOSED_HEADERS      => [],
+            static::KEY_ALLOWED_ORIGINS => empty($serverOrigin) === true ? [] : [$serverOrigin],
+            static::KEY_ALLOWED_METHODS => [],
+            static::KEY_ALLOWED_HEADERS => [],
+            static::KEY_EXPOSED_HEADERS => [],
             static::KEY_IS_USING_CREDENTIALS => false,
             static::KEY_FLIGHT_CACHE_MAX_AGE => 0,
             static::KEY_IS_FORCE_ADD_METHODS => false,
             static::KEY_IS_FORCE_ADD_HEADERS => false,
-            static::KEY_IS_CHECK_HOST        => true,
-            static::KEY_LOG_IS_ENABLED       => $isLogEnabled,
+            static::KEY_IS_CHECK_HOST => true,
+            static::KEY_LOG_IS_ENABLED => $isLogEnabled,
         ];
     }
 

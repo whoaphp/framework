@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Cookies;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,18 +17,22 @@ namespace Limoncello\Application\Packages\Cookies;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Cookies;
+
 use Closure;
-use Limoncello\Application\Contracts\Cookie\CookieFunctionsInterface;
-use Limoncello\Contracts\Application\MiddlewareInterface;
-use Limoncello\Contracts\Cookies\CookieInterface;
-use Limoncello\Contracts\Cookies\CookieJarInterface;
+use Whoa\Application\Contracts\Cookie\CookieFunctionsInterface;
+use Whoa\Contracts\Application\MiddlewareInterface;
+use Whoa\Contracts\Cookies\CookieInterface;
+use Whoa\Contracts\Cookies\CookieJarInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use function call_user_func;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class CookieMiddleware implements MiddlewareInterface
 {
@@ -41,9 +44,10 @@ class CookieMiddleware implements MiddlewareInterface
      */
     public static function handle(
         ServerRequestInterface $request,
-        Closure $next,
-        ContainerInterface $container
-    ): ResponseInterface {
+        Closure                $next,
+        ContainerInterface     $container
+    ): ResponseInterface
+    {
         /** @var ResponseInterface $response */
         $response = $next($request);
 

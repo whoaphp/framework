@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Packages\Session;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Tests\Application\Packages\Session;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Packages\Session;
+
 use Closure;
-use Limoncello\Application\Contracts\Session\SessionFunctionsInterface;
-use Limoncello\Application\Packages\Session\SessionMiddleware;
-use Limoncello\Application\Packages\Session\SessionSettings;
-use Limoncello\Application\Session\SessionFunctions;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Tests\Application\TestCase;
+use Whoa\Application\Contracts\Session\SessionFunctionsInterface;
+use Whoa\Application\Packages\Session\SessionMiddleware;
+use Whoa\Application\Packages\Session\SessionSettings;
+use Whoa\Application\Session\SessionFunctions;
+use Whoa\Container\Container;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Mockery\Mock;
 use Psr\Container\ContainerExceptionInterface;
@@ -34,7 +37,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class SessionMiddlewareTest extends TestCase
 {
@@ -56,8 +59,8 @@ class SessionMiddlewareTest extends TestCase
         parent::setUp();
 
         $this->request = Mockery::mock(ServerRequestInterface::class);
-        $responseMock  = Mockery::mock(ResponseInterface::class);
-        $this->next    = function () use ($responseMock) {
+        $responseMock = Mockery::mock(ResponseInterface::class);
+        $this->next = function () use ($responseMock) {
             return $responseMock;
         };
     }
@@ -85,11 +88,11 @@ class SessionMiddlewareTest extends TestCase
 
         /** @var Mock $providerMock */
         $providerMock = Mockery::mock(SettingsProviderInterface::class);
-        $appSettings  = [];
+        $appSettings = [];
         $providerMock->shouldReceive('get')->once()->with(SessionSettings::class)
             ->andReturn((new SessionSettings())->get($appSettings));
 
-        $container                                   = new Container();
+        $container = new Container();
         $container[SessionFunctionsInterface::class] = $settingsFunctions;
         $container[SettingsProviderInterface::class] = $providerMock;
 

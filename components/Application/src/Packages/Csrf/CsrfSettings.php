@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Csrf;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,12 @@ namespace Limoncello\Application\Packages\Csrf;
  * limitations under the License.
  */
 
-use Limoncello\Common\Reflection\CheckCallableTrait;
-use Limoncello\Contracts\Settings\SettingsInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Csrf;
+
+use Whoa\Common\Reflection\CheckCallableTrait;
+use Whoa\Contracts\Settings\SettingsInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -31,7 +34,7 @@ use function is_string;
 use function strtoupper;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class CsrfSettings implements SettingsInterface
 {
@@ -101,8 +104,8 @@ class CsrfSettings implements SettingsInterface
         assert(is_int($maxTokensThreshold) === true && $maxTokensThreshold >= 0);
 
         $errorResponseMethod = $settings[static::CREATE_ERROR_RESPONSE_METHOD] ?? null;
-        $expectedArgs        = [ContainerInterface::class, ServerRequestInterface::class];
-        $expectedRet         = ResponseInterface::class;
+        $expectedArgs = [ContainerInterface::class, ServerRequestInterface::class];
+        $expectedRet = ResponseInterface::class;
         assert(
             $this->checkPublicStaticCallable($errorResponseMethod, $expectedArgs, $expectedRet) === true,
             'CSRF error response method should have signature ' .
@@ -121,11 +124,11 @@ class CsrfSettings implements SettingsInterface
         $errorResponseMethod = [CsrfMiddleware::class, CsrfMiddleware::DEFAULT_ERROR_RESPONSE_METHOD];
 
         return [
-            static::HTTP_METHODS_TO_CHECK        => ['POST', 'PUT', 'DELETE', 'PATCH'],
-            static::HTTP_REQUEST_CSRF_TOKEN_KEY  => static::DEFAULT_HTTP_REQUEST_CSRF_TOKEN_KEY,
+            static::HTTP_METHODS_TO_CHECK => ['POST', 'PUT', 'DELETE', 'PATCH'],
+            static::HTTP_REQUEST_CSRF_TOKEN_KEY => static::DEFAULT_HTTP_REQUEST_CSRF_TOKEN_KEY,
             static::TOKEN_STORAGE_KEY_IN_SESSION => 'csrf_tokens',
-            static::MAX_TOKENS                   => 20,
-            static::MAX_TOKENS_THRESHOLD         => 5,
+            static::MAX_TOKENS => 20,
+            static::MAX_TOKENS_THRESHOLD => 5,
             static::CREATE_ERROR_RESPONSE_METHOD => $errorResponseMethod,
         ];
     }

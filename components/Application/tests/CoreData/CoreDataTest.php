@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\CoreData;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Tests\Application\CoreData;
  * limitations under the License.
  */
 
-use Limoncello\Application\CoreSettings\CoreData;
-use Limoncello\Tests\Application\Data\CoreSettings\Providers\Provider1;
-use Limoncello\Tests\Application\TestCase;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\CoreData;
+
+use Whoa\Application\CoreSettings\CoreData;
+use Whoa\Tests\Application\Data\CoreSettings\Providers\Provider1;
+use Whoa\Tests\Application\TestCase;
 use ReflectionException;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class CoreDataTest extends TestCase
 {

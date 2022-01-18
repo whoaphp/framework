@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Data;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,19 +17,23 @@ namespace Limoncello\Tests\Application\Data;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Data;
+
 use Doctrine\DBAL\Types\Types;
 use InvalidArgumentException;
-use Limoncello\Application\Data\ModelSchemaInfo;
-use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
-use Limoncello\Contracts\Data\RelationshipTypes;
-use Limoncello\Tests\Application\Data\Models\Comment;
-use Limoncello\Tests\Application\Data\Models\CommentEmotion;
-use Limoncello\Tests\Application\Data\Models\Emotion;
-use Limoncello\Tests\Application\Data\Models\User;
-use Limoncello\Tests\Application\TestCase;
+use Whoa\Application\Data\ModelSchemaInfo;
+use Whoa\Contracts\Data\ModelSchemaInfoInterface;
+use Whoa\Contracts\Data\RelationshipTypes;
+use Whoa\Tests\Application\Data\Models\Comment;
+use Whoa\Tests\Application\Data\Models\CommentEmotion;
+use Whoa\Tests\Application\Data\Models\Emotion;
+use Whoa\Tests\Application\Data\Models\User;
+use Whoa\Tests\Application\TestCase;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class ModelSchemasTest extends TestCase
 {
@@ -170,9 +173,9 @@ class ModelSchemasTest extends TestCase
 
         $this->schemas->registerClass(
             '', Comment::TABLE_NAME, Comment::FIELD_ID, [
-            Comment::FIELD_ID         => Types::INTEGER,
-            Comment::FIELD_ID_USER    => Types::INTEGER,
-            Comment::FIELD_TEXT       => Types::STRING,
+            Comment::FIELD_ID => Types::INTEGER,
+            Comment::FIELD_ID_USER => Types::INTEGER,
+            Comment::FIELD_TEXT => Types::STRING,
             Comment::FIELD_CREATED_AT => Types::DATE_MUTABLE,
         ], [Comment::FIELD_TEXT => Comment::LENGTH_TEXT]
         );
@@ -187,9 +190,9 @@ class ModelSchemasTest extends TestCase
 
         $this->schemas->registerClass(
             Comment::class, '', Comment::FIELD_ID, [
-            Comment::FIELD_ID         => Types::INTEGER,
-            Comment::FIELD_ID_USER    => Types::INTEGER,
-            Comment::FIELD_TEXT       => Types::STRING,
+            Comment::FIELD_ID => Types::INTEGER,
+            Comment::FIELD_ID_USER => Types::INTEGER,
+            Comment::FIELD_TEXT => Types::STRING,
             Comment::FIELD_CREATED_AT => Types::DATE_MUTABLE,
         ], [Comment::FIELD_TEXT => Comment::LENGTH_TEXT]
         );
@@ -204,9 +207,9 @@ class ModelSchemasTest extends TestCase
 
         $this->schemas->registerClass(
             Comment::class, Comment::TABLE_NAME, '', [
-            Comment::FIELD_ID         => Types::INTEGER,
-            Comment::FIELD_ID_USER    => Types::INTEGER,
-            Comment::FIELD_TEXT       => Types::STRING,
+            Comment::FIELD_ID => Types::INTEGER,
+            Comment::FIELD_ID_USER => Types::INTEGER,
+            Comment::FIELD_TEXT => Types::STRING,
             Comment::FIELD_CREATED_AT => Types::DATE_MUTABLE,
         ], [Comment::FIELD_TEXT => Comment::LENGTH_TEXT]
         );
@@ -219,9 +222,9 @@ class ModelSchemasTest extends TestCase
     {
         $this->schemas->registerClass(
             Comment::class, Comment::TABLE_NAME, Comment::FIELD_ID, [
-            Comment::FIELD_ID         => Types::INTEGER,
-            Comment::FIELD_ID_USER    => Types::INTEGER,
-            Comment::FIELD_TEXT       => Types::STRING,
+            Comment::FIELD_ID => Types::INTEGER,
+            Comment::FIELD_ID_USER => Types::INTEGER,
+            Comment::FIELD_TEXT => Types::STRING,
             Comment::FIELD_CREATED_AT => Types::DATE_MUTABLE,
         ], [Comment::FIELD_TEXT => Comment::LENGTH_TEXT]
         );

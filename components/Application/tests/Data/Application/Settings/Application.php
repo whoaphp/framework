@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Data\Application\Settings;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Tests\Application\Data\Application\Settings;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface;
-use Limoncello\Tests\Application\Data\CoreSettings\Providers\Provider1;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Data\Application\Settings;
+
+use Whoa\Contracts\Application\ApplicationConfigurationInterface;
+use Whoa\Tests\Application\Data\CoreSettings\Providers\Provider1;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class Application implements ApplicationConfigurationInterface
 {

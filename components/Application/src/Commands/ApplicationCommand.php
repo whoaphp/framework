@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Commands;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Application\Commands;
  * limitations under the License.
  */
 
-use Limoncello\Application\Exceptions\ConfigurationException;
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface;
-use Limoncello\Contracts\Application\CacheSettingsProviderInterface;
-use Limoncello\Contracts\Commands\CommandInterface;
-use Limoncello\Contracts\Commands\IoInterface;
-use Limoncello\Contracts\FileSystem\FileSystemInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Commands;
+
+use Whoa\Application\Exceptions\ConfigurationException;
+use Whoa\Contracts\Application\ApplicationConfigurationInterface;
+use Whoa\Contracts\Application\CacheSettingsProviderInterface;
+use Whoa\Contracts\Commands\CommandInterface;
+use Whoa\Contracts\Commands\IoInterface;
+use Whoa\Contracts\FileSystem\FileSystemInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -40,14 +43,14 @@ use function is_string;
 use function preg_match;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class ApplicationCommand implements CommandInterface
 {
     /**
      * Command name.
      */
-    const NAME = 'l:app';
+    const NAME = 'w:app';
 
     /** Argument name */
     const ARG_ACTION = 'action';
@@ -92,9 +95,9 @@ class ApplicationCommand implements CommandInterface
 
         return [
             [
-                static::ARGUMENT_NAME        => static::ARG_ACTION,
+                static::ARGUMENT_NAME => static::ARG_ACTION,
                 static::ARGUMENT_DESCRIPTION => "Action such as `$cache` or `$clear`.",
-                static::ARGUMENT_MODE        => static::ARGUMENT_MODE__REQUIRED,
+                static::ARGUMENT_MODE => static::ARGUMENT_MODE__REQUIRED,
             ],
         ];
     }
@@ -155,7 +158,7 @@ class ApplicationCommand implements CommandInterface
     {
         assert($inOut);
 
-        $appConfig     = $this->getApplicationConfiguration($container);
+        $appConfig = $this->getApplicationConfiguration($container);
         $cacheCallable = $appConfig[ApplicationConfigurationInterface::KEY_CACHE_CALLABLE];
         assert(is_string($cacheCallable));
 
@@ -178,7 +181,7 @@ class ApplicationCommand implements CommandInterface
 
     /**
      * @param ContainerInterface $container
-     * @param IoInterface        $inOut
+     * @param IoInterface $inOut
      *
      * @return void
      *
@@ -189,8 +192,8 @@ class ApplicationCommand implements CommandInterface
     {
         assert($inOut);
 
-        $appConfig     = $this->getApplicationConfiguration($container);
-        $cacheDir      = $appConfig[ApplicationConfigurationInterface::KEY_CACHE_FOLDER];
+        $appConfig = $this->getApplicationConfiguration($container);
+        $cacheDir = $appConfig[ApplicationConfigurationInterface::KEY_CACHE_FOLDER];
         $cacheCallable = $appConfig[ApplicationConfigurationInterface::KEY_CACHE_CALLABLE];
         list ($namespace, $class, $method) = $this->parseCacheCallable($cacheCallable);
         if ($class === null || $namespace === null || $method === null) {
@@ -200,8 +203,8 @@ class ApplicationCommand implements CommandInterface
 
         /** @var CacheSettingsProviderInterface $settingsProvider */
         $settingsProvider = $container->get(CacheSettingsProviderInterface::class);
-        $settingsData     = $settingsProvider->serialize();
-        $content          = $this->composeContent($settingsData, $namespace, $class, $method);
+        $settingsData = $settingsProvider->serialize();
+        $content = $this->composeContent($settingsData, $namespace, $class, $method);
 
         $path = $cacheDir . DIRECTORY_SEPARATOR . $class . '.php';
         $this->getFileSystem($container)->write($path, $content);
@@ -225,16 +228,16 @@ class ApplicationCommand implements CommandInterface
             count($nsClassMethod = explode('::', $mightBeCallable, 2)) === 2 &&
             count($nsClass = explode('\\', $nsClassMethod[0])) > 1
         ) {
-            $canBeClass     = array_pop($nsClass);
+            $canBeClass = array_pop($nsClass);
             $canBeNamespace = array_filter($nsClass);
-            $canBeMethod    = $nsClassMethod[1];
+            $canBeMethod = $nsClassMethod[1];
         } elseif (is_array($mightBeCallable) === true &&
             count($mightBeCallable) === 2 &&
             count($nsClass = explode('\\', $mightBeCallable[0])) > 1
         ) {
-            $canBeClass     = array_pop($nsClass);
+            $canBeClass = array_pop($nsClass);
             $canBeNamespace = array_filter($nsClass);
-            $canBeMethod    = $mightBeCallable[1];
+            $canBeMethod = $mightBeCallable[1];
         } else {
             return [null, null, null];
         }
@@ -250,14 +253,14 @@ class ApplicationCommand implements CommandInterface
         }
 
         $namespace = implode('\\', $canBeNamespace);
-        $class     = $canBeClass;
-        $method    = $canBeMethod;
+        $class = $canBeClass;
+        $method = $canBeMethod;
 
         return [$namespace, $class, $method];
     }
 
     /**
-     * @param mixed  $value
+     * @param mixed $value
      * @param string $className
      * @param string $methodName
      * @param string $namespace
@@ -269,8 +272,9 @@ class ApplicationCommand implements CommandInterface
         string $namespace,
         string $className,
         string $methodName
-    ): string {
-        $now  = date(DATE_RFC2822);
+    ): string
+    {
+        $now = date(DATE_RFC2822);
         $data = var_export($value, true);
 
         assert(
@@ -315,7 +319,7 @@ EOT;
     {
         /** @var CacheSettingsProviderInterface $settingsProvider */
         $settingsProvider = $container->get(CacheSettingsProviderInterface::class);
-        $appConfig        = $settingsProvider->getApplicationConfiguration();
+        $appConfig = $settingsProvider->getApplicationConfiguration();
 
         return $appConfig;
     }

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Session;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +17,20 @@ namespace Limoncello\Tests\Application\Session;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Session;
+
 use ArrayIterator;
-use Limoncello\Application\Contracts\Session\SessionFunctionsInterface;
-use Limoncello\Application\Session\Session;
-use Limoncello\Application\Session\SessionFunctions;
-use Limoncello\Tests\Application\TestCase;
+use Whoa\Application\Contracts\Session\SessionFunctionsInterface;
+use Whoa\Application\Session\Session;
+use Whoa\Application\Session\SessionFunctions;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Mockery\Mock;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class SessionTest extends TestCase
 {
@@ -63,7 +66,7 @@ class SessionTest extends TestCase
         $this->assertTrue(is_callable($functions->getUnsetCallable()));
         $this->assertTrue(is_callable($functions->getWriteCloseCallable()));
 
-        $key   = 'some_key';
+        $key = 'some_key';
         $value = 'some_value';
 
         $prevSession = null;
@@ -97,7 +100,7 @@ class SessionTest extends TestCase
         /** @var Mock $functions */
         $functions = Mockery::mock(SessionFunctionsInterface::class);
 
-        $testKey   = 'whatever';
+        $testKey = 'whatever';
         $testValue = 'value';
         $functions->shouldReceive('getPutCallable')->once()->withNoArgs()->andReturn(
             function ($key, $value) use ($testKey, $testValue) {

@@ -1,13 +1,15 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Routes;
 
 use App\Json\Controllers\{%PLURAL_CC%}Controller;
 use App\Json\Schemas\{%SINGULAR_CC%}Schema;
-use Limoncello\Contracts\Application\RoutesConfiguratorInterface;
-use Limoncello\Contracts\Routing\GroupInterface;
-use Limoncello\Flute\Http\Traits\FluteRoutesTrait;
-use Limoncello\Flute\Package\FluteContainerConfigurator;
+use Whoa\Contracts\Application\RoutesConfiguratorInterface;
+use Whoa\Contracts\Routing\GroupInterface;
+use Whoa\Flute\Http\Traits\FluteRoutesTrait;
+use Whoa\Flute\Package\FluteContainerConfigurator;
 
 /**
  * @package App

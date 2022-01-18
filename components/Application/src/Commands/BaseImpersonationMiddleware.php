@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Commands;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Application\Commands;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Application\Commands;
+
 use Closure;
-use Limoncello\Contracts\Authentication\AccountManagerInterface;
-use Limoncello\Contracts\Commands\IoInterface;
-use Limoncello\Contracts\Commands\MiddlewareInterface;
-use Limoncello\Contracts\Passport\PassportAccountInterface;
-use Limoncello\Contracts\Settings\Packages\CommandSettingsInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Contracts\Authentication\AccountManagerInterface;
+use Whoa\Contracts\Commands\IoInterface;
+use Whoa\Contracts\Commands\MiddlewareInterface;
+use Whoa\Contracts\Passport\PassportAccountInterface;
+use Whoa\Contracts\Settings\Packages\CommandSettingsInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
 use Psr\Container\ContainerInterface;
 use function array_key_exists;
 use function assert;
@@ -33,7 +36,7 @@ use function is_int;
 use function is_string;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 abstract class BaseImpersonationMiddleware implements MiddlewareInterface
 {
@@ -48,14 +51,15 @@ abstract class BaseImpersonationMiddleware implements MiddlewareInterface
      * @inheritdoc
      */
     public static function handle(
-        IoInterface $inOut,
-        Closure $next,
+        IoInterface        $inOut,
+        Closure            $next,
         ContainerInterface $container
-    ): void {
+    ): void
+    {
         /** @var SettingsProviderInterface $provider */
-        $provider       = $container->get(SettingsProviderInterface::class);
-        $settings       = $provider->get(CommandSettingsInterface::class);
-        $userIdentity   = $settings[CommandSettingsInterface::KEY_IMPERSONATE_AS_USER_IDENTITY] ?? null;
+        $provider = $container->get(SettingsProviderInterface::class);
+        $settings = $provider->get(CommandSettingsInterface::class);
+        $userIdentity = $settings[CommandSettingsInterface::KEY_IMPERSONATE_AS_USER_IDENTITY] ?? null;
         $userProperties = $settings[CommandSettingsInterface::KEY_IMPERSONATE_WITH_USER_PROPERTIES] ?? [];
 
         /** @var AccountManagerInterface $manager */
@@ -69,8 +73,8 @@ abstract class BaseImpersonationMiddleware implements MiddlewareInterface
 
     /**
      * @param int|string $userIdentity
-     * @param Closure    $readUserScopes
-     * @param array      $properties
+     * @param Closure $readUserScopes
+     * @param array $properties
      *
      * @return PassportAccountInterface
      *
@@ -81,9 +85,9 @@ abstract class BaseImpersonationMiddleware implements MiddlewareInterface
         $userIdentity,
         Closure $readUserScopes,
         array $properties
-    ): PassportAccountInterface {
-        return new class ($userIdentity, $readUserScopes, $properties) implements PassportAccountInterface
-        {
+    ): PassportAccountInterface
+    {
+        return new class ($userIdentity, $readUserScopes, $properties) implements PassportAccountInterface {
             /**
              * @var array
              */
@@ -101,15 +105,15 @@ abstract class BaseImpersonationMiddleware implements MiddlewareInterface
 
             /**
              * @param int|string $userIdentity
-             * @param Closure    $readUserScopes
-             * @param array      $properties
+             * @param Closure $readUserScopes
+             * @param array $properties
              */
             public function __construct($userIdentity, Closure $readUserScopes, array $properties)
             {
                 assert(is_int($userIdentity) === true || is_string($userIdentity) === true);
 
-                $this->userIdentity   = $userIdentity;
-                $this->properties     = $properties;
+                $this->userIdentity = $userIdentity;
+                $this->properties = $properties;
                 $this->readUserScopes = $readUserScopes;
             }
 

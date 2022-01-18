@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Data\CoreSettings\Middleware;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Tests\Application\Data\CoreSettings\Middleware;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Data\CoreSettings\Middleware;
+
 use Closure;
-use Limoncello\Contracts\Application\MiddlewareInterface;
+use Whoa\Contracts\Application\MiddlewareInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class PluginMiddleware implements MiddlewareInterface
 {
@@ -34,9 +37,10 @@ class PluginMiddleware implements MiddlewareInterface
      */
     public static function handle(
         ServerRequestInterface $request,
-        Closure $next,
-        ContainerInterface $container
-    ): ResponseInterface {
+        Closure                $next,
+        ContainerInterface     $container
+    ): ResponseInterface
+    {
         assert($container);
 
         return $next($request);

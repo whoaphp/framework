@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Cors;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,14 @@ namespace Limoncello\Application\Packages\Cors;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Provider\ProvidesSettingsInterface as SI;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Cors;
+
+use Whoa\Contracts\Provider\ProvidesSettingsInterface as SI;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class CorsMinimalProvider implements SI
 {

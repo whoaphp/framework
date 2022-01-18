@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Cookies;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Application\Cookies;
  * limitations under the License.
  */
 
-use Limoncello\Application\Exceptions\InvalidArgumentException;
-use Limoncello\Contracts\Cookies\CookieInterface;
-use Limoncello\Contracts\Cookies\CookieJarInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Cookies;
+
+use Whoa\Application\Exceptions\InvalidArgumentException;
+use Whoa\Contracts\Cookies\CookieInterface;
+use Whoa\Contracts\Cookies\CookieJarInterface;
 use function array_key_exists;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class CookieJar implements CookieJarInterface
 {
@@ -61,23 +64,24 @@ class CookieJar implements CookieJarInterface
     /**
      * @param string $defaultPath
      * @param string $defaultDomain
-     * @param bool   $defaultIsSecure
-     * @param bool   $defaultIsHttpOnly
-     * @param bool   $defaultIsRaw
+     * @param bool $defaultIsSecure
+     * @param bool $defaultIsHttpOnly
+     * @param bool $defaultIsRaw
      */
     public function __construct(
         string $defaultPath,
         string $defaultDomain,
-        bool $defaultIsSecure,
-        bool $defaultIsHttpOnly,
-        bool $defaultIsRaw
-    ) {
-        $this->cookies           = [];
-        $this->defaultPath       = $defaultPath;
-        $this->defaultDomain     = $defaultDomain;
-        $this->defaultIsSecure   = $defaultIsSecure;
+        bool   $defaultIsSecure,
+        bool   $defaultIsHttpOnly,
+        bool   $defaultIsRaw
+    )
+    {
+        $this->cookies = [];
+        $this->defaultPath = $defaultPath;
+        $this->defaultDomain = $defaultDomain;
+        $this->defaultIsSecure = $defaultIsSecure;
         $this->defaultIsHttpOnly = $defaultIsHttpOnly;
-        $this->defaultIsRaw      = $defaultIsRaw;
+        $this->defaultIsRaw = $defaultIsRaw;
     }
 
 

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Csrf;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,14 @@ namespace Limoncello\Application\Packages\Csrf;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Csrf;
+
 use Closure;
-use Limoncello\Application\Contracts\Csrf\CsrfTokenStorageInterface;
-use Limoncello\Contracts\Application\MiddlewareInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Application\Contracts\Csrf\CsrfTokenStorageInterface;
+use Whoa\Contracts\Application\MiddlewareInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -34,7 +37,7 @@ use function is_string;
 use function strtoupper;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class CsrfMiddleware implements MiddlewareInterface
 {
@@ -49,17 +52,18 @@ class CsrfMiddleware implements MiddlewareInterface
      */
     public static function handle(
         ServerRequestInterface $request,
-        Closure $next,
-        ContainerInterface $container
-    ): ResponseInterface {
+        Closure                $next,
+        ContainerInterface     $container
+    ): ResponseInterface
+    {
         $settings = static::getCsrfSettings($container);
-        $methods  = $settings[CsrfSettings::INTERNAL_HTTP_METHODS_TO_CHECK_AS_UC_KEYS];
+        $methods = $settings[CsrfSettings::INTERNAL_HTTP_METHODS_TO_CHECK_AS_UC_KEYS];
 
         if (array_key_exists(strtoupper($request->getMethod()), $methods) === true) {
             $token = static::readToken($request, $settings[CsrfSettings::HTTP_REQUEST_CSRF_TOKEN_KEY]);
             if (is_string($token) === false || static::getTokenStorage($container)->check($token) === false) {
                 $errResponseMethod = $settings[CsrfSettings::CREATE_ERROR_RESPONSE_METHOD];
-                $errResponse       = call_user_func($errResponseMethod, $container, $request);
+                $errResponse = call_user_func($errResponseMethod, $container, $request);
 
                 return $errResponse;
             }
@@ -69,15 +73,16 @@ class CsrfMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @param ContainerInterface     $container
+     * @param ContainerInterface $container
      * @param ServerRequestInterface $request
      *
      * @return ResponseInterface
      */
     public static function defaultErrorResponse(
-        ContainerInterface $container,
+        ContainerInterface     $container,
         ServerRequestInterface $request
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         assert($container !== null && $request !== null);
 
         // forbid if no valid CSRF token
@@ -86,7 +91,7 @@ class CsrfMiddleware implements MiddlewareInterface
 
     /**
      * @param ServerRequestInterface $request
-     * @param string                 $tokenKey
+     * @param string $tokenKey
      *
      * @return null|string
      */

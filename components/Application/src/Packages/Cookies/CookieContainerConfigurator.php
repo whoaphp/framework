@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Cookies;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,17 +17,21 @@ namespace Limoncello\Application\Packages\Cookies;
  * limitations under the License.
  */
 
-use Limoncello\Application\Contracts\Cookie\CookieFunctionsInterface;
-use Limoncello\Application\Cookies\CookieFunctions;
-use Limoncello\Application\Cookies\CookieJar;
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Cookies\CookieJarInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Cookies;
+
+use Whoa\Application\Contracts\Cookie\CookieFunctionsInterface;
+use Whoa\Application\Cookies\CookieFunctions;
+use Whoa\Application\Cookies\CookieJar;
+use Whoa\Contracts\Application\ContainerConfiguratorInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Cookies\CookieJarInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class CookieContainerConfigurator implements ContainerConfiguratorInterface
 {
@@ -40,7 +43,7 @@ class CookieContainerConfigurator implements ContainerConfiguratorInterface
      *
      * @SuppressWarnings(PHPMD.StaticAccess)
      */
-    public static function configureContainer(LimoncelloContainerInterface $container): void
+    public static function configureContainer(WhoaContainerInterface $container): void
     {
         $container[CookieJarInterface::class] =
             function (PsrContainerInterface $container): CookieJarInterface {

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Cookies;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Application\Cookies;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Application\Cookies;
+
 use DateTimeInterface;
-use Limoncello\Application\Exceptions\InvalidArgumentException;
-use Limoncello\Contracts\Cookies\CookieInterface;
+use Whoa\Application\Exceptions\InvalidArgumentException;
+use Whoa\Contracts\Cookies\CookieInterface;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class Cookie implements CookieInterface
 {
@@ -70,23 +73,24 @@ class Cookie implements CookieInterface
     /**
      * @param string $name
      * @param string $value
-     * @param int    $expire
+     * @param int $expire
      * @param string $path
      * @param string $domain
-     * @param bool   $isSecure
-     * @param bool   $isHttpOnly
-     * @param bool   $isRaw
+     * @param bool $isSecure
+     * @param bool $isHttpOnly
+     * @param bool $isRaw
      */
     public function __construct(
         string $name,
         string $value,
-        int $expire,
+        int    $expire,
         string $path,
         string $domain,
-        bool $isSecure,
-        bool $isHttpOnly,
-        bool $isRaw
-    ) {
+        bool   $isSecure,
+        bool   $isHttpOnly,
+        bool   $isRaw
+    )
+    {
         $this->name = $name;
         $this
             ->setValue($value)

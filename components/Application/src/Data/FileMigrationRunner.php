@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Data;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Application\Data;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Commands\IoInterface;
-use Limoncello\Contracts\FileSystem\FileSystemInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Data;
+
+use Whoa\Contracts\Commands\IoInterface;
+use Whoa\Contracts\FileSystem\FileSystemInterface;
 use Psr\Container\ContainerInterface;
 use function assert;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class FileMigrationRunner extends BaseMigrationRunner
 {
@@ -40,7 +43,7 @@ class FileMigrationRunner extends BaseMigrationRunner
 
     /**
      * @param IoInterface $inOut
-     * @param string      $migrationsPath
+     * @param string $migrationsPath
      */
     public function __construct(IoInterface $inOut, string $migrationsPath)
     {

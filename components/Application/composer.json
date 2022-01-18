@@ -1,10 +1,10 @@
 {
-    "name": "whoaphp/application",
+    "name": "whoa-php/application",
     "description": "PHP application components (PSR-7).",
     "keywords": ["whoa", "framework", "PSR-7", "PSR7"],
-    "homepage": "https://github.com/whoaphp/framework/tree/master/components/Application",
+    "homepage": "https://github.com/whoa-php/framework/tree/master/components/Application",
     "support": {
-        "issues": "https://github.com/whoaphp/framework/issues"
+        "issues": "https://github.com/whoa-php/framework/issues"
     },
     "license": "Apache-2.0",
     "authors": [
@@ -23,11 +23,11 @@
         "doctrine/dbal": "^2.6.0",
         "monolog/monolog": "^2.0",
         "neomerx/cors-psr7": "^2.0.0",
-        "whoaphp/contracts": "dev-master",
-        "whoaphp/core": "dev-master",
-        "whoaphp/auth": "dev-master",
-        "whoaphp/l10n": "dev-master",
-        "whoaphp/validation": "dev-master"
+        "whoa-php/contracts": "dev-master",
+        "whoa-php/core": "dev-master",
+        "whoa-php/auth": "dev-master",
+        "whoa-php/l10n": "dev-master",
+        "whoa-php/validation": "dev-master"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^2.9",
@@ -38,19 +38,19 @@
     },
     "autoload": {
         "psr-4": {
-            "Limoncello\\Application\\": "src/",
-            "Limoncello\\Application\\Resources\\Messages\\": "res/Messages"
+            "Whoa\\Application\\": "src/",
+            "Whoa\\Application\\Resources\\Messages\\": "res/Messages"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Limoncello\\Tests\\Application\\": "tests/"
+            "Whoa\\Tests\\Application\\": "tests/"
         }
     },
     "scripts": {
         "test": ["@test-unit-with-coverage", "@test-cs", "@test-md"],
-        "test-unit": "./vendor/bin/phpunit",
-        "test-unit-with-coverage": "phpdbg -qrr ./vendor/bin/phpunit --coverage-text",
+        "test-unit": "./vendor/bin/phpunit --do-not-cache-result",
+        "test-unit-with-coverage": "phpdbg -qrr ./vendor/bin/phpunit --coverage-text --do-not-cache-result",
         "test-cs": "./vendor/bin/phpcs -p -s --standard=PSR2 ./src ./tests",
         "test-md": "./vendor/bin/phpmd ./src text codesize,controversial,cleancode,design,unusedcode,naming",
         "test-unit-php-7-3": "docker-compose run --rm cli_7_3_php php ./vendor/bin/phpunit",

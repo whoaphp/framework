@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Cookies;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +17,19 @@ namespace Limoncello\Tests\Application\Cookies;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Cookies;
+
 use DateInterval;
 use DateTime;
 use Exception;
-use Limoncello\Application\Cookies\Cookie;
-use Limoncello\Application\Exceptions\InvalidArgumentException;
-use Limoncello\Tests\Application\TestCase;
+use Whoa\Application\Cookies\Cookie;
+use Whoa\Application\Exceptions\InvalidArgumentException;
+use Whoa\Tests\Application\TestCase;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class CookieTest extends TestCase
 {
@@ -37,14 +40,14 @@ class CookieTest extends TestCase
      */
     public function testBasicCookieProperties(): void
     {
-        $name       = 'name';
-        $value      = 'value';
-        $expire     = 123;
-        $path       = '/path';
-        $domain     = 'domain';
-        $isSecure   = true;
+        $name = 'name';
+        $value = 'value';
+        $expire = 123;
+        $path = '/path';
+        $domain = 'domain';
+        $isSecure = true;
         $isHttpOnly = true;
-        $isRaw      = true;
+        $isRaw = true;
 
         $cookie = new Cookie($name, $value, $expire, $path, $domain, $isSecure, $isHttpOnly, $isRaw);
 
@@ -72,7 +75,7 @@ class CookieTest extends TestCase
         $this->assertEquals(!$isRaw, $cookie->isRaw());
         $this->assertEquals($isRaw, $cookie->isNotRaw());
 
-        $now      = new DateTime();
+        $now = new DateTime();
         $nowInSec = $now->getTimestamp();
 
         $cookie->setExpiresInSeconds(10);

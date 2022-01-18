@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Monolog;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Application\Packages\Monolog;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface as A;
-use Limoncello\Contracts\Settings\Packages\MonologFileSettingsInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Monolog;
+
+use Whoa\Contracts\Application\ApplicationConfigurationInterface as A;
+use Whoa\Contracts\Settings\Packages\MonologFileSettingsInterface;
 use Monolog\Logger;
 use function assert;
 use function glob;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class MonologFileSettings implements MonologFileSettingsInterface
 {
@@ -44,7 +47,7 @@ class MonologFileSettings implements MonologFileSettingsInterface
         $defaults = $this->getSettings();
 
         $logFolder = $defaults[static::KEY_LOG_FOLDER] ?? null;
-        $logFile   = $defaults[static::KEY_LOG_FILE] ?? null;
+        $logFile = $defaults[static::KEY_LOG_FILE] ?? null;
         assert(
             $logFolder !== null && empty(glob($logFolder)) === false,
             "Invalid Logs folder `$logFolder`."
@@ -67,8 +70,8 @@ class MonologFileSettings implements MonologFileSettingsInterface
 
         return [
             static::KEY_IS_ENABLED => (bool)($appConfig[A::KEY_IS_LOG_ENABLED] ?? false),
-            static::KEY_LOG_LEVEL  => $isDebug === true ? Logger::DEBUG : Logger::INFO,
-            static::KEY_LOG_FILE   => 'limoncello.log',
+            static::KEY_LOG_LEVEL => $isDebug === true ? Logger::DEBUG : Logger::INFO,
+            static::KEY_LOG_FILE => 'limoncello.log',
         ];
     }
 

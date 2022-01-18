@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\PDO;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +17,19 @@ namespace Limoncello\Application\Packages\PDO;
  * limitations under the License.
  */
 
-use Limoncello\Application\Packages\PDO\PdoSettings as C;
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\PDO;
+
+use Whoa\Application\Packages\PDO\PdoSettings as C;
+use Whoa\Contracts\Application\ContainerConfiguratorInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
 use PDO;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class PdoContainerConfigurator implements ContainerConfiguratorInterface
 {
@@ -36,7 +39,7 @@ class PdoContainerConfigurator implements ContainerConfiguratorInterface
     /**
      * @inheritdoc
      */
-    public static function configureContainer(LimoncelloContainerInterface $container): void
+    public static function configureContainer(WhoaContainerInterface $container): void
     {
         $container[PDO::class] = function (PsrContainerInterface $container) {
             $settings = $container->get(SettingsProviderInterface::class)->get(C::class);

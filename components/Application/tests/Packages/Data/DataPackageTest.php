@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Packages\Data;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,24 +17,28 @@ namespace Limoncello\Tests\Application\Packages\Data;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Packages\Data;
+
 use Doctrine\DBAL\Connection;
-use Limoncello\Application\Packages\Data\DataContainerConfigurator;
-use Limoncello\Application\Packages\Data\DataProvider;
-use Limoncello\Application\Packages\Data\DataSettings;
-use Limoncello\Application\Packages\Data\DataSettings as C;
-use Limoncello\Application\Packages\Data\DoctrineSettings;
-use Limoncello\Application\Packages\Data\DoctrineSettings as S;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Data\ModelSchemaInfoInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Tests\Application\TestCase;
+use Whoa\Application\Packages\Data\DataContainerConfigurator;
+use Whoa\Application\Packages\Data\DataProvider;
+use Whoa\Application\Packages\Data\DataSettings;
+use Whoa\Application\Packages\Data\DataSettings as C;
+use Whoa\Application\Packages\Data\DoctrineSettings;
+use Whoa\Application\Packages\Data\DoctrineSettings as S;
+use Whoa\Container\Container;
+use Whoa\Contracts\Data\ModelSchemaInfoInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Mockery\Mock;
 use Psr\Container\ContainerInterface;
 use ReflectionException;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class DataPackageTest extends TestCase
 {
@@ -61,9 +64,9 @@ class DataPackageTest extends TestCase
         $appSettings = [];
         $provider->shouldReceive('get')->once()->with(C::class)->andReturn($this->getDataSettings()->get($appSettings));
         $provider->shouldReceive('get')->once()->with(S::class)->andReturn([
-            S::KEY_URL    => 'sqlite:///',
+            S::KEY_URL => 'sqlite:///',
             S::KEY_MEMORY => true,
-            S::KEY_EXEC   => [
+            S::KEY_EXEC => [
                 'PRAGMA foreign_keys = ON;'
             ],
         ]);
@@ -91,24 +94,23 @@ class DataPackageTest extends TestCase
      */
     private function getDataSettings(): DataSettings
     {
-        return new class extends DataSettings
-        {
+        return new class extends DataSettings {
             /**
              * @inheritdoc
              */
             protected function getSettings(): array
             {
-                $modelsFolder     = implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'Data', 'Models']);
+                $modelsFolder = implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'Data', 'Models']);
                 $migrationsFolder = implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'Data', 'Migrations']);
-                $seedsFolder      = implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'Data', 'Seeds']);
+                $seedsFolder = implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'Data', 'Seeds']);
 
                 return [
-                        static::KEY_MODELS_FOLDER        => $modelsFolder,
-                        static::KEY_MIGRATIONS_FOLDER    => $migrationsFolder,
+                        static::KEY_MODELS_FOLDER => $modelsFolder,
+                        static::KEY_MIGRATIONS_FOLDER => $migrationsFolder,
                         static::KEY_MIGRATIONS_LIST_FILE => $migrationsFolder . DIRECTORY_SEPARATOR . 'migrations.php',
-                        static::KEY_SEEDS_FOLDER         => $seedsFolder,
-                        static::KEY_SEEDS_LIST_FILE      => $seedsFolder . DIRECTORY_SEPARATOR . 'seeds.php',
-                        static::KEY_SEED_INIT            => [DataPackageTest::class, 'initSeeder'],
+                        static::KEY_SEEDS_FOLDER => $seedsFolder,
+                        static::KEY_SEEDS_LIST_FILE => $seedsFolder . DIRECTORY_SEPARATOR . 'seeds.php',
+                        static::KEY_SEED_INIT => [DataPackageTest::class, 'initSeeder'],
                     ] + parent::getSettings();
             }
         };
@@ -119,8 +121,7 @@ class DataPackageTest extends TestCase
      */
     private function getDoctrineSettings(): DoctrineSettings
     {
-        return new class extends DoctrineSettings
-        {
+        return new class extends DoctrineSettings {
             /**
              * @inheritdoc
              */
@@ -139,7 +140,7 @@ class DataPackageTest extends TestCase
 
     /**
      * @param ContainerInterface $container
-     * @param string             $seedClass
+     * @param string $seedClass
      */
     public static function initSeeder(ContainerInterface $container, string $seedClass)
     {

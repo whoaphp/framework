@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Commands;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Application\Commands;
  * limitations under the License.
  */
 
-use Limoncello\Common\Reflection\ClassIsTrait;
-use Limoncello\Contracts\Commands\CommandInterface;
-use Limoncello\Contracts\Commands\CommandStorageInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Commands;
+
+use Whoa\Common\Reflection\ClassIsTrait;
+use Whoa\Contracts\Commands\CommandInterface;
+use Whoa\Contracts\Commands\CommandStorageInterface;
 use function array_key_exists;
 use function assert;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class CommandStorage implements CommandStorageInterface
 {

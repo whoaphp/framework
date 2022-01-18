@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Contracts\Cookie;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,14 @@ namespace Limoncello\Application\Contracts\Cookie;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Application\Contracts\Cookie;
+
 /**
  * Provides a separation layer for native PHP session functions.
  *
- * @package Limoncello\Contracts
+ * @package Whoa\Contracts
  */
 interface CookieFunctionsInterface
 {

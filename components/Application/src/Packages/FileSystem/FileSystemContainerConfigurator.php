@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\FileSystem;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Application\Packages\FileSystem;
  * limitations under the License.
  */
 
-use Limoncello\Application\FileSystem\FileSystem;
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\FileSystem\FileSystemInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\FileSystem;
+
+use Whoa\Application\FileSystem\FileSystem;
+use Whoa\Contracts\Application\ContainerConfiguratorInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\FileSystem\FileSystemInterface;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class FileSystemContainerConfigurator implements ContainerConfiguratorInterface
 {
@@ -34,7 +37,7 @@ class FileSystemContainerConfigurator implements ContainerConfiguratorInterface
     /**
      * @inheritdoc
      */
-    public static function configureContainer(LimoncelloContainerInterface $container): void
+    public static function configureContainer(WhoaContainerInterface $container): void
     {
         $container[FileSystemInterface::class] = function () {
             return new FileSystem();

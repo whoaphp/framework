@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Commands;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,21 +17,25 @@ namespace Limoncello\Tests\Application\Commands;
  * limitations under the License.
  */
 
-use Limoncello\Application\Commands\DataCommand;
-use Limoncello\Application\Data\FileMigrationRunner;
-use Limoncello\Application\Data\FileSeedRunner;
-use Limoncello\Application\Packages\Data\DataSettings;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Commands\IoInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Tests\Application\TestCase;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Commands;
+
+use Whoa\Application\Commands\DataCommand;
+use Whoa\Application\Data\FileMigrationRunner;
+use Whoa\Application\Data\FileSeedRunner;
+use Whoa\Application\Packages\Data\DataSettings;
+use Whoa\Container\Container;
+use Whoa\Contracts\Commands\IoInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Mockery\Mock;
 use ReflectionException;
 use ReflectionMethod;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class DataCommandTest extends TestCase
 {
@@ -44,7 +47,7 @@ class DataCommandTest extends TestCase
     public function testCoverCreateRunnerMethods(): void
     {
         $command = new DataCommand();
-        $inOut   = Mockery::mock(IoInterface::class);
+        $inOut = Mockery::mock(IoInterface::class);
 
         $method = new ReflectionMethod(DataCommand::class, 'createMigrationRunner');
         $method->setAccessible(true);
@@ -107,7 +110,7 @@ class DataCommandTest extends TestCase
             DataCommand::OPT_PATH => '/some/path',
         ]);
 
-        $method  = new ReflectionMethod(DataCommand::class, 'run');
+        $method = new ReflectionMethod(DataCommand::class, 'run');
         $method->setAccessible(true);
         $command = $this->createCommandMock(
             $this->createMigrationRunnerMock('migrate'),
@@ -135,7 +138,7 @@ class DataCommandTest extends TestCase
             DataCommand::OPT_PATH => '/some/path',
         ]);
 
-        $method  = new ReflectionMethod(DataCommand::class, 'run');
+        $method = new ReflectionMethod(DataCommand::class, 'run');
         $method->setAccessible(true);
         $command = $this->createCommandMock(
             $this->createMigrationRunnerMock('rollback'),
@@ -163,7 +166,7 @@ class DataCommandTest extends TestCase
             DataCommand::OPT_PATH => '/some/path',
         ]);
 
-        $method  = new ReflectionMethod(DataCommand::class, 'run');
+        $method = new ReflectionMethod(DataCommand::class, 'run');
         $method->setAccessible(true);
         $command = $this->createCommandMock(
             $this->createMigrationRunnerMock(),
@@ -194,7 +197,7 @@ class DataCommandTest extends TestCase
     /**
      * @param array $arguments
      * @param array $options
-     * @param bool  $expectErrors
+     * @param bool $expectErrors
      *
      * @return IoInterface
      */
@@ -215,7 +218,7 @@ class DataCommandTest extends TestCase
 
     /**
      * @param FileMigrationRunner $migrationMock
-     * @param FileSeedRunner      $seedMock
+     * @param FileSeedRunner $seedMock
      *
      * @return DataCommand
      */

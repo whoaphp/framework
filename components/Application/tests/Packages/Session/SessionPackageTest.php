@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Packages\Session;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +17,19 @@ namespace Limoncello\Tests\Application\Packages\Session;
  * limitations under the License.
  */
 
-use Limoncello\Application\Contracts\Session\SessionFunctionsInterface;
-use Limoncello\Application\Packages\Session\SessionContainerConfigurator;
-use Limoncello\Application\Packages\Session\SessionProvider;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Session\SessionInterface;
-use Limoncello\Tests\Application\TestCase;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Packages\Session;
+
+use Whoa\Application\Contracts\Session\SessionFunctionsInterface;
+use Whoa\Application\Packages\Session\SessionContainerConfigurator;
+use Whoa\Application\Packages\Session\SessionProvider;
+use Whoa\Container\Container;
+use Whoa\Contracts\Session\SessionInterface;
+use Whoa\Tests\Application\TestCase;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class SessionPackageTest extends TestCase
 {

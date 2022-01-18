@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Settings;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +17,19 @@ namespace Limoncello\Application\Settings;
  * limitations under the License.
  */
 
-use Limoncello\Application\Exceptions\InvalidSettingsClassException;
-use Limoncello\Common\Reflection\ClassIsTrait;
-use Limoncello\Contracts\Settings\SettingsInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Settings;
+
+use Whoa\Application\Exceptions\InvalidSettingsClassException;
+use Whoa\Common\Reflection\ClassIsTrait;
+use Whoa\Contracts\Settings\SettingsInterface;
 use ReflectionClass;
 use ReflectionException;
 use function assert;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class FileSettingsProvider extends InstanceSettingsProvider
 {
@@ -61,7 +64,7 @@ class FileSettingsProvider extends InstanceSettingsProvider
     private function checkDoNotHaveRequiredParametersOnCreate(string $className): bool
     {
         try {
-            $reflection  = new ReflectionClass($className);
+            $reflection = new ReflectionClass($className);
             if ($reflection->isInstantiable() === false) {
                 throw new InvalidSettingsClassException($className);
             }

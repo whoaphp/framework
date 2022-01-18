@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\ExceptionHandlers;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +17,11 @@ namespace Limoncello\Application\ExceptionHandlers;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Http\ThrowableResponseInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\ExceptionHandlers;
+
+use Whoa\Contracts\Http\ThrowableResponseInterface;
 use Psr\Container\ContainerInterface;
 use Throwable;
 use Whoops\Handler\PrettyPageHandler;
@@ -26,7 +29,7 @@ use Whoops\Run;
 use function call_user_func;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
@@ -72,7 +75,7 @@ class WhoopsThrowableHtmlHandler extends BaseThrowableHandler
             $handler->setPageTitle("Whoops! There was a problem with '$appName'.");
             $run->appendHandler($handler);
 
-            $html     = $run->handleException($throwable);
+            $html = $run->handleException($throwable);
             $response = $this->createThrowableHtmlResponse($throwable, $html, $status);
         } else {
             $response = $this->createThrowableTextResponse($throwable, $message, $status);

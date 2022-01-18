@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Packages\Cors;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Tests\Application\Packages\Cors;
  * limitations under the License.
  */
 
-use Limoncello\Application\Packages\Cors\CorsContainerConfigurator;
-use Limoncello\Application\Packages\Cors\CorsProvider;
-use Limoncello\Application\Packages\Cors\CorsSettings as C;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface as A;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Tests\Application\TestCase;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Packages\Cors;
+
+use Whoa\Application\Packages\Cors\CorsContainerConfigurator;
+use Whoa\Application\Packages\Cors\CorsProvider;
+use Whoa\Application\Packages\Cors\CorsSettings as C;
+use Whoa\Container\Container;
+use Whoa\Contracts\Application\ApplicationConfigurationInterface as A;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Mockery\Mock;
 use Neomerx\Cors\Contracts\AnalyzerInterface;
@@ -33,7 +36,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class CorsPackageTest extends TestCase
 {
@@ -55,17 +58,17 @@ class CorsPackageTest extends TestCase
         $container = new Container();
 
         $appConfig = [
-            A::KEY_IS_DEBUG          => true,
-            A::KEY_IS_LOG_ENABLED    => true,
+            A::KEY_IS_DEBUG => true,
+            A::KEY_IS_LOG_ENABLED => true,
             A::KEY_APP_ORIGIN_SCHEMA => 'http',
-            A::KEY_APP_ORIGIN_HOST   => 'localhost',
-            A::KEY_APP_ORIGIN_PORT   => '8080',
+            A::KEY_APP_ORIGIN_HOST => 'localhost',
+            A::KEY_APP_ORIGIN_PORT => '8080',
         ];
 
         /** @var Mock $provider */
-        $provider                                    = Mockery::mock(SettingsProviderInterface::class);
+        $provider = Mockery::mock(SettingsProviderInterface::class);
         $container[SettingsProviderInterface::class] = $provider;
-        $container[LoggerInterface::class]           = new NullLogger();
+        $container[LoggerInterface::class] = new NullLogger();
 
         $corsConfig = (new C())->get($appConfig);
         $provider->shouldReceive('get')->once()->with(C::class)->andReturn($corsConfig);
@@ -82,15 +85,14 @@ class CorsPackageTest extends TestCase
     {
         $appSettings = [
             A::KEY_APP_ORIGIN_SCHEMA => 'http',
-            A::KEY_APP_ORIGIN_HOST   => 'localhost',
-            A::KEY_APP_ORIGIN_PORT   => 80,
+            A::KEY_APP_ORIGIN_HOST => 'localhost',
+            A::KEY_APP_ORIGIN_PORT => 80,
         ];
 
         // add some test coverage
 
         // emulate custom settings on application level
-        $customSettings = new class extends C
-        {
+        $customSettings = new class extends C {
             /**
              * @inheritdoc
              */
@@ -107,8 +109,8 @@ class CorsPackageTest extends TestCase
         $packageSettings = $customSettings->get($appSettings);
 
         // now emulate restore settings from cache
-        [$corsCachedData, ] = $packageSettings;
-        $corsSettings       = (new Settings())->setData($corsCachedData);
+        [$corsCachedData,] = $packageSettings;
+        $corsSettings = (new Settings())->setData($corsCachedData);
 
         // now check that settings for adding methods and headers were set
         $this->assertTrue($corsSettings->isForceAddAllowedMethodsToPreFlightResponse());

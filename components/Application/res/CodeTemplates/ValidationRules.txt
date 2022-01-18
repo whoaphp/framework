@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Validation\{%SINGULAR_CC%};
 
@@ -6,7 +8,7 @@ use App\Api\{%PLURAL_CC%}Api;
 use App\Data\Models\{%SINGULAR_CC%} as Model;
 use App\Json\Schemas\{%SINGULAR_CC%}Schema;
 use App\Validation\BaseRules;
-use Limoncello\Validation\Contracts\Rules\RuleInterface;
+use Whoa\Validation\Contracts\Rules\RuleInterface;
 
 /**
  * @package App

@@ -1,13 +1,15 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Api;
 
 use App\Authorization\{%SINGULAR_CC%}Rules;
 use App\Data\Models\{%SINGULAR_CC%} as Model;
 use App\Json\Schemas\{%SINGULAR_CC%}Schema as Schema;
-//use Limoncello\Contracts\Exceptions\AuthorizationExceptionInterface;
-use Limoncello\Contracts\Exceptions\AuthorizationExceptionInterface;
-use Limoncello\Flute\Contracts\Models\PaginatedDataInterface;
+//use Whoa\Contracts\Exceptions\AuthorizationExceptionInterface;
+use Whoa\Contracts\Exceptions\AuthorizationExceptionInterface;
+use Whoa\Flute\Contracts\Models\PaginatedDataInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;

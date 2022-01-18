@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Application;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Application\Packages\Application;
  * limitations under the License.
  */
 
-use Limoncello\Application\Commands\ApplicationCommand;
-use Limoncello\Application\Commands\DataCommand;
-use Limoncello\Application\Commands\MakeCommand;
-use Limoncello\Contracts\Provider\ProvidesCommandsInterface;
-use Limoncello\Contracts\Provider\ProvidesContainerConfiguratorsInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Application;
+
+use Whoa\Application\Commands\ApplicationCommand;
+use Whoa\Application\Commands\DataCommand;
+use Whoa\Application\Commands\MakeCommand;
+use Whoa\Contracts\Provider\ProvidesCommandsInterface;
+use Whoa\Contracts\Provider\ProvidesContainerConfiguratorsInterface;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class ApplicationProvider implements ProvidesContainerConfiguratorsInterface, ProvidesCommandsInterface
 {

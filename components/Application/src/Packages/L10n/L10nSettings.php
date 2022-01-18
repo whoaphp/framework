@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\L10n;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,14 @@ namespace Limoncello\Application\Packages\L10n;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface as A;
-use Limoncello\Contracts\Provider\ProvidesMessageResourcesInterface;
-use Limoncello\Contracts\Settings\Packages\L10nSettingsInterface;
-use Limoncello\l10n\Messages\FileBundleEncoder;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\L10n;
+
+use Whoa\Contracts\Application\ApplicationConfigurationInterface as A;
+use Whoa\Contracts\Provider\ProvidesMessageResourcesInterface;
+use Whoa\Contracts\Settings\Packages\L10nSettingsInterface;
+use Whoa\l10n\Messages\FileBundleEncoder;
 use function assert;
 use function class_implements;
 use function glob;
@@ -29,7 +32,7 @@ use function in_array;
 use function is_string;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 abstract class L10nSettings implements L10nSettingsInterface
 {

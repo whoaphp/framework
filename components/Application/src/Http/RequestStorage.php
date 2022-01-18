@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Http;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Application\Http;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Http\RequestStorageInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Http;
+
+use Whoa\Contracts\Http\RequestStorageInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use function assert;
 
 /**
- * @package Limoncello\Application\Http
+ * @package Whoa\Application\Http
  */
 class RequestStorage implements RequestStorageInterface
 {

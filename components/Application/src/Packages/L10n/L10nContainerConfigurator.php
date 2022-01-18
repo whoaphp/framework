@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\L10n;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,19 +17,23 @@ namespace Limoncello\Application\Packages\L10n;
  * limitations under the License.
  */
 
-use Limoncello\Application\Packages\L10n\L10nSettings as S;
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\L10n\FormatterFactoryInterface;
-use Limoncello\Contracts\L10n\FormatterInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\l10n\Format\Formatter;
-use Limoncello\l10n\Format\Translator;
-use Limoncello\l10n\Messages\BundleStorage;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\L10n;
+
+use Whoa\Application\Packages\L10n\L10nSettings as S;
+use Whoa\Contracts\Application\ContainerConfiguratorInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\L10n\FormatterFactoryInterface;
+use Whoa\Contracts\L10n\FormatterInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\l10n\Format\Formatter;
+use Whoa\l10n\Format\Translator;
+use Whoa\l10n\Messages\BundleStorage;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class L10nContainerConfigurator implements ContainerConfiguratorInterface
 {
@@ -42,17 +45,16 @@ class L10nContainerConfigurator implements ContainerConfiguratorInterface
      *
      * @SuppressWarnings(PHPMD.UndefinedVariable)
      */
-    public static function configureContainer(LimoncelloContainerInterface $container): void
+    public static function configureContainer(WhoaContainerInterface $container): void
     {
         $container[FormatterFactoryInterface::class] = function (PsrContainerInterface $container) {
             $settingsProvider = $container->get(SettingsProviderInterface::class);
-            $settings         = $settingsProvider->get(S::class);
+            $settings = $settingsProvider->get(S::class);
 
             $defaultLocale = $settings[S::KEY_DEFAULT_LOCALE];
-            $storageData   = $settings[S::KEY_LOCALES_DATA];
+            $storageData = $settings[S::KEY_LOCALES_DATA];
 
-            $factory = new class ($defaultLocale, $storageData) implements FormatterFactoryInterface
-            {
+            $factory = new class ($defaultLocale, $storageData) implements FormatterFactoryInterface {
                 /**
                  * @var string
                  */
@@ -65,12 +67,12 @@ class L10nContainerConfigurator implements ContainerConfiguratorInterface
 
                 /**
                  * @param string $defaultLocale
-                 * @param array  $storageData
+                 * @param array $storageData
                  */
                 public function __construct(string $defaultLocale, array $storageData)
                 {
                     $this->defaultLocale = $defaultLocale;
-                    $this->storageData   = $storageData;
+                    $this->storageData = $storageData;
                 }
 
                 /**
@@ -87,7 +89,7 @@ class L10nContainerConfigurator implements ContainerConfiguratorInterface
                 public function createFormatterForLocale(string $namespace, string $locale): FormatterInterface
                 {
                     $translator = new Translator(new BundleStorage($this->storageData));
-                    $formatter  = new Formatter($locale, $namespace, $translator);
+                    $formatter = new Formatter($locale, $namespace, $translator);
 
                     return $formatter;
                 }

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Data;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Application\Packages\Data;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Settings\Packages\DoctrineSettingsInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Data;
+
+use Whoa\Contracts\Settings\Packages\DoctrineSettingsInterface;
 use function assert;
 use function file_exists;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class DoctrineSettings implements DoctrineSettingsInterface
 {

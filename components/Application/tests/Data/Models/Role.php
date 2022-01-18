@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Data\Models;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Tests\Application\Data\Models;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Data\Models;
+
 use Doctrine\DBAL\Types\Type;
-use Limoncello\Contracts\Data\RelationshipTypes;
+use Whoa\Contracts\Data\RelationshipTypes;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class Role extends Model
 {
@@ -44,8 +47,8 @@ class Role extends Model
     public static function getAttributeTypes(): array
     {
         return [
-            self::FIELD_ID         => Type::INTEGER,
-            self::FIELD_NAME       => Type::STRING,
+            self::FIELD_ID => Type::INTEGER,
+            self::FIELD_NAME => Type::STRING,
             self::FIELD_CREATED_AT => Type::DATETIME,
             self::FIELD_UPDATED_AT => Type::DATETIME,
         ];

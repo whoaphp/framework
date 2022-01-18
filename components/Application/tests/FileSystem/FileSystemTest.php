@@ -1,6 +1,25 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\FileSystem;
+/*
+ * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\FileSystem;
 
 /**
  * Copyright 2015-2020 info@neomerx.com
@@ -18,14 +37,14 @@ namespace Limoncello\Tests\Application\FileSystem;
  * limitations under the License.
  */
 
-use Limoncello\Application\Exceptions\FileSystemException;
-use Limoncello\Application\FileSystem\FileSystem;
-use Limoncello\Tests\Application\TestCase;
+use Whoa\Application\Exceptions\FileSystemException;
+use Whoa\Application\FileSystem\FileSystem;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Mockery\Mock;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class FileSystemTest extends TestCase
 {
@@ -47,7 +66,7 @@ class FileSystemTest extends TestCase
         parent::setUp();
 
         $this->fileSystem = Mockery::mock(FileSystem::class)->makePartial();
-        $this->mock       = $this->fileSystem;
+        $this->mock = $this->fileSystem;
     }
 
     /**
@@ -177,12 +196,12 @@ class FileSystemTest extends TestCase
      */
     public function testRecursiveDelete(): void
     {
-        $rootPath        = 'root';
-        $rootItems       = [
+        $rootPath = 'root';
+        $rootItems = [
             'root/folder1',
             'root/file1',
         ];
-        $folder1Items    = [
+        $folder1Items = [
             'root/folder1/subFolder1',
             'root/folder1/file11',
         ];
@@ -215,12 +234,12 @@ class FileSystemTest extends TestCase
      */
     public function testRecursiveDeleteFailedOnFile(): void
     {
-        $rootPath        = 'root';
-        $rootItems       = [
+        $rootPath = 'root';
+        $rootItems = [
             'root/folder1',
             'root/file1',
         ];
-        $folder1Items    = [
+        $folder1Items = [
             'root/folder1/subFolder1',
             'root/folder1/file11',
         ];
@@ -248,12 +267,12 @@ class FileSystemTest extends TestCase
      */
     public function testRecursiveDeleteFailedOnFolder(): void
     {
-        $rootPath        = 'root';
-        $rootItems       = [
+        $rootPath = 'root';
+        $rootItems = [
             'root/folder1',
             'root/file1',
         ];
-        $folder1Items    = [
+        $folder1Items = [
             'root/folder1/subFolder1',
             'root/folder1/file11',
         ];

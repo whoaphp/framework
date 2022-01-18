@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Data\CoreSettings\Routes;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +17,20 @@ namespace Limoncello\Tests\Application\Data\CoreSettings\Routes;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Application\RoutesConfiguratorInterface;
-use Limoncello\Contracts\Routing\GroupInterface;
-use Limoncello\Tests\Application\Data\CoreSettings\Middleware\ApplicationMiddleware;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Data\CoreSettings\Routes;
+
+use Whoa\Contracts\Application\RoutesConfiguratorInterface;
+use Whoa\Contracts\Routing\GroupInterface;
+use Whoa\Tests\Application\Data\CoreSettings\Middleware\ApplicationMiddleware;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\EmptyResponse;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class Routes1 implements RoutesConfiguratorInterface
 {
@@ -50,17 +53,18 @@ class Routes1 implements RoutesConfiguratorInterface
     }
 
     /**
-     * @param array                       $parameters
-     * @param ContainerInterface          $container
+     * @param array $parameters
+     * @param ContainerInterface $container
      * @param ServerRequestInterface|null $request
      *
      * @return ResponseInterface
      */
     public static function home(
-        array $parameters,
-        ContainerInterface $container,
+        array                  $parameters,
+        ContainerInterface     $container,
         ServerRequestInterface $request = null
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         assert(($parameters && $container && $request) || true);
 
         return new EmptyResponse();

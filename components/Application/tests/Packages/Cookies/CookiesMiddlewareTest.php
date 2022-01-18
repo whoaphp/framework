@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Packages\Cookies;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,20 +17,24 @@ namespace Limoncello\Tests\Application\Packages\Cookies;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Packages\Cookies;
+
 use Closure;
-use Limoncello\Application\Contracts\Cookie\CookieFunctionsInterface;
-use Limoncello\Application\Cookies\CookieFunctions;
-use Limoncello\Application\Cookies\CookieJar;
-use Limoncello\Application\Packages\Cookies\CookieMiddleware;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Cookies\CookieJarInterface;
-use Limoncello\Tests\Application\TestCase;
+use Whoa\Application\Contracts\Cookie\CookieFunctionsInterface;
+use Whoa\Application\Cookies\CookieFunctions;
+use Whoa\Application\Cookies\CookieJar;
+use Whoa\Application\Packages\Cookies\CookieMiddleware;
+use Whoa\Container\Container;
+use Whoa\Contracts\Cookies\CookieJarInterface;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class CookiesMiddlewareTest extends TestCase
 {
@@ -83,22 +86,22 @@ class CookiesMiddlewareTest extends TestCase
         parent::setUp();
 
         $this->request = Mockery::mock(ServerRequestInterface::class);
-        $responseMock  = Mockery::mock(ResponseInterface::class);
-        $this->next    = function () use ($responseMock) {
+        $responseMock = Mockery::mock(ResponseInterface::class);
+        $this->next = function () use ($responseMock) {
             return $responseMock;
         };
 
         $this->cookieArgs = [];
 
-        $this->cookieJar       = new CookieJar('/path', 'domain', false, false, false);
+        $this->cookieJar = new CookieJar('/path', 'domain', false, false, false);
         $this->cookieFunctions = (new CookieFunctions())
             ->setWriteCookieCallable([$this, 'setCookie'])
             ->setWriteRawCookieCallable([$this, 'setRawCookie']);
 
-        $container                                  = new Container();
-        $container[CookieJarInterface::class]       = $this->cookieJar;
+        $container = new Container();
+        $container[CookieJarInterface::class] = $this->cookieJar;
         $container[CookieFunctionsInterface::class] = $this->cookieFunctions;
-        $this->container                            = $container;
+        $this->container = $container;
     }
 
     /**
@@ -134,7 +137,7 @@ class CookiesMiddlewareTest extends TestCase
     }
 
     /**
-     * @param bool  $isRaw
+     * @param bool $isRaw
      * @param array $args
      */
     private function setCookieInt(bool $isRaw, array $args): void

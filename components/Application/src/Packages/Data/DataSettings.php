@@ -1,8 +1,8 @@
 <?php
 
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,15 +19,15 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Application\Packages\Data;
+namespace Whoa\Application\Packages\Data;
 
-use Limoncello\Application\Data\ModelSchemaInfo;
-use Limoncello\Common\Reflection\CheckCallableTrait;
-use Limoncello\Common\Reflection\ClassIsTrait;
-use Limoncello\Contracts\Application\ModelInterface;
-use Limoncello\Contracts\Data\RelationshipTypes;
-use Limoncello\Contracts\Settings\Packages\DataSettingsInterface;
-use Limoncello\Contracts\Settings\SettingsInterface;
+use Whoa\Application\Data\ModelSchemaInfo;
+use Whoa\Common\Reflection\CheckCallableTrait;
+use Whoa\Common\Reflection\ClassIsTrait;
+use Whoa\Contracts\Application\ModelInterface;
+use Whoa\Contracts\Data\RelationshipTypes;
+use Whoa\Contracts\Settings\Packages\DataSettingsInterface;
+use Whoa\Contracts\Settings\SettingsInterface;
 use Psr\Container\ContainerInterface;
 use ReflectionException;
 use function array_key_exists;
@@ -38,7 +38,7 @@ use function glob;
 use function iterator_to_array;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 abstract class DataSettings implements SettingsInterface, DataSettingsInterface
 {

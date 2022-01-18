@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Application;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,20 +17,24 @@ namespace Limoncello\Application\Packages\Application;
  * limitations under the License.
  */
 
-use Limoncello\Application\CoreSettings\CoreData;
-use Limoncello\Application\Settings\CacheSettingsProvider;
-use Limoncello\Application\Settings\FileSettingsProvider;
-use Limoncello\Application\Settings\InstanceSettingsProvider;
-use Limoncello\Common\Reflection\ClassIsTrait;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface as A;
-use Limoncello\Contracts\Application\CacheSettingsProviderInterface;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Core\SapiInterface;
-use Limoncello\Contracts\Provider\ProvidesSettingsInterface;
-use Limoncello\Contracts\Routing\RouterInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Core\Application\Sapi;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Application;
+
+use Whoa\Application\CoreSettings\CoreData;
+use Whoa\Application\Settings\CacheSettingsProvider;
+use Whoa\Application\Settings\FileSettingsProvider;
+use Whoa\Application\Settings\InstanceSettingsProvider;
+use Whoa\Common\Reflection\ClassIsTrait;
+use Whoa\Container\Container;
+use Whoa\Contracts\Application\ApplicationConfigurationInterface as A;
+use Whoa\Contracts\Application\CacheSettingsProviderInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Core\SapiInterface;
+use Whoa\Contracts\Provider\ProvidesSettingsInterface;
+use Whoa\Contracts\Routing\RouterInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Core\Application\Sapi;
 use ReflectionException;
 use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 use function assert;
@@ -45,12 +48,12 @@ use function iterator_to_array;
 use function reset;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  * @SuppressWarnings(PHPMD.LongVariable)
  */
-class Application extends \Limoncello\Core\Application\Application
+class Application extends \Whoa\Core\Application\Application
 {
     use ClassIsTrait;
 
@@ -70,9 +73,9 @@ class Application extends \Limoncello\Core\Application\Application
     private $cacheSettingsProvider = null;
 
     /**
-     * @param string                     $settingsPath
+     * @param string $settingsPath
      * @param string|array|callable|null $settingCacheMethod
-     * @param SapiInterface|null         $sapi
+     * @param SapiInterface|null $sapi
      */
     public function __construct(string $settingsPath, $settingCacheMethod = null, SapiInterface $sapi = null)
     {
@@ -81,7 +84,7 @@ class Application extends \Limoncello\Core\Application\Application
         // `is_callable` check and will be used for getting the cached data.
         assert(is_null($settingCacheMethod) || is_string($settingCacheMethod) || is_array($settingCacheMethod));
 
-        $this->settingsPath       = $settingsPath;
+        $this->settingsPath = $settingsPath;
         $this->settingCacheMethod = $settingCacheMethod;
 
         $this->setSapi($sapi ?? new Sapi(new SapiEmitter()));
@@ -104,20 +107,20 @@ class Application extends \Limoncello\Core\Application\Application
      * @param string|null $method
      * @param string|null $path
      *
-     * @return LimoncelloContainerInterface
+     * @return WhoaContainerInterface
      *
      * @throws ReflectionException
      *
      * @SuppressWarnings(PHPMD.StaticAccess)
      */
-    public function createContainer(string $method = null, string $path = null): LimoncelloContainerInterface
+    public function createContainer(string $method = null, string $path = null): WhoaContainerInterface
     {
         $container = $this->createContainerInstance();
 
         $routeConfigurators = [];
-        $coreData           = $this->getCoreData();
+        $coreData = $this->getCoreData();
         if (empty($method) === false && empty($path) === false) {
-            list(, , , , , $routeConfigurators) = $this->initRouter($coreData)->match($method, $path);
+            [, , , , , $routeConfigurators] = $this->initRouter($coreData)->match($method, $path);
         }
 
         // configure container
@@ -129,11 +132,11 @@ class Application extends \Limoncello\Core\Application\Application
     }
 
     /**
-     * @return LimoncelloContainerInterface
+     * @return WhoaContainerInterface
      *
      * @throws ReflectionException
      */
-    protected function createContainerInstance(): LimoncelloContainerInterface
+    protected function createContainerInstance(): WhoaContainerInterface
     {
         $container = new Container();
 
@@ -179,8 +182,8 @@ class Application extends \Limoncello\Core\Application\Application
                 $provider->unserialize($data);
             } else {
                 $appConfig = $this->createApplicationConfiguration();
-                $appData   = $appConfig->get();
-                $coreData  = new CoreData(
+                $appData = $appConfig->get();
+                $coreData = new CoreData(
                     $appData[A::KEY_ROUTES_PATH],
                     $appData[A::KEY_CONTAINER_CONFIGURATORS_PATH],
                     $appData[A::KEY_PROVIDER_CLASSES]
@@ -212,7 +215,7 @@ class Application extends \Limoncello\Core\Application\Application
             count($classes) === 1,
             'Settings path must contain only one class implementing ApplicationConfigurationInterface.'
         );
-        $class    = reset($classes);
+        $class = reset($classes);
         $instance = new $class();
         assert($instance instanceof A);
 

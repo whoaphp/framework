@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Commands;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,28 +17,32 @@ namespace Limoncello\Application\Commands;
  * limitations under the License.
  */
 
-use Doctrine\DBAL\DBALException;
+declare(strict_types=1);
+
+namespace Whoa\Application\Commands;
+
 use Doctrine\DBAL\Exception\InvalidArgumentException;
-use Limoncello\Application\Data\BaseMigrationRunner;
-use Limoncello\Application\Data\FileMigrationRunner;
-use Limoncello\Application\Data\FileSeedRunner;
-use Limoncello\Application\Packages\Data\DataSettings;
-use Limoncello\Contracts\Commands\CommandInterface;
-use Limoncello\Contracts\Commands\IoInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
+use PHPUnit\Util\Exception as DBALException;
+use Whoa\Application\Data\BaseMigrationRunner;
+use Whoa\Application\Data\FileMigrationRunner;
+use Whoa\Application\Data\FileSeedRunner;
+use Whoa\Application\Packages\Data\DataSettings;
+use Whoa\Contracts\Commands\CommandInterface;
+use Whoa\Contracts\Commands\IoInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class DataCommand implements CommandInterface
 {
     /**
      * Command name.
      */
-    const NAME = 'l:db';
+    const NAME = 'w:db';
 
     /** Argument name */
     const ARG_ACTION = 'action';
@@ -85,15 +88,15 @@ class DataCommand implements CommandInterface
      */
     public static function getArguments(): array
     {
-        $migrate  = static::ACTION_MIGRATE;
-        $seed     = static::ACTION_SEED;
+        $migrate = static::ACTION_MIGRATE;
+        $seed = static::ACTION_SEED;
         $rollback = static::ACTION_ROLLBACK;
 
         return [
             [
-                static::ARGUMENT_NAME        => static::ARG_ACTION,
+                static::ARGUMENT_NAME => static::ARG_ACTION,
                 static::ARGUMENT_DESCRIPTION => "Action such as `$migrate`, `$seed` or `$rollback` data.",
-                static::ARGUMENT_MODE        => static::ARGUMENT_MODE__REQUIRED,
+                static::ARGUMENT_MODE => static::ARGUMENT_MODE__REQUIRED,
             ],
         ];
     }
@@ -105,11 +108,11 @@ class DataCommand implements CommandInterface
     {
         return [
             [
-                static::OPTION_NAME        => static::OPT_PATH,
+                static::OPTION_NAME => static::OPT_PATH,
                 static::OPTION_DESCRIPTION => 'Path to a list of migrations or seeds. ' .
                     'If not given a path from settings will be used.',
-                static::OPTION_SHORTCUT    => 'i',
-                static::OPTION_MODE        => static::OPTION_MODE__REQUIRED,
+                static::OPTION_SHORTCUT => 'i',
+                static::OPTION_MODE => static::OPTION_MODE__REQUIRED,
             ],
         ];
     }
@@ -136,13 +139,13 @@ class DataCommand implements CommandInterface
     protected function run(ContainerInterface $container, IoInterface $inOut): void
     {
         $arguments = $inOut->getArguments();
-        $options   = $inOut->getOptions();
+        $options = $inOut->getOptions();
 
         /** @var SettingsProviderInterface $provider */
         $provider = $container->get(SettingsProviderInterface::class);
         $settings = $provider->get(DataSettings::class);
 
-        $path   = $options[static::OPT_PATH] ?? false;
+        $path = $options[static::OPT_PATH] ?? false;
         $action = $arguments[static::ARG_ACTION];
         switch ($action) {
             case static::ACTION_MIGRATE:
@@ -154,7 +157,7 @@ class DataCommand implements CommandInterface
                 $this->createMigrationRunner($inOut, $path)->rollback($container);
                 break;
             case static::ACTION_SEED:
-                $path     = $path !== false ? $path : $settings[DataSettings::KEY_SEEDS_LIST_FILE] ?? '';
+                $path = $path !== false ? $path : $settings[DataSettings::KEY_SEEDS_LIST_FILE] ?? '';
                 $seedInit = $settings[DataSettings::KEY_SEED_INIT] ?? null;
                 $this->createSeedRunner($inOut, $path, $seedInit)->run($container);
                 break;
@@ -166,7 +169,7 @@ class DataCommand implements CommandInterface
 
     /**
      * @param IoInterface $inOut
-     * @param string      $path
+     * @param string $path
      *
      * @return FileMigrationRunner
      */
@@ -176,19 +179,20 @@ class DataCommand implements CommandInterface
     }
 
     /**
-     * @param IoInterface   $inOut
-     * @param string        $seedsPath
+     * @param IoInterface $inOut
+     * @param string $seedsPath
      * @param callable|null $seedInit
-     * @param string        $seedsTable
+     * @param string $seedsTable
      *
      * @return FileSeedRunner
      */
     protected function createSeedRunner(
         IoInterface $inOut,
-        string $seedsPath,
-        callable $seedInit = null,
-        string $seedsTable = BaseMigrationRunner::SEEDS_TABLE
-    ): FileSeedRunner {
+        string      $seedsPath,
+        callable    $seedInit = null,
+        string      $seedsTable = BaseMigrationRunner::SEEDS_TABLE
+    ): FileSeedRunner
+    {
         return new FileSeedRunner($inOut, $seedsPath, $seedInit, $seedsTable);
     }
 }

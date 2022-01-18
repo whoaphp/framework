@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Packages\Application;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +17,20 @@ namespace Limoncello\Tests\Application\Packages\Application;
  * limitations under the License.
  */
 
-use Limoncello\Application\Packages\Application\Application;
-use Limoncello\Application\Settings\CacheSettingsProvider;
-use Limoncello\Application\Settings\InstanceSettingsProvider;
-use Limoncello\Tests\Application\CoreData\CoreDataTest;
-use Limoncello\Tests\Application\Data\Application\Settings\Application as ApplicationConfiguration;
-use Limoncello\Tests\Application\TestCase;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Packages\Application;
+
+use Whoa\Application\Packages\Application\Application;
+use Whoa\Application\Settings\CacheSettingsProvider;
+use Whoa\Application\Settings\InstanceSettingsProvider;
+use Whoa\Tests\Application\CoreData\CoreDataTest;
+use Whoa\Tests\Application\Data\Application\Settings\Application as ApplicationConfiguration;
+use Whoa\Tests\Application\TestCase;
 use ReflectionException;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class ApplicationTest extends TestCase
 {
@@ -52,7 +55,7 @@ class ApplicationTest extends TestCase
     {
         /** @var callable $settingCacheMethod */
         $settingCacheMethod = [static::class, 'getCachedSettings'];
-        $application        = $this->createApplication($settingCacheMethod);
+        $application = $this->createApplication($settingCacheMethod);
 
         $this->assertNotNull($application->createContainer('SOME_METHOD', '/some_path'));
     }
@@ -65,10 +68,10 @@ class ApplicationTest extends TestCase
     public static function getCachedSettings(): array
     {
         $appConfig = new ApplicationConfiguration();
-        $provider  = new InstanceSettingsProvider($appConfig->get());
+        $provider = new InstanceSettingsProvider($appConfig->get());
 
         $coreData = CoreDataTest::createCoreData();
-        $cached   = (new CacheSettingsProvider())->setInstanceSettings($appConfig, $coreData, $provider)->serialize();
+        $cached = (new CacheSettingsProvider())->setInstanceSettings($appConfig, $coreData, $provider)->serialize();
 
         return $cached;
     }
@@ -81,7 +84,7 @@ class ApplicationTest extends TestCase
     private function createApplication($settingCacheMethod = null): Application
     {
         $settingsPath = implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'Data', 'Application', 'Settings', '*.php']);
-        $application  = new Application($settingsPath, $settingCacheMethod);
+        $application = new Application($settingsPath, $settingCacheMethod);
 
         return $application;
     }

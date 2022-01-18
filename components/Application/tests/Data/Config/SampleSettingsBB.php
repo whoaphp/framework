@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Data\Config;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Tests\Application\Data\Config;
  * limitations under the License.
  */
 
-use Limoncello\Tests\Application\Data\Config\MarkerInterfaceChild11And21 as MIC1121;
-use Limoncello\Tests\Application\Data\Config\MarkerInterfaceChild21 as MIC21;
-use Limoncello\Tests\Application\Data\Config\MarkerInterfaceStandalone as MIS;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Data\Config;
+
+use Whoa\Tests\Application\Data\Config\MarkerInterfaceChild11And21 as MIC1121;
+use Whoa\Tests\Application\Data\Config\MarkerInterfaceChild21 as MIC21;
+use Whoa\Tests\Application\Data\Config\MarkerInterfaceStandalone as MIS;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class SampleSettingsBB extends SampleSettingsB implements MIC21, MIS, MIC1121
 {

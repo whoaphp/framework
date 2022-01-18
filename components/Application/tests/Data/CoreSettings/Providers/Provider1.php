@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Data\CoreSettings\Providers;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,27 +17,31 @@ namespace Limoncello\Tests\Application\Data\CoreSettings\Providers;
  * limitations under the License.
  */
 
-use Limoncello\Application\Commands\DataCommand;
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface as CCI;
-use Limoncello\Contracts\Application\RoutesConfiguratorInterface as RCI;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Provider\ProvidesCommandsInterface as PrCmdI;
-use Limoncello\Contracts\Provider\ProvidesContainerConfiguratorsInterface as PrCCI;
-use Limoncello\Contracts\Provider\ProvidesMessageResourcesInterface as MRI;
-use Limoncello\Contracts\Provider\ProvidesMiddlewareInterface as PrMI;
-use Limoncello\Contracts\Provider\ProvidesRouteConfiguratorsInterface as PrRCI;
-use Limoncello\Contracts\Provider\ProvidesSettingsInterface as PrSI;
-use Limoncello\Contracts\Routing\GroupInterface;
-use Limoncello\Contracts\Settings\SettingsInterface;
-use Limoncello\Tests\Application\Data\CoreSettings\Middleware\PluginMiddleware;
-use Limoncello\Tests\Application\Data\L10n\SampleEnUsMessages;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Data\CoreSettings\Providers;
+
+use Whoa\Application\Commands\DataCommand;
+use Whoa\Contracts\Application\ContainerConfiguratorInterface as CCI;
+use Whoa\Contracts\Application\RoutesConfiguratorInterface as RCI;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Provider\ProvidesCommandsInterface as PrCmdI;
+use Whoa\Contracts\Provider\ProvidesContainerConfiguratorsInterface as PrCCI;
+use Whoa\Contracts\Provider\ProvidesMessageResourcesInterface as MRI;
+use Whoa\Contracts\Provider\ProvidesMiddlewareInterface as PrMI;
+use Whoa\Contracts\Provider\ProvidesRouteConfiguratorsInterface as PrRCI;
+use Whoa\Contracts\Provider\ProvidesSettingsInterface as PrSI;
+use Whoa\Contracts\Routing\GroupInterface;
+use Whoa\Contracts\Settings\SettingsInterface;
+use Whoa\Tests\Application\Data\CoreSettings\Middleware\PluginMiddleware;
+use Whoa\Tests\Application\Data\L10n\SampleEnUsMessages;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\EmptyResponse;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class Provider1 implements PrCCI, PrMI, PrRCI, PrSI, CCI, RCI, PrCmdI, MRI
 {
@@ -87,8 +90,7 @@ class Provider1 implements PrCCI, PrMI, PrRCI, PrSI, CCI, RCI, PrCmdI, MRI
      */
     public static function getSettings(): array
     {
-        return [new class implements SettingsInterface
-        {
+        return [new class implements SettingsInterface {
             /**
              * @inheritdoc
              */
@@ -102,7 +104,7 @@ class Provider1 implements PrCCI, PrMI, PrRCI, PrSI, CCI, RCI, PrCmdI, MRI
     /**
      * @inheritdoc
      */
-    public static function configureContainer(LimoncelloContainerInterface $container): void
+    public static function configureContainer(WhoaContainerInterface $container): void
     {
         $container[static::class] = 'Hello container';
     }
@@ -116,17 +118,18 @@ class Provider1 implements PrCCI, PrMI, PrRCI, PrSI, CCI, RCI, PrCmdI, MRI
     }
 
     /**
-     * @param array                       $parameters
-     * @param PsrContainerInterface       $container
+     * @param array $parameters
+     * @param PsrContainerInterface $container
      * @param ServerRequestInterface|null $request
      *
      * @return ResponseInterface
      */
     public static function onIndex(
-        array $parameters,
-        PsrContainerInterface $container,
+        array                  $parameters,
+        PsrContainerInterface  $container,
         ServerRequestInterface $request = null
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         assert(($parameters && $container && $request) || true);
 
         return new EmptyResponse();

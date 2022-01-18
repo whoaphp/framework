@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Packages\Csrf;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,21 +17,25 @@ namespace Limoncello\Tests\Application\Packages\Csrf;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Packages\Csrf;
+
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\ServerRequest;
-use Limoncello\Application\Contracts\Csrf\CsrfTokenStorageInterface;
-use Limoncello\Application\Packages\Csrf\CsrfMiddleware;
-use Limoncello\Application\Packages\Csrf\CsrfSettings as C;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Tests\Application\TestCase;
+use Whoa\Application\Contracts\Csrf\CsrfTokenStorageInterface;
+use Whoa\Application\Packages\Csrf\CsrfMiddleware;
+use Whoa\Application\Packages\Csrf\CsrfSettings as C;
+use Whoa\Container\Container;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Mockery\Mock;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionException;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class CsrfMiddlewareTest extends TestCase
 {
@@ -51,7 +54,7 @@ class CsrfMiddlewareTest extends TestCase
         $container = new Container();
 
         /** @var Mock $provider */
-        $provider                                    = Mockery::mock(SettingsProviderInterface::class);
+        $provider = Mockery::mock(SettingsProviderInterface::class);
         $container[SettingsProviderInterface::class] = $provider;
 
         $provider->shouldReceive('has')->zeroOrMoreTimes()->with(C::class)->andReturn(true);
@@ -66,8 +69,8 @@ class CsrfMiddlewareTest extends TestCase
     public function testHandlerWithValidRequest(): void
     {
         $parsedBody = [C::DEFAULT_HTTP_REQUEST_CSRF_TOKEN_KEY => 'whatever'];
-        $request    = new ServerRequest([], [], null, 'POST', 'php://input', [], [], [], $parsedBody);
-        $next       = function (): ResponseInterface {
+        $request = new ServerRequest([], [], null, 'POST', 'php://input', [], [], [], $parsedBody);
+        $next = function (): ResponseInterface {
             return new EmptyResponse();
         };
 
@@ -85,8 +88,8 @@ class CsrfMiddlewareTest extends TestCase
     public function testHandlerWithInvalidRequest(): void
     {
         $parsedBody = [C::DEFAULT_HTTP_REQUEST_CSRF_TOKEN_KEY => 'whatever'];
-        $request    = new ServerRequest([], [], null, 'POST', 'php://input', [], [], [], $parsedBody);
-        $next       = function (): ResponseInterface {
+        $request = new ServerRequest([], [], null, 'POST', 'php://input', [], [], [], $parsedBody);
+        $next = function (): ResponseInterface {
             return new EmptyResponse();
         };
 
@@ -105,7 +108,7 @@ class CsrfMiddlewareTest extends TestCase
      */
     private function getDefaultCsrfSettings(): array
     {
-        $appConfig       = [];
+        $appConfig = [];
         $defaultSettings = (new C())->get($appConfig);
 
         return $defaultSettings;

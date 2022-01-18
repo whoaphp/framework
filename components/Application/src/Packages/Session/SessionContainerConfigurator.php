@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Session;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +17,20 @@ namespace Limoncello\Application\Packages\Session;
  * limitations under the License.
  */
 
-use Limoncello\Application\Contracts\Session\SessionFunctionsInterface;
-use Limoncello\Application\Session\Session;
-use Limoncello\Application\Session\SessionFunctions;
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Session\SessionInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Session;
+
+use Whoa\Application\Contracts\Session\SessionFunctionsInterface;
+use Whoa\Application\Session\Session;
+use Whoa\Application\Session\SessionFunctions;
+use Whoa\Contracts\Application\ContainerConfiguratorInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Session\SessionInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class SessionContainerConfigurator implements ContainerConfiguratorInterface
 {
@@ -37,12 +40,12 @@ class SessionContainerConfigurator implements ContainerConfiguratorInterface
     /**
      * @inheritdoc
      */
-    public static function configureContainer(LimoncelloContainerInterface $container): void
+    public static function configureContainer(WhoaContainerInterface $container): void
     {
         $container[SessionInterface::class] = function (PsrContainerInterface $container): SessionInterface {
             /** @var SessionFunctionsInterface $functions */
             $functions = $container->get(SessionFunctionsInterface::class);
-            $session   = new Session($functions);
+            $session = new Session($functions);
 
             return $session;
         };

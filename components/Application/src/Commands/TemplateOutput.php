@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Commands;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +16,15 @@ namespace Limoncello\Application\Commands;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+declare(strict_types=1);
+
+namespace Whoa\Application\Commands;
+
 use function assert;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class TemplateOutput
 {
@@ -65,7 +69,8 @@ class TemplateOutput
         string $outputFileName,
         string $outputContent,
         string $outputSubFolder = ''
-    ) {
+    )
+    {
         $this
             ->setOutputRootFolder($outputRootFolder)
             ->setOutputSubFolder($outputSubFolder)
@@ -208,6 +213,6 @@ class TemplateOutput
     private function reset(): void
     {
         $this->outputFolder = null;
-        $this->outputPath   = null;
+        $this->outputPath = null;
     }
 }

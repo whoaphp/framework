@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Packages\Monolog;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,19 +17,23 @@ namespace Limoncello\Tests\Application\Packages\Monolog;
  * limitations under the License.
  */
 
-use Limoncello\Application\Packages\Monolog\MonologFileContainerConfigurator;
-use Limoncello\Application\Packages\Monolog\MonologFileProvider;
-use Limoncello\Application\Packages\Monolog\MonologFileSettings as C;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface as A;
-use Limoncello\Contracts\Application\CacheSettingsProviderInterface;
-use Limoncello\Tests\Application\TestCase;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Packages\Monolog;
+
+use Whoa\Application\Packages\Monolog\MonologFileContainerConfigurator;
+use Whoa\Application\Packages\Monolog\MonologFileProvider;
+use Whoa\Application\Packages\Monolog\MonologFileSettings as C;
+use Whoa\Container\Container;
+use Whoa\Contracts\Application\ApplicationConfigurationInterface as A;
+use Whoa\Contracts\Application\CacheSettingsProviderInterface;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Mockery\Mock;
 use Psr\Log\LoggerInterface;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class MonologPackageTest extends TestCase
 {
@@ -50,14 +53,14 @@ class MonologPackageTest extends TestCase
         $container = new Container();
 
         /** @var Mock $provider */
-        $provider                                         = Mockery::mock(CacheSettingsProviderInterface::class);
+        $provider = Mockery::mock(CacheSettingsProviderInterface::class);
         $container[CacheSettingsProviderInterface::class] = $provider;
         $provider->shouldReceive('getApplicationConfiguration')->once()->withNoArgs()->andReturn([
             A::KEY_APP_NAME => 'Test_App',
         ]);
         $provider->shouldReceive('get')->once()->with(C::class)->andReturn([
             C::KEY_IS_ENABLED => true,
-            C::KEY_LOG_PATH   => '/some/path',
+            C::KEY_LOG_PATH => '/some/path',
         ]);
 
         MonologFileContainerConfigurator::configureContainer($container);
@@ -79,8 +82,7 @@ class MonologPackageTest extends TestCase
      */
     private function getSettings(): C
     {
-        return new class extends C
-        {
+        return new class extends C {
             /**
              * @inheritdoc
              */

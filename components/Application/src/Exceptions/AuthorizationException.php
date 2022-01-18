@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Exceptions;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Application\Exceptions;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Exceptions\AuthorizationExceptionInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Exceptions;
+
+use Whoa\Contracts\Exceptions\AuthorizationExceptionInterface;
 use RuntimeException;
 use function assert;
 use function is_int;
 use function is_string;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class AuthorizationException extends RuntimeException implements AuthorizationExceptionInterface
 {
@@ -50,23 +53,24 @@ class AuthorizationException extends RuntimeException implements AuthorizationEx
     private $extraParameters;
 
     /**
-     * @param string          $action
-     * @param null|string     $resourceType
+     * @param string $action
+     * @param null|string $resourceType
      * @param int|null|string $resourceIdentity
-     * @param array           $extraParams
+     * @param array $extraParams
      */
     public function __construct(
         string $action,
         string $resourceType = null,
-        $resourceIdentity = null,
-        array $extraParams = []
-    ) {
+               $resourceIdentity = null,
+        array  $extraParams = []
+    )
+    {
         assert($resourceIdentity === null || is_string($resourceIdentity) || is_int($resourceIdentity));
 
-        $this->action           = $action;
-        $this->resourceType     = $resourceType;
+        $this->action = $action;
+        $this->resourceType = $resourceType;
         $this->resourceIdentity = $resourceIdentity;
-        $this->extraParameters  = $extraParams;
+        $this->extraParameters = $extraParams;
     }
 
     /**

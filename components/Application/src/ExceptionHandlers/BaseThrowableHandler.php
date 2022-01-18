@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\ExceptionHandlers;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,16 @@ namespace Limoncello\Application\ExceptionHandlers;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Application\ExceptionHandlers;
+
 use Exception;
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface as A;
-use Limoncello\Contracts\Application\CacheSettingsProviderInterface;
-use Limoncello\Contracts\Exceptions\ThrowableHandlerInterface;
-use Limoncello\Contracts\Http\ThrowableResponseInterface;
-use Limoncello\Core\Application\ThrowableResponseTrait;
+use Whoa\Contracts\Application\ApplicationConfigurationInterface as A;
+use Whoa\Contracts\Application\CacheSettingsProviderInterface;
+use Whoa\Contracts\Exceptions\ThrowableHandlerInterface;
+use Whoa\Contracts\Http\ThrowableResponseInterface;
+use Whoa\Core\Application\ThrowableResponseTrait;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -34,7 +37,7 @@ use Zend\Diactoros\Response\JsonResponse;
 use Zend\Diactoros\Response\TextResponse;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
@@ -72,9 +75,9 @@ abstract class BaseThrowableHandler implements ThrowableHandlerInterface
     }
 
     /**
-     * @param Throwable          $exception
+     * @param Throwable $exception
      * @param ContainerInterface $container
-     * @param string             $message
+     * @param string $message
      *
      * @return void
      *
@@ -101,24 +104,24 @@ abstract class BaseThrowableHandler implements ThrowableHandlerInterface
 
     /**
      * @param Throwable $throwable
-     * @param string    $text
-     * @param int       $status
+     * @param string $text
+     * @param int $status
      *
      * @return ThrowableResponseInterface
      */
     protected function createThrowableTextResponse(
         Throwable $throwable,
-        string $text,
-        int $status
-    ): ThrowableResponseInterface {
-        return new class ($throwable, $text, $status) extends TextResponse implements ThrowableResponseInterface
-        {
+        string    $text,
+        int       $status
+    ): ThrowableResponseInterface
+    {
+        return new class ($throwable, $text, $status) extends TextResponse implements ThrowableResponseInterface {
             use ThrowableResponseTrait;
 
             /**
              * @param Throwable $throwable
-             * @param string    $text
-             * @param int       $status
+             * @param string $text
+             * @param int $status
              */
             public function __construct(Throwable $throwable, string $text, int $status)
             {
@@ -130,24 +133,24 @@ abstract class BaseThrowableHandler implements ThrowableHandlerInterface
 
     /**
      * @param Throwable $throwable
-     * @param string    $text
-     * @param int       $status
+     * @param string $text
+     * @param int $status
      *
      * @return ThrowableResponseInterface
      */
     protected function createThrowableHtmlResponse(
         Throwable $throwable,
-        string $text,
-        int $status
-    ): ThrowableResponseInterface {
-        return new class ($throwable, $text, $status) extends HtmlResponse implements ThrowableResponseInterface
-        {
+        string    $text,
+        int       $status
+    ): ThrowableResponseInterface
+    {
+        return new class ($throwable, $text, $status) extends HtmlResponse implements ThrowableResponseInterface {
             use ThrowableResponseTrait;
 
             /**
              * @param Throwable $throwable
-             * @param string    $text
-             * @param int       $status
+             * @param string $text
+             * @param int $status
              */
             public function __construct(Throwable $throwable, string $text, int $status)
             {
@@ -159,24 +162,24 @@ abstract class BaseThrowableHandler implements ThrowableHandlerInterface
 
     /**
      * @param Throwable $throwable
-     * @param string    $json
-     * @param int       $status
+     * @param string $json
+     * @param int $status
      *
      * @return ThrowableResponseInterface
      */
     protected function createThrowableJsonResponse(
         Throwable $throwable,
-        string $json,
-        int $status
-    ): ThrowableResponseInterface {
-        return new class ($throwable, $json, $status) extends JsonResponse implements ThrowableResponseInterface
-        {
+        string    $json,
+        int       $status
+    ): ThrowableResponseInterface
+    {
+        return new class ($throwable, $json, $status) extends JsonResponse implements ThrowableResponseInterface {
             use ThrowableResponseTrait;
 
             /**
              * @param Throwable $throwable
-             * @param string    $json
-             * @param int       $status
+             * @param string $json
+             * @param int $status
              */
             public function __construct(Throwable $throwable, string $json, int $status)
             {

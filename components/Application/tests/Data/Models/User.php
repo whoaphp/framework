@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Data\Models;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Tests\Application\Data\Models;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Data\Models;
+
 use Doctrine\DBAL\Types\Type;
-use Limoncello\Contracts\Data\RelationshipTypes;
+use Whoa\Contracts\Data\RelationshipTypes;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class User extends Model
 {
@@ -77,19 +80,19 @@ class User extends Model
     public static function getAttributeTypes(): array
     {
         return [
-            self::FIELD_ID            => Type::INTEGER,
-            self::FIELD_ID_ROLE       => Type::INTEGER,
-            self::FIELD_TITLE         => Type::STRING,
-            self::FIELD_FIRST_NAME    => Type::STRING,
-            self::FIELD_LAST_NAME     => Type::STRING,
-            self::FIELD_EMAIL         => Type::STRING,
-            self::FIELD_IS_ACTIVE     => Type::BOOLEAN,
+            self::FIELD_ID => Type::INTEGER,
+            self::FIELD_ID_ROLE => Type::INTEGER,
+            self::FIELD_TITLE => Type::STRING,
+            self::FIELD_FIRST_NAME => Type::STRING,
+            self::FIELD_LAST_NAME => Type::STRING,
+            self::FIELD_EMAIL => Type::STRING,
+            self::FIELD_IS_ACTIVE => Type::BOOLEAN,
             self::FIELD_PASSWORD_HASH => Type::STRING,
-            self::FIELD_LANGUAGE      => Type::STRING,
-            self::FIELD_API_TOKEN     => Type::STRING,
-            self::FIELD_CREATED_AT    => Type::DATETIME,
-            self::FIELD_UPDATED_AT    => Type::DATETIME,
-            self::FIELD_DELETED_AT    => Type::DATETIME,
+            self::FIELD_LANGUAGE => Type::STRING,
+            self::FIELD_API_TOKEN => Type::STRING,
+            self::FIELD_CREATED_AT => Type::DATETIME,
+            self::FIELD_UPDATED_AT => Type::DATETIME,
+            self::FIELD_DELETED_AT => Type::DATETIME,
         ];
     }
 
@@ -99,13 +102,13 @@ class User extends Model
     public static function getAttributeLengths(): array
     {
         return [
-            self::FIELD_TITLE         => 255,
-            self::FIELD_FIRST_NAME    => 255,
-            self::FIELD_LAST_NAME     => 255,
-            self::FIELD_EMAIL         => 255,
+            self::FIELD_TITLE => 255,
+            self::FIELD_FIRST_NAME => 255,
+            self::FIELD_LAST_NAME => 255,
+            self::FIELD_EMAIL => 255,
             self::FIELD_PASSWORD_HASH => 255,
-            self::FIELD_LANGUAGE      => 255,
-            self::FIELD_API_TOKEN     => 255,
+            self::FIELD_LANGUAGE => 255,
+            self::FIELD_API_TOKEN => 255,
         ];
     }
 
@@ -118,10 +121,10 @@ class User extends Model
             RelationshipTypes::BELONGS_TO => [
                 self::REL_ROLE => [Role::class, self::FIELD_ID_ROLE, Role::REL_USERS],
             ],
-            RelationshipTypes::HAS_MANY   => [
+            RelationshipTypes::HAS_MANY => [
                 self::REL_AUTHORED_POSTS => [Post::class, Post::FIELD_ID_USER, Post::REL_USER],
-                self::REL_EDITOR_POSTS   => [Post::class, Post::FIELD_ID_EDITOR, Post::REL_EDITOR],
-                self::REL_COMMENTS       => [Comment::class, Comment::FIELD_ID_USER, Comment::REL_USER],
+                self::REL_EDITOR_POSTS => [Post::class, Post::FIELD_ID_EDITOR, Post::REL_EDITOR],
+                self::REL_COMMENTS => [Comment::class, Comment::FIELD_ID_USER, Comment::REL_USER],
             ],
         ];
     }

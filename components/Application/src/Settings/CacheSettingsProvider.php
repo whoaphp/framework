@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Settings;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +17,20 @@ namespace Limoncello\Application\Settings;
  * limitations under the License.
  */
 
-use Limoncello\Application\CoreSettings\CoreData;
-use Limoncello\Application\Exceptions\AmbiguousSettingsException;
-use Limoncello\Application\Exceptions\NotRegisteredSettingsException;
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface;
-use Limoncello\Contracts\Application\CacheSettingsProviderInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Settings;
+
+use Whoa\Application\CoreSettings\CoreData;
+use Whoa\Application\Exceptions\AmbiguousSettingsException;
+use Whoa\Application\Exceptions\NotRegisteredSettingsException;
+use Whoa\Contracts\Application\ApplicationConfigurationInterface;
+use Whoa\Contracts\Application\CacheSettingsProviderInterface;
 use ReflectionException;
 use function array_key_exists;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class CacheSettingsProvider implements CacheSettingsProviderInterface
 {
@@ -126,8 +129,8 @@ class CacheSettingsProvider implements CacheSettingsProviderInterface
 
     /**
      * @param ApplicationConfigurationInterface $appConfig
-     * @param CoreData                          $coreData
-     * @param InstanceSettingsProvider          $provider
+     * @param CoreData $coreData
+     * @param InstanceSettingsProvider $provider
      *
      * @return self
      *
@@ -135,15 +138,16 @@ class CacheSettingsProvider implements CacheSettingsProviderInterface
      */
     public function setInstanceSettings(
         ApplicationConfigurationInterface $appConfig,
-        CoreData $coreData,
-        InstanceSettingsProvider $provider
-    ): self {
+        CoreData                          $coreData,
+        InstanceSettingsProvider          $provider
+    ): self
+    {
         $this->unserialize([
             static::KEY_APPLICATION_CONFIGURATION => $appConfig->get(),
-            static::KEY_CORE_DATA                 => $coreData->get(),
-            static::KEY_SETTINGS_MAP              => $provider->getSettingsMap(),
-            static::KEY_SETTINGS_DATA             => $provider->getSettingsData(),
-            static::KEY_AMBIGUOUS_MAP             => $provider->getAmbiguousMap(),
+            static::KEY_CORE_DATA => $coreData->get(),
+            static::KEY_SETTINGS_MAP => $provider->getSettingsMap(),
+            static::KEY_SETTINGS_DATA => $provider->getSettingsData(),
+            static::KEY_AMBIGUOUS_MAP => $provider->getAmbiguousMap(),
         ]);
 
         return $this;
@@ -156,10 +160,10 @@ class CacheSettingsProvider implements CacheSettingsProviderInterface
     {
         return [
             static::KEY_APPLICATION_CONFIGURATION => $this->appConfig,
-            static::KEY_CORE_DATA                 => $this->coreData,
-            static::KEY_SETTINGS_MAP              => $this->settingsMap,
-            static::KEY_SETTINGS_DATA             => $this->settingsData,
-            static::KEY_AMBIGUOUS_MAP             => $this->ambiguousMap,
+            static::KEY_CORE_DATA => $this->coreData,
+            static::KEY_SETTINGS_MAP => $this->settingsMap,
+            static::KEY_SETTINGS_DATA => $this->settingsData,
+            static::KEY_AMBIGUOUS_MAP => $this->ambiguousMap,
         ];
     }
 
@@ -170,10 +174,10 @@ class CacheSettingsProvider implements CacheSettingsProviderInterface
     {
         [
             static::KEY_APPLICATION_CONFIGURATION => $this->appConfig,
-            static::KEY_CORE_DATA                 => $this->coreData,
-            static::KEY_SETTINGS_MAP              => $this->settingsMap,
-            static::KEY_SETTINGS_DATA             => $this->settingsData,
-            static::KEY_AMBIGUOUS_MAP             => $this->ambiguousMap,
-         ] = $serialized;
+            static::KEY_CORE_DATA => $this->coreData,
+            static::KEY_SETTINGS_MAP => $this->settingsMap,
+            static::KEY_SETTINGS_DATA => $this->settingsData,
+            static::KEY_AMBIGUOUS_MAP => $this->ambiguousMap,
+        ] = $serialized;
     }
 }

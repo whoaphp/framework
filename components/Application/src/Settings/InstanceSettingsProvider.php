@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Settings;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Application\Settings;
  * limitations under the License.
  */
 
-use Limoncello\Application\Exceptions\AlreadyRegisteredSettingsException;
-use Limoncello\Application\Exceptions\AmbiguousSettingsException;
-use Limoncello\Application\Exceptions\NotRegisteredSettingsException;
-use Limoncello\Contracts\Settings\SettingsInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Settings;
+
+use Whoa\Application\Exceptions\AlreadyRegisteredSettingsException;
+use Whoa\Application\Exceptions\AmbiguousSettingsException;
+use Whoa\Application\Exceptions\NotRegisteredSettingsException;
+use Whoa\Contracts\Settings\SettingsInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
 use function array_key_exists;
 use function assert;
 use function class_implements;
@@ -32,7 +35,7 @@ use function get_class;
 use function is_subclass_of;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class InstanceSettingsProvider implements SettingsProviderInterface
 {
@@ -101,7 +104,7 @@ class InstanceSettingsProvider implements SettingsProviderInterface
         }
 
         $index = $this->settingsMap[$className];
-        $data  = $this->settingsData[$index];
+        $data = $this->settingsData[$index];
 
         return $data;
     }
@@ -119,7 +122,7 @@ class InstanceSettingsProvider implements SettingsProviderInterface
         }
 
         $this->instances[$className] = $settings;
-        $this->isProcessed           = false;
+        $this->isProcessed = false;
 
         return $this;
     }
@@ -198,23 +201,23 @@ class InstanceSettingsProvider implements SettingsProviderInterface
             }
         }
 
-        $nextIndex    = 0;
-        $hashMap      = []; // hash  => index
+        $nextIndex = 0;
+        $hashMap = []; // hash  => index
         $settingsData = []; // index => instance data
-        $getIndex     = function (SettingsInterface $instance) use (&$nextIndex, &$hashMap, &$settingsData): int {
+        $getIndex = function (SettingsInterface $instance) use (&$nextIndex, &$hashMap, &$settingsData): int {
             $hash = spl_object_hash($instance);
             if (array_key_exists($hash, $hashMap) === true) {
                 $index = $hashMap[$hash];
             } else {
-                $hashMap[$hash]           = $nextIndex;
+                $hashMap[$hash] = $nextIndex;
                 $settingsData[$nextIndex] = $instance->get($this->getApplicationData());
-                $index                    = $nextIndex++;
+                $index = $nextIndex++;
             }
 
             return $index;
         };
 
-        $settingsMap  = []; // class => index
+        $settingsMap = []; // class => index
         $ambiguousMap = []; // class => true
         foreach ($preliminaryMap as $class => $instanceList) {
             if (count($instanceList) === 1) {
@@ -229,10 +232,10 @@ class InstanceSettingsProvider implements SettingsProviderInterface
             }
         }
 
-        $this->settingsMap  = $settingsMap;
+        $this->settingsMap = $settingsMap;
         $this->settingsData = $settingsData;
         $this->ambiguousMap = $ambiguousMap;
-        $this->isProcessed  = true;
+        $this->isProcessed = true;
     }
 
     /**
@@ -266,7 +269,8 @@ class InstanceSettingsProvider implements SettingsProviderInterface
     private function selectChildSettingsAmongTwo(
         SettingsInterface $instance1,
         SettingsInterface $instance2
-    ): ?SettingsInterface {
+    ): ?SettingsInterface
+    {
         return is_subclass_of($instance1, get_class($instance2)) === true ?
             $instance1 : (is_subclass_of($instance2, get_class($instance1)) === true ? $instance2 : null);
     }

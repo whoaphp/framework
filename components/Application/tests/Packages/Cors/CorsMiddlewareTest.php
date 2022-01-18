@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Packages\Cors;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,14 @@ namespace Limoncello\Tests\Application\Packages\Cors;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Packages\Cors;
+
 use Closure;
-use Limoncello\Application\Packages\Cors\CorsMiddleware;
-use Limoncello\Container\Container;
-use Limoncello\Tests\Application\TestCase;
+use Whoa\Application\Packages\Cors\CorsMiddleware;
+use Whoa\Container\Container;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Mockery\Mock;
 use Neomerx\Cors\Contracts\AnalysisResultInterface;
@@ -32,7 +35,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\EmptyResponse;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class CorsMiddlewareTest extends TestCase
 {
@@ -76,9 +79,9 @@ class CorsMiddlewareTest extends TestCase
 
         $this->analyzer = $analyzer;
 
-        $container                           = new Container();
+        $container = new Container();
         $container[AnalyzerInterface::class] = $this->analyzer;
-        $this->container                     = $container;
+        $this->container = $container;
 
         $this->request = Mockery::mock(ServerRequestInterface::class);
 

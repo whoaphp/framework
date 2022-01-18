@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Session;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Application\Packages\Session;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Session;
+
 use Closure;
-use Limoncello\Application\Contracts\Session\SessionFunctionsInterface;
-use Limoncello\Application\Packages\Session\SessionSettings as C;
-use Limoncello\Contracts\Application\MiddlewareInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Application\Contracts\Session\SessionFunctionsInterface;
+use Whoa\Application\Packages\Session\SessionSettings as C;
+use Whoa\Contracts\Application\MiddlewareInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -31,7 +34,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use function call_user_func;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class SessionMiddleware implements MiddlewareInterface
 {
@@ -46,9 +49,10 @@ class SessionMiddleware implements MiddlewareInterface
      */
     public static function handle(
         ServerRequestInterface $request,
-        Closure $next,
-        ContainerInterface $container
-    ): ResponseInterface {
+        Closure                $next,
+        ContainerInterface     $container
+    ): ResponseInterface
+    {
 
         $sessionFunctions = static::getSessionFunctions($container);
 

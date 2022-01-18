@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\ExceptionHandlers;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Application\ExceptionHandlers;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Http\ThrowableResponseInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\ExceptionHandlers;
+
+use Whoa\Contracts\Http\ThrowableResponseInterface;
 use Psr\Container\ContainerInterface;
 use Throwable;
 use Whoops\Handler\PlainTextHandler;
 use Whoops\Run;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
@@ -64,7 +67,7 @@ class WhoopsThrowableTextHandler extends BaseThrowableHandler
             $message = $run->handleException($throwable);
         }
 
-        $status   = $throwable->getCode() > 0 ? $throwable->getCode() : static::DEFAULT_HTTP_ERROR_CODE;
+        $status = $throwable->getCode() > 0 ? $throwable->getCode() : static::DEFAULT_HTTP_ERROR_CODE;
         $response = $this->createThrowableTextResponse($throwable, $message, $status);
 
         return $response;

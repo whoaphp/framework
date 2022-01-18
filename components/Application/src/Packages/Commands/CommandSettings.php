@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Commands;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +17,19 @@ namespace Limoncello\Application\Packages\Commands;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Settings\Packages\CommandSettingsInterface;
-use Limoncello\Contracts\Settings\SettingsInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Commands;
+
+use Whoa\Contracts\Settings\Packages\CommandSettingsInterface;
+use Whoa\Contracts\Settings\SettingsInterface;
 use function assert;
 use function is_array;
 use function is_int;
 use function is_string;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class CommandSettings implements SettingsInterface, CommandSettingsInterface
 {
@@ -37,7 +40,7 @@ class CommandSettings implements SettingsInterface, CommandSettingsInterface
     {
         $defaults = $this->getSettings();
 
-        $userIdentity   = $defaults[static::KEY_IMPERSONATE_AS_USER_IDENTITY] ?? null;
+        $userIdentity = $defaults[static::KEY_IMPERSONATE_AS_USER_IDENTITY] ?? null;
         $userProperties = $defaults[static::KEY_IMPERSONATE_WITH_USER_PROPERTIES] ?? null;
 
         assert(
@@ -56,7 +59,7 @@ class CommandSettings implements SettingsInterface, CommandSettingsInterface
     protected function getSettings(): array
     {
         return [
-            static::KEY_IMPERSONATE_AS_USER_IDENTITY     => null,
+            static::KEY_IMPERSONATE_AS_USER_IDENTITY => null,
             static::KEY_IMPERSONATE_WITH_USER_PROPERTIES => [],
         ];
     }

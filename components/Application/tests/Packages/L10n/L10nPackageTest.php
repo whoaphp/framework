@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Packages\L10n;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,20 +17,24 @@ namespace Limoncello\Tests\Application\Packages\L10n;
  * limitations under the License.
  */
 
-use Limoncello\Application\Packages\L10n\L10nContainerConfigurator;
-use Limoncello\Application\Packages\L10n\L10nProvider;
-use Limoncello\Application\Packages\L10n\L10nSettings as C;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface as A;
-use Limoncello\Contracts\L10n\FormatterFactoryInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Tests\Application\Data\CoreSettings\Providers\Provider1;
-use Limoncello\Tests\Application\TestCase;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Packages\L10n;
+
+use Whoa\Application\Packages\L10n\L10nContainerConfigurator;
+use Whoa\Application\Packages\L10n\L10nProvider;
+use Whoa\Application\Packages\L10n\L10nSettings as C;
+use Whoa\Container\Container;
+use Whoa\Contracts\Application\ApplicationConfigurationInterface as A;
+use Whoa\Contracts\L10n\FormatterFactoryInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Tests\Application\Data\CoreSettings\Providers\Provider1;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Mockery\Mock;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class L10nPackageTest extends TestCase
 {
@@ -67,8 +70,7 @@ class L10nPackageTest extends TestCase
      */
     private function getSettings(): array
     {
-        $settings = new class extends C
-        {
+        $settings = new class extends C {
             /**
              * @inheritdoc
              */
@@ -87,7 +89,7 @@ class L10nPackageTest extends TestCase
                 Provider1::class,
             ],
         ];
-        $result      = $settings->get($appSettings);
+        $result = $settings->get($appSettings);
 
         return $result;
     }

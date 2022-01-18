@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Authorization;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Application\Authorization;
  * limitations under the License.
  */
 
-use Limoncello\Application\Exceptions\AuthorizationException;
-use Limoncello\Auth\Authorization\PolicyDecision\PolicyDecisionPoint;
-use Limoncello\Auth\Authorization\PolicyEnforcement\PolicyEnforcementPoint;
-use Limoncello\Auth\Authorization\PolicyEnforcement\Request;
-use Limoncello\Auth\Authorization\PolicyInformation\PolicyInformationPoint;
-use Limoncello\Auth\Contracts\Authorization\PolicyEnforcement\PolicyEnforcementPointInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyEnforcement\RequestInterface;
-use Limoncello\Contracts\Authorization\AuthorizationManagerInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Authorization;
+
+use Whoa\Application\Exceptions\AuthorizationException;
+use Whoa\Auth\Authorization\PolicyDecision\PolicyDecisionPoint;
+use Whoa\Auth\Authorization\PolicyEnforcement\PolicyEnforcementPoint;
+use Whoa\Auth\Authorization\PolicyEnforcement\Request;
+use Whoa\Auth\Authorization\PolicyInformation\PolicyInformationPoint;
+use Whoa\Auth\Contracts\Authorization\PolicyEnforcement\PolicyEnforcementPointInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyEnforcement\RequestInterface;
+use Whoa\Contracts\Authorization\AuthorizationManagerInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -35,7 +38,7 @@ use function is_int;
 use function is_string;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class AuthorizationManager implements AuthorizationManagerInterface, LoggerAwareInterface
 {
@@ -67,7 +70,8 @@ class AuthorizationManager implements AuthorizationManagerInterface, LoggerAware
         string $resourceType = null,
         string $resourceIdentity = null,
         array $extraParams = []
-    ): bool {
+    ): bool
+    {
         $request = $this->createRequest($action, $resourceType, $resourceIdentity, $extraParams);
         $result  = $this->createPolicyEnforcementPoint($this->getContainer())->authorize($request);
 
@@ -82,7 +86,8 @@ class AuthorizationManager implements AuthorizationManagerInterface, LoggerAware
         string $resourceType = null,
         string $resourceIdentity = null,
         array $extraParams = []
-    ): void {
+    ): void
+    {
         if ($this->isAllowed($action, $resourceType, $resourceIdentity, $extraParams) !== true) {
             throw new AuthorizationException($action, $resourceType, $resourceIdentity, $extraParams);
         }
@@ -165,12 +170,13 @@ class AuthorizationManager implements AuthorizationManagerInterface, LoggerAware
         string $type = null,
         string $identity = null,
         array $extraParams = []
-    ): RequestInterface {
+    ): RequestInterface
+    {
         assert($identity === null || is_string($identity) || is_array($identity) || is_int($identity));
         return new Request([
-            RequestProperties::REQ_ACTION            => $action,
-            RequestProperties::REQ_RESOURCE_TYPE     => $type,
-            RequestProperties::REQ_RESOURCE_IDENTITY => $identity,
-        ] + $extraParams);
+                RequestProperties::REQ_ACTION            => $action,
+                RequestProperties::REQ_RESOURCE_TYPE     => $type,
+                RequestProperties::REQ_RESOURCE_IDENTITY => $identity,
+            ] + $extraParams);
     }
 }

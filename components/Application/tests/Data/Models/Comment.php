@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Data\Models;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +17,15 @@ namespace Limoncello\Tests\Application\Data\Models;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Data\Models;
+
 use Doctrine\DBAL\Types\Type;
-use Limoncello\Contracts\Data\RelationshipTypes;
+use Whoa\Contracts\Data\RelationshipTypes;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class Comment extends Model
 {
@@ -59,10 +62,10 @@ class Comment extends Model
     public static function getAttributeTypes(): array
     {
         return [
-            self::FIELD_ID         => Type::INTEGER,
-            self::FIELD_ID_POST    => Type::INTEGER,
-            self::FIELD_ID_USER    => Type::INTEGER,
-            self::FIELD_TEXT       => Type::STRING,
+            self::FIELD_ID => Type::INTEGER,
+            self::FIELD_ID_POST => Type::INTEGER,
+            self::FIELD_ID_USER => Type::INTEGER,
+            self::FIELD_TEXT => Type::STRING,
             self::FIELD_CREATED_AT => Type::DATETIME,
             self::FIELD_UPDATED_AT => Type::DATETIME,
             self::FIELD_DELETED_AT => Type::DATETIME,
@@ -86,8 +89,16 @@ class Comment extends Model
     {
         return [
             RelationshipTypes::BELONGS_TO => [
-                self::REL_POST => [Post::class, self::FIELD_ID_POST, Post::REL_COMMENTS],
-                self::REL_USER => [User::class, self::FIELD_ID_USER, User::REL_COMMENTS],
+                self::REL_POST => [
+                    Post::class,
+                    self::FIELD_ID_POST,
+                    Post::REL_COMMENTS,
+                ],
+                self::REL_USER => [
+                    User::class,
+                    self::FIELD_ID_USER,
+                    User::REL_COMMENTS,
+                ],
             ],
             RelationshipTypes::BELONGS_TO_MANY => [
                 self::REL_EMOTIONS => [
@@ -107,14 +118,14 @@ class Comment extends Model
     public static function getRawAttributes(): array
     {
         $usersTable = User::TABLE_NAME;
-        $userId     = User::FIELD_ID;
-        $userName   = User::FIELD_FIRST_NAME;
-        $authorId   = self::FIELD_ID_USER;
+        $userId = User::FIELD_ID;
+        $userName = User::FIELD_FIRST_NAME;
+        $authorId = self::FIELD_ID_USER;
 
         return [
 
-            "(SELECT $userName FROM $usersTable WHERE $userId = $authorId) AS user_name",
+                "(SELECT $userName FROM $usersTable WHERE $userId = $authorId) AS user_name",
 
-        ] + parent::getRawAttributes();
+            ] + parent::getRawAttributes();
     }
 }

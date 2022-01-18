@@ -1,8 +1,8 @@
 <?php
 
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
- * Copyright 2021 info@whoaphp.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,25 +19,25 @@
 
 declare(strict_types=1);
 
-namespace Limoncello\Application\Authorization;
+namespace Whoa\Application\Authorization;
 
-use Limoncello\Application\Contracts\Authorization\AuthorizationRulesInterface;
-use Limoncello\Application\Contracts\Authorization\ResourceAuthorizationRulesInterface;
-use Limoncello\Auth\Authorization\PolicyAdministration\AllOf;
-use Limoncello\Auth\Authorization\PolicyAdministration\AnyOf;
-use Limoncello\Auth\Authorization\PolicyAdministration\Logical;
-use Limoncello\Auth\Authorization\PolicyAdministration\Policy;
-use Limoncello\Auth\Authorization\PolicyAdministration\PolicySet;
-use Limoncello\Auth\Authorization\PolicyAdministration\Rule;
-use Limoncello\Auth\Authorization\PolicyAdministration\Target;
-use Limoncello\Auth\Authorization\PolicyDecision\PolicyAlgorithm;
-use Limoncello\Auth\Authorization\PolicyDecision\PolicyDecisionPoint;
-use Limoncello\Auth\Authorization\PolicyDecision\RuleAlgorithm;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\PolicyInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\RuleInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyAdministration\TargetInterface;
-use Limoncello\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
-use Limoncello\Common\Reflection\ClassIsTrait;
+use Whoa\Application\Contracts\Authorization\AuthorizationRulesInterface;
+use Whoa\Application\Contracts\Authorization\ResourceAuthorizationRulesInterface;
+use Whoa\Auth\Authorization\PolicyAdministration\AllOf;
+use Whoa\Auth\Authorization\PolicyAdministration\AnyOf;
+use Whoa\Auth\Authorization\PolicyAdministration\Logical;
+use Whoa\Auth\Authorization\PolicyAdministration\Policy;
+use Whoa\Auth\Authorization\PolicyAdministration\PolicySet;
+use Whoa\Auth\Authorization\PolicyAdministration\Rule;
+use Whoa\Auth\Authorization\PolicyAdministration\Target;
+use Whoa\Auth\Authorization\PolicyDecision\PolicyAlgorithm;
+use Whoa\Auth\Authorization\PolicyDecision\PolicyDecisionPoint;
+use Whoa\Auth\Authorization\PolicyDecision\RuleAlgorithm;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\PolicyInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\RuleInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyAdministration\TargetInterface;
+use Whoa\Auth\Contracts\Authorization\PolicyInformation\ContextInterface;
+use Whoa\Common\Reflection\ClassIsTrait;
 use ReflectionClass;
 use ReflectionException;
 use function array_key_exists;
@@ -48,7 +48,7 @@ use function is_string;
 use function iterator_to_array;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
@@ -86,11 +86,11 @@ class AuthorizationRulesLoader
     {
         $policies = [];
         foreach ($this->getAuthorizationRulesClasses($path) as $class) {
-            $methodNames   = $this->getActions($class);
+            $methodNames = $this->getActions($class);
             $resourcesType = $this->getResourcesType($class);
-            $policies[]    = $this->createClassPolicy($name, $class, $methodNames, $resourcesType);
+            $policies[] = $this->createClassPolicy($name, $class, $methodNames, $resourcesType);
         }
-        $policySet    = (new PolicySet($policies, PolicyAlgorithm::firstApplicable()))->setName($name);
+        $policySet = (new PolicySet($policies, PolicyAlgorithm::firstApplicable()))->setName($name);
         $policiesData = (new PolicyDecisionPoint($policySet))->getEncodePolicySet();
 
         return $policiesData;
@@ -152,9 +152,9 @@ class AuthorizationRulesLoader
     }
 
     /**
-     * @param string      $policiesName
-     * @param string      $class
-     * @param array       $methods
+     * @param string $policiesName
+     * @param string $class
+     * @param array $methods
      * @param string|null $resourcesType
      *
      * @return PolicyInterface
@@ -164,7 +164,7 @@ class AuthorizationRulesLoader
     private function createClassPolicy(
         string $policiesName,
         string $class,
-        array $methods,
+        array  $methods,
         string $resourcesType = null
     ): PolicyInterface
     {
@@ -198,7 +198,7 @@ class AuthorizationRulesLoader
     }
 
     /**
-     * @param string|int      $key
+     * @param string|int $key
      * @param string|int|null $value
      *
      * @return TargetInterface

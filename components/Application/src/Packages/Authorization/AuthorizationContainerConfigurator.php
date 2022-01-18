@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Authorization;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,17 +17,21 @@ namespace Limoncello\Application\Packages\Authorization;
  * limitations under the License.
  */
 
-use Limoncello\Application\Authorization\AuthorizationManager;
-use Limoncello\Application\Packages\Authorization\AuthorizationSettings as S;
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface;
-use Limoncello\Contracts\Authorization\AuthorizationManagerInterface;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Authorization;
+
+use Whoa\Application\Authorization\AuthorizationManager;
+use Whoa\Application\Packages\Authorization\AuthorizationSettings as S;
+use Whoa\Contracts\Application\ContainerConfiguratorInterface;
+use Whoa\Contracts\Authorization\AuthorizationManagerInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class AuthorizationContainerConfigurator implements ContainerConfiguratorInterface
 {
@@ -38,13 +41,13 @@ class AuthorizationContainerConfigurator implements ContainerConfiguratorInterfa
     /**
      * @inheritdoc
      */
-    public static function configureContainer(LimoncelloContainerInterface $container): void
+    public static function configureContainer(WhoaContainerInterface $container): void
     {
         $container[AuthorizationManagerInterface::class] = function (PsrContainerInterface $container) {
             $settingsProvider = $container->get(SettingsProviderInterface::class);
-            $settings         = $settingsProvider->get(S::class);
+            $settings = $settingsProvider->get(S::class);
 
-            $manager      = new AuthorizationManager($container, $settings[S::KEY_POLICIES_DATA]);
+            $manager = new AuthorizationManager($container, $settings[S::KEY_POLICIES_DATA]);
             $isLogEnabled = $settings[S::KEY_LOG_IS_ENABLED] ?? false;
             if ($isLogEnabled === true && $container->has(LoggerInterface::class)) {
                 $logger = $container->get(LoggerInterface::class);

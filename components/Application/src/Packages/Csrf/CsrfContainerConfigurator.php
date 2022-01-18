@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Csrf;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,18 +17,22 @@ namespace Limoncello\Application\Packages\Csrf;
  * limitations under the License.
  */
 
-use Limoncello\Application\Contracts\Csrf\CsrfTokenGeneratorInterface;
-use Limoncello\Application\Contracts\Csrf\CsrfTokenStorageInterface;
-use Limoncello\Application\Packages\Csrf\CsrfSettings as C;
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Session\SessionInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Csrf;
+
+use Whoa\Application\Contracts\Csrf\CsrfTokenGeneratorInterface;
+use Whoa\Application\Contracts\Csrf\CsrfTokenStorageInterface;
+use Whoa\Application\Packages\Csrf\CsrfSettings as C;
+use Whoa\Contracts\Application\ContainerConfiguratorInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Session\SessionInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use function assert;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class CsrfContainerConfigurator implements ContainerConfiguratorInterface
 {
@@ -41,7 +44,7 @@ class CsrfContainerConfigurator implements ContainerConfiguratorInterface
      *
      * @SuppressWarnings(PHPMD.StaticAccess)
      */
-    public static function configureContainer(LimoncelloContainerInterface $container): void
+    public static function configureContainer(WhoaContainerInterface $container): void
     {
         $storage = null;
         $factory = function (PsrContainerInterface $container) use (&$storage) {
@@ -53,7 +56,7 @@ class CsrfContainerConfigurator implements ContainerConfiguratorInterface
         };
 
         $container[CsrfTokenGeneratorInterface::class] = $factory;
-        $container[CsrfTokenStorageInterface::class]   = $factory;
+        $container[CsrfTokenStorageInterface::class] = $factory;
     }
 
     /**
@@ -71,8 +74,8 @@ class CsrfContainerConfigurator implements ContainerConfiguratorInterface
         assert($provider->has(C::class));
         [
             C::TOKEN_STORAGE_KEY_IN_SESSION => $sessionKey,
-            C::MAX_TOKENS                   => $maxTokens,
-            C::MAX_TOKENS_THRESHOLD         => $maxTokensThreshold,
+            C::MAX_TOKENS => $maxTokens,
+            C::MAX_TOKENS_THRESHOLD => $maxTokensThreshold,
         ]
             = $provider->get(C::class);
 

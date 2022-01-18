@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Commands;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,22 +17,26 @@ namespace Limoncello\Tests\Application\Commands;
  * limitations under the License.
  */
 
-use Limoncello\Application\Commands\ApplicationCommand;
-use Limoncello\Application\Exceptions\ConfigurationException;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface;
-use Limoncello\Contracts\Application\CacheSettingsProviderInterface;
-use Limoncello\Contracts\Commands\IoInterface;
-use Limoncello\Contracts\FileSystem\FileSystemInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Tests\Application\TestCase;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Commands;
+
+use Whoa\Application\Commands\ApplicationCommand;
+use Whoa\Application\Exceptions\ConfigurationException;
+use Whoa\Container\Container;
+use Whoa\Contracts\Application\ApplicationConfigurationInterface;
+use Whoa\Contracts\Application\CacheSettingsProviderInterface;
+use Whoa\Contracts\Commands\IoInterface;
+use Whoa\Contracts\FileSystem\FileSystemInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Mockery\Mock;
 use ReflectionException;
 use ReflectionMethod;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class ApplicationCommandTest extends TestCase
 {
@@ -55,7 +58,7 @@ class ApplicationCommandTest extends TestCase
     public function testInvalidAction(): void
     {
         $container = new Container();
-        $inOut     = $this->createInOutMock(
+        $inOut = $this->createInOutMock(
             ApplicationCommand::ARG_ACTION,
             'non_existing_action',
             true
@@ -77,12 +80,12 @@ class ApplicationCommandTest extends TestCase
         $container = new Container();
 
         /** @var Mock $providerMock */
-        $providerMock                                     = Mockery::mock(CacheSettingsProviderInterface::class);
-        $container[SettingsProviderInterface::class]      = $providerMock;
+        $providerMock = Mockery::mock(CacheSettingsProviderInterface::class);
+        $container[SettingsProviderInterface::class] = $providerMock;
         $container[CacheSettingsProviderInterface::class] = $providerMock;
         $providerMock->shouldReceive('getApplicationConfiguration')->once()->withNoArgs()
             ->andReturn([
-                ApplicationConfigurationInterface::KEY_CACHE_FOLDER   => '/some/path',
+                ApplicationConfigurationInterface::KEY_CACHE_FOLDER => '/some/path',
                 ApplicationConfigurationInterface::KEY_CACHE_CALLABLE => 'Namespace\\ClassName::methodName',
             ]);
         $providerMock->shouldReceive('serialize')->once()->withNoArgs()->andReturn(['some' => 'cache']);
@@ -113,12 +116,12 @@ class ApplicationCommandTest extends TestCase
         $container = new Container();
 
         /** @var Mock $providerMock */
-        $providerMock                                     = Mockery::mock(CacheSettingsProviderInterface::class);
-        $container[SettingsProviderInterface::class]      = $providerMock;
+        $providerMock = Mockery::mock(CacheSettingsProviderInterface::class);
+        $container[SettingsProviderInterface::class] = $providerMock;
         $container[CacheSettingsProviderInterface::class] = $providerMock;
         $providerMock->shouldReceive('getApplicationConfiguration')->once()->withNoArgs()
             ->andReturn([
-                ApplicationConfigurationInterface::KEY_CACHE_FOLDER   => '/some/path',
+                ApplicationConfigurationInterface::KEY_CACHE_FOLDER => '/some/path',
                 ApplicationConfigurationInterface::KEY_CACHE_CALLABLE => '', // <-- invalid value
             ]);
 
@@ -143,8 +146,8 @@ class ApplicationCommandTest extends TestCase
         $container = new Container();
 
         /** @var Mock $providerMock */
-        $providerMock                                     = Mockery::mock(CacheSettingsProviderInterface::class);
-        $container[SettingsProviderInterface::class]      = $providerMock;
+        $providerMock = Mockery::mock(CacheSettingsProviderInterface::class);
+        $container[SettingsProviderInterface::class] = $providerMock;
         $container[CacheSettingsProviderInterface::class] = $providerMock;
         $providerMock->shouldReceive('getApplicationConfiguration')->once()->withNoArgs()
             ->andReturn([
@@ -177,8 +180,8 @@ class ApplicationCommandTest extends TestCase
         $container = new Container();
 
         /** @var Mock $providerMock */
-        $providerMock                                     = Mockery::mock(CacheSettingsProviderInterface::class);
-        $container[SettingsProviderInterface::class]      = $providerMock;
+        $providerMock = Mockery::mock(CacheSettingsProviderInterface::class);
+        $container[SettingsProviderInterface::class] = $providerMock;
         $container[CacheSettingsProviderInterface::class] = $providerMock;
         $providerMock->shouldReceive('getApplicationConfiguration')->once()->withNoArgs()
             ->andReturn([
@@ -251,7 +254,7 @@ class ApplicationCommandTest extends TestCase
     /**
      * @param string $arName
      * @param string $argValue
-     * @param bool   $expectErrors
+     * @param bool $expectErrors
      *
      * @return IoInterface
      */

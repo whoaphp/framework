@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Application;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,19 +17,23 @@ namespace Limoncello\Application\Packages\Application;
  * limitations under the License.
  */
 
-use Limoncello\Application\Commands\CommandStorage;
-use Limoncello\Common\Reflection\ClassIsTrait;
-use Limoncello\Contracts\Application\ApplicationConfigurationInterface as S;
-use Limoncello\Contracts\Application\CacheSettingsProviderInterface;
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface;
-use Limoncello\Contracts\Commands\CommandInterface;
-use Limoncello\Contracts\Commands\CommandStorageInterface;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Provider\ProvidesCommandsInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Application;
+
+use Whoa\Application\Commands\CommandStorage;
+use Whoa\Common\Reflection\ClassIsTrait;
+use Whoa\Contracts\Application\ApplicationConfigurationInterface as S;
+use Whoa\Contracts\Application\CacheSettingsProviderInterface;
+use Whoa\Contracts\Application\ContainerConfiguratorInterface;
+use Whoa\Contracts\Commands\CommandInterface;
+use Whoa\Contracts\Commands\CommandStorageInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Provider\ProvidesCommandsInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class ApplicationContainerConfigurator implements ContainerConfiguratorInterface
 {
@@ -42,24 +45,24 @@ class ApplicationContainerConfigurator implements ContainerConfiguratorInterface
      *
      * @SuppressWarnings(PHPMD.UndefinedVariable)
      */
-    public static function configureContainer(LimoncelloContainerInterface $container): void
+    public static function configureContainer(WhoaContainerInterface $container): void
     {
         $container[CommandStorageInterface::class] =
             function (PsrContainerInterface $container): CommandStorageInterface {
-                $creator = new class
-                {
+                $creator = new class {
                     use ClassIsTrait;
 
                     /**
                      * @param string $commandsPath
-                     * @param array  $providerClasses
+                     * @param array $providerClasses
                      *
                      * @return CommandStorageInterface
                      */
                     public function createCommandStorage(
                         string $commandsPath,
-                        array $providerClasses
-                    ): CommandStorageInterface {
+                        array  $providerClasses
+                    ): CommandStorageInterface
+                    {
                         $storage = new CommandStorage();
 
                         $interfaceName = CommandInterface::class;
@@ -80,13 +83,13 @@ class ApplicationContainerConfigurator implements ContainerConfiguratorInterface
                 };
 
                 /** @var CacheSettingsProviderInterface $provider */
-                $provider  = $container->get(CacheSettingsProviderInterface::class);
+                $provider = $container->get(CacheSettingsProviderInterface::class);
                 $appConfig = $provider->getApplicationConfiguration();
 
-                $providerClasses  = $appConfig[S::KEY_PROVIDER_CLASSES];
-                $commandsFolder   = $appConfig[S::KEY_COMMANDS_FOLDER];
+                $providerClasses = $appConfig[S::KEY_PROVIDER_CLASSES];
+                $commandsFolder = $appConfig[S::KEY_COMMANDS_FOLDER];
                 $commandsFileMask = $appConfig[S::KEY_COMMANDS_FILE_MASK] ?? '*.php';
-                $commandsPath     = $commandsFolder . DIRECTORY_SEPARATOR . $commandsFileMask;
+                $commandsPath = $commandsFolder . DIRECTORY_SEPARATOR . $commandsFileMask;
 
                 $storage = $creator->createCommandStorage($commandsPath, $providerClasses);
 

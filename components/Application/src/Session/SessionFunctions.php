@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Session;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +17,18 @@ namespace Limoncello\Application\Session;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Application\Session;
+
 use ArrayIterator;
 use Iterator;
-use Limoncello\Application\Contracts\Session\SessionFunctionsInterface;
+use Whoa\Application\Contracts\Session\SessionFunctionsInterface;
 use function array_key_exists;
 use function session_status;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  *
  * @SuppressWarnings(PHPMD.Superglobals)
  * @SuppressWarnings(PHPMD.LongVariable)

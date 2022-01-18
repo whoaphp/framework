@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Data\L10n;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,14 @@ namespace Limoncello\Tests\Application\Data\L10n;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\L10n\MessageStorageInterface;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Data\L10n;
+
+use Whoa\Contracts\L10n\MessageStorageInterface;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class SampleEnUsMessages implements MessageStorageInterface
 {

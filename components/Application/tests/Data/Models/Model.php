@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Data\Models;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,14 @@ namespace Limoncello\Tests\Application\Data\Models;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Application\ModelInterface;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Data\Models;
+
+use Whoa\Contracts\Application\ModelInterface;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 abstract class Model implements ModelInterface
 {
@@ -61,6 +64,11 @@ abstract class Model implements ModelInterface
      * @inheritdoc
      */
     public static function getRawAttributes(): array
+    {
+        return [];
+    }
+
+    public static function getVirtualAttributes(): array
     {
         return [];
     }

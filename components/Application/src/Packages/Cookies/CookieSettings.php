@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Cookies;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +17,17 @@ namespace Limoncello\Application\Packages\Cookies;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Settings\Packages\CookieSettingsInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Cookies;
+
+use Whoa\Contracts\Settings\Packages\CookieSettingsInterface;
 use function assert;
 use function is_bool;
 use function is_string;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class CookieSettings implements CookieSettingsInterface
 {
@@ -59,11 +62,11 @@ class CookieSettings implements CookieSettingsInterface
     protected function getSettings(): array
     {
         return [
-            static::KEY_DEFAULT_PATH                                => '',
-            static::KEY_DEFAULT_DOMAIN                              => '',
+            static::KEY_DEFAULT_PATH => '',
+            static::KEY_DEFAULT_DOMAIN => '',
             static::KEY_DEFAULT_IS_SEND_ONLY_OVER_SECURE_CONNECTION => false,
-            static::KEY_DEFAULT_IS_ACCESSIBLE_ONLY_THROUGH_HTTP     => true,
-            static::KEY_DEFAULT_IS_RAW                              => false,
+            static::KEY_DEFAULT_IS_ACCESSIBLE_ONLY_THROUGH_HTTP => true,
+            static::KEY_DEFAULT_IS_RAW => false,
         ];
     }
 }

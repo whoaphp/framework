@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Session;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,14 @@ namespace Limoncello\Application\Packages\Session;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Settings\Packages\SessionSettingsInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Session;
+
+use Whoa\Contracts\Settings\Packages\SessionSettingsInterface;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class SessionSettings implements SessionSettingsInterface
 {
@@ -41,8 +44,8 @@ class SessionSettings implements SessionSettingsInterface
     protected function getSettings(): array
     {
         return [
-            static::KEY_NAME             => 'session_id',
-            static::KEY_USE_STRICT_MODE  => '1',
+            static::KEY_NAME => 'session_id',
+            static::KEY_USE_STRICT_MODE => '1',
             static::KEY_COOKIE_HTTP_ONLY => '1',
         ];
     }

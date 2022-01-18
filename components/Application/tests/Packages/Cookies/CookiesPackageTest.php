@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Packages\Cookies;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,21 +17,25 @@ namespace Limoncello\Tests\Application\Packages\Cookies;
  * limitations under the License.
  */
 
-use Limoncello\Application\Contracts\Cookie\CookieFunctionsInterface;
-use Limoncello\Application\Packages\Cookies\CookieContainerConfigurator;
-use Limoncello\Application\Packages\Cookies\CookieProvider;
-use Limoncello\Application\Packages\Cookies\CookieSettings as C;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Cookies\CookieJarInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Tests\Application\TestCase;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Packages\Cookies;
+
+use Whoa\Application\Contracts\Cookie\CookieFunctionsInterface;
+use Whoa\Application\Packages\Cookies\CookieContainerConfigurator;
+use Whoa\Application\Packages\Cookies\CookieProvider;
+use Whoa\Application\Packages\Cookies\CookieSettings as C;
+use Whoa\Container\Container;
+use Whoa\Contracts\Cookies\CookieJarInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Mockery\Mock;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class CookiesPackageTest extends TestCase
 {
@@ -54,11 +57,11 @@ class CookiesPackageTest extends TestCase
         $container = new Container();
 
         /** @var Mock $provider */
-        $provider                                    = Mockery::mock(SettingsProviderInterface::class);
+        $provider = Mockery::mock(SettingsProviderInterface::class);
         $container[SettingsProviderInterface::class] = $provider;
-        $container[LoggerInterface::class]           = new NullLogger();
-        $appSettings                                 = [];
-        $corsConfig                                  = (new C())->get($appSettings);
+        $container[LoggerInterface::class] = new NullLogger();
+        $appSettings = [];
+        $corsConfig = (new C())->get($appSettings);
         $provider->shouldReceive('get')->once()->with(C::class)->andReturn($corsConfig);
 
         CookieContainerConfigurator::configureContainer($container);

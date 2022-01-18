@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\FileSystem;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +17,13 @@ namespace Limoncello\Application\FileSystem;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Application\FileSystem;
+
 use DirectoryIterator;
-use Limoncello\Application\Exceptions\FileSystemException;
-use Limoncello\Contracts\FileSystem\FileSystemInterface;
+use Whoa\Application\Exceptions\FileSystemException;
+use Whoa\Contracts\FileSystem\FileSystemInterface;
 use function call_user_func;
 use function file_exists;
 use function file_get_contents;
@@ -34,7 +37,7 @@ use function symlink;
 use function unlink;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Authorization;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,14 @@ namespace Limoncello\Application\Packages\Authorization;
  * limitations under the License.
  */
 
-use Limoncello\Contracts\Provider\ProvidesContainerConfiguratorsInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Authorization;
+
+use Whoa\Contracts\Provider\ProvidesContainerConfiguratorsInterface;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class AuthorizationProvider implements ProvidesContainerConfiguratorsInterface
 {

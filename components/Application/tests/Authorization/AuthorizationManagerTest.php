@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Authorization;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,23 +17,27 @@ namespace Limoncello\Tests\Application\Authorization;
  * limitations under the License.
  */
 
-use Limoncello\Application\Authorization\AuthorizationRulesTrait;
-use Limoncello\Application\Authorization\ContextProperties;
-use Limoncello\Application\Authorization\RequestProperties;
-use Limoncello\Application\Exceptions\AuthorizationException;
-use Limoncello\Application\Packages\Authorization\AuthorizationContainerConfigurator;
-use Limoncello\Application\Packages\Authorization\AuthorizationSettings as C;
-use Limoncello\Auth\Authorization\PolicyEnforcement\Request;
-use Limoncello\Auth\Authorization\PolicyInformation\Context;
-use Limoncello\Container\Container;
-use Limoncello\Contracts\Authentication\AccountInterface;
-use Limoncello\Contracts\Authentication\AccountManagerInterface;
-use Limoncello\Contracts\Authorization\AuthorizationManagerInterface;
-use Limoncello\Contracts\Exceptions\AuthorizationExceptionInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
-use Limoncello\Tests\Application\Data\Authorization\NotificationRules;
-use Limoncello\Tests\Application\Packages\Authorization\AuthorizationPackageTest;
-use Limoncello\Tests\Application\TestCase;
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Authorization;
+
+use Whoa\Application\Authorization\AuthorizationRulesTrait;
+use Whoa\Application\Authorization\ContextProperties;
+use Whoa\Application\Authorization\RequestProperties;
+use Whoa\Application\Exceptions\AuthorizationException;
+use Whoa\Application\Packages\Authorization\AuthorizationContainerConfigurator;
+use Whoa\Application\Packages\Authorization\AuthorizationSettings as C;
+use Whoa\Auth\Authorization\PolicyEnforcement\Request;
+use Whoa\Auth\Authorization\PolicyInformation\Context;
+use Whoa\Container\Container;
+use Whoa\Contracts\Authentication\AccountInterface;
+use Whoa\Contracts\Authentication\AccountManagerInterface;
+use Whoa\Contracts\Authorization\AuthorizationManagerInterface;
+use Whoa\Contracts\Exceptions\AuthorizationExceptionInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
+use Whoa\Tests\Application\Data\Authorization\NotificationRules;
+use Whoa\Tests\Application\Packages\Authorization\AuthorizationPackageTest;
+use Whoa\Tests\Application\TestCase;
 use Mockery;
 use Mockery\Mock;
 use Psr\Container\ContainerExceptionInterface;
@@ -44,7 +47,7 @@ use Psr\Log\NullLogger;
 use ReflectionException;
 
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 class AuthorizationManagerTest extends TestCase
 {

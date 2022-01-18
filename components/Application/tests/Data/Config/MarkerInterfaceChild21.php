@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Tests\Application\Data\Config;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,12 @@ namespace Limoncello\Tests\Application\Data\Config;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Tests\Application\Data\Config;
+
 /**
- * @package Limoncello\Tests\Application
+ * @package Whoa\Tests\Application
  */
 interface MarkerInterfaceChild21 extends MarkerInterfaceChild2
 {

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Cors;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +17,14 @@ namespace Limoncello\Application\Packages\Cors;
  * limitations under the License.
  */
 
-use Limoncello\Application\Packages\Cors\CorsSettings as C;
-use Limoncello\Contracts\Application\ContainerConfiguratorInterface;
-use Limoncello\Contracts\Container\ContainerInterface as LimoncelloContainerInterface;
-use Limoncello\Contracts\Settings\SettingsProviderInterface;
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Cors;
+
+use Whoa\Application\Packages\Cors\CorsSettings as C;
+use Whoa\Contracts\Application\ContainerConfiguratorInterface;
+use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
+use Whoa\Contracts\Settings\SettingsProviderInterface;
 use Neomerx\Cors\Analyzer;
 use Neomerx\Cors\Contracts\AnalyzerInterface;
 use Neomerx\Cors\Strategies\Settings;
@@ -29,7 +32,7 @@ use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class CorsContainerConfigurator implements ContainerConfiguratorInterface
 {
@@ -42,7 +45,7 @@ class CorsContainerConfigurator implements ContainerConfiguratorInterface
      * @SuppressWarnings(PHPMD.StaticAccess)
      * @SuppressWarnings(PHPMD.UndefinedVariable)
      */
-    public static function configureContainer(LimoncelloContainerInterface $container): void
+    public static function configureContainer(WhoaContainerInterface $container): void
     {
         $container[AnalyzerInterface::class] = function (PsrContainerInterface $container) {
             $settingsProvider = $container->get(SettingsProviderInterface::class);

@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Limoncello\Application\Packages\Cors;
-
-/**
+/*
  * Copyright 2015-2020 info@neomerx.com
+ * Modification Copyright 2021-2022 info@whoaphp.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,12 @@ namespace Limoncello\Application\Packages\Cors;
  * limitations under the License.
  */
 
+declare(strict_types=1);
+
+namespace Whoa\Application\Packages\Cors;
+
 use Closure;
-use Limoncello\Contracts\Application\MiddlewareInterface;
+use Whoa\Contracts\Application\MiddlewareInterface;
 use Neomerx\Cors\Contracts\AnalysisResultInterface;
 use Neomerx\Cors\Contracts\AnalyzerInterface;
 use Psr\Container\ContainerExceptionInterface;
@@ -31,7 +34,7 @@ use Zend\Diactoros\Response\EmptyResponse;
 use function assert;
 
 /**
- * @package Limoncello\Application
+ * @package Whoa\Application
  */
 class CorsMiddleware implements MiddlewareInterface
 {
@@ -46,9 +49,10 @@ class CorsMiddleware implements MiddlewareInterface
      */
     public static function handle(
         ServerRequestInterface $request,
-        Closure $next,
-        ContainerInterface $container
-    ): ResponseInterface {
+        Closure                $next,
+        ContainerInterface     $container
+    ): ResponseInterface
+    {
         /** @var AnalyzerInterface $analyzer */
         $analyzer = $container->get(AnalyzerInterface::class);
         $analysis = $analyzer->analyze($request);
@@ -103,7 +107,8 @@ class CorsMiddleware implements MiddlewareInterface
      */
     protected static function getErrorNoHostHeaderResponse(
         /** @noinspection PhpUnusedParameterInspection */ AnalysisResultInterface $analysis
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         return new EmptyResponse(400);
     }
 
@@ -116,7 +121,8 @@ class CorsMiddleware implements MiddlewareInterface
      */
     protected static function getErrorOriginNotAllowedResponse(
         /** @noinspection PhpUnusedParameterInspection */ AnalysisResultInterface $analysis
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         return new EmptyResponse(400);
     }
 
@@ -129,7 +135,8 @@ class CorsMiddleware implements MiddlewareInterface
      */
     protected static function getErrorMethodNotSupportedResponse(
         /** @noinspection PhpUnusedParameterInspection */ AnalysisResultInterface $analysis
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         return new EmptyResponse(400);
     }
 
@@ -142,7 +149,8 @@ class CorsMiddleware implements MiddlewareInterface
      */
     protected static function getErrorHeadersNotSupportedResponse(
         /** @noinspection PhpUnusedParameterInspection */ AnalysisResultInterface $analysis
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         return new EmptyResponse(400);
     }
 }
